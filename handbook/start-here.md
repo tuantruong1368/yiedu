@@ -37,3 +37,10 @@ có bằng chứng review. Một yêu cầu có thể đã mô tả nhưng vẫn
 [Git workflow](guides/git-workflow.md) giải thích clone, pull, branch, commit và review.
 
 Sau khi chạy được local, làm [bài thực hành đầu tiên](guides/first-lab.md).
+
+## Cập nhật yêu cầu v0.2
+
+Sau P0, đọc [vision mới](product/vision-v2.md), [CR-001](product/changes/CR-001-extensible-platform.md)
+và [truy vết](product/traceability-v2.md) để hiểu tác động khi mở rộng phạm vi.
+Học quản lý thay đổi: yêu cầu mới → AC → kiến trúc/data → backlog → test/UAT → code theo sprint.
+Nếu muốn xem metadata extension, theo [developer quickstart](guides/developer-quickstart.md).

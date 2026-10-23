@@ -38,3 +38,22 @@ Migration production theo expand → backfill → chuyển code → contract; ro
 Không dùng pg_dump toàn DB SaaS gửi khách hàng. Cần export có whitelist bảng, chọn tenant,
 thu thập quan hệ phụ thuộc, tách identity/PII, kiểm số lượng và chạy restore ở DB sạch.
 pg_dump phù hợp backup DB hoặc export DB đã tách; không thay thế quy trình tenant export.
+
+## Domain model v0.2 — CHƯA có migration
+
+| Nhóm | Thực thể đề xuất và ràng buộc |
+|---|---|
+| Identity | users, external_identities (unique issuer/subject), memberships (tenant/user unique), roles/permissions |
+| Builder | template_selections, workspaces (owner/state), pages/revisions, template_overrides (base version) |
+| Provisioning | tenant_domains (hostname unique/verified), provisioning_jobs (owner/idempotency unique), job_steps |
+| Learning | learning_paths/path_versions/path_items, prerequisites, enrollments/progress, lessons/revisions |
+| Distribution | packages (vendor/name unique), package_versions (immutable package/version), dependencies, release_channels |
+| Tenant config | extension_installations (tenant/package unique), configs/revisions, migration_state theo deployment/instance |
+| Marketplace | seller_profiles, listings/reviews, orders/payments, entitlements/license_grants, ledger/refunds/payouts |
+| Export/update | export_jobs/manifests, installations/instances, update_policies/jobs, audit/outbox events |
+
+User identity toàn cục không đồng nghĩa export toàn bộ users: chỉ membership và data được phép của tenant,
+có ánh xạ identity đích. Ledger/payout/platform key ở Control Plane, không đóng vào ZIP.
+Domain unique ở registry, runtime tenant UUID không suy ra trực tiếp từ Host. Cấu hình tenant và
+artifact version là dữ liệu khác nhau; migration schema shared không chạy lại mỗi lần tenant bật plugin.
+Mọi bảng mới sẽ có migration riêng và test khi triển khai; migration 0001 giữ nguyên.

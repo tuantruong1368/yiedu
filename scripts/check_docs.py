@@ -21,6 +21,12 @@ for phase in range(10):
 for name in ["charter.md", "requirements.md", "architecture.md", "backlog.md", "status.md"]:
     if not (root / "handbook/product" / name).exists():
         errors.append(f"Missing product/{name}")
+requirements = (root / "handbook/product/requirements.md").read_text()
+traceability = (root / "handbook/product/traceability-v2.md").read_text()
+for number in range(15, 26):
+    identifier = f"FR-{number:03}"
+    if f"| {identifier} |" not in requirements or f"| {identifier} |" not in traceability:
+        errors.append(f"Missing v0.2 requirement or traceability: {identifier}")
 if errors:
     print("\n".join(errors))
     sys.exit(1)

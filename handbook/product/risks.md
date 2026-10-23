@@ -19,3 +19,14 @@
 
 Risk là việc có thể xảy ra; issue là việc đã xảy ra. Khi rủi ro kích hoạt, tạo issue,
 ghi tác động, người xử lý, thời điểm cập nhật và quyết định. Dùng [mẫu issue](../forms/issue.md).
+
+## Rủi ro bổ sung v0.2
+
+| ID | Rủi ro | Ưu tiên | Kiểm soát đề xuất |
+|---|---|---|---|
+| R-11 | Extension chiếm quyền shared host | Cao | Review, isolation, capability enforcement, không arbitrary upload execution |
+| R-12 | Update mất dữ liệu hoặc supply-chain compromise | Cao | Chữ ký/trust root, preflight, compatible migration, recovery drill |
+| R-13 | Wildcard/callback/cookie sai tenant | Cao | Verified domain router, callback allowlist, host-only cookie, negative test |
+| R-14 | SaaS account/app không dùng được sau export | Cao | Identity/instance discovery spike, không tái dùng token sai issuer |
+| R-15 | License package không cho đóng ZIP | Cao | Entitlement/redistribution check và báo blocker trước export |
+| R-16 | Marketplace payout/refund/abuse | Cao | Review, ledger idempotent, quyết định chính sách và đơn vị chuyên môn phù hợp |

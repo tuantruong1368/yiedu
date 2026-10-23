@@ -53,3 +53,11 @@ triển khai và kiểm tra; mọi xác nhận phải ghi rõ chủ thể và b�
 
 Qua bước khi: anh review mô tả, chỉ ra nhóm khách hàng ưu tiên sơ bộ và ghi các điểm chưa quyết định.
 Liên quan: [Stakeholder/RACI](stakeholders.md), [phạm vi](scope.md), [rủi ro](risks.md).
+
+## Bổ sung v0.2 — yêu cầu chủ sản phẩm
+
+[Vision v0.2](vision-v2.md) là mô tả chi tiết hiện tại: template gallery trước đăng ký,
+Google/Facebook/email, builder trước publish, subdomain có homepage/admin, tạo bài giảng/khóa học/lộ trình,
+app YiEdu chung, ZIP chạy local/server, core updater và marketplace extension do developer bán.
+Các năng lực này thuộc phạm vi tổng thể; lịch/giá/ngân sách chưa chốt. Tiếp tục học P0–P9 song song.
+[CR-001](changes/CR-001-extensible-platform.md) ghi tác động, không cần khởi tạo lại repository.

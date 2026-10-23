@@ -49,11 +49,21 @@ nav:
   - Kết quả kiểm tra: product/verification.md
   - Kinh doanh và nguồn lực: product/commercial-plan.md
   - Xuất độc lập: product/standalone-export.md
+  - Vision v0.2: product/vision-v2.md
+  - 'CR-001: mở rộng nền tảng': product/changes/CR-001-extensible-platform.md
+  - Onboarding và builder: product/onboarding-builder.md
+  - Identity và mobile: product/identity-mobile.md
+  - Extensions và SDK: product/extensions.md
+  - Core updates: product/updates.md
+  - Developer marketplace: product/marketplace.md
+  - Truy vết v0.2: product/traceability-v2.md
+  - Nghiên cứu: product/research.md
 - Hướng dẫn:
   - Local setup: guides/local-setup.md
   - Git: guides/git-workflow.md
   - Testing: guides/testing.md
   - Bài thực hành đầu tiên: guides/first-lab.md
+  - Developer quickstart: guides/developer-quickstart.md
 - Biểu mẫu:
   - Biên bản phỏng vấn: forms/interview.md
   - User story và AC: forms/user-story.md

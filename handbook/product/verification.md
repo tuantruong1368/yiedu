@@ -28,3 +28,20 @@ upgrade, alembic check, downgrade/upgrade và 5 test đều đạt.
 
 Chưa kiểm Docker image API chạy thực tế và chưa chạy trên Mac M1; CI PostgreSQL không thay thế
 hai kiểm tra môi trường này. Hướng dẫn local có hai cách chạy; ưu tiên venv để học/debug.
+
+
+## Kiểm tra cập nhật đặc tả v0.2
+
+Lần cập nhật này: thay đổi spec/PM docs, thêm manifest contract/schema/examples/validator;
+không đổi API tenant/course, dependencies hoặc migration database.
+
+| Kiểm tra local | Kết quả |
+|---|---|
+| Ruff | Đạt |
+| Link/P0–P9/FR-015–025 traceability | Đạt |
+| Handbook strict build | Đạt |
+| Pytest | 16 passed, 1 skipped (PostgreSQL integration) |
+| Manifest mẫu và compatibility boundary | Đạt metadata; không là kiểm installer/code plugin |
+| SaaS journey / OAuth / DNS / app / ZIP / update / marketplace UAT | Chưa triển khai/chưa chạy |
+
+CI cho commit v0.2 sẽ kiểm lại toàn bộ với PostgreSQL riêng. Link kết quả được ghi sau khi chạy.

@@ -31,3 +31,12 @@ Nếu cần, mở change request và đánh giá ảnh hưởng trước.
 
 Ghi vấn đề → yêu cầu/AC → tác động chi phí, thời gian, dữ liệu và bảo mật → quyết định của chủ
 sản phẩm → sửa backlog/spec → triển khai → kiểm tra. Dùng [biểu mẫu](../forms/change-request.md).
+
+## Baseline sản phẩm v0.2
+
+Bổ sung chính thức vào phạm vi: [onboarding/builder/subdomain](onboarding-builder.md),
+[identity và app chung](identity-mobile.md), [extension/SDK](extensions.md),
+[core updater](updates.md), [developer marketplace](marketplace.md).
+Marketplace ở đây bán template/component/plugin; khác với marketplace bán khóa học của YiEdu.
+Joomla là tham chiếu mô hình CMS, không yêu cầu tương thích mã PHP/ZIP của Joomla.
+App riêng/managed dedicated là hướng bổ sung; app chung và ZIP độc lập là yêu cầu trực tiếp.

@@ -6,6 +6,15 @@ Yisoft và Yirobot là hệ thống khách hàng demo, không phải khóa học
 **Điểm bắt đầu cho anh Tuân:** [Lộ trình đọc và thực hành](handbook/start-here.md).
 Học theo thứ tự P0–P9, rồi quay lại chu trình sprint khi phát triển thêm.
 
+## Phạm vi sản phẩm v0.2
+
+[Đọc tầm nhìn và hành trình v0.2](handbook/product/vision-v2.md): chọn template → đăng ký
+Google/Facebook/email → builder → cấp subdomain có homepage/admin → quản lý khóa học/lộ trình →
+app YiEdu iOS/Android → ZIP độc lập → cập nhật core/extension → developer marketplace.
+
+Không cần xóa repo. Đây là mở rộng đặc tả và nền SDK; chức năng SaaS đầy đủ chưa triển khai.
+[Quy trình developer](handbook/guides/developer-quickstart.md) có manifest mẫu và validator offline.
+
 ## Có gì trong repo?
 
 - Handbook tiếng Việt cho toàn bộ P0–P9, bài thực hành, đầu ra và tiêu chí qua bước.

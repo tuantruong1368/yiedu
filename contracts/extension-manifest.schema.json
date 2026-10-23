@@ -1,0 +1,147 @@
+{
+  "$defs": {
+    "Dependency": {
+      "additionalProperties": false,
+      "properties": {
+        "package_id": {
+          "maxLength": 120,
+          "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$",
+          "title": "Package Id",
+          "type": "string"
+        },
+        "versions": {
+          "$ref": "#/$defs/VersionRange"
+        }
+      },
+      "required": [
+        "package_id",
+        "versions"
+      ],
+      "title": "Dependency",
+      "type": "object"
+    },
+    "VersionRange": {
+      "additionalProperties": false,
+      "properties": {
+        "min_inclusive": {
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+          "title": "Min Inclusive",
+          "type": "string"
+        },
+        "max_exclusive": {
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+          "title": "Max Exclusive",
+          "type": "string"
+        }
+      },
+      "required": [
+        "min_inclusive",
+        "max_exclusive"
+      ],
+      "title": "VersionRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "package_id": {
+      "maxLength": 120,
+      "pattern": "^[a-z][a-z0-9-]*\\.[a-z][a-z0-9-]*$",
+      "title": "Package Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "template",
+        "component",
+        "plugin",
+        "block"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "version": {
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+      "title": "Version",
+      "type": "string"
+    },
+    "display_name": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Display Name",
+      "type": "string"
+    },
+    "core": {
+      "$ref": "#/$defs/VersionRange"
+    },
+    "extension_api": {
+      "$ref": "#/$defs/VersionRange"
+    },
+    "surfaces": {
+      "items": {
+        "enum": [
+          "web",
+          "admin",
+          "mobile"
+        ],
+        "type": "string"
+      },
+      "maxItems": 3,
+      "minItems": 1,
+      "title": "Surfaces",
+      "type": "array"
+    },
+    "capabilities": {
+      "items": {
+        "enum": [
+          "pages:read",
+          "pages:write",
+          "courses:read",
+          "courses:write",
+          "learning:read",
+          "notifications:send"
+        ],
+        "type": "string"
+      },
+      "maxItems": 6,
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "dependencies": {
+      "items": {
+        "$ref": "#/$defs/Dependency"
+      },
+      "maxItems": 50,
+      "title": "Dependencies",
+      "type": "array"
+    },
+    "portable": {
+      "title": "Portable",
+      "type": "boolean"
+    },
+    "data_schema_version": {
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$",
+      "title": "Data Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema_version",
+    "package_id",
+    "kind",
+    "version",
+    "display_name",
+    "core",
+    "extension_api",
+    "surfaces",
+    "portable",
+    "data_schema_version"
+  ],
+  "title": "ExtensionManifest",
+  "type": "object"
+}

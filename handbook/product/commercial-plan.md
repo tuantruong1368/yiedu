@@ -44,3 +44,11 @@ với người có chuyên môn phù hợp trước thương mại; tài liệu 
 Sau discovery: chọn nhóm khách hàng. Sau spike: chốt giải pháp. Sau pilot: review giá/chi phí.
 Trước release: xác nhận ngân sách, phạm vi và khả năng hỗ trợ. Chưa đạt thì cập nhật backlog,
 không tự bỏ qua cổng chỉ vì code chạy được.
+
+## Marketplace v0.2
+
+Marketplace template/component/plugin đã thuộc phạm vi theo yêu cầu anh Tuân; không còn là ý tưởng ngoài phạm vi.
+Cần khảo sát developer/seller và tenant buyer; [marketplace](marketplace.md) mô tả entitlement,
+review, ledger/refund/payout và quyền export. Giá, chia doanh thu, giấy phép và chính sách hỗ trợ chưa chốt.
+Cần tính thêm chi phí build/kiểm duyệt artifact, signing, registry/CDN, download, backup/restore,
+update support và xử lý sự cố của extension. Không tự đặt mức phí hoặc điều khoản thay chủ sản phẩm.

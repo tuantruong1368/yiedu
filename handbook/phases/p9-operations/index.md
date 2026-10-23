@@ -53,3 +53,10 @@ Có người phụ trách, diễn tập recovery, chỉ số và vòng phản h�
 
 Người chịu trách nhiệm: anh Tuân; AI hỗ trợ chuẩn bị và phân tích. Ghi kết quả thực tế vào
 [nhật ký học](../../learning-notes.md), không đánh dấu hoàn thành vì đã đọc xong trang.
+
+## Áp dụng yêu cầu v0.2
+
+- [Update/recovery](../../product/updates.md)
+- [Marketplace support](../../product/marketplace.md)
+
+Phạm vi và đặc tả đã cập nhật; hoạt động thực tế vẫn theo trạng thái/bằng chứng, không tự đánh dấu Done.

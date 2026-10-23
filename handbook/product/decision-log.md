@@ -21,3 +21,17 @@ Dùng [ADR](../forms/adr.md). Không biến đề xuất của AI thành yêu c�
 
 Tham khảo chính thức: [FastAPI](https://fastapi.tiangolo.com/),
 [PostgreSQL](https://www.postgresql.org/docs/), [Puck](https://puckeditor.com/docs).
+
+## Quyết định và yêu cầu v0.2
+
+| ID | Nội dung | Trạng thái | Căn cứ / hệ quả |
+|---|---|---|---|
+| DEC-010 | Template → Google/Facebook/email → builder → subdomain có homepage/admin | Yêu cầu đã xác nhận | Chỉ đạo anh Tuân 23/10/2026; FR-015–017 |
+| DEC-011 | Tenant quản lý khóa học, bài giảng, lộ trình; learner đăng ký tại tenant, học trên app chung | Yêu cầu đã xác nhận | FR-018–019; kiểm membership và tiến độ |
+| DEC-012 | ZIP chạy độc lập, cập nhật core từ YiEdu, thêm extension | Yêu cầu đã xác nhận | FR-020–022; runtime không phụ thuộc Control Plane để học |
+| DEC-013 | Developer tạo và bán template/component/plugin | Yêu cầu đã xác nhận | FR-023–024; bổ sung marketplace vào phạm vi |
+| DEC-014 | Giữ repository, thêm spec v0.2 và manifest contract thử nghiệm | Lựa chọn triển khai | Nền hiện tại dùng tiếp được, không có production cần phá bỏ |
+| DEC-015 | Extension registry/host cô lập, signed updates, rollout theo cohort | Thiết kế đề xuất | Cần spike và ADR trước triển khai thực tế |
+| DEC-016 | Identity toàn cục + membership; adapter để standalone | Thiết kế đề xuất | Firebase/Identity Platform hoặc provider khác chưa chốt |
+
+Nguồn và giới hạn nghiên cứu ở [research](research.md). DEC-005/006/007 vẫn là đề xuất.

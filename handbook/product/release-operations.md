@@ -48,3 +48,12 @@ Dùng [mẫu incident](../forms/incident.md).
 Tỷ lệ tạo tenant thành công, thời gian tạo khóa học đầu tiên, hoàn thành học, lỗi thanh toán,
 chi phí theo tenant, lượng hỗ trợ và nhu cầu export. Chưa có số liệu thật.
 Sau mỗi sprint: demo, review chỉ số, retrospective và cập nhật backlog.
+
+## Vận hành v0.2
+
+Bổ sung checklist domain/TLS và OAuth callbacks trước publish tenant; không cho unknown host fallback.
+Provision/export/update là job có state, retry/idempotency, audit và theo dõi queue.
+Release registry/signing keys là tài sản riêng, không nằm trong ZIP khách hàng.
+Theo dõi compatibility của core/extension và cohort; không hứa version tùy ý cho tenant shared.
+[Core update lifecycle](updates.md) và [export](standalone-export.md) là runbook mục tiêu,
+chưa có hạ tầng hay diễn tập production. App chung cần policy tương thích với instance standalone.

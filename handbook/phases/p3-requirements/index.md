@@ -55,3 +55,10 @@ Người chịu trách nhiệm: anh Tuân; AI hỗ trợ chuẩn bị và phân 
 [nhật ký học](../../learning-notes.md), không đánh dấu hoàn thành vì đã đọc xong trang.
 
 Tiếp theo: [P4 — Thiết kế giải pháp](../p4-design/index.md).
+
+## Áp dụng yêu cầu v0.2
+
+- [Truy vết v0.2](../../product/traceability-v2.md)
+- [Identity/mobile](../../product/identity-mobile.md)
+
+Phạm vi và đặc tả đã cập nhật; hoạt động thực tế vẫn theo trạng thái/bằng chứng, không tự đánh dấu Done.

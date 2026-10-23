@@ -1,37 +1,56 @@
-# Đặc tả xuất hệ thống độc lập — bản đề xuất
+# FR-020 — ZIP hệ thống độc lập
 
-Trạng thái: thiết kế cho FR-011, chưa triển khai. Mục tiêu là xuất đúng phạm vi khách hàng,
-khôi phục được trên môi trường sạch và ghi rõ dịch vụ nào cần thay thế.
+Trạng thái: đặc tả v0.2, chưa có exporter/installer. Bấm ZIP là trải nghiệm mục tiêu sau khi khách ưng ý.
 
-## Nội dung gói xuất dự kiến
+## Kết quả phải có
 
-- Runtime source/build theo quyền cấp phép, migration và phiên bản schema.
-- Dữ liệu tenant đã lọc và quan hệ cần thiết; báo cáo số lượng và kiểm toàn vẹn.
-- Media được phép xuất, checksum và đường dẫn ánh xạ.
-- Page revisions, schema version, cấu hình branding và component renderer phù hợp.
-- Cấu hình mẫu không có secret; deployment manifest và hướng dẫn restore.
-- Nếu mua app riêng: source/cấu hình thương hiệu và quy trình build/ký, không hứa tự duyệt store.
+Khách tải ZIP có homepage, trang quản trị, backend, schema/data/media của tenant và hướng dẫn
+chạy local hoặc server. Đây là ứng dụng cần runtime/database; không phải file HTML mở trực tiếp.
+Đề xuất gói có Docker Compose và CLI setup; phải kiểm trên Mac M1 và Linux trước nghiệm thu.
 
-Control Plane, dữ liệu khách hàng khác, khóa thanh toán/AI dùng chung và secret SaaS không nằm trong gói.
-Identity cần chính sách chuyển tài khoản: liên kết danh tính hoặc reset/di chuyển theo provider;
-không hứa copy password nguyên trạng giữa mọi dịch vụ.
+| Đường dẫn dự kiến trong ZIP | Nội dung |
+|---|---|
+| runtime/ | Source/build được phép của FastAPI và web/admin renderer |
+| database/ | Schema migrations, snapshot đúng tenant, mapping/checks |
+| media/ | File được phép kèm checksum, remap object keys |
+| packages/ | Template/component/plugin portable đúng version/license |
+| config/ | Env mẫu và config branding/page, không chứa secret SaaS |
+| deployment/ | Compose/manifests, installer/updater được ký và version |
+| export-manifest.json | Phiên bản core/API/schema, file checksum, số bản ghi, phụ thuộc và quyền |
+| README.md | Preflight, setup, auth, restore, endpoint mobile, backup và update |
 
-## Luồng job
+Đây là layout đề xuất, chưa là ZIP có thể tải thật. App binary/signing key không mặc định nằm trong ZIP.
+Một app YiEdu dùng chung là yêu cầu chính; app white-label riêng là đường bổ sung.
 
-Kiểm quyền và phạm vi → tạo snapshot nhất quán → export dữ liệu/media → lập manifest/checksum →
-kiểm số lượng và quan hệ → mã hóa/lưu an toàn → giao bằng quyền có thời hạn → restore drill → nghiệm thu.
-Job có trạng thái, retry/idempotency, quota và audit; link tải không công khai vô thời hạn.
-Chốt cách xử lý dữ liệu phát sinh trong lúc export (maintenance window hoặc snapshot/cutover).
+## Pipeline
 
-## Manifest tối thiểu
+Authorize owner/entitlement → khóa snapshot nhất quán → kiểm dependency/license/portability →
+export dữ liệu và file → build/assemble → ký manifest/checksum → restore sandbox → phát link tải private có hạn.
+Job bất đồng bộ có idempotency và audit. Không báo ready trước khi kiểm gói thành công.
+Tùy chọn dừng ghi/cutover phải chốt cho từng lần export. Snapshot không tự đồng bộ thay đổi phát sinh sau đó;
+không có replication hai chiều hoặc import-back ngầm sau tách.
 
-Tenant ID, export ID, created_at, runtime/schema/component versions, danh sách file/checksum,
-số bản ghi từng bảng, dịch vụ phụ thuộc, hướng dẫn cấu hình và giới hạn đã biết.
-Không lưu secret vào manifest hoặc log.
+## Installer môi trường đích
 
-## Tiêu chí nghiệm thu
+Preflight runtime/dung lượng/DB/network → kiểm chữ ký/checksum → nhập config riêng → restore DB/media →
+chạy migration cần thiết một lần → cấu hình auth/email/storage → tạo/reset admin theo thủ tục → smoke → ready.
+Không nhúng `.env` SaaS, private keys, global admin key, seller finance hoặc data tenant khác.
+Identity provider Google/Facebook phải đăng ký callback cho domain mới; provider phải có credential riêng
+hoặc federation được cấu hình. Không hứa di chuyển password nguyên trạng giữa mọi nhà cung cấp.
+Core có email/local login khả dụng theo adapter đã triển khai, không phụ thuộc auth SaaS để học offline.
 
-Restore vào PostgreSQL sạch, file khớp checksum, người dùng đủ quyền đăng nhập và học,
-branding/page render đúng, không có dữ liệu tenant khác và không cần Control Plane cho luồng học.
-Kiểm upgrade/backup cho bản độc lập và trách nhiệm hỗ trợ sau giao.
-Cloud service adapters phải có cấu hình hợp lệ ở môi trường đích; export source không tự thay thế dịch vụ cloud.
+## Extension và app sau tách
+
+Portable package phải có quyền redistribution/runtime. Package không portable/license thiếu thì báo blocker,
+không âm thầm bỏ chức năng. Updater local đăng ký instance và policy với YiEdu nếu admin cho phép.
+Core learning không gọi Control Plane để quyết định được học sau tách; update/marketplace/AI cần mạng riêng.
+App chung phải discover endpoint mới, kiểm issuer/API compatibility và đăng nhập lại theo [thiết kế](identity-mobile.md).
+Đây là spike chưa chứng minh; không hứa token/account tự hoạt động ở mọi server mới.
+
+## AC
+
+- AC-020-01: giải nén và setup trên local/server sạch, homepage/admin/course/path/progress đúng snapshot.
+- AC-020-02: retry job cùng key không xuất sai/multiple snapshot; gói thiếu file hoặc checksum sai bị từ chối.
+- AC-020-03: không có secret/data tenant khác; file/license không portable được báo trước export.
+- AC-020-04: thay domain/auth/provider theo hướng dẫn và app dùng endpoint/issuer đúng; không gửi token SaaS sang instance khác.
+- AC-020-05: core learning vẫn dùng được khi YiEdu update registry tạm không liên lạc được.

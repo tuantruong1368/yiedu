@@ -34,3 +34,21 @@ Ghi bug có bước tái hiện, mong đợi, thực tế, môi trường, mức
 
 Theo [testing guide](../guides/testing.md). Kết quả chạy ghi vào [verification](verification.md),
 không ghi pass chỉ vì test file tồn tại hoặc pipeline đã được tạo.
+
+## Ma trận kiểm thử v0.2 — chưa chạy E2E
+
+| TC | FR | Kịch bản mục tiêu |
+|---|---|---|
+| TC-015 | FR-015 | Chọn template/version, ba cách signup; hủy/lỗi/link account; giữ selection |
+| TC-016 | FR-016 | Private draft/preview, publish revision, template update không ghi đè override |
+| TC-017 | FR-017, FR-025 | Concurrent slug, reserved names, host spoofing, provisioning retry/fail |
+| TC-018 | FR-018 | Tenant admin/instructor permission, CRUD path, prerequisite cycle/version |
+| TC-019 | FR-019 | Learner tenant signup → app đúng tenant, multi-tenant cache/logout, standalone issuer |
+| TC-020 | FR-020, FR-025 | ZIP sạch, checksum/license/identity, Mac/Linux restore, retry và cutover |
+| TC-021 | FR-021, FR-025 | Signed/invalid update, incompatibility, crash/resume, migration recovery |
+| TC-022 | FR-022 | Entitlement/capability, cross-tenant plugin, disable/uninstall giữ dữ liệu |
+| TC-023 | FR-023 | Seller/reviewer, immutable release, duplicate payment/refund/payout audit |
+| TC-024 | FR-024 | Contract metadata và range validator; sau này dependency graph, signature/host tests |
+
+Hiện chỉ metadata contract subset của TC-024 có automated tests; TC-015–023 và phần runtime TC-024
+chưa triển khai/chưa được chứng minh. [Truy vết](traceability-v2.md) là nguồn trạng thái chung.

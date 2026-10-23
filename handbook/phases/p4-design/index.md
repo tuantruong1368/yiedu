@@ -56,3 +56,10 @@ Người chịu trách nhiệm: anh Tuân; AI hỗ trợ chuẩn bị và phân 
 [nhật ký học](../../learning-notes.md), không đánh dấu hoàn thành vì đã đọc xong trang.
 
 Tiếp theo: [P5 — Phát triển theo sprint](../p5-development/index.md).
+
+## Áp dụng yêu cầu v0.2
+
+- [Extension architecture](../../product/extensions.md)
+- [Core updater](../../product/updates.md)
+
+Phạm vi và đặc tả đã cập nhật; hoạt động thực tế vẫn theo trạng thái/bằng chứng, không tự đánh dấu Done.

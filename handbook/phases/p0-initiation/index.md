@@ -57,3 +57,10 @@ Người chịu trách nhiệm: anh Tuân; AI hỗ trợ chuẩn bị và phân 
 [nhật ký học](../../learning-notes.md), không đánh dấu hoàn thành vì đã đọc xong trang.
 
 Tiếp theo: [P1 — Khám phá khách hàng](../p1-discovery/index.md).
+
+## Áp dụng yêu cầu v0.2
+
+- [Vision v0.2](../../product/vision-v2.md)
+- [CR-001](../../product/changes/CR-001-extensible-platform.md)
+
+Phạm vi và đặc tả đã cập nhật; hoạt động thực tế vẫn theo trạng thái/bằng chứng, không tự đánh dấu Done.

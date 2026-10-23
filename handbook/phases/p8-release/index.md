@@ -54,3 +54,10 @@ Người chịu trách nhiệm: anh Tuân; AI hỗ trợ chuẩn bị và phân 
 [nhật ký học](../../learning-notes.md), không đánh dấu hoàn thành vì đã đọc xong trang.
 
 Tiếp theo: [P9 — Vận hành và cải tiến](../p9-operations/index.md).
+
+## Áp dụng yêu cầu v0.2
+
+- [Signed updates](../../product/updates.md)
+- [ZIP/restore](../../product/standalone-export.md)
+
+Phạm vi và đặc tả đã cập nhật; hoạt động thực tế vẫn theo trạng thái/bằng chứng, không tự đánh dấu Done.

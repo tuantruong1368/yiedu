@@ -1,6 +1,6 @@
 # P3 — SRS YiEdu: yêu cầu và tiêu chí chấp nhận
 
-Trạng thái: baseline đề xuất để review; không đồng nghĩa tính năng đã triển khai.
+Trạng thái v0.2: yêu cầu sản phẩm ghi nhận từ anh Tuân; thiết kế/AC cần review, chưa là tính năng đã triển khai.
 Từ “phải” trong bảng là yêu cầu mục tiêu, chưa là cam kết phát hành.
 
 ## Thuật ngữ
@@ -15,19 +15,30 @@ Một user có thể có membership ở nhiều tenant với vai trò khác nhau
 | ID | Năng lực | Tiêu chí chấp nhận mục tiêu |
 |---|---|---|
 | FR-001 | Tạo tenant | Tên hợp lệ, slug duy nhất, lưu được và trả mã ID; trùng trả 409 |
-| FR-002 | Đăng nhập và membership | Xác thực danh tính; chỉ thành viên có quyền mới truy cập tenant |
+| FR-002 | Đăng nhập và membership | Owner Google/Facebook/email; learner đăng ký tại tenant; quyền server-side theo membership |
 | FR-003 | Branding | Lưu logo/màu/tên; hiển thị đúng tenant sau tải lại |
 | FR-004 | Page builder | Lưu nháp, preview, publish, phục hồi revision; render đúng trang tenant |
 | FR-005 | Khóa học và bài học | Quản lý cấu trúc; phân biệt draft/published; chỉ học viên đủ quyền xem |
 | FR-006 | Ghi danh và tiến độ | Ghi danh không trùng; cập nhật tiến độ idempotent, không vượt quyền |
 | FR-007 | Bài kiểm tra | Lưu lần làm, chấm theo quy tắc; học viên không đọc được đáp án trước phép |
 | FR-008 | Thuê bao/thanh toán | Webhook xác thực, xử lý lặp không cấp quyền/ghi tiền hai lần |
-| FR-009 | Mobile | Đăng nhập, xem khóa học, học và đồng bộ tiến độ; kiểm tra Android/iOS |
+| FR-009 | Mobile | App YiEdu chung iOS/Android, chọn tenant, học đúng lộ trình, đồng bộ tiến độ; kiểm identity standalone |
 | FR-010 | AI hỗ trợ | Chỉ truy cập tài liệu được phép; giới hạn chi phí và ghi nhận lỗi |
-| FR-011 | Xuất độc lập | Xuất đúng tenant, kiểm manifest/checksum, khôi phục trên môi trường sạch |
+| FR-011 | Xuất độc lập | ZIP gồm runtime/homepage/admin/data/media; restore local/server sạch; identity và updater được cấu hình riêng |
 | FR-012 | Web công khai và SEO | Việt/Anh, HTML có nội dung, metadata/canonical đúng tên miền, sitemap |
 | FR-013 | Quản trị dịch vụ | Quản lý gói và tenant, lưu audit khi thao tác nhạy cảm |
 | FR-014 | Handbook và học quản lý dự án | Có P0–P9, hướng dẫn thực hành; quyền khu học public cần quyết định |
+| FR-015 | Template-first onboarding | Giữ template ID/version qua Google/Facebook/email, lỗi/hủy đăng ký có thể tiếp tục |
+| FR-016 | Draft workspace và builder | Chỉnh thương hiệu/trang, preview private, revision; chưa publish thì chưa public |
+| FR-017 | Provision subdomain | Publish tạo đúng một tenant, homepage và admin; slug duy nhất, retry an toàn |
+| FR-018 | Quản trị và lộ trình | CRUD course/lesson/path, quyền theo role, prerequisite/version/hoàn thành |
+| FR-019 | Tenant signup và app discovery | Learner membership đúng tenant, app chọn tenant; standalone login theo issuer đích |
+| FR-020 | ZIP có thể triển khai | Installer/config/data/media + compatibility/license checks + restore drill |
+| FR-021 | Core/extension updates | Signed releases, preflight, backup/migration/health, policy và recovery |
+| FR-022 | Extension lifecycle | Catalog/install/enable/disable/update/uninstall; quyền, dependency và dữ liệu |
+| FR-023 | Developer marketplace | Submit/review/publish/sell, entitlement, refund/payout audit |
+| FR-024 | SDK và compatibility | Manifest/version/event/capability contract, docs/example/validation |
+| FR-025 | Provision/export/update jobs | State machine, idempotency, lock, retry, audit; không báo thành công sớm |
 
 ## Yêu cầu phi chức năng
 
@@ -58,3 +69,17 @@ Giá và số tiền dùng numeric hoặc đơn vị tiền nhỏ nhất, không
 | FR-014 | Handbook | Kiểm link/build; chưa triển khai khu học trên sản phẩm |
 
 Các FR còn lại đang backlog. Xem [backlog](backlog.md) và [kế hoạch test](test-plan.md).
+
+## Quy tắc v0.2 và AC chi tiết
+
+[Onboarding](onboarding-builder.md) AC-015/016/017; [identity/mobile](identity-mobile.md) AC-018/019;
+[export](standalone-export.md) AC-020; [updates](updates.md) AC-021;
+[extensions](extensions.md) AC-022/024; [marketplace](marketplace.md) AC-023/024.
+[Truy vết](traceability-v2.md) liên kết FR → BL → test/UAT và trạng thái code.
+
+| ID bổ sung | Yêu cầu mục tiêu | Cách chứng minh |
+|---|---|---|
+| NFR-008 | Extension không có quyền ngầm với tenant khác/host | Security tests với capability/host isolation |
+| NFR-009 | Update giữ content/config, kiểm authenticity/compatibility | Signed release tests và recovery drill |
+| NFR-010 | Domain/callback/deep link/discovery không rò credential | Negative tests host/origin/issuer/redirect |
+FR-025 dùng AC-017-01/03, AC-020-02 và AC-021-03 cho từng job tương ứng.

@@ -60,3 +60,23 @@ Thực hiện restore drill và kiểm giấy phép trước khi bán.
 Local: API loopback + PostgreSQL Docker. Production dự kiến: Cloud Run, Cloud SQL, storage,
 secret manager; chưa tạo hạ tầng, chưa phê duyệt chi phí. Container local không phải cấu hình
 production: cần HTTPS, DB private networking, secret injection, backup, giám sát và auth thật.
+
+## Kiến trúc mục tiêu v0.2
+
+| Ranh giới | Module mục tiêu | Mã đã có? |
+|---|---|---|
+| Control Plane | Gallery/catalog, onboarding/workspaces, provisioning/domains, billing/export orchestration | Chỉ CRUD tenant admin nền |
+| Portable Runtime | Auth adapters, ACL/membership, pages/template, courses/lessons/paths, assessments/media | Chỉ course metadata nền |
+| Distribution | Package registry, release signing, updater, installer, entitlement và SDK | Chỉ metadata validator thử nghiệm |
+| Marketplace | Developer/seller portal, review, order/ledger/payout, support | Chưa |
+| Clients | Website YiEdu, builder, tenant public/admin, app học chung | Chưa |
+
+Đây là ranh giới logic, không yêu cầu tách thành từng microservice ngay. Core Python + database giữ nguyên.
+Frontend marketplace/builder và portable tenant renderer/admin có thể là app/build entry riêng để ZIP
+không mang theo Control Plane hoặc seller financial data. Runtime và core API có version độc lập với UI.
+
+[Onboarding](onboarding-builder.md) quy định draft → provisioning → active và domain routing.
+[Identity/mobile](identity-mobile.md) quy định account/membership và instance discovery sau export.
+[Extensions](extensions.md) quy định trust model và schema migration shared/standalone.
+[Updates](updates.md) quy định authenticity, staged rollout và recovery.
+Không tự tạo backend/website riêng cho mỗi tenant dùng chung; export mới đóng một instance riêng.

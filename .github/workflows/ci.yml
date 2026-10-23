@@ -30,6 +30,7 @@ jobs:
       - run: pip install --no-deps -e .
       - run: ruff check .
       - run: python scripts/check_docs.py
+      - run: python scripts/check_contracts.py
       - run: mkdocs build --strict
       - run: alembic upgrade head
       - run: alembic check

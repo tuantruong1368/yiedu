@@ -1,0 +1,25 @@
+{
+  "schema_version": "0.1",
+  "package_id": "yiedu.certificates-component",
+  "kind": "component",
+  "version": "0.1.0",
+  "display_name": "Certificates",
+  "core": {
+    "min_inclusive": "0.1.0",
+    "max_exclusive": "1.0.0"
+  },
+  "extension_api": {
+    "min_inclusive": "0.1.0",
+    "max_exclusive": "0.2.0"
+  },
+  "surfaces": [
+    "web",
+    "admin"
+  ],
+  "capabilities": [
+    "learning:read"
+  ],
+  "dependencies": [],
+  "portable": true,
+  "data_schema_version": "0.1.0"
+}

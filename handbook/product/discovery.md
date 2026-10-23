@@ -35,3 +35,11 @@ Giá, số khách và tỷ lệ chuyển đổi chưa được xác nhận.
 Tìm hiểu → xem demo → đăng ký → tạo hệ thống → thiết lập trang → tạo khóa học →
 mời học viên → học thử → chọn gói → vận hành hoặc yêu cầu tách riêng.
 Theo dõi điểm bỏ dở mỗi bước sau khi có người dùng thật.
+
+## Journey v0.2 và câu hỏi khám phá bổ sung
+
+Journey hiện hành ở [vision](vision-v2.md), thay luồng tổng quát phía trên bằng template-first onboarding.
+Yêu cầu nền tảng đã được chủ sản phẩm xác định; discovery kiểm chứng ưu tiên/trải nghiệm và giá trị thị trường.
+Hỏi thêm: mẫu nào cần trước, quản trị lộ trình ra sao, vì sao phải export, ai vận hành server riêng,
+app chung có đủ không, có cần dùng app sau export, tiện ích nào sẵn sàng trả tiền,
+ai phát triển và hỗ trợ extension, chính sách auto-update/maintenance nào chấp nhận được.

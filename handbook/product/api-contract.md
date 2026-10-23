@@ -40,3 +40,21 @@ Không có DELETE/UPDATE ở bộ nền; không coi đây là CRUD đầy đủ.
 Thêm request ID, error schema thống nhất, auth token và membership, rate limit, idempotency cho
 thanh toán/job trước khi public. Version API được quản lý độc lập UI; Server Actions không dùng
 thay hợp đồng HTTP cho mobile. Khi đổi schema, cập nhật OpenAPI và client sau review.
+
+## API mục tiêu v0.2 — CHƯA được tạo endpoint
+
+| Miền | Thao tác/contract dự kiến | Auth và tính nhất quán |
+|---|---|---|
+| Catalog | List template, preview, package versions | Public chỉ metadata đã publish |
+| Identity | Provider callback, session, membership | Provider verify, state/nonce, scope/role |
+| Builder | Workspace CRUD, revisions, preview/publish | Owner/member, optimistic revision control |
+| Provisioning | Reserve slug, create job, get status | Owner/quota/idempotency; active sau kiểm tra |
+| Learning | Courses/lessons/paths/enrollments/progress | Tenant membership, entitlement, prerequisite |
+| Extensions | Catalog/plan/install/enable/update/uninstall | Role/capability/compatibility, async jobs |
+| Export/update | Request job, manifest/download grant/status | Owner/operator, idempotency, signed artifacts |
+| Marketplace | Seller/package submit/review/order/license | Seller/reviewer separation, webhook verification |
+| Discovery | Well-known instance info/capabilities | Metadata không chứa secret; verified origin, API/auth issuer |
+
+Đây là nhóm hợp đồng cần thiết kế OpenAPI khi viết story. Endpoint scaffold hiện tại giữ nguyên;
+không trả thành công giả hoặc mock API cho chức năng chưa triển khai. Validator manifest offline
+không mở endpoint cài code và không phải hệ thống phân phối package.
