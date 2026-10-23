@@ -44,4 +44,7 @@ không đổi API tenant/course, dependencies hoặc migration database.
 | Manifest mẫu và compatibility boundary | Đạt metadata; không là kiểm installer/code plugin |
 | SaaS journey / OAuth / DNS / app / ZIP / update / marketplace UAT | Chưa triển khai/chưa chạy |
 
-CI cho commit v0.2 sẽ kiểm lại toàn bộ với PostgreSQL riêng. Link kết quả được ghi sau khi chạy.
+CI v0.2 [run 39914435513](https://github.com/tuantruong1368/yiedu/actions/runs/39914435513)
+đã hoàn tất thành công cho commit `6f8d03fe31e5af2f40cf2c03fcdcc962ae53dd9b`:
+lint, link/traceability, contract schema/examples, Handbook strict build, PostgreSQL 17
+migration round-trip/drift và toàn bộ pytest đều đạt. Không phải kết quả UAT của chức năng SaaS v0.2.
