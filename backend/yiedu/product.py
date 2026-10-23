@@ -7,6 +7,7 @@ import uuid
 from fastapi import APIRouter, HTTPException, Request, Response
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import delete, select
+from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError
 
 from yiedu.auth import (
@@ -455,16 +456,12 @@ def enroll(tenant_id: uuid.UUID, course_id: uuid.UUID, user: UserDep, db: DB):
     course = get_course(db, tenant_id, course_id)
     if not course.published:
         raise HTTPException(403, "Khóa học chưa xuất bản")
-    exists = db.scalar(
-        select(Enrollment).where(
-            Enrollment.tenant_id == tenant_id,
-            Enrollment.user_id == user.id,
-            Enrollment.course_id == course_id,
-        )
+    db.execute(
+        insert(Enrollment)
+        .values(id=uuid.uuid4(), tenant_id=tenant_id, user_id=user.id, course_id=course_id)
+        .on_conflict_do_nothing(index_elements=["tenant_id", "user_id", "course_id"])
     )
-    if not exists:
-        db.add(Enrollment(tenant_id=tenant_id, user_id=user.id, course_id=course_id))
-        commit(db)
+    commit(db)
     return {"ok": True}
 
 
@@ -475,30 +472,27 @@ def complete_lesson(tenant_id: uuid.UUID, lesson_id: uuid.UUID, user: UserDep, d
     if not row:
         raise HTTPException(404, "Không tìm thấy bài học")
     require_enrollment(db, user, tenant_id, get_course(db, tenant_id, row.course_id))
-    exists = db.scalar(
-        select(Completion).where(
-            Completion.tenant_id == tenant_id,
-            Completion.user_id == user.id,
-            Completion.lesson_id == lesson_id,
-        )
+    inserted = db.scalar(
+        insert(Completion)
+        .values(id=uuid.uuid4(), tenant_id=tenant_id, user_id=user.id, lesson_id=lesson_id)
+        .on_conflict_do_nothing(index_elements=["tenant_id", "user_id", "lesson_id"])
+        .returning(Completion.id)
     )
-    if not exists:
-        db.add(Completion(tenant_id=tenant_id, user_id=user.id, lesson_id=lesson_id))
-        if db.scalar(
-            select(TenantExtension).where(
-                TenantExtension.tenant_id == tenant_id,
-                TenantExtension.package_id == "yiedu.activity-log",
-                TenantExtension.enabled.is_(True),
-            )
-        ):
-            audit(
-                db, tenant_id, user.id, "learning.lesson.completed", {"lesson_id": str(lesson_id)}
-            )
-        commit(db)
+    if inserted and db.scalar(
+        select(TenantExtension).where(
+            TenantExtension.tenant_id == tenant_id,
+            TenantExtension.package_id == "yiedu.activity-log",
+            TenantExtension.enabled.is_(True),
+        )
+    ):
+        audit(db, tenant_id, user.id, "learning.lesson.completed", {"lesson_id": str(lesson_id)})
+    commit(db)
     return {"ok": True}
 
 
 def validate_learning_path(db, tenant_id, payload, excluding=None):
+    # Serialize path graph edits within a tenant, including concurrent create requests.
+    db.execute(select(Tenant.id).where(Tenant.id == tenant_id).with_for_update())
     ids = set(payload.course_ids)
     found = set(
         db.scalars(select(Course.id).where(Course.tenant_id == tenant_id, Course.id.in_(ids)))

@@ -63,3 +63,8 @@ migration round-trip/drift và toàn bộ pytest đều đạt. Không phải k�
 
 Screenshots local đã được xem để kiểm bố cục; CI upload browser evidence dưới dạng artifact.
 Đây là kiểm tra bản local, không phải nghiệm thu toàn bộ phạm vi FR-001–025.
+
+
+Lần CI đầu của 0.3 phát hiện smoke Compose gửi request trước API sẵn sàng (connection reset).
+Đã bổ sung API healthcheck, web đợi API healthy và curl retry các lỗi startup.
+Kết quả chạy lại được ghi sau khi workflow hoàn tất; không coi lần đầu là pass.
