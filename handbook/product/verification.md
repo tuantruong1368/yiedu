@@ -98,7 +98,8 @@ Kiểm tra local trên Python 3.15.1/Node 26.12.1/npm 12.2.1:
 - Pytest không cần DB: 16 passed; 4 integration tests để CI chạy PostgreSQL thật.
 - Next.js 16.4.3 production build thành công.
 - Expo offline dependency check, TypeScript và bundle Android/iOS thành công.
-- CI bổ sung job database-upgrade: seed UTF-8 trên PostgreSQL 17, backup/restore 18 và so sánh dữ liệu.
+- CI bổ sung job database-upgrade: seed tài khoản/tenant/builder/khóa học/lộ trình/tiến độ và UTF-8 trên PostgreSQL 17,
+  backup/restore 18, kiểm đăng nhập cũ, JSONB và tiến độ qua API.
 
 Chưa có Docker daemon trong môi trường kiểm tra local của tác nhân; kết quả PostgreSQL/Compose/browser
 sẽ được ghi sau khi workflow GitHub hoàn tất. Không coi cấu hình job là bằng chứng job đã pass.

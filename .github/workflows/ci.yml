@@ -76,6 +76,8 @@ jobs:
       - run: npm install --global npm@12.2.1
       - run: npm ci
         working-directory: mobile
+      - run: npx expo install --check
+        working-directory: mobile
       - run: npm run typecheck
         working-directory: mobile
       - run: npx expo export --platform android --platform ios --output-dir ../.build/mobile
@@ -100,6 +102,7 @@ jobs:
       - run: docker compose -f compose.pg17.yaml up -d --wait db
       - run: docker compose build migrate
       - run: docker compose run --rm --no-deps migrate
+      - run: docker compose run --rm -T --no-deps api python - seed < tests/upgrade_fixture.py
       - name: Seed PostgreSQL 17 migration probe
         run: |
           docker compose -f compose.pg17.yaml exec -T db sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' <<'SQL'
@@ -107,6 +110,7 @@ jobs:
           INSERT INTO upgrade_probe VALUES (1, 'YiEdu tiếng Việt — dữ liệu cũ');
           SQL
       - run: python3 scripts/upgrade_postgres.py
+      - run: docker compose run --rm -T --no-deps api python - verify < tests/upgrade_fixture.py
       - name: Verify preserved data on PostgreSQL 18
         run: |
           docker compose exec -T db sh -c 'psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atc "SELECT payload FROM upgrade_probe WHERE id=1"' > /tmp/probe.txt

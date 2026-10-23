@@ -59,7 +59,7 @@ def main():
         if not backup.is_file() or backup.stat().st_size == 0:
             raise SystemExit("Backup is missing or empty.")
     else:
-        # Compose project labels preserve the old volume's actual name, including custom -p/env.
+        # Keep the same Compose project name; set COMPOSE_PROJECT_NAME if previously using -p.
         run(compose(True) + ["up", "-d", "--wait", "db"])
         if sql("SHOW server_version_num", True)[:2] != "17":
             raise SystemExit("Expected PostgreSQL 17 source. No backup/restore was attempted.")

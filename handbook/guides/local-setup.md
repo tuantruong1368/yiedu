@@ -2,7 +2,8 @@
 
 ## Điều kiện
 
-Git, Python 3.15.1+ và Docker Desktop đã cài, Docker đang chạy. Mac M1 dùng image PostgreSQL
+Git và Docker Desktop đã cài, Docker đang chạy. Bootstrap chỉ cần Python 3.12+;
+chạy API ngoài Docker cần Python 3.15.1. Mac M1 dùng image PostgreSQL
 hỗ trợ ARM64. Kiểm tra, chưa cài phần nào thì dùng trang chính thức:
 [Python](https://www.python.org/downloads/), [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/).
 

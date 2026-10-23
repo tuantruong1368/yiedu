@@ -19,7 +19,8 @@ Xem [ma trận trạng thái](handbook/product/release-0.3.md) trước khi đá
 
 ## Chạy bằng Docker — cách gọn nhất
 
-Cần Git, Python 3.15.1+ (cho bootstrap), Docker Desktop đang chạy.
+Cần Git, Python 3.12+ (chỉ cho bootstrap) và Docker Desktop đang chạy.
+API dùng Python 3.15.1 trong container; không cần cài lại Python/Node trên Mac khi dùng Docker.
 Trong thư mục repo anh đã clone/pull:
 
 ```bash

@@ -12,6 +12,7 @@ Không dùng beta/RC/canary. Không có thay đổi chức năng sản phẩm ho
 ## Máy đã chạy bản PostgreSQL 17
 
 Thực hiện trong **đúng thư mục repo cũ**, giữ nguyên `.env`, tên thư mục và Compose project name.
+Nếu trước đây dùng `docker compose -p TEN_DU_AN`, đặt `export COMPOSE_PROJECT_NAME=TEN_DU_AN` trước khi chạy script.
 Không đổi mật khẩu DB trong quá trình này. Mở Docker Desktop và chờ Engine chạy.
 
 ```bash
