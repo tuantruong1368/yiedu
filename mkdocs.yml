@@ -1,0 +1,66 @@
+site_name: YiEdu Developer Handbook
+site_description: Vừa xây YiEdu vừa học quản lý dự án
+docs_dir: handbook
+site_dir: .build/handbook
+theme:
+  name: material
+  language: vi
+  features:
+  - navigation.sections
+  - navigation.top
+  - content.code.copy
+plugins:
+- search
+markdown_extensions:
+- tables
+- fenced_code
+- admonition
+nav:
+- Trang chủ: index.md
+- Bắt đầu: start-here.md
+- Nhật ký học: learning-notes.md
+- Giai đoạn P0–P9:
+  - P0 — Khởi tạo dự án: phases/p0-initiation/index.md
+  - P1 — Khám phá khách hàng: phases/p1-discovery/index.md
+  - P2 — Lập kế hoạch và backlog: phases/p2-planning/index.md
+  - P3 — Phân tích yêu cầu: phases/p3-requirements/index.md
+  - P4 — Thiết kế giải pháp: phases/p4-design/index.md
+  - P5 — Phát triển theo sprint: phases/p5-development/index.md
+  - P6 — Kiểm thử và đảm bảo chất lượng: phases/p6-testing/index.md
+  - P7 — UAT và nghiệm thu: phases/p7-acceptance/index.md
+  - P8 — Phát hành và bàn giao: phases/p8-release/index.md
+  - P9 — Vận hành và cải tiến: phases/p9-operations/index.md
+- Hồ sơ YiEdu:
+  - Trạng thái: product/status.md
+  - Charter: product/charter.md
+  - Stakeholder và RACI: product/stakeholders.md
+  - Phạm vi: product/scope.md
+  - Quyết định: product/decision-log.md
+  - Discovery: product/discovery.md
+  - Backlog: product/backlog.md
+  - SRS và truy vết: product/requirements.md
+  - Kiến trúc: product/architecture.md
+  - Dữ liệu: product/data-model.md
+  - API: product/api-contract.md
+  - Rủi ro: product/risks.md
+  - Test plan: product/test-plan.md
+  - UAT: product/uat.md
+  - Phát hành và vận hành: product/release-operations.md
+  - Kết quả kiểm tra: product/verification.md
+  - Kinh doanh và nguồn lực: product/commercial-plan.md
+  - Xuất độc lập: product/standalone-export.md
+- Hướng dẫn:
+  - Local setup: guides/local-setup.md
+  - Git: guides/git-workflow.md
+  - Testing: guides/testing.md
+  - Bài thực hành đầu tiên: guides/first-lab.md
+- Biểu mẫu:
+  - Biên bản phỏng vấn: forms/interview.md
+  - User story và AC: forms/user-story.md
+  - Architecture Decision Record: forms/adr.md
+  - Yêu cầu thay đổi: forms/change-request.md
+  - Sprint planning, review và retrospective: forms/sprint.md
+  - Bug và issue: forms/issue.md
+  - Biên bản nghiệm thu: forms/acceptance.md
+  - Release checklist: forms/release.md
+  - Incident và postmortem: forms/incident.md

@@ -1,0 +1,19 @@
+name: Công việc YiEdu
+description: Công việc có đầu ra và tiêu chí nghiệm thu
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Mục tiêu và yêu cầu liên quan
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Tiêu chí nghiệm thu và cách kiểm tra
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Kết quả, bằng chứng, rủi ro

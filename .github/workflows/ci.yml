@@ -1,0 +1,38 @@
+name: Verify YiEdu
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: yiedu_test
+          POSTGRES_USER: yiedu
+          POSTGRES_PASSWORD: ci_only_password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U yiedu -d yiedu_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://yiedu:ci_only_password@localhost:5432/yiedu_test
+      TEST_DATABASE_URL: postgresql+psycopg://yiedu:ci_only_password@localhost:5432/yiedu_test
+      ADMIN_API_KEY: ci-only-key-not-for-production-1234567890
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.lock
+      - run: pip install --no-deps -e .
+      - run: ruff check .
+      - run: python scripts/check_docs.py
+      - run: mkdocs build --strict
+      - run: alembic upgrade head
+      - run: alembic check
+      - run: alembic downgrade base
+      - run: alembic upgrade head
+      - run: pytest -q
