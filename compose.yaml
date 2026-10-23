@@ -4,25 +4,46 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-yiedu}
       POSTGRES_USER: ${POSTGRES_USER:-yiedu}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Copy .env.example to .env first}
-    ports:
-      - "127.0.0.1:5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/bootstrap.py first}
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
       timeout: 3s
-      retries: 10
-  api:
+      retries: 15
+  migrate:
+    image: yiedu-api:local
     build: .
+    command: ["alembic", "upgrade", "head"]
     environment:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-yiedu}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-yiedu}
-      ADMIN_API_KEY: ${ADMIN_API_KEY:?Set ADMIN_API_KEY in .env}
-    ports:
-      - "127.0.0.1:8000:8000"
+      ADMIN_API_KEY: ${ADMIN_API_KEY:?Run bootstrap first}
     depends_on:
       db:
         condition: service_healthy
+  api:
+    image: yiedu-api:local
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-yiedu}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-yiedu}
+      ADMIN_API_KEY: ${ADMIN_API_KEY:?Run bootstrap first}
+      INSTANCE_MODE: ${INSTANCE_MODE:-saas}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:-localhost}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:3000}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  web:
+    build: ./web
+    environment:
+      API_INTERNAL_URL: http://api:8000
+      ROOT_DOMAIN: ${ROOT_DOMAIN:-localhost}
+      INSTANCE_MODE: ${INSTANCE_MODE:-saas}
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: [api]
 volumes:
   postgres_data:

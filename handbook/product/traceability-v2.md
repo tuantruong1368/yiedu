@@ -18,3 +18,8 @@ ID cũ FR-001–014 giữ nguyên. Bảng này liên kết phạm vi mới với
 
 Trạng thái đặc tả không bằng trạng thái code. Validator chỉ kiểm subset metadata của FR-024;
 không đạt AC registry dependency/signature hoặc khả năng thực thi/cô lập extension.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

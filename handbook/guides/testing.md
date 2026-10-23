@@ -52,3 +52,20 @@ Không chạy lệnh downgrade xóa dữ liệu trên DB đang dùng.
 
 Ghi commit, môi trường, lệnh, số pass/skip/fail và giới hạn. Kết quả thật hiện tại ở
 [verification](../product/verification.md). GitHub Actions xanh là kiểm tự động, không thay UAT.
+
+## Kiểm tra sản phẩm 0.3
+
+CI còn chạy `tests/test_product_integration.py` với PostgreSQL riêng. Web:
+
+```bash
+cd web
+npm ci
+npm run build
+npx playwright install chromium
+npm run test:e2e
+```
+
+Browser journey cần API trên port 8000 và database riêng đã migrate; không chạy E2E vào data thật.
+Playwright tự khởi động web port 3000. Xem workflow CI cho thiết lập đầy đủ.
+Mobile: `npm ci`, `npm run typecheck`, `npx expo export --platform android --platform ios`.
+Bundle không thay thiết bị thật hoặc UAT. [Ma trận 0.3](../product/release-0.3.md) ghi phần còn mở.

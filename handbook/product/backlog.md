@@ -91,3 +91,15 @@ full-product scope vẫn giữ. Không cam kết ngày/chi phí trước spike v
 
 Các issue đang mở, chưa gán deadline/ngân sách hoặc đánh dấu Done. Khi bắt đầu sprint tách story/task
 nhỏ, giữ liên kết FR/AC và bằng chứng. Phần metadata validator BL-022 đã có không đóng toàn issue #1.
+
+## Cập nhật thực thi 0.3
+
+| Nhóm | Tiến triển | Phần còn mở |
+|---|---|---|
+| BL-017–019 | Email/session, template/gallery, workspace/Puck, publish và local routing | Social auth, DNS/TLS/jobs, revision history |
+| BL-020 | Course/lesson/path CRUD API, UI tạo/sửa, prerequisite/progress | Quizzes, rich/media, version pinning |
+| BL-021 | Expo app source/typecheck/bundles | Thiết bị, deep link, native signing/store |
+| BL-022–025 | Metadata + first-party toggles + ZIP/restore local | Third-party host, signed releases/update agent và production recovery |
+| BL-026–027 | Developer submit/list metadata pending | Artifact review/signing/checkout/entitlement/ledger/payout |
+
+Các issue #1–7 vẫn mở, xem [release matrix](release-0.3.md). Không gọi partial implementation là Done.

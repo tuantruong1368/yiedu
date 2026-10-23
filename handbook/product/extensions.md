@@ -65,3 +65,8 @@ Hiện examples chỉ là metadata minh họa, không phải extension có chứ
 - AC-022-02: tenant A bật plugin không ảnh hưởng trạng thái/config của B; không truy cập data B.
 - AC-022-03: disable/gỡ theo chính sách dữ liệu; lỗi plugin có timeout/circuit breaker, không sập core.
 - AC-024-01: package/version trùng hoặc dependency vòng lặp bị từ chối bởi registry/resolver mục tiêu.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

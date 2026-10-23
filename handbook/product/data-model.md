@@ -57,3 +57,12 @@ có ánh xạ identity đích. Ledger/payout/platform key ở Control Plane, kh�
 Domain unique ở registry, runtime tenant UUID không suy ra trực tiếp từ Host. Cấu hình tenant và
 artifact version là dữ liệu khác nhau; migration schema shared không chạy lại mỗi lần tenant bật plugin.
 Mọi bảng mới sẽ có migration riêng và test khi triển khai; migration 0001 giữ nguyên.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.
+
+Migration 0002 tạo users/auth_sessions/memberships/workspaces/lessons/learning_paths/enrollments/
+completions/package_listings/tenant_extensions/audit_events, bổ sung published_page/template_id
+và course description/published. Đây là schema thực, khác với các bảng mục tiêu chưa tạo ở v0.2.

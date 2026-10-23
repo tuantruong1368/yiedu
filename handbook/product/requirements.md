@@ -83,3 +83,8 @@ Các FR còn lại đang backlog. Xem [backlog](backlog.md) và [kế hoạch te
 | NFR-009 | Update giữ content/config, kiểm authenticity/compatibility | Signed release tests và recovery drill |
 | NFR-010 | Domain/callback/deep link/discovery không rò credential | Negative tests host/origin/issuer/redirect |
 FR-025 dùng AC-017-01/03, AC-020-02 và AC-021-03 cho từng job tương ứng.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

@@ -54,3 +54,8 @@ App chung phải discover endpoint mới, kiểm issuer/API compatibility và đ
 - AC-020-03: không có secret/data tenant khác; file/license không portable được báo trước export.
 - AC-020-04: thay domain/auth/provider theo hướng dẫn và app dùng endpoint/issuer đúng; không gửi token SaaS sang instance khác.
 - AC-020-05: core learning vẫn dùng được khi YiEdu update registry tạm không liên lạc được.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

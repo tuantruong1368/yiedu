@@ -35,3 +35,13 @@ Tham khảo chính thức: [FastAPI](https://fastapi.tiangolo.com/),
 | DEC-016 | Identity toàn cục + membership; adapter để standalone | Thiết kế đề xuất | Firebase/Identity Platform hoặc provider khác chưa chốt |
 
 Nguồn và giới hạn nghiên cứu ở [research](research.md). DEC-005/006/007 vẫn là đề xuất.
+
+## Lựa chọn triển khai 0.3
+
+DEC-017: Theo yêu cầu anh Tuân tạo hệ thống thực thi, dùng Next.js/Puck cho web và Expo/React Native cho
+mobile trong bản local; không phải xác nhận đã hoàn tất mọi spike hay cổng production.
+DEC-018: Opaque DB sessions + scrypt, HttpOnly cookie cho web, Bearer + SecureStore cho native.
+DEC-019: Shared runtime kiểm membership/role tại API; chưa dùng RLS nên không tuyên bố đạt toàn NFR-001.
+DEC-020: Chỉ first-party code được chạy; developer submission hiện là metadata pending.
+DEC-021: ZIP local không mang password hash/session; restore tạo mật khẩu mới, không dùng lại token SaaS.
+Các lựa chọn này là quyết định triển khai có thể review; không thay phạm vi đầy đủ trong vision v0.2.

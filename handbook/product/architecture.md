@@ -80,3 +80,8 @@ không mang theo Control Plane hoặc seller financial data. Runtime và core AP
 [Extensions](extensions.md) quy định trust model và schema migration shared/standalone.
 [Updates](updates.md) quy định authenticity, staged rollout và recovery.
 Không tự tạo backend/website riêng cho mỗi tenant dùng chung; export mới đóng một instance riêng.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

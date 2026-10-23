@@ -3,7 +3,7 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  verify:
+  product:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -20,12 +20,19 @@ jobs:
       DATABASE_URL: postgresql+psycopg://yiedu:ci_only_password@localhost:5432/yiedu_test
       TEST_DATABASE_URL: postgresql+psycopg://yiedu:ci_only_password@localhost:5432/yiedu_test
       ADMIN_API_KEY: ci-only-key-not-for-production-1234567890
+      API_INTERNAL_URL: http://127.0.0.1:8000
+      NEXT_TELEMETRY_DISABLED: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - run: pip install -r requirements.lock
       - run: pip install --no-deps -e .
       - run: ruff check .
@@ -37,3 +44,49 @@ jobs:
       - run: alembic downgrade base
       - run: alembic upgrade head
       - run: pytest -q
+      - run: npm ci
+        working-directory: web
+      - run: npm run build
+        working-directory: web
+      - run: npx playwright install --with-deps chromium
+        working-directory: web
+      - run: nohup uvicorn yiedu.main:app --host 127.0.0.1 --port 8000 > /tmp/yiedu-api.log 2>&1 &
+      - run: npm run test:e2e
+        working-directory: web
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-evidence
+          path: |
+            .build/screenshots
+            web/test-results
+  mobile:
+    runs-on: ubuntu-latest
+    env:
+      EXPO_OFFLINE: '1'
+      EXPO_NO_TELEMETRY: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+        working-directory: mobile
+      - run: npm run typecheck
+        working-directory: mobile
+      - run: npx expo export --platform android --platform ios --output-dir ../.build/mobile
+        working-directory: mobile
+  compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/bootstrap.py
+      - run: docker compose up --build -d
+      - run: curl --retry 15 --retry-delay 2 --retry-connrefused --fail http://localhost:8000/health/ready
+      - run: curl --retry 15 --retry-delay 2 --retry-connrefused --fail http://localhost:3000/ > /tmp/yiedu-home.html
+      - run: docker compose logs --tail 60
+        if: failure()
+      - run: docker compose down
+        if: always()

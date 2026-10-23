@@ -57,3 +57,8 @@ Tương thích app chung với standalone là spike bắt buộc, chưa được
 - AC-019-01: learner tạo account tại A, đăng nhập app thấy membership A và tiến độ đúng.
 - AC-019-02: chuyển tenant/logout không giữ dữ liệu/cache/token sai tenant; đăng ký không tự mua course.
 - AC-019-03: endpoint standalone phải được xác minh và login với issuer đích, không dùng lại token SaaS.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

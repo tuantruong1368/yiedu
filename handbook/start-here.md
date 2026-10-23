@@ -44,3 +44,8 @@ Sau P0, đọc [vision mới](product/vision-v2.md), [CR-001](product/changes/CR
 và [truy vết](product/traceability-v2.md) để hiểu tác động khi mở rộng phạm vi.
 Học quản lý thay đổi: yêu cầu mới → AC → kiến trúc/data → backlog → test/UAT → code theo sprint.
 Nếu muốn xem metadata extension, theo [developer quickstart](guides/developer-quickstart.md).
+
+## Chạy sản phẩm thay vì chỉ đọc tài liệu
+
+Sau khi hiểu mục tiêu P0, theo [product local](guides/product-local.md), tạo một tenant bằng tài khoản
+của anh và chạy thử như owner rồi learner. So sánh thực tế với [ma trận 0.3](product/release-0.3.md).

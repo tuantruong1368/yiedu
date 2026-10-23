@@ -52,3 +52,8 @@ không ghi pass chỉ vì test file tồn tại hoặc pipeline đã được t�
 
 Hiện chỉ metadata contract subset của TC-024 có automated tests; TC-015–023 và phần runtime TC-024
 chưa triển khai/chưa được chứng minh. [Truy vết](traceability-v2.md) là nguồn trạng thái chung.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

@@ -48,3 +48,18 @@ CI v0.2 [run 39914435513](https://github.com/tuantruong1368/yiedu/actions/runs/3
 đã hoàn tất thành công cho commit `6f8d03fe31e5af2f40cf2c03fcdcc962ae53dd9b`:
 lint, link/traceability, contract schema/examples, Handbook strict build, PostgreSQL 17
 migration round-trip/drift và toàn bộ pytest đều đạt. Không phải kết quả UAT của chức năng SaaS v0.2.
+
+
+## Bản chạy local 0.3.0 — kiểm tra trước push
+
+- Ruff, link/traceability, contract schema/examples và Handbook strict build: đạt.
+- Migration upgrade và Alembic drift check: đạt trên PostgreSQL WASM (PGlite) local.
+- Pytest: 20 passed, bao gồm auth/tenant isolation/path/extension/export và restore sang schema sạch.
+- Next.js production build và TypeScript: đạt.
+- Playwright browser journey: đã chạy và đạt luồng owner → learner → ZIP.
+- Expo TypeScript: đạt; Metro export bundle iOS và Android: đạt.
+- Docker Compose, PostgreSQL 17 native và browser trên CI: chờ workflow của commit 0.3.
+- Chưa có Mac M1/device UAT, signed APK/IPA, OAuth/payment/AI, third-party runtime, signed updater hoặc production.
+
+Screenshots local đã được xem để kiểm bố cục; CI upload browser evidence dưới dạng artifact.
+Đây là kiểm tra bản local, không phải nghiệm thu toàn bộ phạm vi FR-001–025.

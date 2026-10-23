@@ -59,3 +59,8 @@ không để page builder tự sinh quyền backend. Trình tạo bài giảng c
 - AC-017-01: hai request tranh cùng slug chỉ một thành công; retry cùng key trả cùng job/tenant.
 - AC-017-02: khi Active, homepage và admin đúng tenant; hostname lạ không route tới tenant mặc định.
 - AC-017-03: tenant không được active khi provisioning thiếu bước cần thiết; job lỗi có thể xử lý lại.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.

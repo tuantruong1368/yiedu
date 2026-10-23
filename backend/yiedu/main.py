@@ -2,16 +2,20 @@ import secrets
 import uuid
 from contextlib import asynccontextmanager
 from typing import Annotated
+from urllib.parse import urlparse
 
 from fastapi import Depends, FastAPI, HTTPException, Query, Security
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import APIKeyHeader
 from sqlalchemy import select, text
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
+from starlette.responses import JSONResponse
 
 from yiedu.config import get_settings
 from yiedu.db import get_session
 from yiedu.models import Course, Tenant
+from yiedu.product import router as product_router
 from yiedu.schemas import CourseCreate, CourseRead, TenantCreate, TenantRead
 
 
@@ -21,7 +25,44 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="YiEdu API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="YiEdu API", version="0.3.0", lifespan=lifespan)
+
+
+app.include_router(product_router)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=get_settings().allowed_origins.split(","),
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Content-Type", "Authorization"],
+)
+
+
+@app.middleware("http")
+async def csrf_guard(request, call_next):
+    if request.method not in {"GET", "HEAD", "OPTIONS"} and not request.headers.get(
+        "authorization"
+    ):
+        origin = request.headers.get("origin")
+        allowed = get_settings().allowed_origins.split(",")
+        parsed = urlparse(origin or "")
+        root = get_settings().root_domain
+        tenant_origin = (
+            parsed.hostname
+            and parsed.hostname.endswith("." + root)
+            and parsed.scheme == ("https" if get_settings().cookie_secure else "http")
+            and parsed.port == urlparse(get_settings().public_base_url).port
+        )
+        if origin and origin not in allowed and not tenant_origin:
+            return JSONResponse({"detail": "Origin không được phép"}, status_code=403)
+        if request.cookies.get("yiedu_session") and not origin:
+            return JSONResponse({"detail": "Thiếu Origin"}, status_code=403)
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
+
 api_key = APIKeyHeader(name="X-Admin-Key", auto_error=False)
 DB = Annotated[Session, Depends(get_session)]
 

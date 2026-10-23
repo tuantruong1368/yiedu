@@ -10,3 +10,10 @@ site/
 .DS_Store
 coverage.xml
 .coverage
+
+node_modules/
+.next/
+.expo/
+test-results/
+playwright-report/
+*.tsbuildinfo

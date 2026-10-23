@@ -32,6 +32,7 @@ nav:
   - P9 — Vận hành và cải tiến: phases/p9-operations/index.md
 - Hồ sơ YiEdu:
   - Trạng thái: product/status.md
+  - Triển khai 0.3: product/release-0.3.md
   - Charter: product/charter.md
   - Stakeholder và RACI: product/stakeholders.md
   - Phạm vi: product/scope.md
@@ -64,6 +65,9 @@ nav:
   - Testing: guides/testing.md
   - Bài thực hành đầu tiên: guides/first-lab.md
   - Developer quickstart: guides/developer-quickstart.md
+  - Chạy sản phẩm: guides/product-local.md
+  - App mobile: guides/mobile.md
+  - Phục hồi ZIP: guides/standalone-local.md
 - Biểu mẫu:
   - Biên bản phỏng vấn: forms/interview.md
   - User story và AC: forms/user-story.md

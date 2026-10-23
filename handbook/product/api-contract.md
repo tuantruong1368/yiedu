@@ -58,3 +58,12 @@ thay hợp đồng HTTP cho mobile. Khi đổi schema, cập nhật OpenAPI và 
 Đây là nhóm hợp đồng cần thiết kế OpenAPI khi viết story. Endpoint scaffold hiện tại giữ nguyên;
 không trả thành công giả hoặc mock API cho chức năng chưa triển khai. Validator manifest offline
 không mở endpoint cài code và không phải hệ thống phân phối package.
+
+## Mức triển khai 0.3
+
+Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
+phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.
+
+API product thực ở `/auth`, `/me/dashboard`, `/workspaces`, `/sites`, `/runtime`, `/developer/packages`,
+`/catalog`, `/instance`, `/marketplace`; xem `/openapi.json` của bản 0.3.0.
+Chưa có provider OAuth, billing, AI hoặc signed updater endpoint thực thi.

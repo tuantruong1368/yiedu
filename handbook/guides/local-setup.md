@@ -49,7 +49,7 @@ alembic upgrade head
 alembic current
 ```
 
-Chờ DB báo healthy trước khi migration. Migration mong đợi `0001 (head)`.
+Chờ DB báo healthy trước khi migration. Migration mong đợi `0002 (head)`.
 
 ## Cách A — API chạy trong venv (dễ học/debug)
 
@@ -110,3 +110,5 @@ Không thêm `-v` nếu muốn giữ DB: tùy chọn đó sẽ xóa volume và d
 - Python quá cũ: dùng Python 3.12, tạo lại venv bằng đúng interpreter.
 
 Hoàn tất khi: Handbook mở được, health/ready trả 200, smoke PASS và anh giải thích được tenant/course vừa tạo.
+
+Sản phẩm web/mobile 0.3: theo [hướng dẫn sản phẩm](product-local.md). Compose hiện tự chạy migration khi khởi động đầy đủ.
