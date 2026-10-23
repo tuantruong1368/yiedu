@@ -1,12 +1,12 @@
 services:
   db:
-    image: postgres:17
+    image: postgres:18.6
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-yiedu}
       POSTGRES_USER: ${POSTGRES_USER:-yiedu}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/bootstrap.py first}
     ports: ["127.0.0.1:5432:5432"]
-    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    volumes: ["postgres18_data:/var/lib/postgresql"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 5s
@@ -54,4 +54,4 @@ services:
       api:
         condition: service_healthy
 volumes:
-  postgres_data:
+  postgres18_data:

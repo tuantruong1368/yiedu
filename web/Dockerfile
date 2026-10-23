@@ -1,11 +1,11 @@
-FROM node:24-alpine AS build
+FROM node:26.12.1-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install --global npm@12.2.1 && npm ci
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
-FROM node:24-alpine
+FROM node:26.12.1-alpine
 WORKDIR /app
 ENV NODE_ENV=production HOSTNAME=0.0.0.0 PORT=3000
 COPY --from=build --chown=node:node /app/.next/standalone ./

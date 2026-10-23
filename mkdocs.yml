@@ -66,6 +66,7 @@ nav:
   - Bài thực hành đầu tiên: guides/first-lab.md
   - Developer quickstart: guides/developer-quickstart.md
   - Chạy sản phẩm: guides/product-local.md
+  - Nâng cấp phiên bản: guides/upgrade-latest.md
   - App mobile: guides/mobile.md
   - Phục hồi ZIP: guides/standalone-local.md
 - Biểu mẫu:

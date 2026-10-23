@@ -15,9 +15,11 @@ third-party plugin execution và marketplace mua bán chưa triển khai. Develo
 App đóng gói được bundle iOS/Android; chưa thử trên thiết bị thật, ký binary hoặc phát hành store.
 Xem [ma trận trạng thái](handbook/product/release-0.3.md) trước khi đánh giá phạm vi.
 
+**Đã có dữ liệu từ bản trước?** Đọc [hướng dẫn nâng cấp và giữ dữ liệu](handbook/guides/upgrade-latest.md) trước khi chạy Compose mới.
+
 ## Chạy bằng Docker — cách gọn nhất
 
-Cần Git, Python 3.12+ (cho bootstrap), Docker Desktop đang chạy.
+Cần Git, Python 3.15.1+ (cho bootstrap), Docker Desktop đang chạy.
 Trong thư mục repo anh đã clone/pull:
 
 ```bash
@@ -62,7 +64,7 @@ npm ci
 npm run dev
 ```
 
-Node.js 24 được dùng để kiểm tra. API docs: http://127.0.0.1:8000/docs.
+Node.js 26.12.1 được dùng để kiểm tra. API docs: http://127.0.0.1:8000/docs.
 Endpoint `/runtime` dùng tài khoản/session; các endpoint `/tenants` cũ dành riêng cho platform admin key.
 Không gửi admin key vào frontend hoặc mobile.
 
@@ -92,7 +94,7 @@ mkdocs build --strict
 pytest -q -m 'not integration'
 ```
 
-CI chạy PostgreSQL 17 migration + integration, Next build + browser journey, TypeScript và Expo bundle.
+CI chạy PostgreSQL 18.6 migration + integration, Next build + browser journey, TypeScript và Expo bundle.
 [Test guide](handbook/guides/testing.md), [bằng chứng](handbook/product/verification.md).
 
 Chưa có LICENSE cấp quyền thương mại toàn bộ source. Chính sách cấp phép khách hàng/developer và

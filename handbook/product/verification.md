@@ -84,3 +84,22 @@ cho commit `de90a4d24b98f33b3e0ebeb1b2569bfaf46d2058` đã hoàn tất thành c�
 Bằng chứng ảnh browser nằm trong artifact browser-evidence của workflow.
 Không đổi kết quả này thành UAT production hoặc test trên thiết bị thật. Phần full-product còn mở
 được ghi tại release-0.3.md và các issue #1–7; các issue đã được cập nhật trạng thái từng phần.
+
+## Nâng cấp công nghệ 24/10/2026
+
+Đối chiếu PyPI/npm stable mới nhất cho toàn bộ dependency trực tiếp và Python lock.
+[Danh mục phiên bản](dependencies-2026-10-24.json), [hướng dẫn local](../guides/upgrade-latest.md).
+Ngoại lệ: React mobile 19.3.0 theo yêu cầu Expo 58; web React 19.3.1.
+
+Kiểm tra local trên Python 3.15.1/Node 26.12.1/npm 12.2.1:
+
+- Cài toàn bộ Python requirements + editable package thành công.
+- Ruff, contracts, docs links, MkDocs strict thành công.
+- Pytest không cần DB: 16 passed; 4 integration tests để CI chạy PostgreSQL thật.
+- Next.js 16.4.3 production build thành công.
+- Expo offline dependency check, TypeScript và bundle Android/iOS thành công.
+- CI bổ sung job database-upgrade: seed UTF-8 trên PostgreSQL 17, backup/restore 18 và so sánh dữ liệu.
+
+Chưa có Docker daemon trong môi trường kiểm tra local của tác nhân; kết quả PostgreSQL/Compose/browser
+sẽ được ghi sau khi workflow GitHub hoàn tất. Không coi cấu hình job là bằng chứng job đã pass.
+Có cảnh báo upstream Starlette về httpx TestClient; chưa ảnh hưởng kết quả test.

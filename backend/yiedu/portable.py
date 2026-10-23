@@ -89,6 +89,10 @@ def create_export(db, tenant):
         "alembic.ini",
         "Dockerfile",
         "compose.yaml",
+        "compose.pg17.yaml",
+        ".python-version",
+        ".node-version",
+        ".nvmrc",
     ]:
         files[name] = (root / name).read_bytes()
     files["RESTORE.md"] = (

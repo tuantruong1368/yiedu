@@ -1,0 +1,544 @@
+{
+  "checked_on": "2026-10-24",
+  "policy": "latest stable; mobile React follows Expo SDK compatibility; transitive dependencies follow upstream constraints",
+  "runtimes": {
+    "python": "3.15.1",
+    "node": "26.12.1",
+    "npm": "12.2.1",
+    "postgresql": "18.6"
+  },
+  "dependencies": [
+    {
+      "group": "python",
+      "name": "alembic",
+      "previous": "1.20.1",
+      "latest_at_check": "1.20.1",
+      "selected": "1.20.1"
+    },
+    {
+      "group": "python",
+      "name": "annotated-doc",
+      "previous": "0.0.5",
+      "latest_at_check": "0.0.5",
+      "selected": "0.0.5"
+    },
+    {
+      "group": "python",
+      "name": "annotated-types",
+      "previous": "0.8.0",
+      "latest_at_check": "0.8.0",
+      "selected": "0.8.0"
+    },
+    {
+      "group": "python",
+      "name": "anyio",
+      "previous": "4.15.1",
+      "latest_at_check": "4.15.1",
+      "selected": "4.15.1"
+    },
+    {
+      "group": "python",
+      "name": "babel",
+      "previous": "2.18.0",
+      "latest_at_check": "2.18.0",
+      "selected": "2.18.0"
+    },
+    {
+      "group": "python",
+      "name": "backrefs",
+      "previous": "8.1",
+      "latest_at_check": "8.1",
+      "selected": "8.1"
+    },
+    {
+      "group": "python",
+      "name": "certifi",
+      "previous": "2026.10.19",
+      "latest_at_check": "2026.10.23",
+      "selected": "2026.10.23"
+    },
+    {
+      "group": "python",
+      "name": "charset-normalizer",
+      "previous": "3.5.2",
+      "latest_at_check": "3.5.2",
+      "selected": "3.5.2"
+    },
+    {
+      "group": "python",
+      "name": "click",
+      "previous": "8.5.0",
+      "latest_at_check": "8.5.0",
+      "selected": "8.5.0"
+    },
+    {
+      "group": "python",
+      "name": "colorama",
+      "previous": "0.4.6",
+      "latest_at_check": "0.4.6",
+      "selected": "0.4.6"
+    },
+    {
+      "group": "python",
+      "name": "fastapi",
+      "previous": "0.161.1",
+      "latest_at_check": "0.162.0",
+      "selected": "0.162.0"
+    },
+    {
+      "group": "python",
+      "name": "ghp-import",
+      "previous": "2.1.0",
+      "latest_at_check": "2.1.0",
+      "selected": "2.1.0"
+    },
+    {
+      "group": "python",
+      "name": "h11",
+      "previous": "0.16.0",
+      "latest_at_check": "0.16.0",
+      "selected": "0.16.0"
+    },
+    {
+      "group": "python",
+      "name": "httpcore",
+      "previous": "1.0.9",
+      "latest_at_check": "1.0.9",
+      "selected": "1.0.9"
+    },
+    {
+      "group": "python",
+      "name": "httpx",
+      "previous": "0.28.1",
+      "latest_at_check": "0.28.1",
+      "selected": "0.28.1"
+    },
+    {
+      "group": "python",
+      "name": "idna",
+      "previous": "3.20",
+      "latest_at_check": "3.20",
+      "selected": "3.20"
+    },
+    {
+      "group": "python",
+      "name": "iniconfig",
+      "previous": "2.3.1",
+      "latest_at_check": "2.3.1",
+      "selected": "2.3.1"
+    },
+    {
+      "group": "python",
+      "name": "Jinja2",
+      "previous": "3.1.6",
+      "latest_at_check": "3.1.6",
+      "selected": "3.1.6"
+    },
+    {
+      "group": "python",
+      "name": "Mako",
+      "previous": "1.4.3",
+      "latest_at_check": "1.4.3",
+      "selected": "1.4.3"
+    },
+    {
+      "group": "python",
+      "name": "Markdown",
+      "previous": "3.11.2",
+      "latest_at_check": "3.11.2",
+      "selected": "3.11.2"
+    },
+    {
+      "group": "python",
+      "name": "MarkupSafe",
+      "previous": "3.0.4",
+      "latest_at_check": "3.0.4",
+      "selected": "3.0.4"
+    },
+    {
+      "group": "python",
+      "name": "mergedeep",
+      "previous": "1.3.4",
+      "latest_at_check": "1.3.4",
+      "selected": "1.3.4"
+    },
+    {
+      "group": "python",
+      "name": "mkdocs",
+      "previous": "1.6.1",
+      "latest_at_check": "1.6.1",
+      "selected": "1.6.1"
+    },
+    {
+      "group": "python",
+      "name": "mkdocs-get-deps",
+      "previous": "0.2.2",
+      "latest_at_check": "0.2.2",
+      "selected": "0.2.2"
+    },
+    {
+      "group": "python",
+      "name": "mkdocs-material",
+      "previous": "9.7.7",
+      "latest_at_check": "9.7.7",
+      "selected": "9.7.7"
+    },
+    {
+      "group": "python",
+      "name": "mkdocs-material-extensions",
+      "previous": "1.3.1",
+      "latest_at_check": "1.3.1",
+      "selected": "1.3.1"
+    },
+    {
+      "group": "python",
+      "name": "opentelemetry-api",
+      "previous": "1.45.1",
+      "latest_at_check": "1.45.1",
+      "selected": "1.45.1"
+    },
+    {
+      "group": "python",
+      "name": "packaging",
+      "previous": "26.3",
+      "latest_at_check": "26.3",
+      "selected": "26.3"
+    },
+    {
+      "group": "python",
+      "name": "paginate",
+      "previous": "0.5.7",
+      "latest_at_check": "0.5.7",
+      "selected": "0.5.7"
+    },
+    {
+      "group": "python",
+      "name": "pathspec",
+      "previous": "1.1.1",
+      "latest_at_check": "1.1.1",
+      "selected": "1.1.1"
+    },
+    {
+      "group": "python",
+      "name": "platformdirs",
+      "previous": "4.13.5",
+      "latest_at_check": "4.13.5",
+      "selected": "4.13.5"
+    },
+    {
+      "group": "python",
+      "name": "pluggy",
+      "previous": "1.7.0",
+      "latest_at_check": "1.7.0",
+      "selected": "1.7.0"
+    },
+    {
+      "group": "python",
+      "name": "psycopg",
+      "previous": "3.3.6",
+      "latest_at_check": "3.3.6",
+      "selected": "3.3.6"
+    },
+    {
+      "group": "python",
+      "name": "psycopg-binary",
+      "previous": "3.3.6",
+      "latest_at_check": "3.3.6",
+      "selected": "3.3.6"
+    },
+    {
+      "group": "python",
+      "name": "pydantic",
+      "previous": "2.14.1",
+      "latest_at_check": "2.14.1",
+      "selected": "2.14.1"
+    },
+    {
+      "group": "python",
+      "name": "pydantic-settings",
+      "previous": "2.16.1",
+      "latest_at_check": "2.16.1",
+      "selected": "2.16.1"
+    },
+    {
+      "group": "python",
+      "name": "pydantic_core",
+      "previous": "2.50.1",
+      "latest_at_check": "2.50.1",
+      "selected": "2.50.1"
+    },
+    {
+      "group": "python",
+      "name": "Pygments",
+      "previous": "2.21.0",
+      "latest_at_check": "2.21.0",
+      "selected": "2.21.0"
+    },
+    {
+      "group": "python",
+      "name": "pymdown-extensions",
+      "previous": "12.3",
+      "latest_at_check": "12.3",
+      "selected": "12.3"
+    },
+    {
+      "group": "python",
+      "name": "pytest",
+      "previous": "9.1.1",
+      "latest_at_check": "9.1.1",
+      "selected": "9.1.1"
+    },
+    {
+      "group": "python",
+      "name": "python-dateutil",
+      "previous": "3.0.0",
+      "latest_at_check": "3.0.0",
+      "selected": "3.0.0"
+    },
+    {
+      "group": "python",
+      "name": "python-dotenv",
+      "previous": "1.2.4",
+      "latest_at_check": "1.2.4",
+      "selected": "1.2.4"
+    },
+    {
+      "group": "python",
+      "name": "PyYAML",
+      "previous": "6.0.3",
+      "latest_at_check": "6.0.3",
+      "selected": "6.0.3"
+    },
+    {
+      "group": "python",
+      "name": "pyyaml_env_tag",
+      "previous": "1.1",
+      "latest_at_check": "1.1",
+      "selected": "1.1"
+    },
+    {
+      "group": "python",
+      "name": "requests",
+      "previous": "2.34.2",
+      "latest_at_check": "2.34.2",
+      "selected": "2.34.2"
+    },
+    {
+      "group": "python",
+      "name": "ruff",
+      "previous": "0.17.2",
+      "latest_at_check": "0.17.2",
+      "selected": "0.17.2"
+    },
+    {
+      "group": "python",
+      "name": "setuptools",
+      "previous": "84.2.1",
+      "latest_at_check": "84.2.1",
+      "selected": "84.2.1"
+    },
+    {
+      "group": "python",
+      "name": "six",
+      "previous": "1.17.0",
+      "latest_at_check": "1.17.0",
+      "selected": "1.17.0"
+    },
+    {
+      "group": "python",
+      "name": "SQLAlchemy",
+      "previous": "2.1.6",
+      "latest_at_check": "2.1.6",
+      "selected": "2.1.6"
+    },
+    {
+      "group": "python",
+      "name": "starlette",
+      "previous": "1.9.0",
+      "latest_at_check": "1.9.0",
+      "selected": "1.9.0"
+    },
+    {
+      "group": "python",
+      "name": "typing-inspection",
+      "previous": "0.4.4",
+      "latest_at_check": "0.4.4",
+      "selected": "0.4.4"
+    },
+    {
+      "group": "python",
+      "name": "typing_extensions",
+      "previous": "4.16.0",
+      "latest_at_check": "4.16.0",
+      "selected": "4.16.0"
+    },
+    {
+      "group": "python",
+      "name": "tzdata",
+      "previous": "2026.5",
+      "latest_at_check": "2026.5",
+      "selected": "2026.5"
+    },
+    {
+      "group": "python",
+      "name": "urllib3",
+      "previous": "2.8.0",
+      "latest_at_check": "2.8.0",
+      "selected": "2.8.0"
+    },
+    {
+      "group": "python",
+      "name": "uvicorn",
+      "previous": "0.54.0",
+      "latest_at_check": "0.54.0",
+      "selected": "0.54.0"
+    },
+    {
+      "group": "python",
+      "name": "watchdog",
+      "previous": "6.0.0",
+      "latest_at_check": "6.0.0",
+      "selected": "6.0.0"
+    },
+    {
+      "group": "python",
+      "name": "wheel",
+      "previous": "0.48.0",
+      "latest_at_check": "0.48.0",
+      "selected": "0.48.0"
+    },
+    {
+      "group": "web",
+      "name": "@puckeditor/core",
+      "previous": "^0.23.0",
+      "latest_at_check": "0.23.0",
+      "selected": "0.23.0"
+    },
+    {
+      "group": "web",
+      "name": "lucide-react",
+      "previous": "^1.61.0",
+      "latest_at_check": "1.61.0",
+      "selected": "1.61.0"
+    },
+    {
+      "group": "web",
+      "name": "next",
+      "previous": "^16.4.2",
+      "latest_at_check": "16.4.3",
+      "selected": "16.4.3"
+    },
+    {
+      "group": "web",
+      "name": "react",
+      "previous": "^19.3.1",
+      "latest_at_check": "19.3.1",
+      "selected": "19.3.1"
+    },
+    {
+      "group": "web",
+      "name": "react-dom",
+      "previous": "^19.3.1",
+      "latest_at_check": "19.3.1",
+      "selected": "19.3.1"
+    },
+    {
+      "group": "web",
+      "name": "@playwright/test",
+      "previous": "^1.64.1",
+      "latest_at_check": "1.64.1",
+      "selected": "1.64.1"
+    },
+    {
+      "group": "web",
+      "name": "@types/node",
+      "previous": "^26.6.5",
+      "latest_at_check": "26.6.5",
+      "selected": "26.6.5"
+    },
+    {
+      "group": "web",
+      "name": "@types/react",
+      "previous": "^19.3.0",
+      "latest_at_check": "19.3.0",
+      "selected": "19.3.0"
+    },
+    {
+      "group": "web",
+      "name": "@types/react-dom",
+      "previous": "^19.3.0",
+      "latest_at_check": "19.3.0",
+      "selected": "19.3.0"
+    },
+    {
+      "group": "web",
+      "name": "prettier",
+      "previous": "^3.9.10",
+      "latest_at_check": "3.9.10",
+      "selected": "3.9.10"
+    },
+    {
+      "group": "web",
+      "name": "typescript",
+      "previous": "^7.0.2",
+      "latest_at_check": "7.0.2",
+      "selected": "7.0.2"
+    },
+    {
+      "group": "mobile",
+      "name": "expo",
+      "previous": "^58.0.17",
+      "latest_at_check": "58.0.17",
+      "selected": "58.0.17"
+    },
+    {
+      "group": "mobile",
+      "name": "expo-secure-store",
+      "previous": "^58.0.2",
+      "latest_at_check": "58.0.2",
+      "selected": "58.0.2"
+    },
+    {
+      "group": "mobile",
+      "name": "expo-status-bar",
+      "previous": "^58.0.4",
+      "latest_at_check": "58.0.4",
+      "selected": "58.0.4"
+    },
+    {
+      "group": "mobile",
+      "name": "expo-video",
+      "previous": "^58.0.12",
+      "latest_at_check": "58.0.12",
+      "selected": "58.0.12"
+    },
+    {
+      "group": "mobile",
+      "name": "react",
+      "previous": "19.3.0",
+      "latest_at_check": "19.3.1",
+      "selected": "19.3.0"
+    },
+    {
+      "group": "mobile",
+      "name": "react-native",
+      "previous": "^0.88.0",
+      "latest_at_check": "0.88.0",
+      "selected": "0.88.0"
+    },
+    {
+      "group": "mobile",
+      "name": "@types/react",
+      "previous": "^19.3.0",
+      "latest_at_check": "19.3.0",
+      "selected": "19.3.0"
+    },
+    {
+      "group": "mobile",
+      "name": "typescript",
+      "previous": "^7.0.2",
+      "latest_at_check": "7.0.2",
+      "selected": "7.0.2"
+    }
+  ]
+}

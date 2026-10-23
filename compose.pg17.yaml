@@ -1,0 +1,17 @@
+# Only for backing up the previous local release. Never mount this volume with PostgreSQL 18.
+services:
+  db:
+    image: postgres:17.11
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-yiedu}
+      POSTGRES_USER: ${POSTGRES_USER:-yiedu}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Existing .env required}
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: ["postgres_data:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+volumes:
+  postgres_data:

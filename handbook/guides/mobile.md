@@ -5,7 +5,7 @@ Tài khoản học viên phải được tạo/tham gia tại website tenant tr�
 
 ## Chạy dev
 
-Cần Node.js 24, Expo Go tương thích SDK trong package.json hoặc development build phù hợp.
+Cần Node.js 26.12.1, Expo Go tương thích SDK trong package.json hoặc development build phù hợp.
 
 ```bash
 cd mobile

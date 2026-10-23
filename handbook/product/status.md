@@ -28,3 +28,9 @@ Không đóng toàn bộ FR/issue chỉ vì một phần đã có code.
 FastAPI/PostgreSQL là quyết định đã chốt. Next.js/Puck và Expo được dùng trong bản triển khai này
 để thực hiện yêu cầu tạo sản phẩm, vẫn cần review kiến trúc trước production.
 [Start here](../start-here.md) giữ lộ trình học; [product local](../guides/product-local.md) để chạy thử.
+
+## Nâng cấp nền tảng 24/10/2026
+
+Python 3.15.1, Node.js 26.12.1, PostgreSQL 18.6, FastAPI 0.162.0, Next.js 16.4.3.
+React mobile giữ 19.3.0 theo Expo 58; web dùng 19.3.1. Không thay đổi phạm vi tính năng.
+[Hướng dẫn nâng cấp](../guides/upgrade-latest.md) có backup/restore PostgreSQL 17 và kiểm tra dữ liệu.

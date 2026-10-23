@@ -2,7 +2,7 @@
 
 ## Điều kiện
 
-Git, Python 3.12+ và Docker Desktop đã cài, Docker đang chạy. Mac M1 dùng image PostgreSQL
+Git, Python 3.15.1+ và Docker Desktop đã cài, Docker đang chạy. Mac M1 dùng image PostgreSQL
 hỗ trợ ARM64. Kiểm tra, chưa cài phần nào thì dùng trang chính thức:
 [Python](https://www.python.org/downloads/), [Docker Desktop](https://docs.docker.com/desktop/setup/install/mac-install/).
 
@@ -29,8 +29,8 @@ cp .env.example .env
 
 Nếu chưa có SSH key trên GitHub, có thể clone bằng HTTPS:
 `git clone https://github.com/tuantruong1368/yiedu.git yiedu-fresh` (chỉ chạy một cách clone).
-`requirements.lock` ghi phiên bản đã kiểm tra cho Python 3.12; không phải lock đa nền tảng có hash.
-Nếu cài bản Python khác, chọn Python 3.12 hoặc review và kiểm lại dependency.
+`requirements.lock` ghi phiên bản đã kiểm tra cho Python 3.15.1; không phải lock đa nền tảng có hash.
+Nếu cài bản Python khác, chọn Python 3.15.1 hoặc review và kiểm lại dependency.
 
 Mở `.env` trong VSCode. Thay ADMIN_API_KEY bằng chuỗi từ lệnh:
 
@@ -107,7 +107,7 @@ Không thêm `-v` nếu muốn giữ DB: tùy chọn đó sẽ xóa volume và d
   không xóa volume để “sửa nhanh” khi còn dữ liệu cần giữ.
 - `relation does not exist`: chạy `alembic upgrade head` với đúng DB.
 - `ModuleNotFoundError yiedu`: kích hoạt venv và cài editable package.
-- Python quá cũ: dùng Python 3.12, tạo lại venv bằng đúng interpreter.
+- Python quá cũ: dùng Python 3.15.1, tạo lại venv bằng đúng interpreter.
 
 Hoàn tất khi: Handbook mở được, health/ready trả 200, smoke PASS và anh giải thích được tenant/course vừa tạo.
 

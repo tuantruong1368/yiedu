@@ -10,3 +10,7 @@ site
 web/node_modules
 web/.next
 mobile/node_modules
+
+backups/
+
+.venv*/

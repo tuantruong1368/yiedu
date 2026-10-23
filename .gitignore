@@ -17,3 +17,7 @@ node_modules/
 test-results/
 playwright-report/
 *.tsbuildinfo
+
+backups/
+
+.venv*/

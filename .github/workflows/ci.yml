@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:17
+        image: postgres:18.6
         env:
           POSTGRES_DB: yiedu_test
           POSTGRES_USER: yiedu
@@ -23,14 +23,14 @@ jobs:
       API_INTERNAL_URL: http://127.0.0.1:8000
       NEXT_TELEMETRY_DISABLED: '1'
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
         with:
-          python-version: '3.12'
+          python-version: '3.15.1'
           cache: pip
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7.1.0
         with:
-          node-version: '24'
+          node-version: '26.12.1'
           cache: npm
           cache-dependency-path: web/package-lock.json
       - run: pip install -r requirements.lock
@@ -44,6 +44,7 @@ jobs:
       - run: alembic downgrade base
       - run: alembic upgrade head
       - run: pytest -q
+      - run: npm install --global npm@12.2.1
       - run: npm ci
         working-directory: web
       - run: npm run build
@@ -53,7 +54,7 @@ jobs:
       - run: nohup uvicorn yiedu.main:app --host 127.0.0.1 --port 8000 > /tmp/yiedu-api.log 2>&1 &
       - run: npm run test:e2e
         working-directory: web
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7.0.2
         if: always()
         with:
           name: browser-evidence
@@ -66,12 +67,13 @@ jobs:
       EXPO_OFFLINE: '1'
       EXPO_NO_TELEMETRY: '1'
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
-          node-version: '24'
+          node-version: '26.12.1'
           cache: npm
           cache-dependency-path: mobile/package-lock.json
+      - run: npm install --global npm@12.2.1
       - run: npm ci
         working-directory: mobile
       - run: npm run typecheck
@@ -81,11 +83,36 @@ jobs:
   compose:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7.0.1
       - run: python3 scripts/bootstrap.py
       - run: docker compose up --build -d
       - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:8000/health/ready
       - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:3000/ > /tmp/yiedu-home.html
+      - run: docker compose logs --tail 60
+        if: failure()
+      - run: docker compose down
+        if: always()
+  database-upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - run: python3 scripts/bootstrap.py
+      - run: docker compose -f compose.pg17.yaml up -d --wait db
+      - run: docker compose build migrate
+      - run: docker compose run --rm --no-deps migrate
+      - name: Seed PostgreSQL 17 migration probe
+        run: |
+          docker compose -f compose.pg17.yaml exec -T db sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB"' <<'SQL'
+          CREATE TABLE upgrade_probe (id integer PRIMARY KEY, payload text NOT NULL);
+          INSERT INTO upgrade_probe VALUES (1, 'YiEdu tiếng Việt — dữ liệu cũ');
+          SQL
+      - run: python3 scripts/upgrade_postgres.py
+      - name: Verify preserved data on PostgreSQL 18
+        run: |
+          docker compose exec -T db sh -c 'psql -X -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atc "SELECT payload FROM upgrade_probe WHERE id=1"' > /tmp/probe.txt
+          python3 -c 'from pathlib import Path; assert Path("/tmp/probe.txt").read_text().strip() == "YiEdu tiếng Việt — dữ liệu cũ"'
+      - run: docker compose up --build -d
+      - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:8000/health/ready
       - run: docker compose logs --tail 60
         if: failure()
       - run: docker compose down
