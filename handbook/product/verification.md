@@ -68,3 +68,19 @@ Screenshots local đã được xem để kiểm bố cục; CI upload browser e
 Lần CI đầu của 0.3 phát hiện smoke Compose gửi request trước API sẵn sàng (connection reset).
 Đã bổ sung API healthcheck, web đợi API healthy và curl retry các lỗi startup.
 Kết quả chạy lại được ghi sau khi workflow hoàn tất; không coi lần đầu là pass.
+
+
+## Kết quả CI 0.3 đã xác nhận
+
+[Workflow 39922082793](https://github.com/tuantruong1368/yiedu/actions/runs/39922082793)
+cho commit `de90a4d24b98f33b3e0ebeb1b2569bfaf46d2058` đã hoàn tất thành công:
+
+| Job | Bằng chứng |
+|---|---|
+| product | Lint/docs/contracts; PostgreSQL 17 upgrade/check/downgrade/upgrade; pytest; Next production build; Playwright owner → learner → ZIP |
+| compose | Build API/web images, DB/migration/API/web khởi động; API readiness và homepage HTTP smoke đạt |
+| mobile | npm ci, TypeScript và Expo export bundle Android/iOS đạt |
+
+Bằng chứng ảnh browser nằm trong artifact browser-evidence của workflow.
+Không đổi kết quả này thành UAT production hoặc test trên thiết bị thật. Phần full-product còn mở
+được ghi tại release-0.3.md và các issue #1–7; các issue đã được cập nhật trạng thái từng phần.
