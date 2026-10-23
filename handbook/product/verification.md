@@ -101,6 +101,16 @@ Kiểm tra local trên Python 3.15.1/Node 26.12.1/npm 12.2.1:
 - CI bổ sung job database-upgrade: seed tài khoản/tenant/builder/khóa học/lộ trình/tiến độ và UTF-8 trên PostgreSQL 17,
   backup/restore 18, kiểm đăng nhập cũ, JSONB và tiến độ qua API.
 
-Chưa có Docker daemon trong môi trường kiểm tra local của tác nhân; kết quả PostgreSQL/Compose/browser
-sẽ được ghi sau khi workflow GitHub hoàn tất. Không coi cấu hình job là bằng chứng job đã pass.
+CI cho commit `e152f3ec1579eedb12c9c29e52f922cc0ab2145c` đã hoàn tất: cả bốn job **success**.
+[Workflow](https://github.com/tuantruong1368/yiedu/actions/runs/40040024736):
+
+- `product`: Python 3.15.1/PostgreSQL 18.6, migration lên/xuống/lên, 20 pytest tests và browser journey pass.
+- `mobile`: Expo dependency check, TypeScript và bundle Android/iOS pass trên Node 26.12.1/npm 12.2.1.
+- `compose`: build image Python/Node mới, khởi động stack và kiểm tra API/web pass.
+- `database-upgrade`: seed tài khoản, tenant, JSONB builder, khóa học, bài học, lộ trình và tiến độ trên 17;
+  backup/restore sang 18; số dòng toàn bộ bảng khớp; đăng nhập cũ và dữ liệu học qua API pass.
+
+Không có Docker daemon trong môi trường kiểm tra local của tác nhân; bằng chứng Docker/PostgreSQL thật
+đến từ GitHub Actions Ubuntu x86_64. Có wheel Python 3.15 Linux ARM64 cho Psycopg/Pydantic/SQLAlchemy,
+nhưng chưa trực tiếp chạy bản nâng cấp trên Mac M1 của anh hoặc thiết bị mobile thật.
 Có cảnh báo upstream Starlette về httpx TestClient; chưa ảnh hưởng kết quả test.
