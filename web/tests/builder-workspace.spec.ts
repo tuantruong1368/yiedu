@@ -189,7 +189,23 @@ test("long course lists keep lesson editing visible and retain course context", 
   await expect(
     page.getByRole("textbox", { name: "Nội dung", exact: true }),
   ).toContainText("Preserved in full-page Studio");
-  await page.getByRole("link", { name: "Quản trị", exact: true }).click();
+  await page.locator('a[href*="/studio/slides/new"]').click();
+  await expect(page).toHaveURL(/\/studio\/slides\/new\?/);
+  await page
+    .getByLabel("Tên dự án", { exact: true })
+    .fill("A nested lesson slide deck");
+  await page.getByRole("button", { name: "Lưu", exact: true }).click();
+  await expect(page.getByRole("status")).toContainText("Đã lưu");
+  await page
+    .getByRole("link", { name: "Quay lại bài học", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/studio\/lesson\//);
+  await expect(
+    page.getByRole("textbox", { name: "Nội dung", exact: true }),
+  ).toContainText("Preserved in full-page Studio");
+  await page
+    .getByRole("link", { name: "Quay lại bài học", exact: true })
+    .click();
   await expect(
     page.locator('.lesson-workbench input[name="title"]'),
   ).toHaveValue("A new lesson in the same course");

@@ -33,6 +33,8 @@ nav:
 - Hồ sơ YiEdu:
   - Trạng thái: product/status.md
   - Triển khai 0.3: product/release-0.3.md
+  - Trải nghiệm 0.8: product/release-0.8.md
+  - CR-006 template Yoga và navigation: product/changes/CR-006-discovery-yoga-navigation.md
   - Website Studio 0.7: product/release-0.7.md
   - CR-005 render và workspaces: product/changes/CR-005-authoring-workspaces.md
   - Content Studio 0.6: product/release-0.6.md
@@ -67,6 +69,7 @@ nav:
   - Nghiên cứu: product/research.md
 - Hướng dẫn:
   - Cấu trúc dự án cho developer: guides/project-structure.md
+  - Template Yoga và điều hướng: guides/experience-yoga.md
   - Website Studio và bài học: guides/website-studio.md
   - Content Studio và SDK: guides/content-studio.md
   - Thư viện template: guides/template-library.md

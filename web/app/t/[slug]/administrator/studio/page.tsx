@@ -1,10 +1,11 @@
-import StudioScreen from "@/components/studio/studio-screen";
+import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
-export const metadata = { title: { absolute: "Content Studio" } };
 export default async function Page({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  return <StudioScreen slug={(await params).slug} />;
+  redirect(
+    `/t/${encodeURIComponent((await params).slug)}/administrator?tab=studio`,
+  );
 }

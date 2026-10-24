@@ -15,11 +15,16 @@ ROOT = Path(__file__).with_name("content")
 def library():
     modules = json.loads((ROOT / "modules.json").read_text())
     templates = json.loads((ROOT / "templates.json").read_text())
+    yoga = json.loads((ROOT / "yoga.json").read_text())
+    modules.extend(yoga["modules"])
+    templates.append(yoga["template"])
     sources = json.loads((ROOT / "sources.json").read_text())
+    groups = json.loads((ROOT / "template-groups.json").read_text())
     return {
         "modules": {x["id"]: x for x in modules},
         "templates": {x["id"]: x for x in templates},
         "sources": sources,
+        "groups": groups,
     }
 
 
@@ -62,6 +67,8 @@ def listing(items):
 
 def lessons_for(module_id):
     m = get_module(module_id)
+    if "lessons" in m:
+        return guided_lessons(m)
     labels = {
         "vi": [
             "Nguyên lý và cách hiểu",
@@ -194,6 +201,115 @@ def lessons_for(module_id):
     return result
 
 
+def guided_lessons(module):
+    """Original practice notes paired with attributed, externally hosted demonstrations."""
+    videos = json.loads((ROOT / "yoga.json").read_text())["videos"]
+    result = []
+    for index, item in enumerate(module["lessons"]):
+        video = videos[item["video"]]
+        versions = {}
+        for lang in ["vi", "en"]:
+            vi = lang == "vi"
+            nodes = [
+                heading(item["title"][lang]),
+                paragraph(item["focus"][lang]),
+                heading("Hướng dẫn thực hành" if vi else "Practice guide"),
+                listing(item["steps"][lang]),
+                heading("Chọn phiên bản phù hợp" if vi else "Choose a suitable option"),
+                paragraph(item["adapt"][lang]),
+                heading("Video hướng dẫn" if vi else "Video demonstration"),
+                paragraph(
+                    "Video tiếng Anh từ Yoga With Adriene; hướng dẫn chữ là bài biên soạn riêng, "
+                    "không phải bản dịch video. Có thể dừng và bỏ phần không phù hợp."
+                    if vi
+                    else "English-language video by Yoga With Adriene. "
+                    "The original written notes are "
+                    "not a video transcript. Pause or skip unsuitable sections."
+                ),
+                {
+                    "type": "youtube",
+                    "attrs": {
+                        "src": f"https://www.youtube.com/watch?v={video['id']}",
+                        "title": video["title"],
+                    },
+                },
+                {
+                    "type": "paragraph",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Yoga With Adriene · " + video["title"],
+                            "marks": [
+                                {
+                                    "type": "link",
+                                    "attrs": {"href": video["url"], "target": "_blank"},
+                                }
+                            ],
+                        }
+                    ],
+                },
+                heading("Tự kiểm tra" if vi else "Reflect and check"),
+                paragraph(item["question"][lang]),
+                heading("Gợi ý trả lời" if vi else "Reference answer"),
+                paragraph(item["answer"][lang]),
+                heading("Nhật ký sau buổi học" if vi else "Your practice log"),
+                paragraph(
+                    "Ghi ngày, phần đã chọn, điểm tựa, thời lượng thực tế và điều muốn điều chỉnh. "
+                    "Đánh dấu hoàn thành ghi tiến độ học, không chứng nhận kỹ thuật động tác."
+                    if vi
+                    else "Record the date, selected sections, support, actual duration "
+                    "and a change for next time. Completion records learning progress "
+                    "rather than physical technique."
+                ),
+            ]
+            if module["id"] == "yoga-foundations" and index == 0:
+                nodes[1:1] = [
+                    paragraph(
+                        "Nếu có chấn thương, bệnh nền, đang mang thai hoặc khó giữ thăng bằng, "
+                        "hãy hỏi chuyên viên y tế và người hướng dẫn phù hợp trước khi tập. "
+                        "Dừng khi đau, choáng hoặc khó thở. Đây là hướng dẫn vận động tổng quát."
+                        if vi
+                        else "Injuries, health conditions, pregnancy or balance difficulties "
+                        "require "
+                        "appropriate healthcare and instructor guidance before practice. "
+                        "Stop for pain, dizziness or breathing difficulty. "
+                        "This is general movement guidance."
+                    ),
+                    {
+                        "type": "paragraph",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "NCCIH · Yoga: Effectiveness and Safety",
+                                "marks": [
+                                    {
+                                        "type": "link",
+                                        "attrs": {
+                                            "href": "https://www.nccih.nih.gov/health/yoga-effectiveness-and-safety",
+                                            "target": "_blank",
+                                        },
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                ]
+            doc = validate_lesson_document({"type": "doc", "content": nodes})
+            versions[lang] = {
+                "title": item["title"][lang],
+                "document": doc,
+                "content": plain_text(doc),
+            }
+        result.append(
+            {
+                **versions["vi"],
+                "position": index,
+                "translations": {"en": versions["en"]},
+            }
+        )
+    return result
+
+
 def plain_text(node):
     if node.get("type") == "text":
         return node["text"]
@@ -207,6 +323,8 @@ def plain_text(node):
         )
     if node.get("type") == "simulation":
         return "[Mô phỏng tương tác trên web / Interactive simulation on web]"
+    if node.get("type") == "youtube":
+        return node["attrs"].get("title", "Video") + "\n" + node["attrs"]["src"]
     return "\n".join(filter(None, (plain_text(x) for x in node.get("content", []))))
 
 

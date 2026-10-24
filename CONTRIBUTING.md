@@ -130,3 +130,5 @@ không import code từ ZIP/URL tenant. Thêm UI phải có nhãn VI/EN và gi�
 Module Content Studio: đọc [hướng dẫn tác giả và SDK](handbook/guides/content-studio.md) trước khi sửa thư viện slide/video/mô phỏng, media snapshot hoặc nâng học liệu.
 
 Website Studio và bố cục khóa học/bài học: [hướng dẫn 0.7](handbook/guides/website-studio.md).
+
+Nhóm template, Yoga, video ngoài và điều hướng theo URL: [hướng dẫn 0.8](handbook/guides/experience-yoga.md).

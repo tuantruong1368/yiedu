@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   BookOpen,
   Plus,
@@ -30,6 +30,7 @@ export default function CourseWorkspace({
 }) {
   const { t, locale } = useI18n(),
     query = useSearchParams(),
+    router = useRouter(),
     base = `/runtime/${data.tenant.id}`;
   const [courseId, setCourseId] = useState(
       query.get("course") || data.courses[0]?.id || "",
@@ -83,7 +84,7 @@ export default function CourseWorkspace({
     );
   }
   function selectCourse(id: string) {
-    if (!canLeave()) return;
+    if (busy || !canLeave()) return;
     setDirty(false);
     setCourseId(id);
     setLessonId("");
@@ -94,7 +95,7 @@ export default function CourseWorkspace({
     address(id);
   }
   function selectLesson(id: string) {
-    if (!canLeave()) return;
+    if (busy || !canLeave()) return;
     setDirty(false);
     setCreating(false);
     setLessonId(id);
@@ -102,7 +103,7 @@ export default function CourseWorkspace({
     address(courseId, id);
   }
   function newLesson() {
-    if (!canLeave()) return;
+    if (busy || !canLeave()) return;
     setDirty(false);
     fingerprint.current = null;
     setLessonId("");
@@ -186,7 +187,14 @@ export default function CourseWorkspace({
       await onRefresh();
       setNotice(t("Đã lưu bài học.", "Lesson saved."));
       if (advanced)
-        location.assign(studioURL(data.tenant.slug, "lesson", row.id));
+        router.push(
+          studioURL(
+            data.tenant.slug,
+            "lesson",
+            row.id,
+            location.pathname + location.search,
+          ),
+        );
     } catch (e) {
       setError((e as Error).message);
     } finally {

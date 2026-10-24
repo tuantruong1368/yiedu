@@ -2,6 +2,7 @@ import { LocaleProvider } from "@/components/locale-provider";
 import { getLocale } from "@/lib/i18n/server";
 import type { Metadata } from "next";
 import "./globals.css";
+import "./experience.css";
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   return {

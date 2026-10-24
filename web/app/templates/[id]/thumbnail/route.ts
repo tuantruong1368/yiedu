@@ -30,7 +30,7 @@ export async function GET(
         "Content-Type": "text/html; charset=utf-8",
         "Cache-Control": "public, max-age=300",
         "Content-Security-Policy":
-          "default-src 'none'; style-src 'unsafe-inline'; img-src https: data:; frame-ancestors 'self'; base-uri 'none'; form-action 'none'",
+          "default-src 'none'; style-src 'unsafe-inline'; img-src 'self' https: data:; frame-ancestors 'self'; base-uri 'none'; form-action 'none'",
         "X-Content-Type-Options": "nosniff",
       },
     },

@@ -17,7 +17,7 @@ export default function TemplateLink({
   return (
     <div>
       <button
-        className="template-card template-select"
+        className="template-select"
         disabled={busy}
         onClick={async () => {
           setBusy(true);

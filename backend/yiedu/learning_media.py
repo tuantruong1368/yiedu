@@ -122,9 +122,21 @@ def presentation_for(module, locale, video=False):
         )
     add(
         "Bước tiếp theo" if vi else "Next step",
-        "Nộp cách chạy, đầu vào, kết quả và một trường hợp thất bại. Đọc nguồn gốc trong bài học."
-        if vi
-        else "Submit commands, inputs, results and one failure case. Read the lesson references.",
+        (
+            "Ghi lựa chọn thực hành, điểm tựa, thời lượng và cảm giác. "
+            "Xem video từ nguồn gốc trong bài học."
+            if vi
+            else "Record your practice choices, support, duration and observations. "
+            "See the original lesson video."
+        )
+        if module["id"].startswith("yoga-")
+        else (
+            "Nộp cách chạy, đầu vào, kết quả và một trường hợp thất bại. "
+            "Đọc nguồn gốc trong bài học."
+            if vi
+            else "Submit commands, inputs, results and one failure case. "
+            "Read the lesson references."
+        ),
         duration=10,
     )
     return {

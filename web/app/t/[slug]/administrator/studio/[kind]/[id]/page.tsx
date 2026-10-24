@@ -1,3 +1,4 @@
+import { publicApi } from "@/lib/api";
 import { notFound } from "next/navigation";
 import StudioScreen from "@/components/studio/studio-screen";
 export const dynamic = "force-dynamic";
@@ -13,5 +14,13 @@ export default async function Page({
     !(id === "new" || /^[a-f0-9-]{36}$/.test(id))
   )
     notFound();
-  return <StudioScreen slug={slug} kind={kind} projectId={id} />;
+  const site = await publicApi("/sites/" + encodeURIComponent(slug));
+  return (
+    <StudioScreen
+      slug={slug}
+      kind={kind}
+      projectId={id}
+      initialTenant={site?.tenant}
+    />
+  );
 }

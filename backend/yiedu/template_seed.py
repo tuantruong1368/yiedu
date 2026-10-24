@@ -62,8 +62,8 @@ def seed_template(db, tenant):
         "lesson_count": 4 * len(records),
         "path_count": 1 + len(t["semesters"]),
         "installed_at": datetime.now(UTC).isoformat(),
-        "review_status": "editorial-draft",
-        "content_depth": "compact-learning-units",
+        "review_status": t["review_status"],
+        "content_depth": t["content_depth"],
         "media_version": "2026.10.2",
         "studio_asset_count": seed_studio(db, tenant),
     }

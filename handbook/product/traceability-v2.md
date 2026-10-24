@@ -1,5 +1,11 @@
 # Truy vết yêu cầu v0.2
 
+Hiện hành: [trải nghiệm 0.8](release-0.8.md) và
+[CR-006](changes/CR-006-discovery-yoga-navigation.md) bổ sung AC-006-01–09 cho phân nhóm/hover,
+Yoga, preview, logo admin, Studio nhúng/Back, nhãn công cụ và ổn định điều hướng.
+Kiểm chứng: `test_template_library.py`, yoga integration, `experience.spec.ts`, các regression
+0.7, CI Compose asset HTTP và mobile bundle. Các bảng dưới giữ lịch sử đặc tả/triển khai.
+
 ID cũ FR-001–014 giữ nguyên. Bảng này liên kết phạm vi mới với backlog, AC và UAT.
 
 | FR | Tài liệu/AC | Backlog | Test | UAT | Triển khai |

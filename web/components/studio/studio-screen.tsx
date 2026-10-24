@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   BookOpen,
@@ -23,6 +23,8 @@ import {
   StudioAsset,
   studioURL,
 } from "@/lib/studio/types";
+import { tenantAdminURL, tenantReturnURL } from "@/lib/navigation";
+import StudioLibrary from "./studio-library";
 import { studioTools } from "@/lib/studio/registry";
 import {
   download,
@@ -41,15 +43,18 @@ export default function StudioScreen({
   slug,
   kind,
   projectId,
+  initialTenant,
 }: {
   slug: string;
   kind?: string;
   projectId?: string;
+  initialTenant?: any;
 }) {
   const { t, locale } = useI18n(),
-    router = useRouter(),
+    pathname = usePathname(),
     query = useSearchParams();
   const [overview, setOverview] = useState<any>(null),
+    [opening, setOpening] = useState(true),
     [assets, setAssets] = useState<StudioAsset[]>([]),
     [current, setCurrent] = useState<any>(null),
     [title, setTitle] = useState(""),
@@ -104,7 +109,14 @@ export default function StudioScreen({
     let cancelled = false;
     (async () => {
       setError("");
-      setOverview(null);
+      if (current?.id === projectId && overview?.tenant.slug === slug) {
+        setOpening(false);
+        return;
+      }
+      setOpening(true);
+      setOverview((previous: any) =>
+        previous?.tenant.slug === slug ? previous : null,
+      );
       setDirty(false);
       setDocs(null);
       setCurrent(null);
@@ -112,11 +124,23 @@ export default function StudioScreen({
       docFingerprint.current = null;
       setPreview(false);
       const [site, user] = await Promise.all([
-        api(`/sites/${slug}`),
+        initialTenant?.id
+          ? Promise.resolve({ tenant: initialTenant })
+          : api(`/sites/${slug}`),
         api("/auth/me"),
       ]);
-      const b = `/runtime/${site.tenant.id}`,
-        o = await api(`${b}/overview`);
+      const b = `/runtime/${site.tenant.id}`;
+      const [o, library, row] = await Promise.all([
+        api(`${b}/overview`),
+        api<StudioAsset[]>(`${b}/studio`),
+        kind && projectId !== "new"
+          ? api(
+              kind === "lesson"
+                ? `${b}/lessons/${projectId}`
+                : `${b}/studio/${projectId}`,
+            )
+          : Promise.resolve(null),
+      ]);
       if (!["owner", "admin", "instructor"].includes(o.role))
         throw new Error(
           t(
@@ -124,21 +148,23 @@ export default function StudioScreen({
             "Studio requires instructor or administrator access.",
           ),
         );
-      const library = await api<StudioAsset[]>(`${b}/studio`);
-      let row: any = null;
-      if (kind && projectId !== "new")
-        row = await api(
-          kind === "lesson"
-            ? `${b}/lessons/${projectId}`
-            : `${b}/studio/${projectId}`,
-        );
       if (row && kind !== "lesson" && row.kind !== kind)
         throw new Error(t("Sai loại dự án.", "Project kind mismatch."));
       if (cancelled) return;
       setOverview(o);
+      setOpening(false);
       setAssets(library);
       setCurrent(row);
-      setTitle(row?.title || t("Bài giảng mới", "New learning project"));
+      setTitle(
+        row?.title ||
+          (kind === "slides"
+            ? t("Bộ slide mới", "New slide deck")
+            : kind === "video"
+              ? t("Video bài giảng mới", "New lesson video")
+              : kind === "simulation"
+                ? t("Mô phỏng mới", "New simulation")
+                : t("Bài giảng mới", "New lesson")),
+      );
       setProject(
         kind && kind !== "lesson"
           ? row?.data || defaultProject(kind as ProjectKind)
@@ -155,7 +181,10 @@ export default function StudioScreen({
       const cached = localStorage.getItem(key);
       setDraft(cached ? JSON.parse(cached) : null);
     })().catch((e) => {
-      if (!cancelled) setError(e.message);
+      if (!cancelled) {
+        setError(e.message);
+        setOpening(false);
+      }
     });
     return () => {
       cancelled = true;
@@ -269,7 +298,10 @@ export default function StudioScreen({
       setDirty(false);
       setCurrent(row);
       setNotice(t("Đã lưu vào hệ thống.", "Saved to the server."));
-      if (projectId === "new") router.replace(studioURL(slug, kind, row.id));
+      if (projectId === "new") {
+        setDraftKey((key) => key.replace(/:new$/, `:${row.id}`));
+        history.replaceState(null, "", studioURL(slug, kind, row.id, returnTo));
+      }
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -317,23 +349,6 @@ export default function StudioScreen({
       ])
       .run();
   }
-  async function remove(asset: StudioAsset) {
-    if (
-      !confirm(
-        t(
-          "Xóa dự án? Các bản đã chèn trong bài học vẫn được giữ.",
-          "Delete project? Snapshots already embedded in lessons are kept.",
-        ),
-      )
-    )
-      return;
-    try {
-      await api(`${base}/studio/${asset.id}`, { method: "DELETE" });
-      setAssets((a) => a.filter((x) => x.id !== asset.id));
-    } catch (e) {
-      setError((e as Error).message);
-    }
-  }
   const lessonPreview = {
     ...current,
     id: current?.id || "draft",
@@ -347,16 +362,59 @@ export default function StudioScreen({
     video: Clapperboard,
     simulation: FlaskConical,
   };
+  const fallbackReturn =
+    kind === "lesson" && current?.course_id
+      ? `${tenantAdminURL(slug, "courses")}&course=${current.course_id}&lesson=${current.id}`
+      : tenantAdminURL(slug, "studio");
+  const returnTo = tenantReturnURL(slug, query.get("returnTo"), fallbackReturn);
+  const returnKind = /\/studio\/(lesson|slides|video|simulation)\//.exec(
+    returnTo.split("?")[0],
+  )?.[1];
+  const returnLabel =
+    returnKind === "video"
+      ? t("Quay lại video", "Back to video")
+      : returnKind === "slides"
+        ? t("Quay lại slide", "Back to slides")
+        : returnKind === "simulation"
+          ? t("Quay lại mô phỏng", "Back to simulation")
+          : returnKind === "lesson" || /[?&]tab=courses/.test(returnTo)
+            ? t("Quay lại bài học", "Back to lesson")
+            : t("Quay lại Studio", "Back to Studio");
+  const toolHref = (nextKind: string) =>
+    studioURL(
+      slug,
+      nextKind,
+      "new",
+      pathname + (query.size ? `?${query}` : ""),
+    );
   return (
     <div
+      onClickCapture={(event) => {
+        const link = (event.target as HTMLElement).closest("a[href]");
+        if (
+          dirty &&
+          link &&
+          !link.hasAttribute("download") &&
+          !link.getAttribute("href")?.startsWith("#") &&
+          !confirm(
+            t(
+              "Rời studio? Bản nháp trình duyệt vẫn được giữ.",
+              "Leave studio? Your browser draft is kept.",
+            ),
+          )
+        ) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      }}
       className={`studio-shell content-studio ${wide ? "studio-wide" : ""}`}
       aria-busy={saving}
       inert={saving}
     >
       <header className="studio-header">
         <div className="studio-identity">
-          {overview ? (
-            <TenantBrand tenant={overview.tenant} />
+          {overview || initialTenant ? (
+            <TenantBrand tenant={overview?.tenant || initialTenant} />
           ) : (
             <strong>Content Studio</strong>
           )}
@@ -367,27 +425,9 @@ export default function StudioScreen({
         </div>
         <div className="actions">
           <LocaleSwitch />
-          <Link
-            href={
-              kind === "lesson" && current?.course_id
-                ? `/t/${slug}/administrator?tab=courses&course=${current.course_id}&lesson=${current.id}`
-                : `/t/${slug}/administrator`
-            }
-            onClick={(e) => {
-              if (
-                dirty &&
-                !confirm(
-                  t(
-                    "Rời studio? Bản nháp trình duyệt vẫn được giữ.",
-                    "Leave studio? Your browser draft is kept.",
-                  ),
-                )
-              )
-                e.preventDefault();
-            }}
-          >
+          <Link href={returnTo} replace className="studio-return">
             <ArrowLeft size={16} />
-            {t("Quản trị", "Administration")}
+            {returnLabel}
           </Link>
         </div>
       </header>
@@ -397,169 +437,23 @@ export default function StudioScreen({
           {notice}
         </p>
       )}
-      {!overview ? (
+      {!overview || (opening && kind) ? (
         <>
           {!error ? (
             <Loading />
           ) : (
             <div className="empty">
-              <Link href={`/login?site=${slug}`} className="button">
+              <Link
+                href={`/login?site=${slug}&returnTo=${encodeURIComponent(pathname + (query.size ? `?${query}` : ""))}`}
+                className="button"
+              >
                 {t("Đăng nhập", "Sign in")}
               </Link>
             </div>
           )}
         </>
       ) : !kind ? (
-        <main className="studio-library">
-          <div className="studio-library-heading">
-            <span className="eyebrow">CONTENT WORKSPACE</span>
-            <h1>
-              {t(
-                "Từ ý tưởng đến bài giảng.",
-                "From an idea to a learning experience.",
-              )}
-            </h1>
-            <p>
-              {t(
-                "Soạn độc lập. Tái sử dụng trong nhiều bài học. Mọi nội dung thuộc hệ thống của bạn.",
-                "Create independently. Reuse in multiple lessons. Your content belongs to your academy.",
-              )}
-            </p>
-          </div>
-          <div className="studio-tool-grid">
-            <Link href={studioURL(slug, "lesson")} className="studio-tool-card">
-              <BookOpen />
-              <h2>{t("Bài giảng nâng cao", "Advanced lesson")}</h2>
-              <p>
-                {t(
-                  "Văn bản, toán học, bảng, slide, video và mô phỏng trong một bài học.",
-                  "Text, math, tables, slides, video and simulations in one lesson.",
-                )}
-              </p>
-              <span>+ {t("Soạn bài", "Compose lesson")}</span>
-            </Link>
-            {studioTools().map((tool) => {
-              const Icon = icons[tool.id];
-              return (
-                <Link
-                  key={tool.id}
-                  href={studioURL(slug, tool.id)}
-                  className={`studio-tool-card tool-${tool.id}`}
-                >
-                  <Icon />
-                  <h2>{tool.label[locale]}</h2>
-                  <p>{tool.description[locale]}</p>
-                  <span>+ {t("Tạo dự án", "Create project")}</span>
-                </Link>
-              );
-            })}
-          </div>
-          <div className="section-title">
-            <h2>
-              {t("Thư viện dự án", "Project library")}{" "}
-              <small>({assets.length})</small>
-            </h2>
-            <input
-              type="search"
-              aria-label={t("Tìm dự án", "Search projects")}
-              placeholder={t(
-                "Tên dự án, loại công cụ…",
-                "Project name, tool type…",
-              )}
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            />
-          </div>
-          <div className="studio-project-grid">
-            {assets
-              .filter((a) =>
-                `${a.title} ${a.kind} ${a.locale}`
-                  .toLowerCase()
-                  .includes(filter.toLowerCase()),
-              )
-              .map((a) => {
-                const Icon = icons[a.kind];
-                return (
-                  <article key={a.id}>
-                    <Icon />
-                    <small>
-                      {a.kind.toUpperCase()} · {a.locale.toUpperCase()} · v
-                      {a.revision}
-                    </small>
-                    <h3>
-                      <Link href={studioURL(slug, a.kind, a.id)}>
-                        {a.title}
-                      </Link>
-                    </h3>
-                    <div className="actions">
-                      <Link
-                        className="text-link"
-                        href={studioURL(slug, a.kind, a.id)}
-                      >
-                        {t("Mở dự án", "Open project")} ↗
-                      </Link>
-                      <button type="button" onClick={() => remove(a)}>
-                        {t("Xóa", "Delete")}
-                      </button>
-                    </div>
-                  </article>
-                );
-              })}
-          </div>
-          {!assets.length && (
-            <p>
-              {t(
-                "Chọn một công cụ phía trên để bắt đầu dự án đầu tiên.",
-                "Choose a tool above to create your first project.",
-              )}
-            </p>
-          )}
-          <section className="studio-lesson-library">
-            <h2>{t("Bài giảng trong hệ thống", "Lessons in your academy")}</h2>
-            <label>
-              {t("Lọc theo khóa học", "Filter by course")}
-              <select
-                value={filter.startsWith("course:") ? filter.slice(7) : ""}
-                onChange={(e) =>
-                  setFilter(e.target.value ? `course:${e.target.value}` : "")
-                }
-              >
-                <option value="">{t("Tất cả khóa học", "All courses")}</option>
-                {overview.courses.map((c: any) => (
-                  <option key={c.id} value={c.id}>
-                    {c.title}
-                  </option>
-                ))}
-              </select>
-            </label>
-            {overview.lessons
-              .filter((l: any) =>
-                filter.startsWith("course:")
-                  ? l.course_id === filter.slice(7)
-                  : true,
-              )
-              .slice(0, 200)
-              .map((l: any) => (
-                <Link
-                  className="studio-lesson-row"
-                  key={l.id}
-                  href={studioURL(slug, "lesson", l.id)}
-                >
-                  <BookOpen size={17} />
-                  <span>
-                    {l.title}
-                    <small>
-                      {
-                        overview.courses.find((c: any) => c.id === l.course_id)
-                          ?.title
-                      }
-                    </small>
-                  </span>
-                  <span>↗</span>
-                </Link>
-              ))}
-          </section>
-        </main>
+        <StudioLibrary overview={overview} />
       ) : (
         <>
           <div className="studio-command-bar">
@@ -766,11 +660,7 @@ export default function StudioScreen({
                   )}
                 </p>
                 {studioTools().map((tool) => (
-                  <Link
-                    key={tool.id}
-                    target="_blank"
-                    href={studioURL(slug, tool.id)}
-                  >
+                  <Link key={tool.id} href={toolHref(tool.id)}>
                     + {tool.label[locale]} ↗
                   </Link>
                 ))}

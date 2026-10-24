@@ -1,6 +1,10 @@
 # Content Studio 0.6 — hướng dẫn sử dụng và SDK
 
-Ngày 24/10/2026. [Phạm vi và giới hạn](../product/release-0.6.md).
+Ngày 24/10/2026.
+
+Cập nhật 0.8: [thư viện trong panel phải, Back theo ngữ cảnh và Yoga](experience-yoga.md).
+Chỉ editor công cụ mở full page; đường dẫn thư viện cũ chuyển về `?tab=studio`.
+ [Phạm vi và giới hạn](../product/release-0.6.md).
 Đây là khu vực tạo học liệu toàn màn hình, tách khỏi page builder thiết kế website.
 
 ## Cập nhật local, giữ dữ liệu
@@ -32,7 +36,7 @@ không phải hình minh họa khác với website sắp tạo. Nhấn ảnh đ�
 Menu và nút `data-template-link` dùng bảng ánh xạ page ID → slug. Đổi slug ở builder vẫn giữ liên kết.
 Các liên kết tương đối như `about.html`, `home`, `/p/roadmap` được ánh xạ tới trang đã có.
 Không tự tạo trang thiếu hoặc backend cho HTML được nhập từ website khác.
-Menu tenant vẫn hiện dạng cuộn ngang trên màn hình nhỏ. Nút học dẫn vào khu học tập;
+Menu tenant có nút mở/đóng trên màn hình nhỏ, dùng chung với template preview. Nút học dẫn vào khu học tập;
 người đang đăng nhập được tham gia tenant, người chưa đăng nhập có lựa chọn đăng nhập/đăng ký.
 
 ## Studio và bài giảng toàn màn hình
@@ -50,7 +54,7 @@ Vào `/t/<slug>/administrator` → **Studio nội dung**; hoặc mở
   Không tự ghi đè khi nhận lỗi 409. Tải lại và đối chiếu trước khi lưu bản nháp của mình.
 - Bản nháp trình duyệt được giữ theo user/tenant/project; có nút khôi phục hoặc bỏ.
   Bản nháp này không thay thế sao lưu trên server và không đồng bộ sang thiết bị khác.
-- Từ form bài học gọn, **Lưu và mở Studio toàn màn hình** lưu nội dung hiện tại trước khi mở.
+- Từ form bài học gọn, **Mở Studio toàn màn hình** lưu nội dung hiện tại trước khi mở.
 
 ## Ba thư viện độc lập
 

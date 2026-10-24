@@ -10,8 +10,8 @@ from yiedu.template_sites import site_document
 
 
 def test_library_curricula_and_documents():
-    assert len(catalog()) == 14
-    assert len(library()["modules"]) == 65
+    assert len(catalog()) == 15
+    assert len(library()["modules"]) == 69
     for template in catalog():
         document = validate_site(site_document(template["id"]))
         assert len(document["pages"]) == 5
@@ -48,3 +48,43 @@ def test_empty_course_translation_keeps_source_fallback():
         title="Source", slug="source", translations={"en": {"title": "", "description": " "}}
     )
     assert course.translations == {"en": {}}
+
+
+def test_groups_cover_every_template_and_yoga_has_attributed_tutorials():
+    groups = {g["id"] for g in library()["groups"]}
+    assert len(groups) == 7
+    assert set().union(*(set(t["group_ids"]) for t in catalog())) == groups
+    for item in catalog():
+        assert item["group_ids"] and set(item["group_ids"]) <= groups
+    yoga = library()["templates"]["yoga-studio"]
+    assert len(yoga["module_ids"]) == 4
+    seen = set()
+    for module in yoga["module_ids"]:
+        for lesson in lessons_for(module):
+            for version in [lesson, lesson["translations"]["en"]]:
+                assert len(version["content"]) > 1000
+                nodes = version["document"]["content"]
+                videos = [n for n in nodes if n["type"] == "youtube"]
+                assert len(videos) == 1
+                seen.add(videos[0]["attrs"]["src"])
+                assert "Yoga With Adriene" in version["content"]
+    assert len(seen) == 6
+
+
+def test_public_template_render_resolves_preview_links_and_validates_routes():
+    from fastapi.testclient import TestClient
+    from yiedu.main import app
+
+    client = TestClient(app)
+    response = client.get("/api/v1/catalog/templates/yoga-studio/render?page=programs")
+    assert response.status_code == 200
+    assert response.text.count('class="yd-course"') == 4
+    assert "/templates/yoga-studio?course=yoga-foundations#lessons" in response.text
+    assert "nonce-" in response.headers["content-security-policy"]
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert client.get("/api/v1/catalog/template-groups").status_code == 200
+    assert (
+        client.get("/api/v1/catalog/templates/yoga-studio/render?page=missing").status_code == 404
+    )
+    assert client.get("/api/v1/catalog/templates/missing/render").status_code == 404
+    assert client.get("/api/v1/catalog/templates/yoga-studio/render?locale=fr").status_code == 422

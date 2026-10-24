@@ -1,22 +1,27 @@
 "use client";
 import { useI18n, LocaleSwitch } from "./locale-provider";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, Layers3 } from "lucide-react";
 import { api } from "@/lib/api";
+import { tenantReturnURL } from "@/lib/navigation";
 import { Brand, ErrorBox } from "./shared";
 export default function AuthScreen({
   register = false,
   template = "academy",
   site = "",
   course = "",
+  returnTo = "",
 }: {
   register?: boolean;
   template?: string;
   site?: string;
   course?: string;
+  returnTo?: string;
 }) {
   const { t: tr } = useI18n();
+  const router = useRouter();
 
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -38,13 +43,16 @@ export default function AuthScreen({
         await api("/sites/" + encodeURIComponent(site) + "/join", {
           method: "POST",
         });
-        location.href =
+        const destination =
           "/t/" +
           site +
           "/learn" +
           (course ? "?course=" + encodeURIComponent(course) : "");
+        router.replace(
+          returnTo ? tenantReturnURL(site, returnTo, destination) : destination,
+        );
       } else
-        location.href = "/dashboard?template=" + encodeURIComponent(template);
+        router.replace("/dashboard?template=" + encodeURIComponent(template));
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);
@@ -54,7 +62,8 @@ export default function AuthScreen({
     "?template=" +
     encodeURIComponent(template) +
     (site ? "&site=" + encodeURIComponent(site) : "") +
-    (course ? "&course=" + encodeURIComponent(course) : "");
+    (course ? "&course=" + encodeURIComponent(course) : "") +
+    (returnTo ? "&returnTo=" + encodeURIComponent(returnTo) : "");
   return (
     <main className="auth-layout">
       <div className="auth-language">

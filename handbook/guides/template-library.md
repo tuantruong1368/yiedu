@@ -1,6 +1,6 @@
-# Thư viện template và học liệu 0.5
+# Thư viện template và học liệu — cập nhật 0.8
 
-Thư viện gồm 14 website khởi tạo có 5 trang Việt/Anh: trang chủ, chương trình, lộ trình,
+Thư viện gồm 15 website khởi tạo có 5 trang Việt/Anh: trang chủ, chương trình, lộ trình,
 dự án và giới thiệu. Giao diện dùng SiteDocument/GrapesJS nên tenant chỉnh sửa tiếp được.
 Yirobot lấy cảm hứng từ bản demo Learn · Build · Share: sắc tím, robot CSS, bản đồ năng lực,
 lab và portfolio. Các mẫu doanh nghiệp, giáo viên, ngoại ngữ, phần mềm có bố cục hero riêng.
@@ -23,11 +23,15 @@ lab và portfolio. Các mẫu doanh nghiệp, giáo viên, ngoại ngữ, phần
 | university-engineering | Engineering Foundation | 4 | 16 | 0 |
 | data-ai | Data Observatory | 3 | 12 | 0 |
 | design-school | Form & Function | 3 | 12 | 0 |
+| yoga-studio | An Nhiên Yoga | 4 | 16 | 0 |
+
+[Nhóm template, preview mới và Yoga](experience-yoga.md) mô tả bản 0.8.
 
 ## Nội dung và giới hạn
 
-65 chuyên đề gốc, mỗi chuyên đề gồm 4 bài có bản Việt/Anh: nguyên lý, ví dụ có lời giải,
-thực hành/sản phẩm và tự đánh giá/đáp án. Tổng cộng 260 bài duy nhất; các template tái sử dụng
+69 chuyên đề gốc, gồm 65 chuyên đề kỹ năng và 4 chuyên đề Yoga.
+65 chuyên đề kỹ năng có 4 bài Việt/Anh: nguyên lý, ví dụ có lời giải,
+thực hành/sản phẩm và tự đánh giá/đáp án. Cùng 16 bài Yoga, tổng cộng 276 bài duy nhất; các template tái sử dụng
 chuyên đề phù hợp. Ví dụ Python có output và kiểm thử thực thi. Một số bài có mô phỏng web.
 Thời lượng là gợi ý lập kế hoạch, chưa được kiểm chứng qua lớp học thực tế.
 
@@ -83,7 +87,7 @@ có giới hạn phi thương mại; liên kết đọc không cấp quyền sao
 
 Tenant cũ không tự được chèn hoặc thay thế khóa học. Để thử thư viện mới, tạo website mới từ mẫu.
 Xuất bản lại chỉ cập nhật giao diện và thương hiệu, không chép lại học liệu hoặc ghi đè bài đã sửa.
-Snapshot mới dùng schema 0004; restore vẫn nhận 0002/0003 và mặc định metadata rỗng.
+Snapshot hiện tại dùng schema 0005, gồm cả Studio assets; restore vẫn nhận các schema trước theo contract hiện hành.
 
 ## Developer
 

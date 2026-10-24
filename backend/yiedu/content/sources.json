@@ -158,5 +158,61 @@
     "usage": "reading-link-only",
     "notes": "External writing guidance",
     "checked_on": "2026-10-24"
+  },
+  "yoga-safety": {
+    "id": "yoga-safety",
+    "title": "NCCIH · Yoga: Effectiveness and Safety",
+    "url": "https://www.nccih.nih.gov/health/yoga-effectiveness-and-safety",
+    "usage": "reading-link-only",
+    "notes": "General safety reference; not an individual clinical assessment",
+    "checked_on": "2026-10-24"
+  },
+  "yoga-beginner": {
+    "id": "yoga-beginner",
+    "title": "Yoga With Adriene · Yoga For Complete Beginners",
+    "url": "https://yogawithadriene.com/yoga-complete-beginners/",
+    "usage": "official-video-embed-and-source-link",
+    "notes": "English-language external video. Copyright remains with the creator; not downloaded or redistributed. Availability and captions depend on the provider.",
+    "checked_on": "2026-10-24"
+  },
+  "yoga-short": {
+    "id": "yoga-short",
+    "title": "Yoga With Adriene · 10-Minute Yoga for Beginners",
+    "url": "https://yogawithadriene.com/10-minute-yoga-for-beginners/",
+    "usage": "official-video-embed-and-source-link",
+    "notes": "English-language external video. Copyright remains with the creator; not downloaded or redistributed. Availability and captions depend on the provider.",
+    "checked_on": "2026-10-24"
+  },
+  "yoga-mountain": {
+    "id": "yoga-mountain",
+    "title": "Yoga With Adriene · Tadasana (Mountain Pose)",
+    "url": "https://yogawithadriene.com/tadasana-mountain-pose/",
+    "usage": "official-video-embed-and-source-link",
+    "notes": "English-language external video. Copyright remains with the creator; not downloaded or redistributed. Availability and captions depend on the provider.",
+    "checked_on": "2026-10-24"
+  },
+  "yoga-catcow": {
+    "id": "yoga-catcow",
+    "title": "Yoga With Adriene · Cat-Cow Pose",
+    "url": "https://yogawithadriene.com/cat-cow-pose/",
+    "usage": "official-video-embed-and-source-link",
+    "notes": "English-language external video. Copyright remains with the creator; not downloaded or redistributed. Availability and captions depend on the provider.",
+    "checked_on": "2026-10-24"
+  },
+  "yoga-chair": {
+    "id": "yoga-chair",
+    "title": "Yoga With Adriene · Chair Yoga",
+    "url": "https://yogawithadriene.com/chair-yoga/",
+    "usage": "official-video-embed-and-source-link",
+    "notes": "English-language external video. Copyright remains with the creator; not downloaded or redistributed. Availability and captions depend on the provider.",
+    "checked_on": "2026-10-24"
+  },
+  "yoga-rest": {
+    "id": "yoga-rest",
+    "title": "Yoga With Adriene · 10-Minute Yoga For Self Care",
+    "url": "https://yogawithadriene.com/10-minute-yoga-for-self-care/",
+    "usage": "official-video-embed-and-source-link",
+    "notes": "English-language external video. Copyright remains with the creator; not downloaded or redistributed. Availability and captions depend on the provider.",
+    "checked_on": "2026-10-24"
   }
 }

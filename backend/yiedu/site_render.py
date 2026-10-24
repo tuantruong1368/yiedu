@@ -101,11 +101,13 @@ RUNTIME = r"""(()=>{
 })();"""
 
 
-def page_href(page, slug):
+def page_href(page, slug, page_base=None):
+    if page_base:
+        return page_base + page["id"]
     return f"/t/{slug}" + (f"/p/{page['slug']}" if page["slug"] else "")
 
 
-def resolve_link(href, pages, slug, root=None, source_locale="vi"):
+def resolve_link(href, pages, slug, root=None, source_locale="vi", page_base=None):
     if not isinstance(href, str):
         return ""
     if href.startswith("#"):
@@ -115,7 +117,7 @@ def resolve_link(href, pages, slug, root=None, source_locale="vi"):
         for page in pages:
             source = page.get(source_locale, {}).get("html", "")
             if any(node.attrs.get("id") == key for node in Fragment(source).root.walk()):
-                return page_href(page, slug) + href
+                return page_href(page, slug, page_base) + href
         return href
     if not href or href.startswith("https://"):
         return href
@@ -127,13 +129,15 @@ def resolve_link(href, pages, slug, root=None, source_locale="vi"):
         None,
     )
     if page:
-        return page_href(page, slug) + ("#" + url.fragment if url.fragment else "")
+        return page_href(page, slug, page_base) + ("#" + url.fragment if url.fragment else "")
     if url.path in {"/login", "/register"}:
         return url.path + "?" + urlencode({"site": slug})
     return href
 
 
-def render_site(document, courses, slug, page_slug="", locale="vi"):
+def render_site(
+    document, courses, slug, page_slug="", locale="vi", page_base=None, course_base=None
+):
     """Inputs must already have passed SiteDocument validation and published-course filtering."""
     page = next((p for p in document["pages"] if p["slug"] == page_slug), None)
     if page is None:
@@ -153,19 +157,21 @@ def render_site(document, courses, slug, page_slug="", locale="vi"):
                 None,
             )
             if target:
-                attrs["href"] = page_href(target, slug)
+                attrs["href"] = page_href(target, slug, page_base)
         if "href" in attrs:
-            attrs["href"] = resolve_link(attrs["href"], document["pages"], slug, root, lang)
+            attrs["href"] = resolve_link(
+                attrs["href"], document["pages"], slug, root, lang, page_base
+            )
         if attrs.get("data-action") == "navigate":
             attrs["data-target"] = resolve_link(
-                attrs.get("data-target", ""), document["pages"], slug, root, lang
+                attrs.get("data-target", ""), document["pages"], slug, root, lang, page_base
             )
         if "data-events" in attrs:
             events = json.loads(attrs["data-events"] or "[]")
             for event in events:
                 if event.get("action") == "navigate":
                     event["target"] = resolve_link(
-                        event.get("target", ""), document["pages"], slug, root, lang
+                        event.get("target", ""), document["pages"], slug, root, lang, page_base
                     )
             attrs["data-events"] = json.dumps(events)
         if attrs.get("data-gadget") != "yiedu.courses":
@@ -189,9 +195,12 @@ def render_site(document, courses, slug, page_slug="", locale="vi"):
         grid = Element("div", [("class", "yd-course-grid")])
         for course in courses[:limit]:
             translated = {**course, **course.get("translations", {}).get(lang, {})}
-            link = Element(
-                "a", [("class", "yd-course"), ("href", f"/t/{slug}/learn?course={course['id']}")]
+            href = (
+                (course_base + course["id"] + "#lessons")
+                if course_base
+                else f"/t/{slug}/learn?course={course['id']}"
             )
+            link = Element("a", [("class", "yd-course"), ("href", href)])
             for tag, text in [
                 ("h3", translated["title"]),
                 ("p", translated.get("description", "")),
@@ -206,7 +215,7 @@ def render_site(document, courses, slug, page_slug="", locale="vi"):
         )
         wrap.children.append(grid)
     nonce = secrets.token_urlsafe(18)
-    csp = f"default-src 'none'; img-src https: data:; media-src https:; style-src 'unsafe-inline'; script-src 'nonce-{nonce}'; font-src https: data:; form-action 'none'; base-uri 'none'"
+    csp = f"default-src 'none'; img-src 'self' https: data:; media-src https:; style-src 'unsafe-inline'; script-src 'nonce-{nonce}'; font-src 'self' https: data:; form-action 'none'; base-uri 'none'"
     css = source.get("css", "").replace("<", "\\3c ")
     title = escape(page["title"].get(lang) or document["branding"]["text"])
     html = f'<!doctype html><html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title><style>html,body{{margin:0;min-height:0}}{css}</style></head><body>{root.html()}<script nonce="{nonce}">{RUNTIME}</script></body></html>'

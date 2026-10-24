@@ -102,7 +102,7 @@ test("actual template previews, all tenant menus, independent studio tools and l
     .getByRole("textbox", { name: "Nội dung trang/cảnh", exact: true })
     .fill("Predict first. Run the experiment. Explain the evidence.");
   await page.getByRole("button", { name: "Lưu", exact: true }).click();
-  await expect(page).not.toHaveURL(/\/new$/);
+  await expect(page).not.toHaveURL(/\/new(?:\?|$)/);
   await page.reload();
   await expect(
     page.getByLabel("Tiêu đề trang/cảnh", { exact: true }),
@@ -116,7 +116,7 @@ test("actual template previews, all tenant menus, independent studio tools and l
   await page.getByLabel("Loại mô phỏng").selectOption("pid");
   await page.getByLabel("Hệ số P", { exact: true }).press("End");
   await page.getByRole("button", { name: "Lưu", exact: true }).click();
-  await expect(page).not.toHaveURL(/\/new$/);
+  await expect(page).not.toHaveURL(/\/new(?:\?|$)/);
   await page.reload();
   await expect(page.getByLabel("Hệ số P", { exact: true })).toHaveValue("8");
   await page.goto(studio + "/video/new");
@@ -135,7 +135,7 @@ test("actual template previews, all tenant menus, independent studio tools and l
   const { stat } = await import("node:fs/promises");
   expect((await stat(videoPath!)).size).toBeGreaterThan(1000);
   await page.getByRole("button", { name: "Lưu", exact: true }).click();
-  await expect(page).not.toHaveURL(/\/new$/);
+  await expect(page).not.toHaveURL(/\/new(?:\?|$)/);
   await page.goto(`/t/${slug}/administrator`);
   await page.getByRole("button", { name: "Khóa học", exact: true }).click();
   await page
@@ -149,7 +149,7 @@ test("actual template previews, all tenant menus, independent studio tools and l
     .getByRole("textbox", { name: "Nội dung", exact: true })
     .fill("Explain the model before trying the controls.");
   await page.getByRole("button", { name: /Mở Studio toàn màn hình/ }).click();
-  await expect(page).toHaveURL(/\/studio\/lesson\/[a-f0-9-]+$/);
+  await expect(page).toHaveURL(/\/studio\/lesson\/[a-f0-9-]+(?:\?|$)/);
   await expect(page.getByLabel("Tên dự án", { exact: true })).toHaveValue(
     "Learning with real media",
   );

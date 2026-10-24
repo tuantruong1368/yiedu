@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Source, SitePage, esc, sanitizeImport } from "@/lib/authoring/site";
 import { pageHref, resolveSiteHref } from "@/lib/authoring/navigation";
 const NO_PAGES: SitePage[] = [];
@@ -14,6 +15,7 @@ export default function SiteRuntime({
   pages = NO_PAGES,
   frameUrl,
   onNavigate,
+  viewport = false,
 }: {
   source: Source;
   courses: any[];
@@ -24,7 +26,9 @@ export default function SiteRuntime({
   pages?: SitePage[];
   frameUrl?: string;
   onNavigate?: (href: string) => void;
+  viewport?: boolean;
 }) {
+  const router = useRouter();
   const frame = useRef<HTMLIFrameElement>(null),
     [doc, setDoc] = useState(""),
     [height, setHeight] = useState(600);
@@ -35,9 +39,6 @@ export default function SiteRuntime({
   const ready = useRef(false),
     navigateRef = useRef(onNavigate);
   navigateRef.current = onNavigate;
-  useEffect(() => {
-    setEpoch((n) => n + 1);
-  }, []);
   useEffect(() => {
     ready.current = false;
     setStatus("loading");
@@ -162,7 +163,11 @@ export default function SiteRuntime({
         ready.current = true;
         setStatus("ready");
       }
-      if (e.data.type === "height" && Number.isFinite(e.data.height))
+      if (
+        !viewport &&
+        e.data.type === "height" &&
+        Number.isFinite(e.data.height)
+      )
         setHeight(Math.min(60000, Math.max(200, e.data.height)));
       if (e.data.type === "navigate" && typeof e.data.href === "string") {
         const href = e.data.href;
@@ -171,6 +176,7 @@ export default function SiteRuntime({
           !/[\\\x00-\x20]/.test(href)
         ) {
           if (navigateRef.current) navigateRef.current(href);
+          else if (href.startsWith("/")) router.push(href);
           else location.assign(href);
         }
       }
@@ -185,7 +191,7 @@ export default function SiteRuntime({
       window.removeEventListener("message", receive);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [viewport, router]);
   return (
     <>
       <iframe
@@ -212,7 +218,7 @@ export default function SiteRuntime({
         sandbox="allow-scripts"
         referrerPolicy="no-referrer"
         className="tenant-canvas"
-        style={{ height }}
+        style={{ height: viewport ? "100%" : height }}
       />
       {status === "error" && (
         <div className="site-render-error" role="alert">

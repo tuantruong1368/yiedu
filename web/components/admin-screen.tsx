@@ -1,12 +1,14 @@
 "use client";
 import { useI18n } from "./locale-provider";
 import { studioURL } from "@/lib/studio/types";
+import StudioLibrary from "./studio/studio-library";
+import { tenantAdminURL } from "@/lib/navigation";
 import { Library } from "lucide-react";
 import CourseWorkspace from "./course-workspace";
 import { useSearchParams } from "next/navigation";
 import { TenantBrand } from "./tenant-brand";
 import { LocaleSwitch } from "./locale-provider";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   BookOpen,
@@ -36,14 +38,21 @@ const tabs = [
   ["export", "Xuất hệ thống", Download],
   ["updates", "Cập nhật", RefreshCw],
 ] as const;
-export default function AdminScreen({ slug }: { slug: string }) {
+export default function AdminScreen({
+  slug,
+  initialTenant,
+}: {
+  slug: string;
+  initialTenant?: any;
+}) {
   const { t: tr, locale } = useI18n();
   const query = useSearchParams();
+  const tab = tabs.some(([id]) => id === query.get("tab"))
+    ? query.get("tab")!
+    : "overview";
+  const tabURLs = useRef<Record<string, string>>({});
 
   const [data, setData] = useState<any>(null),
-    [tab, setTab] = useState(
-      query.get("tab") === "courses" ? "courses" : "overview",
-    ),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
@@ -51,9 +60,11 @@ export default function AdminScreen({ slug }: { slug: string }) {
     [pathCourses, setPathCourses] = useState<string[]>([]),
     [pathEdit, setPathEdit] = useState<any>(null),
     [contentDirty, setContentDirty] = useState(false);
-  const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
+  const [tenant, setTenant] = useState<any>(
+    initialTenant || { slug, name: slug, branding: {} },
+  );
   async function refresh() {
-    const site = await api("/sites/" + slug);
+    const site = tenant.id ? { tenant } : await api("/sites/" + slug);
     setTenant(site.tenant);
     const d = await api("/runtime/" + site.tenant.id + "/overview");
     setData(d);
@@ -63,6 +74,29 @@ export default function AdminScreen({ slug }: { slug: string }) {
     refresh().catch((e) => setError(e.message));
     api<any[]>("/catalog/extensions").then(setCatalog);
   }, [slug]);
+  function openTab(id: string) {
+    const currentTab =
+      new URLSearchParams(location.search).get("tab") || "overview";
+    if (id === currentTab) return;
+    if (
+      contentDirty &&
+      !confirm(
+        tr(
+          "Bài học chưa lưu. Rời phần biên tập?",
+          "This lesson has unsaved changes. Leave the editor?",
+        ),
+      )
+    )
+      return;
+    tabURLs.current[currentTab] = location.pathname + location.search;
+    history.pushState(
+      null,
+      "",
+      tabURLs.current[id] || tenantAdminURL(slug, id),
+    );
+    setError("");
+    setNotice("");
+  }
   const base = data ? "/runtime/" + data.tenant.id : "";
   async function action(fn: () => Promise<any>, message: string) {
     setBusy(true);
@@ -86,24 +120,91 @@ export default function AdminScreen({ slug }: { slug: string }) {
   }
   if (!data)
     return (
-      <>
-        <header className="topbar">
-          <TenantBrand tenant={data?.tenant || tenant} />
-          <Link href="/dashboard">{tr("Về dashboard")}</Link>
-        </header>
-        <ErrorBox message={error} />
-        {error ? (
-          <div className="empty">
-            <h2>{tr("Chưa thể mở trang quản trị")}</h2>
-            <p>{tr("Đăng nhập bằng tài khoản có quyền của tenant.")}</p>
-            <Link className="button" href="/login">
-              {tr("Đăng nhập")}
-            </Link>
+      <div className="admin-layout" aria-busy={!error}>
+        <aside className="sidebar">
+          <TenantBrand tenant={tenant} />
+          <div className="tenant-role-label">
+            <span className="status-dot" />
+            <div>
+              <b>{tr("Không gian đào tạo", "Learning workspace")}</b>
+              <small>{tr("Đang mở không gian…", "Opening workspace…")}</small>
+            </div>
           </div>
-        ) : (
-          <Loading />
-        )}
-      </>
+          <span className="nav-caption">{tr("KHÔNG GIAN QUẢN TRỊ")}</span>
+          <nav>
+            {tabs.map(([id, label, Icon]) => (
+              <button
+                type="button"
+                key={id}
+                className={id === tab ? "active" : ""}
+                disabled
+              >
+                <Icon size={18} />
+                {tr(label)}
+              </button>
+            ))}
+          </nav>
+          <div className="sidebar-bottom">
+            <Link href="/dashboard">{tr("Không gian của tôi")}</Link>
+          </div>
+        </aside>
+        <div className="admin-main">
+          <header className="admin-top">
+            <span>
+              {tenant.name}
+              <ChevronRight size={13} />
+              {tr(tabs.find((x) => x[0] === tab)?.[1] || "")}
+            </span>
+            <LocaleSwitch />
+          </header>
+          <main className="admin-content">
+            <div className="page-heading">
+              <div>
+                <span className="eyebrow">{tr("QUẢN TRỊ HỆ THỐNG")}</span>
+                <h1>
+                  {tr(tabs.find((x) => x[0] === tab)?.[1] || "")}
+                  <span className="brand-dot">.</span>
+                </h1>
+              </div>
+            </div>
+            <ErrorBox message={error} />
+            {error ? (
+              <div className="empty">
+                <h2>{tr("Chưa thể mở trang quản trị")}</h2>
+                <p>{tr("Đăng nhập bằng tài khoản có quyền của tenant.")}</p>
+                <div className="actions">
+                  <button
+                    type="button"
+                    className="button ghost"
+                    onClick={() => {
+                      setError("");
+                      refresh().catch((e) => setError(e.message));
+                    }}
+                  >
+                    {tr("Thử lại", "Try again")}
+                  </button>
+                  <Link
+                    className="button"
+                    href={`/login?site=${slug}&returnTo=${encodeURIComponent(`/t/${slug}/administrator${query.size ? `?${query}` : ""}`)}`}
+                  >
+                    {tr("Đăng nhập")}
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="admin-panel-skeleton"
+                role="status"
+                aria-label={tr("Đang tải không gian của bạn…")}
+              >
+                <div />
+                <div />
+                <div />
+              </div>
+            )}
+          </main>
+        </div>
+      </div>
     );
   if (!["owner", "admin", "instructor"].includes(data.role))
     return (
@@ -118,13 +219,24 @@ export default function AdminScreen({ slug }: { slug: string }) {
     <div className="admin-layout">
       <aside className="sidebar">
         <TenantBrand tenant={data?.tenant || tenant} />
-        <div className="tenant-label">
-          <span style={{ background: data.tenant.branding.color || "#215d4c" }}>
-            {data.tenant.name[0]}
-          </span>
+        <div className="tenant-role-label">
+          <span className="status-dot" />
           <div>
-            <b>{data.tenant.name}</b>
-            <small>{data.role.toUpperCase()}</small>
+            <b>{tr("Không gian đào tạo", "Learning workspace")}</b>
+            <small>
+              {tr(
+                data.role === "instructor"
+                  ? "Giảng viên"
+                  : data.role === "owner"
+                    ? "Chủ hệ thống"
+                    : "Quản trị viên",
+                data.role === "instructor"
+                  ? "Instructor"
+                  : data.role === "owner"
+                    ? "Owner"
+                    : "Administrator",
+              )}
+            </small>
           </div>
         </div>
         <span className="nav-caption">{tr("KHÔNG GIAN QUẢN TRỊ")}</span>
@@ -139,31 +251,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
               <button
                 key={id}
                 className={tab === id ? "active" : ""}
-                onClick={() => {
-                  if (
-                    contentDirty &&
-                    id !== tab &&
-                    !confirm(
-                      tr(
-                        "Bài học chưa lưu. Rời phần biên tập?",
-                        "This lesson has unsaved changes. Leave the editor?",
-                      ),
-                    )
-                  )
-                    return;
-                  if (id === "studio") {
-                    location.assign(studioURL(slug));
-                    return;
-                  }
-                  setTab(id);
-                  window.history.replaceState(
-                    null,
-                    "",
-                    `/t/${slug}/administrator${id === "courses" ? "?tab=courses" : ""}`,
-                  );
-                  setError("");
-                  setNotice("");
-                }}
+                onClick={() => openTab(id)}
               >
                 <Icon size={18} />
                 {tr(label)}
@@ -197,7 +285,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
           </div>
         </header>
         <main
-          className={`admin-content ${tab === "courses" ? "admin-courses-content" : ""}`}
+          className={`admin-content ${tab === "courses" ? "admin-courses-content" : tab === "studio" ? "admin-studio-content" : ""}`}
         >
           <div className="page-heading">
             <div>
@@ -226,6 +314,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
               {notice}
             </div>
           )}
+          {tab === "studio" && <StudioLibrary overview={data} />}
           {tab === "overview" && (
             <>
               <div className="stats-row">
@@ -303,17 +392,17 @@ export default function AdminScreen({ slug }: { slug: string }) {
                   {tr("Mở Studio nội dung", "Open Content Studio")} ↗
                 </Link>
                 <div className="quick-actions">
-                  <button onClick={() => setTab("courses")}>
+                  <button onClick={() => openTab("courses")}>
                     <BookOpen />
                     <b>{tr("Tạo bài học đầu tiên")}</b>
                     <span>{tr("Chia sẻ điều bạn biết với học viên.")}</span>
                   </button>
-                  <button onClick={() => setTab("paths")}>
+                  <button onClick={() => openTab("paths")}>
                     <Route />
                     <b>{tr("Thiết kế một lộ trình")}</b>
                     <span>{tr("Đưa học viên đi từng bước rõ ràng.")}</span>
                   </button>
-                  <button onClick={() => setTab("extensions")}>
+                  <button onClick={() => openTab("extensions")}>
                     <Puzzle />
                     <b>{tr("Mở rộng khả năng")}</b>
                     <span>{tr("Kích hoạt tiện ích cho hệ thống.")}</span>
@@ -617,7 +706,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
               <span className="feature-icon">
                 <RefreshCw />
               </span>
-              <span className="pill">CORE 0.7.0</span>
+              <span className="pill">CORE 0.8.0</span>
               <h2>{tr("Cập nhật có kiểm soát.")}</h2>
               <p>
                 {tr(

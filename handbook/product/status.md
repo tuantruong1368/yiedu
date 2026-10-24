@@ -1,6 +1,10 @@
 # Trạng thái thực tế YiEdu
 
-Cập nhật bản 0.7.0: [Website Studio, render và course workspace](release-0.7.md).
+Cập nhật bản 0.8.0: [template, Yoga và điều hướng](release-0.8.md).
+15 mẫu/7 nhóm, 16 bài Yoga VI/EN, Studio nhúng, Back theo ngữ cảnh và video theo yêu cầu.
+Không thêm migration hoặc đổi dữ liệu tenant. [Hướng dẫn](../guides/experience-yoga.md).
+
+Bản 0.7.0: [Website Studio, render và course workspace](release-0.7.md).
 Không thêm migration hoặc thay nội dung tenant. [Hướng dẫn](../guides/website-studio.md).
 
 Bản 0.6.0: [Content Studio và template website](release-0.6.md).

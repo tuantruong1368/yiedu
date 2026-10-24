@@ -60,7 +60,7 @@ def create_export(db, tenant):
     files = {"snapshot.json": data}
     root = Path(__file__).resolve().parents[2]
     # Explicit allowlist. No .env, git history, uploaded data or node_modules.
-    for base in ["backend", "web", "scripts"]:
+    for base in ["backend", "web", "mobile", "scripts"]:
         for path in (root / base).rglob("*"):
             relative = path.relative_to(root)
             if path.is_file() and not any(
@@ -83,6 +83,7 @@ def create_export(db, tenant):
                     ".css",
                     ".mjs",
                     ".mako",
+                    ".svg",
                 } or path.name in {"Dockerfile", ".dockerignore"}:
                     files[str(relative)] = path.read_bytes()
     for name in [
@@ -109,13 +110,15 @@ def create_export(db, tenant):
         "6. Homepage: /t/<slug>; admin: /t/<slug>/administrator.\n"
         "   Configure DNS/TLS separately.\n"
         "Video URLs are external references; no video files are managed by this release.\n"
+        "Static SVG assets and mobile source are included. In mobile: npm ci; configure "
+        "EXPO_PUBLIC_API_URL for your instance, then use Expo. App signing is separate.\n"
         "OAuth/payment/update signing/mobile distribution require separate configuration.\n"
     ).encode()
     if sum(len(value) for value in files.values()) > 20_000_000:
         raise HTTPException(413, "Gói vượt giới hạn exporter local")
     manifest = {
         "tenant_id": str(tenant.id),
-        "core_version": "0.7.0",
+        "core_version": "0.8.0",
         "schema_version": "0005",
         "files": {name: hashlib.sha256(body).hexdigest() for name, body in files.items()},
         "signed": False,

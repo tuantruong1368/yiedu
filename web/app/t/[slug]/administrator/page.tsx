@@ -5,7 +5,9 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  return <AdminScreen slug={(await params).slug} />;
+  const { slug } = await params;
+  const site = await publicApi("/sites/" + encodeURIComponent(slug));
+  return <AdminScreen slug={slug} initialTenant={site?.tenant} />;
 }
 
 export async function generateMetadata({

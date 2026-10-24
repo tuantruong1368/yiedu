@@ -173,6 +173,13 @@ def templates():
     return TEMPLATES
 
 
+@router.get("/catalog/template-groups")
+def template_groups():
+    from yiedu.template_library import library
+
+    return library()["groups"]
+
+
 @router.get("/catalog/templates/{template_id}")
 def template_preview(template_id: str):
     try:
@@ -194,6 +201,34 @@ def template_lessons(template_id: str, module_id: str):
         return lessons_for(module_id)
     except KeyError:
         raise HTTPException(404, "Learning unit not found") from None
+
+
+@router.get("/catalog/templates/{template_id}/render", response_class=HTMLResponse)
+def preview_document(template_id: str, page: str = "home", locale: str = "vi"):
+    if locale not in {"vi", "en"} or len(page) > 63:
+        raise HTTPException(422, "Invalid page or locale")
+    try:
+        document = initial_page(template_id)
+        selected = next(p for p in document["pages"] if page in {p["id"], p["slug"]})
+        html, csp = render_site(
+            document,
+            curriculum(template_id),
+            "preview",
+            selected["slug"],
+            locale,
+            page_base=f"/templates/{template_id}?page=",
+            course_base=f"/templates/{template_id}?course=",
+        )
+    except KeyError, StopIteration:
+        raise HTTPException(404, "Template page not found") from None
+    return HTMLResponse(
+        html,
+        headers={
+            "Cache-Control": "public, max-age=300",
+            "Content-Security-Policy": csp,
+            "X-Content-Type-Options": "nosniff",
+        },
+    )
 
 
 @router.get("/me/dashboard")
@@ -755,7 +790,7 @@ def marketplace(db: DB):
 def update_status(tenant_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin"])
     return {
-        "current_version": "0.7.0",
+        "current_version": "0.8.0",
         "configured": False,
         "message": (
             "Chưa cấu hình release registry và trust key. Không có bản cập nhật được xác minh."
@@ -785,7 +820,7 @@ def export_tenant(tenant_id: uuid.UUID, user: UserDep, db: DB):
 def instance_info(db: DB):
     mode = get_settings().instance_mode
     tenant = db.scalar(select(Tenant)) if mode == "standalone" else None
-    return {"mode": mode, "version": "0.7.0", "tenant": encode(tenant) if tenant else None}
+    return {"mode": mode, "version": "0.8.0", "tenant": encode(tenant) if tenant else None}
 
 
 @router.put("/runtime/{tenant_id}/paths/{path_id}")

@@ -18,13 +18,15 @@ import { ErrorBox, Loading, Empty, Logout } from "./shared";
 import { TenantBrand } from "./tenant-brand";
 import { LocaleSwitch } from "./locale-provider";
 import LessonView from "./lesson/lesson-view";
+import ExternalVideo from "./lesson/external-video";
 export default function LearnScreen({ slug }: { slug: string }) {
   const { t: tr, locale } = useI18n();
   const query = useSearchParams();
+  const courseId = query.get("course") || "",
+    lessonId = query.get("lesson") || "";
 
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
-    [courseId, setCourseId] = useState(query.get("course") || ""),
     [lesson, setLesson] = useState<any>(null),
     [certificate, setCertificate] = useState<any>(null);
   const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
@@ -38,6 +40,35 @@ export default function LearnScreen({ slug }: { slug: string }) {
   useEffect(() => {
     refresh().catch((e) => setError(e.message));
   }, [slug]);
+  function chooseCourse(id: string, lesson = "", replace = false) {
+    const params = new URLSearchParams();
+    if (id) params.set("course", id);
+    if (lesson) params.set("lesson", lesson);
+    history[replace ? "replaceState" : "pushState"](
+      null,
+      "",
+      `/t/${slug}/learn${params.size ? `?${params}` : ""}`,
+    );
+  }
+  useEffect(() => {
+    if (!data) return;
+    if (!lessonId) {
+      setLesson(null);
+      return;
+    }
+    let cancelled = false;
+    setError("");
+    api(`/runtime/${data.tenant.id}/lessons/${lessonId}`)
+      .then((row) => {
+        if (!cancelled) setLesson(row);
+      })
+      .catch((e) => {
+        if (!cancelled) setError(e.message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [data?.tenant.id, lessonId]);
   async function call(fn: () => Promise<any>) {
     setError("");
     try {
@@ -135,7 +166,10 @@ export default function LearnScreen({ slug }: { slug: string }) {
           {lesson ? (
             <div className="learning-layout">
               <aside className="panel">
-                <button className="text-link" onClick={() => setLesson(null)}>
+                <button
+                  className="text-link"
+                  onClick={() => chooseCourse(lesson.course_id, "", true)}
+                >
                   <ArrowLeft size={15} />
                   {tr("Danh sách khóa học")}
                 </button>
@@ -153,11 +187,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                       className={
                         "lesson-nav " + (l.id === lesson.id ? "active" : "")
                       }
-                      onClick={() =>
-                        call(async () =>
-                          setLesson(await api(base + "/lessons/" + l.id)),
-                        )
-                      }
+                      onClick={() => chooseCourse(l.course_id, l.id)}
                     >
                       {data.completed.includes(l.id) ? (
                         <CheckCircle2 size={17} />
@@ -172,9 +202,13 @@ export default function LearnScreen({ slug }: { slug: string }) {
                 <span className="eyebrow">{tr("BÀI HỌC")}</span>
                 <h1>{lesson.translations?.[locale]?.title || lesson.title}</h1>
                 {lesson.video_url && (
-                  <video controls preload="metadata" src={lesson.video_url} />
+                  <ExternalVideo
+                    key={lesson.video_url}
+                    url={lesson.video_url}
+                    title={lesson.translations?.[locale]?.title || lesson.title}
+                  />
                 )}
-                <LessonView lesson={lesson} />
+                <LessonView lesson={lesson} hideHeading />
                 <button
                   className="button"
                   onClick={() =>
@@ -207,7 +241,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                       </b>
                       <div>
                         {p.course_ids.map((id: string, i: number) => (
-                          <button key={id} onClick={() => setCourseId(id)}>
+                          <button key={id} onClick={() => chooseCourse(id)}>
                             <span>{i + 1}</span>
                             {data.courses.find((c: any) => c.id === id)
                               ?.title || tr("Khóa học chưa xuất bản")}
@@ -222,7 +256,10 @@ export default function LearnScreen({ slug }: { slug: string }) {
               <div className="section-title spaced">
                 <h2>{tr("Khóa học dành cho bạn")}</h2>
                 {courseId && (
-                  <button className="text-link" onClick={() => setCourseId("")}>
+                  <button
+                    className="text-link"
+                    onClick={() => chooseCourse("")}
+                  >
                     {tr("Xem tất cả")}
                   </button>
                 )}
@@ -275,11 +312,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                                     className="lesson-nav"
                                     key={l.id}
                                     onClick={() =>
-                                      call(async () =>
-                                        setLesson(
-                                          await api(base + "/lessons/" + l.id),
-                                        ),
-                                      )
+                                      chooseCourse(l.course_id, l.id)
                                     }
                                   >
                                     {data.completed.includes(l.id) ? (

@@ -1,0 +1,926 @@
+{
+  "template": {
+    "id": "yoga-studio",
+    "name": "An Nhiên Yoga",
+    "category": "Yoga & Sống khỏe",
+    "category_en": "Yoga & Wellbeing",
+    "color": "#53715b",
+    "layout": "yoga",
+    "tagline": {
+      "vi": "THỞ CHẬM. CHUYỂN ĐỘNG NHẸ.",
+      "en": "BREATHE. MOVE. BEGIN AGAIN."
+    },
+    "subtitle": "Một khoảng lặng. Một khởi đầu mới.",
+    "subtitle_en": "A moment of calm. A new beginning.",
+    "description": "Học yoga nhập môn theo lộ trình 4 tuần: 16 bài Việt/Anh, video hướng dẫn từ nguồn chính thức và lựa chọn thực hành vừa sức.",
+    "description_en": "A four-week beginner pathway with 16 bilingual lessons, official-source videos and thoughtful practice options.",
+    "version": "2026.10.3",
+    "module_ids": [
+      "yoga-foundations",
+      "yoga-postures",
+      "yoga-guided-practice",
+      "yoga-personal-practice"
+    ],
+    "semesters": [],
+    "content_depth": "guided-practice-course",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ],
+    "group_ids": [
+      "wellness"
+    ]
+  },
+  "modules": [
+    {
+      "id": "yoga-foundations",
+      "title": {
+        "vi": "Tuần 1 · Bắt đầu vững vàng",
+        "en": "Week 1 · Begin with confidence"
+      },
+      "concept": {
+        "vi": "Bốn bài học gồm Buổi đầu trên thảm, Hơi thở tự nhiên và điểm tựa, Đứng vững trong tư thế Núi, Nhật ký tuần 1 và chọn mức tập. Hướng dẫn bằng chữ, video từ nguồn chính thức, lựa chọn nhẹ hơn và nhật ký thực hành.",
+        "en": "Four learning units cover your first session, natural breathing and support, finding a comfortable mountain pose, week-one reflection and practice choice. Includes written guidance, official-source video, accessible options and reflection."
+      },
+      "example": {
+        "vi": "Mục tiêu hôm nay là biết chuẩn bị và chủ động dừng, chưa phải làm đủ mọi tư thế. Yoga có nguồn gốc từ Ấn Độ và bao gồm nhiều thực hành hơn vận động; khóa này tập trung vào chuyển động nhẹ, chú ý và hơi thở tự nhiên. Chọn mặt sàn phẳng, khoảng trống đủ duỗi tay và thảm không trượt. Một chiếc ghế chắc không bánh xe, khăn và gối có thể giúp bạn chọn mức phù hợp. Xem trước video một lần để biết trình tự, rồi mới tập phần thấy thoải mái.",
+        "en": "Learn to prepare, choose and stop before trying to complete a routine. This introduction focuses on gentle movement, attention and natural breathing. Use a clear, level space and a non-slip mat. A sturdy chair without wheels, a towel and a cushion are useful options. Watch the sequence before practicing the parts that feel comfortable."
+      },
+      "lab": {
+        "vi": [
+          "Chọn một buổi phù hợp, ghi điểm tựa và nhật ký."
+        ],
+        "en": [
+          "Choose a suitable session and record support and observations."
+        ]
+      },
+      "questions": {
+        "vi": [
+          "Tập được một nửa video nhưng dừng đúng lúc có tính là một buổi tập không?",
+          "Có cần nín thở để tập yoga hiệu quả hơn không?",
+          "Đầu gối khóa cứng có giúp đứng đúng hơn không?",
+          "Nhật ký nào hữu ích hơn: “đã hoàn thành” hay “tập ghế 6 phút, vai thoải mái, nghỉ một lần”?"
+        ],
+        "en": [
+          "Does a safely shortened session count?",
+          "Must you hold your breath to practice well?",
+          "Does locking your knees improve the pose?",
+          "Which log is more useful: “done” or specific observations?"
+        ]
+      },
+      "answers": {
+        "vi": [
+          "Có. Mục tiêu là chủ động chọn mức phù hợp và quan sát cơ thể, không phải sao chép hết video.",
+          "Không. Khóa nhập môn dùng hơi thở tự nhiên; không luyện nín thở hoặc kỹ thuật thở mạnh.",
+          "Không cần khóa. Mức vững, hơi thở thoải mái và khả năng rời tư thế chủ động quan trọng hơn dáng nhìn bên ngoài.",
+          "Nhật ký cụ thể giúp nhận biết lựa chọn phù hợp và điều chỉnh buổi sau. Nút hoàn thành chỉ ghi tiến độ học."
+        ],
+        "en": [
+          "Yes. Choosing a suitable level and noticing your response matters more than completing a video.",
+          "No. This course uses natural breathing rather than breath retention or forceful techniques.",
+          "There is no need to lock them. Stability, easy breathing and a controlled exit matter more than appearance.",
+          "Specific observations help plan the next session; the completion button records learning progress only."
+        ]
+      },
+      "sources": [
+        "yoga-safety",
+        "yoga-short",
+        "yoga-chair",
+        "yoga-mountain"
+      ],
+      "code": "",
+      "code_output": "",
+      "content_depth": "guided-practice-course",
+      "review_status": "editorial-draft",
+      "estimated_hours": 2,
+      "lessons": [
+        {
+          "title": {
+            "vi": "01 · Buổi đầu trên thảm",
+            "en": "01 · Your first session"
+          },
+          "video": "short",
+          "focus": {
+            "vi": "Mục tiêu hôm nay là biết chuẩn bị và chủ động dừng, chưa phải làm đủ mọi tư thế. Yoga có nguồn gốc từ Ấn Độ và bao gồm nhiều thực hành hơn vận động; khóa này tập trung vào chuyển động nhẹ, chú ý và hơi thở tự nhiên. Chọn mặt sàn phẳng, khoảng trống đủ duỗi tay và thảm không trượt. Một chiếc ghế chắc không bánh xe, khăn và gối có thể giúp bạn chọn mức phù hợp. Xem trước video một lần để biết trình tự, rồi mới tập phần thấy thoải mái.",
+            "en": "Learn to prepare, choose and stop before trying to complete a routine. This introduction focuses on gentle movement, attention and natural breathing. Use a clear, level space and a non-slip mat. A sturdy chair without wheels, a towel and a cushion are useful options. Watch the sequence before practicing the parts that feel comfortable."
+          },
+          "steps": {
+            "vi": [
+              "Đặt màn hình ngang tầm dễ nhìn; tắt thông báo và dọn vật cản quanh thảm.",
+              "Ngồi trên ghế hoặc gối, cảm nhận điểm tựa và quan sát 5 nhịp thở bình thường.",
+              "Xem video, tạm dừng trước mỗi động tác mới; không cố theo kịp người hướng dẫn.",
+              "Kết thúc sớm nếu cần, ngồi nghỉ rồi ghi lại thời lượng, động tác đã chọn và cảm giác."
+            ],
+            "en": [
+              "Position the screen where you can see it without twisting; clear the area.",
+              "Sit on a chair or cushion and observe five ordinary breaths.",
+              "Watch, then pause before a new movement. Do not race the instructor.",
+              "Finish early if needed, rest and record your chosen movements and how they felt."
+            ]
+          },
+          "adapt": {
+            "vi": "Nếu chưa thuận tiện ngồi sàn, dùng ghế. Đau nhói, tê, choáng hoặc khó thở là dấu hiệu dừng; không cố tập tiếp để hoàn thành video.",
+            "en": "Use a chair if floor sitting is uncomfortable. Stop for sharp pain, numbness, dizziness or difficulty breathing rather than finishing the video."
+          },
+          "question": {
+            "vi": "Tập được một nửa video nhưng dừng đúng lúc có tính là một buổi tập không?",
+            "en": "Does a safely shortened session count?"
+          },
+          "answer": {
+            "vi": "Có. Mục tiêu là chủ động chọn mức phù hợp và quan sát cơ thể, không phải sao chép hết video.",
+            "en": "Yes. Choosing a suitable level and noticing your response matters more than completing a video."
+          }
+        },
+        {
+          "title": {
+            "vi": "02 · Hơi thở tự nhiên và điểm tựa",
+            "en": "02 · Natural breathing and support"
+          },
+          "video": "chair",
+          "focus": {
+            "vi": "Dành buổi này để nhận ra mình đang thở như thế nào, không để đạt một nhịp đếm cố định. Ngồi với bàn chân được đỡ, vai thả vừa phải và mắt mở hoặc nhìn nhẹ xuống. Có thể đặt tay lên bụng hay sườn chỉ để quan sát. Không nín thở, ép hít thật sâu hoặc cố kéo dài hơi thở. Video ghế là tài liệu để quan sát cách chọn điểm tựa; bạn có thể chỉ thực hiện phần ngồi và nghỉ.",
+            "en": "Notice your breathing without forcing a count or volume. Sit with supported feet and relaxed shoulders. Rest a hand on your abdomen or ribs as an observation aid. Avoid breath holding, forced deep breathing and strenuous breathing techniques. Use the chair video to observe support, choosing only the seated parts if that suits you."
+          },
+          "steps": {
+            "vi": [
+              "Đặt hai chân được đỡ vững; kê thêm khăn nếu chân chưa chạm sàn.",
+              "Quan sát 1 phút: hơi thở đi qua mũi hay miệng, nhanh hay chậm; không phán xét.",
+              "Thả lỏng bàn tay và vai, quan sát thêm 5 nhịp thở bình thường.",
+              "Nhìn quanh phòng, cử động ngón tay rồi ghi một điều giúp bạn ngồi dễ chịu hơn."
+            ],
+            "en": [
+              "Support both feet; use a stable footrest if needed.",
+              "Observe breathing for one minute without judging its pace.",
+              "Relax your hands and shoulders and notice another five ordinary breaths.",
+              "Look around, move your fingers and note one helpful adjustment."
+            ]
+          },
+          "adapt": {
+            "vi": "Không cần nhắm mắt. Nếu chú ý vào hơi thở khiến khó chịu, chuyển sang cảm nhận chân trên sàn hoặc âm thanh trong phòng.",
+            "en": "You may keep your eyes open. If focusing on breathing feels uncomfortable, notice your feet on the floor or sounds in the room."
+          },
+          "question": {
+            "vi": "Có cần nín thở để tập yoga hiệu quả hơn không?",
+            "en": "Must you hold your breath to practice well?"
+          },
+          "answer": {
+            "vi": "Không. Khóa nhập môn dùng hơi thở tự nhiên; không luyện nín thở hoặc kỹ thuật thở mạnh.",
+            "en": "No. This course uses natural breathing rather than breath retention or forceful techniques."
+          }
+        },
+        {
+          "title": {
+            "vi": "03 · Đứng vững trong tư thế Núi",
+            "en": "03 · Finding a comfortable Mountain pose"
+          },
+          "video": "mountain",
+          "focus": {
+            "vi": "Tư thế Núi là cơ hội quan sát cách đứng, không phải cố đứng thật cứng. Bàn chân đặt ở độ rộng dễ chịu, đầu gối không khóa, tay nghỉ bên người và ánh nhìn hướng trước. Hãy chú ý phân bố trọng lượng thay vì cố tạo một đường thẳng hoàn hảo. Xem tư thế của người dạy để hiểu ý tưởng rồi chọn một phiên bản có điểm tựa cho chính mình.",
+            "en": "Mountain is an opportunity to notice standing rather than to hold your body rigidly. Choose a comfortable foot width, keep your knees unlocked, rest your arms and look ahead. Notice weight distribution without seeking a perfect line. Observe the demonstration and choose a supported variation for yourself."
+          },
+          "steps": {
+            "vi": [
+              "Đứng cạnh tường hoặc ghế chắc; thử cảm nhận hai chân chạm sàn.",
+              "Nhẹ nhàng chuyển trọng lượng sang hai bên rất nhỏ rồi trở về giữa.",
+              "Thả vai, giữ đầu gối mềm và quan sát 3–5 nhịp thở.",
+              "Ngồi nghỉ, lặp lại một lần nếu vẫn thoải mái; ghi điểm tựa đã dùng."
+            ],
+            "en": [
+              "Stand beside a wall or sturdy chair and notice both feet.",
+              "Make a small side-to-side weight shift, then return to center.",
+              "Relax your shoulders, leave your knees soft and observe three to five breaths.",
+              "Sit and rest; repeat once only if comfortable and record your support."
+            ]
+          },
+          "adapt": {
+            "vi": "Không nhắm mắt khi đang kiểm tra thăng bằng. Nếu đứng gây mỏi hoặc thiếu vững, giữ tay ở ghế hoặc thực hành ngồi thẳng dễ chịu.",
+            "en": "Keep your eyes open for balance work. Hold the chair or use a comfortable upright seated version if standing is tiring or unsteady."
+          },
+          "question": {
+            "vi": "Đầu gối khóa cứng có giúp đứng đúng hơn không?",
+            "en": "Does locking your knees improve the pose?"
+          },
+          "answer": {
+            "vi": "Không cần khóa. Mức vững, hơi thở thoải mái và khả năng rời tư thế chủ động quan trọng hơn dáng nhìn bên ngoài.",
+            "en": "There is no need to lock them. Stability, easy breathing and a controlled exit matter more than appearance."
+          }
+        },
+        {
+          "title": {
+            "vi": "04 · Nhật ký tuần 1 và chọn mức tập",
+            "en": "04 · Week-one reflection and practice choice"
+          },
+          "video": "short",
+          "focus": {
+            "vi": "Bạn đã có ba kỹ năng nền: chuẩn bị, quan sát và chọn điểm tựa. Hôm nay kết hợp chúng trong một buổi ngắn. Dành khoảng 2 phút chuẩn bị, tối đa 10 phút xem/tập phần phù hợp và 2 phút nghỉ, ghi chép. Con số là gợi ý tổ chức thời gian, không phải yêu cầu thể lực. Chọn ngắn hơn nếu cơ thể cần; một buổi nghỉ vẫn là phần hợp lệ của kế hoạch.",
+            "en": "Combine preparation, observation and support in a short session. Allow roughly two minutes to prepare, up to ten minutes for suitable video sections and two minutes to rest and reflect. These are scheduling suggestions rather than physical targets. Shorter sessions and rest days are valid choices."
+          },
+          "steps": {
+            "vi": [
+              "Viết một mục tiêu: tập chậm, giữ hơi thở tự nhiên hoặc nhớ dùng điểm tựa.",
+              "Chọn phiên bản ghế, đứng hoặc sàn đã quen; không thêm động tác khó hôm nay.",
+              "Dừng video mỗi khi cần chỉnh vị trí màn hình hoặc nghỉ.",
+              "Ghi ba dòng: đã làm gì, cảm giác trước/sau và lần tới sẽ giữ hay giảm thời lượng."
+            ],
+            "en": [
+              "Choose one aim: slower movement, natural breathing or remembering support.",
+              "Use familiar chair, standing or floor options without adding difficulty today.",
+              "Pause whenever you need to adjust the screen or rest.",
+              "Record your choices, before/after observations and a plan to keep or shorten the next session."
+            ]
+          },
+          "adapt": {
+            "vi": "Không dùng số phút hay độ dẻo để so sánh với người khác. Nếu khó chịu lặp lại, dừng động tác đó và hỏi người hướng dẫn phù hợp.",
+            "en": "Avoid comparing minutes or flexibility with other people. Stop a repeatedly uncomfortable movement and seek suitable individual guidance."
+          },
+          "question": {
+            "vi": "Nhật ký nào hữu ích hơn: “đã hoàn thành” hay “tập ghế 6 phút, vai thoải mái, nghỉ một lần”?",
+            "en": "Which log is more useful: “done” or specific observations?"
+          },
+          "answer": {
+            "vi": "Nhật ký cụ thể giúp nhận biết lựa chọn phù hợp và điều chỉnh buổi sau. Nút hoàn thành chỉ ghi tiến độ học.",
+            "en": "Specific observations help plan the next session; the completion button records learning progress only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yoga-postures",
+      "title": {
+        "vi": "Tuần 2 · Nền tảng chuyển động",
+        "en": "Week 2 · Movement foundations"
+      },
+      "concept": {
+        "vi": "Bốn bài học gồm Tabletop và chuyển động Mèo–Bò, Điểm tựa cho vai và lưng, Thăng bằng với ghế hỗ trợ, Ghép một chuỗi nền tảng ngắn. Hướng dẫn bằng chữ, video từ nguồn chính thức, lựa chọn nhẹ hơn và nhật ký thực hành.",
+        "en": "Four learning units cover tabletop and gentle cat–cow, support for comfortable upper-body movement, supported standing balance, putting a short foundation sequence together. Includes written guidance, official-source video, accessible options and reflection."
+      },
+      "example": {
+        "vi": "Trong bài này, quan sát sự phối hợp giữa chuyển động nhẹ và hơi thở. Tư thế bốn điểm tựa có thể tạo áp lực lên cổ tay hoặc đầu gối nên không bắt buộc. Xem người dạy thiết lập điểm tựa trước, sau đó chọn phiên bản rất nhỏ hoặc phiên bản ngồi ghế. Mục tiêu là có thể vào, điều chỉnh và ra tư thế bình tĩnh, không cần đạt biên độ lớn.",
+        "en": "Explore gentle movement with ordinary breathing. Hands-and-knees work can load wrists and knees, so it is optional. Watch how support is arranged, then choose a small range or a seated variation. Practice a controlled entry, adjustment and exit rather than a large movement."
+      },
+      "lab": {
+        "vi": [
+          "Chọn một buổi phù hợp, ghi điểm tựa và nhật ký."
+        ],
+        "en": [
+          "Choose a suitable session and record support and observations."
+        ]
+      },
+      "questions": {
+        "vi": [
+          "Biên độ lớn hơn có luôn tốt hơn không?",
+          "Nếu video nâng tay quá đầu nhưng vai mình khó chịu thì làm gì?",
+          "Có phải bỏ tay khỏi ghế mới tính là tiến bộ không?",
+          "Khoảng dừng có làm hỏng một chuỗi yoga không?"
+        ],
+        "en": [
+          "Is a larger range always better?",
+          "What if an overhead reach feels uncomfortable?",
+          "Must you let go of the chair to progress?",
+          "Do pauses spoil a sequence?"
+        ]
+      },
+      "answers": {
+        "vi": [
+          "Không. Chọn biên độ có thể kiểm soát, không đau và không làm bạn phải nín thở.",
+          "Giữ tay ở mức thấp hoặc bỏ động tác; không ép theo độ cao của người dạy.",
+          "Không. Biết dùng điểm tựa và kiểm soát chuyển động là tiến bộ có ý nghĩa.",
+          "Không. Dừng để chỉnh điểm tựa và kiểm tra cảm giác giúp bạn chủ động hơn."
+        ],
+        "en": [
+          "No. Choose a controllable, pain-free range that does not make you hold your breath.",
+          "Keep the reach low or skip it instead of copying the instructor’s range.",
+          "No. Appropriate support and controlled movement are meaningful progress.",
+          "No. Pausing to arrange support and check your response supports deliberate practice."
+        ]
+      },
+      "sources": [
+        "yoga-safety",
+        "yoga-catcow",
+        "yoga-chair",
+        "yoga-mountain",
+        "yoga-short"
+      ],
+      "code": "",
+      "code_output": "",
+      "content_depth": "guided-practice-course",
+      "review_status": "editorial-draft",
+      "estimated_hours": 2,
+      "lessons": [
+        {
+          "title": {
+            "vi": "05 · Tabletop và chuyển động Mèo–Bò",
+            "en": "05 · Tabletop and gentle Cat–Cow"
+          },
+          "video": "catcow",
+          "focus": {
+            "vi": "Trong bài này, quan sát sự phối hợp giữa chuyển động nhẹ và hơi thở. Tư thế bốn điểm tựa có thể tạo áp lực lên cổ tay hoặc đầu gối nên không bắt buộc. Xem người dạy thiết lập điểm tựa trước, sau đó chọn phiên bản rất nhỏ hoặc phiên bản ngồi ghế. Mục tiêu là có thể vào, điều chỉnh và ra tư thế bình tĩnh, không cần đạt biên độ lớn.",
+            "en": "Explore gentle movement with ordinary breathing. Hands-and-knees work can load wrists and knees, so it is optional. Watch how support is arranged, then choose a small range or a seated variation. Practice a controlled entry, adjustment and exit rather than a large movement."
+          },
+          "steps": {
+            "vi": [
+              "Xem video trước; chuẩn bị khăn đỡ đầu gối nếu chọn phiên bản sàn.",
+              "Nếu thoải mái, đặt tay dưới vai và gối dưới hông; không dồn toàn bộ trọng lượng lên cổ tay.",
+              "Di chuyển cột sống nhẹ trong phạm vi dễ chịu trong 3 vòng, không ngửa cổ sâu.",
+              "Trở về vị trí trung tính, nghỉ và so sánh với phiên bản ngồi ghế."
+            ],
+            "en": [
+              "Watch first and prepare knee padding if choosing the floor version.",
+              "If comfortable, arrange hands below shoulders and knees below hips.",
+              "Explore three small, comfortable movement cycles without throwing your head back.",
+              "Return to neutral, rest and compare with a seated version."
+            ]
+          },
+          "adapt": {
+            "vi": "Nếu cổ tay hoặc gối khó chịu, ngồi ghế, đặt tay lên đùi và chỉ thay đổi nhẹ hướng ngực; bỏ động tác nếu vẫn không thoải mái.",
+            "en": "For uncomfortable wrists or knees, sit with hands on thighs and try a small chest movement, or skip the movement."
+          },
+          "question": {
+            "vi": "Biên độ lớn hơn có luôn tốt hơn không?",
+            "en": "Is a larger range always better?"
+          },
+          "answer": {
+            "vi": "Không. Chọn biên độ có thể kiểm soát, không đau và không làm bạn phải nín thở.",
+            "en": "No. Choose a controllable, pain-free range that does not make you hold your breath."
+          }
+        },
+        {
+          "title": {
+            "vi": "06 · Điểm tựa cho vai và lưng",
+            "en": "06 · Support for comfortable upper-body movement"
+          },
+          "video": "chair",
+          "focus": {
+            "vi": "Tập nhận biết vùng vai đang làm việc và vùng có thể thả lỏng. Dùng ghế giúp bạn dành sự chú ý cho phần thân trên. Đây là buổi vận động tổng quát, không phải bài chữa đau lưng hay điều trị cột sống. Mỗi chuyển động nên đủ nhỏ để bạn vẫn nhìn, thở và dừng chủ động. So sánh cảm giác khi có và không có tựa lưng thay vì cố giữ một tư thế lâu.",
+            "en": "Use a chair to explore small upper-body movements and notice effort. This is general movement rather than treatment for back or spinal conditions. Keep the range small enough to breathe and stop deliberately. Compare supported sitting options without trying to sustain a pose for a long time."
+          },
+          "steps": {
+            "vi": [
+              "Ngồi với chân có điểm tựa, hai tay nghỉ trên đùi.",
+              "Nâng rồi hạ vai nhẹ một hoặc hai lần nếu thoải mái.",
+              "Thử đưa tay lên mức thấp, quan sát vai và hơi thở; không cần giơ quá đầu.",
+              "Tạm dừng video ở phần vượt mức thoải mái, ngồi nghỉ và ghi điều chỉnh có ích."
+            ],
+            "en": [
+              "Sit with supported feet and hands resting on thighs.",
+              "Gently lift and release your shoulders once or twice if comfortable.",
+              "Explore a low arm reach without a requirement to lift overhead.",
+              "Pause or skip unsuitable sections, rest and note a helpful change."
+            ]
+          },
+          "adapt": {
+            "vi": "Giữ tay thấp hoặc đặt tay trên đùi xuyên suốt buổi tập là một lựa chọn hợp lệ. Không ép vai ra sau hay kéo cổ bằng tay.",
+            "en": "Keeping your hands on your thighs throughout is valid. Avoid pulling your neck or forcing your shoulders backward."
+          },
+          "question": {
+            "vi": "Nếu video nâng tay quá đầu nhưng vai mình khó chịu thì làm gì?",
+            "en": "What if an overhead reach feels uncomfortable?"
+          },
+          "answer": {
+            "vi": "Giữ tay ở mức thấp hoặc bỏ động tác; không ép theo độ cao của người dạy.",
+            "en": "Keep the reach low or skip it instead of copying the instructor’s range."
+          }
+        },
+        {
+          "title": {
+            "vi": "07 · Thăng bằng với ghế hỗ trợ",
+            "en": "07 · Supported standing balance"
+          },
+          "video": "mountain",
+          "focus": {
+            "vi": "Thăng bằng được luyện bằng sự chú ý và điểm tựa thích hợp, không bằng cách chấp nhận nguy cơ ngã. Buổi này dùng tư thế đứng hai chân và chuyển trọng lượng rất nhỏ. Không cần đứng một chân, nhắm mắt hay bỏ tay khỏi ghế. Chuẩn bị một ghế chắc sát tường và vị trí không có vật cản; nếu thiếu điểm tựa ổn định, chọn phiên bản ngồi.",
+            "en": "Practice attention with appropriate support rather than taking a fall risk. Stay on two feet and use small weight shifts. You do not need to stand on one leg, close your eyes or let go of the chair. Place a sturdy chair against a wall in a clear area; use sitting if suitable support is unavailable."
+          },
+          "steps": {
+            "vi": [
+              "Đặt một tay lên ghế, hai chân ở khoảng cách thoải mái.",
+              "Nhìn một điểm ngang tầm trước mặt và kiểm tra cảm giác vững.",
+              "Chuyển trọng lượng rất nhỏ rồi trở về giữa, tối đa 3 lần mỗi bên nếu thoải mái.",
+              "Ngồi xuống chậm, nghỉ và đánh giá mức an toàn của chỗ tập."
+            ],
+            "en": [
+              "Keep one hand on the chair and both feet comfortably apart.",
+              "Look at a steady point ahead and notice your stability.",
+              "Make small weight shifts and return to center, up to three each way if comfortable.",
+              "Sit slowly, rest and assess the safety of your space."
+            ]
+          },
+          "adapt": {
+            "vi": "Nếu có tiền sử té ngã hoặc vấn đề thăng bằng, cần hướng dẫn cá nhân trước khi tự tập đứng. Dùng ghế không có nghĩa bài tập kém giá trị.",
+            "en": "A history of falls or balance problems warrants individual guidance before independent standing work. Support does not make practice less valuable."
+          },
+          "question": {
+            "vi": "Có phải bỏ tay khỏi ghế mới tính là tiến bộ không?",
+            "en": "Must you let go of the chair to progress?"
+          },
+          "answer": {
+            "vi": "Không. Biết dùng điểm tựa và kiểm soát chuyển động là tiến bộ có ý nghĩa.",
+            "en": "No. Appropriate support and controlled movement are meaningful progress."
+          }
+        },
+        {
+          "title": {
+            "vi": "08 · Ghép một chuỗi nền tảng ngắn",
+            "en": "08 · Putting a short foundation sequence together"
+          },
+          "video": "short",
+          "focus": {
+            "vi": "Chọn những gì đã học thay vì thêm nhiều tư thế. Một chuỗi có thể gồm ngồi quan sát, đứng Núi có ghế hoặc Mèo–Bò phiên bản phù hợp, rồi ngồi nghỉ. Không bắt buộc phải chuyển liên tục: khoảng dừng để thiết lập điểm tựa là một phần của bài tập. Video 10 phút giúp quan sát nhịp buổi tập; bạn có quyền thay hoặc bỏ bất kỳ phần nào.",
+            "en": "Combine familiar choices rather than collecting more poses. A sequence may include supported sitting, Mountain or a suitable Cat–Cow variation, and a seated rest. Pauses for setting up support are part of practice. Observe pacing in the short video and replace or skip any section."
+          },
+          "steps": {
+            "vi": [
+              "Viết ba phần: chuẩn bị, một hoặc hai chuyển động đã quen, nghỉ.",
+              "Sắp ghế và thảm trước khi bắt đầu; không vừa di chuyển vừa với thiết bị.",
+              "Thực hiện chậm, tạm dừng giữa các phần và kiểm tra hơi thở bình thường.",
+              "Ghi một phiên bản muốn giữ lại và một phần muốn bỏ ở buổi sau."
+            ],
+            "en": [
+              "Write three parts: preparation, one or two familiar movements, rest.",
+              "Set up your chair and mat before beginning.",
+              "Move slowly, pause between parts and notice ordinary breathing.",
+              "Note one useful variation and one section to omit next time."
+            ]
+          },
+          "adapt": {
+            "vi": "Có thể thực hiện toàn bộ chuỗi trên ghế. Không đặt mục tiêu phải xuống sàn hay đứng lên nếu việc chuyển vị trí gây khó khăn.",
+            "en": "The whole sequence may be seated. Do not set floor transfers as a goal if getting down or up is difficult."
+          },
+          "question": {
+            "vi": "Khoảng dừng có làm hỏng một chuỗi yoga không?",
+            "en": "Do pauses spoil a sequence?"
+          },
+          "answer": {
+            "vi": "Không. Dừng để chỉnh điểm tựa và kiểm tra cảm giác giúp bạn chủ động hơn.",
+            "en": "No. Pausing to arrange support and check your response supports deliberate practice."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yoga-guided-practice",
+      "title": {
+        "vi": "Tuần 3 · Thực hành có hướng dẫn",
+        "en": "Week 3 · Guided practice"
+      },
+      "concept": {
+        "vi": "Bốn bài học gồm Buổi 10 phút có hướng dẫn, Buổi nhập môn 20 phút, chia nhỏ được, Buổi yoga trên ghế, Nghỉ ngơi và kết thúc buổi tập. Hướng dẫn bằng chữ, video từ nguồn chính thức, lựa chọn nhẹ hơn và nhật ký thực hành.",
+        "en": "Four learning units cover a guided ten-minute session, a beginner session you can divide, a complete chair-based option, rest and a deliberate finish. Includes written guidance, official-source video, accessible options and reflection."
+      },
+      "example": {
+        "vi": "Đây là buổi áp dụng quy trình xem trước → chọn phiên bản → thực hành → ghi chép. Bạn đã có các điểm tựa để điều chỉnh thay vì mặc định làm hết động tác. Xem video trước khi bắt đầu hoặc chia thành từng đoạn. Mười phút là độ dài tài liệu, không phải hạn mức tối thiểu; có thể hoàn thành buổi học bằng việc xem, chọn và giải thích các phần phù hợp.",
+        "en": "Apply the sequence preview, choose, practice and reflect. Use familiar support options rather than following every movement automatically. Watch first or work in sections. Ten minutes describes the resource, not a required minimum; observing and explaining appropriate choices is valid learning."
+      },
+      "lab": {
+        "vi": [
+          "Chọn một buổi phù hợp, ghi điểm tựa và nhật ký."
+        ],
+        "en": [
+          "Choose a suitable session and record support and observations."
+        ]
+      },
+      "questions": {
+        "vi": [
+          "Mở video chạy hết có chứng minh mình tập đúng không?",
+          "Tiến bộ có bắt buộc tăng thời lượng mỗi tuần không?",
+          "Có thể duy trì khóa này hoàn toàn bằng phiên bản ghế không?",
+          "Nếu không cảm thấy thư giãn ngay thì buổi tập có thất bại không?"
+        ],
+        "en": [
+          "Does playing the full video prove correct technique?",
+          "Must practice time increase every week?",
+          "Can chair practice remain your main option?",
+          "Is the session a failure if you do not feel relaxed?"
+        ]
+      },
+      "answers": {
+        "vi": [
+          "Không. Cần quan sát lựa chọn, cảm giác và khi cần có người hướng dẫn chuyên môn phản hồi.",
+          "Không. Duy trì một mức thoải mái, tự chọn và đều đặn có thể là mục tiêu phù hợp hơn.",
+          "Có, miễn các lựa chọn phù hợp với mình; không có yêu cầu phải chuyển sang tư thế sàn.",
+          "Không. Biết quan sát và lựa chọn nghỉ phù hợp đã là một kỹ năng của buổi học."
+        ],
+        "en": [
+          "No. Your choices and response matter, with qualified feedback when needed.",
+          "No. A comfortable, deliberate and sustainable routine can be the better goal.",
+          "Yes, with suitable choices. Floor poses are not a course requirement.",
+          "No. Noticing your response and choosing suitable rest is a learned skill."
+        ]
+      },
+      "sources": [
+        "yoga-safety",
+        "yoga-short",
+        "yoga-beginner",
+        "yoga-chair",
+        "yoga-rest"
+      ],
+      "code": "",
+      "code_output": "",
+      "content_depth": "guided-practice-course",
+      "review_status": "editorial-draft",
+      "estimated_hours": 2,
+      "lessons": [
+        {
+          "title": {
+            "vi": "09 · Buổi 10 phút có hướng dẫn",
+            "en": "09 · A guided ten-minute session"
+          },
+          "video": "short",
+          "focus": {
+            "vi": "Đây là buổi áp dụng quy trình xem trước → chọn phiên bản → thực hành → ghi chép. Bạn đã có các điểm tựa để điều chỉnh thay vì mặc định làm hết động tác. Xem video trước khi bắt đầu hoặc chia thành từng đoạn. Mười phút là độ dài tài liệu, không phải hạn mức tối thiểu; có thể hoàn thành buổi học bằng việc xem, chọn và giải thích các phần phù hợp.",
+            "en": "Apply the sequence preview, choose, practice and reflect. Use familiar support options rather than following every movement automatically. Watch first or work in sections. Ten minutes describes the resource, not a required minimum; observing and explaining appropriate choices is valid learning."
+          },
+          "steps": {
+            "vi": [
+              "Trước khi bật video, chọn một điểm tựa và một động tác sẽ bỏ nếu không phù hợp.",
+              "Theo dõi 2–3 phút đầu ở tốc độ thường; dừng để thiết lập tư thế.",
+              "Tập phần đã chọn với hơi thở tự nhiên; nghỉ bất cứ lúc nào.",
+              "Ghi tổng thời gian thực hành thực tế, không tính thời gian video đã mở mà chưa tập."
+            ],
+            "en": [
+              "Choose support and identify one movement you will skip if unsuitable.",
+              "Watch the opening at normal speed and pause to set up.",
+              "Practice selected sections with ordinary breathing and rest as needed.",
+              "Log actual practice time rather than total time the video was open."
+            ]
+          },
+          "adapt": {
+            "vi": "Có thể chỉ xem quan sát trong ngày chưa sẵn sàng vận động. Dấu hoàn thành ghi nhận việc học, không xác nhận chất lượng thực hành thể chất.",
+            "en": "An observation-only day is valid. Completion records study progress, not an assessment of physical technique."
+          },
+          "question": {
+            "vi": "Mở video chạy hết có chứng minh mình tập đúng không?",
+            "en": "Does playing the full video prove correct technique?"
+          },
+          "answer": {
+            "vi": "Không. Cần quan sát lựa chọn, cảm giác và khi cần có người hướng dẫn chuyên môn phản hồi.",
+            "en": "No. Your choices and response matter, with qualified feedback when needed."
+          }
+        },
+        {
+          "title": {
+            "vi": "10 · Buổi nhập môn 20 phút, chia nhỏ được",
+            "en": "10 · A beginner session you can divide"
+          },
+          "video": "beginner",
+          "focus": {
+            "vi": "Video dài hơn cho phép quan sát cách mở đầu, chuyển phần và nghỉ cuối buổi. Không cần tăng thời lượng chỉ vì sang bài mới. Nếu buổi 10 phút đã phù hợp, giữ nguyên và dùng video này làm tài liệu quan sát. Nếu chọn tập, chia thành hai phần với khoảng nghỉ; không ghép thêm một buổi nặng để bù phần đã bỏ.",
+            "en": "Use the longer beginner video to observe preparation, transitions and a closing rest. A new lesson does not require more physical time. Keep your shorter routine if it suits you and use this resource for observation. If practicing, divide it into sections with a rest rather than trying to make up missed movements."
+          },
+          "steps": {
+            "vi": [
+              "Xem lướt trình tự, nhận diện phần quen và phần cần hỏi người hướng dẫn.",
+              "Chọn tối đa một nửa video cho lượt đầu; giữ nguyên các điểm tựa đã dùng.",
+              "Nghỉ, kiểm tra cảm giác rồi quyết định kết thúc hoặc xem tiếp phần còn lại.",
+              "So sánh với bài 10 phút: nhịp nào giúp bạn duy trì chú ý mà không vội?"
+            ],
+            "en": [
+              "Preview the sequence and identify familiar and unfamiliar sections.",
+              "Choose at most one half for a first pass and keep your supports.",
+              "Rest, check your response and decide whether to stop or observe more.",
+              "Compare the pacing with the shorter session without judging by duration alone."
+            ]
+          },
+          "adapt": {
+            "vi": "Không mặc định tăng 10 lên 20 phút. Nếu mệt, giảm phần tập hoặc chọn buổi nghỉ; không cố giữ tư thế khi khó thở hay đau.",
+            "en": "Do not automatically double your practice time. Shorten the session or rest when tired and stop for pain or difficult breathing."
+          },
+          "question": {
+            "vi": "Tiến bộ có bắt buộc tăng thời lượng mỗi tuần không?",
+            "en": "Must practice time increase every week?"
+          },
+          "answer": {
+            "vi": "Không. Duy trì một mức thoải mái, tự chọn và đều đặn có thể là mục tiêu phù hợp hơn.",
+            "en": "No. A comfortable, deliberate and sustainable routine can be the better goal."
+          }
+        },
+        {
+          "title": {
+            "vi": "11 · Buổi yoga trên ghế",
+            "en": "11 · A complete chair-based option"
+          },
+          "video": "chair",
+          "focus": {
+            "vi": "Ghế là một phương án thực hành độc lập, không chỉ là bước chờ để chuyển xuống sàn. Kiểm tra ghế vững, không xoay, không có bánh và đủ chỗ cho hai bàn chân. Tài liệu có những lựa chọn khác nhau; chỉ thực hiện phần bạn đã xem và thấy phù hợp. Người có nhu cầu phục hồi hoặc hạn chế vận động riêng cần người có chuyên môn điều chỉnh, không dùng khóa chung thay hướng dẫn cá nhân.",
+            "en": "Chair practice is an independent option rather than a temporary substitute for floor work. Use a stable chair without wheels or swivel and support your feet. Follow only suitable, previewed sections. Rehabilitation and individual mobility needs require appropriate guidance beyond this general course."
+          },
+          "steps": {
+            "vi": [
+              "Kiểm tra ghế trên sàn phẳng; đặt sát tường nếu cần ổn định hơn.",
+              "Bắt đầu bằng tay trên đùi và quan sát một phút.",
+              "Chọn các chuyển động tay/thân trên nhỏ trong video, giữ chân có điểm tựa.",
+              "Kết thúc bằng ngồi yên ngắn; ghi một thay đổi khiến chỗ ngồi phù hợp hơn."
+            ],
+            "en": [
+              "Check the chair on a level floor, with a wall behind if useful.",
+              "Rest hands on thighs and observe for a minute.",
+              "Choose small arm or upper-body movements with supported feet.",
+              "Finish with a short seated rest and note a useful seating adjustment."
+            ]
+          },
+          "adapt": {
+            "vi": "Không thực hiện phần đứng nếu chưa có khả năng chuyển tư thế an toàn. Đặt chân lên vật kê chắc; tránh ghế quá cao hoặc trượt.",
+            "en": "Skip standing sections if transfers are not safe for you. Use a stable footrest rather than an unsuitable high or slippery chair."
+          },
+          "question": {
+            "vi": "Có thể duy trì khóa này hoàn toàn bằng phiên bản ghế không?",
+            "en": "Can chair practice remain your main option?"
+          },
+          "answer": {
+            "vi": "Có, miễn các lựa chọn phù hợp với mình; không có yêu cầu phải chuyển sang tư thế sàn.",
+            "en": "Yes, with suitable choices. Floor poses are not a course requirement."
+          }
+        },
+        {
+          "title": {
+            "vi": "12 · Nghỉ ngơi và kết thúc buổi tập",
+            "en": "12 · Rest and a deliberate finish"
+          },
+          "video": "rest",
+          "focus": {
+            "vi": "Một buổi tập cần kết thúc có chủ ý, không chỉ tắt màn hình rồi đứng bật dậy. Chọn nghỉ ngồi hoặc nằm ở vị trí thoải mái. Video self-care cung cấp một ví dụ nhịp nhẹ để quan sát, không phải liệu pháp điều trị. Bạn có thể giữ mắt mở, đổi vị trí hoặc kết thúc sớm. Cảm giác dễ chịu hay khó chịu đều là thông tin để điều chỉnh, không phải điểm số.",
+            "en": "Finish deliberately instead of closing the screen and rushing away. Choose a comfortable seated or lying rest. The self-care resource offers an example of gentle pacing rather than treatment. Keep your eyes open, change position or finish early as needed. Observations guide your choices rather than grade them."
+          },
+          "steps": {
+            "vi": [
+              "Chọn ngồi có tựa hoặc nằm thoải mái; không bắt buộc nằm ngửa.",
+              "Thả tay, giữ hơi thở bình thường và nhận ra ba điểm tiếp xúc với mặt đỡ.",
+              "Cử động ngón tay/chân rồi chuyển tư thế chậm, dùng điểm tựa nếu cần.",
+              "Ghi một điều muốn giữ và một điều muốn đổi trong buổi tiếp theo."
+            ],
+            "en": [
+              "Choose supported sitting or comfortable lying without a required position.",
+              "Rest your hands, breathe normally and notice three contact points.",
+              "Move fingers and toes, then change position slowly with support.",
+              "Record one choice to keep and one to adjust next time."
+            ]
+          },
+          "adapt": {
+            "vi": "Nếu nằm gây khó chịu, ngồi ghế. Không xem cảm giác thư giãn là điều bắt buộc phải đạt; cũng không trì hoãn chăm sóc y tế khi có triệu chứng.",
+            "en": "Use sitting if lying is uncomfortable. Relaxation is not a required outcome, and practice should not delay medical care for symptoms."
+          },
+          "question": {
+            "vi": "Nếu không cảm thấy thư giãn ngay thì buổi tập có thất bại không?",
+            "en": "Is the session a failure if you do not feel relaxed?"
+          },
+          "answer": {
+            "vi": "Không. Biết quan sát và lựa chọn nghỉ phù hợp đã là một kỹ năng của buổi học.",
+            "en": "No. Noticing your response and choosing suitable rest is a learned skill."
+          }
+        }
+      ]
+    },
+    {
+      "id": "yoga-personal-practice",
+      "title": {
+        "vi": "Tuần 4 · Xây thói quen riêng",
+        "en": "Week 4 · Your own routine"
+      },
+      "concept": {
+        "vi": "Bốn bài học gồm Tự thiết kế một buổi 15 phút, Lịch 4 tuần và ngày nghỉ, Tự đánh giá kỹ năng lựa chọn, Kế hoạch sau khóa và học cùng người hướng dẫn. Hướng dẫn bằng chữ, video từ nguồn chính thức, lựa chọn nhẹ hơn và nhật ký thực hành.",
+        "en": "Four learning units cover plan your own short session, a four-week routine with rest days, assess your practice decisions, your next month and instructor feedback. Includes written guidance, official-source video, accessible options and reflection."
+      },
+      "example": {
+        "vi": "Bây giờ hãy tạo một cấu trúc có thể lặp lại, chỉ dùng lựa chọn đã quen. Gợi ý 15 phút gồm 2 phút chuẩn bị, khoảng 8 phút thực hành, 3 phút nghỉ và 2 phút ghi chép. Đây là khung tổ chức, có thể rút xuống 5 phút. Chưa cần thêm tư thế nâng cao hoặc thử giữ lâu; chất lượng lựa chọn và khả năng dừng mới là tiêu chí.",
+        "en": "Build a repeatable structure using familiar options. A fifteen-minute plan might allow two minutes to prepare, eight to practice, three to rest and two to reflect. This is a planning framework and can be shortened to five minutes. Avoid adding advanced poses or longer holds simply to make a session seem complete."
+      },
+      "lab": {
+        "vi": [
+          "Chọn một buổi phù hợp, ghi điểm tựa và nhật ký."
+        ],
+        "en": [
+          "Choose a suitable session and record support and observations."
+        ]
+      },
+      "questions": {
+        "vi": [
+          "Một kế hoạch tốt cần ghi gì ngoài tên tư thế?",
+          "Bỏ lỡ hai buổi có nên tập gấp đôi để bù không?",
+          "Nêu ba dấu hiệu cần dừng thay vì cố hoàn thành.",
+          "Sau khóa, lựa chọn nào tốt hơn: một lịch vừa sức hay ép theo thử thách nâng cao?"
+        ],
+        "en": [
+          "What belongs in a plan besides pose names?",
+          "Should you double the next session after missing practice?",
+          "Name three reasons to stop rather than finish.",
+          "What is a better next step: a sustainable plan or an advanced challenge?"
+        ]
+      },
+      "answers": {
+        "vi": [
+          "Điểm tựa, cách giảm mức, khoảng nghỉ, cách dừng và thời gian ghi chép.",
+          "Không cần. Trở lại một lựa chọn quen, quan sát và điều chỉnh lịch thực tế hơn.",
+          "Ví dụ: đau nhói, choáng hoặc khó thở. Dừng, nghỉ an toàn và tìm hỗ trợ phù hợp khi triệu chứng không hết hoặc đáng lo.",
+          "Một kế hoạch phù hợp với mình, có điểm tựa, nghỉ và phản hồi chuyên môn khi cần."
+        ],
+        "en": [
+          "Support, easier options, rest, a stopping plan and reflection time.",
+          "No. Return to a familiar option and make the schedule more realistic.",
+          "Examples include sharp pain, dizziness or breathing difficulty. Stop, rest safely and seek appropriate help for persistent or concerning symptoms.",
+          "A suitable plan with support, rest and qualified feedback when needed."
+        ]
+      },
+      "sources": [
+        "yoga-safety",
+        "yoga-short",
+        "yoga-chair",
+        "yoga-beginner",
+        "yoga-rest"
+      ],
+      "code": "",
+      "code_output": "",
+      "content_depth": "guided-practice-course",
+      "review_status": "editorial-draft",
+      "estimated_hours": 2,
+      "lessons": [
+        {
+          "title": {
+            "vi": "13 · Tự thiết kế một buổi 15 phút",
+            "en": "13 · Plan your own short session"
+          },
+          "video": "short",
+          "focus": {
+            "vi": "Bây giờ hãy tạo một cấu trúc có thể lặp lại, chỉ dùng lựa chọn đã quen. Gợi ý 15 phút gồm 2 phút chuẩn bị, khoảng 8 phút thực hành, 3 phút nghỉ và 2 phút ghi chép. Đây là khung tổ chức, có thể rút xuống 5 phút. Chưa cần thêm tư thế nâng cao hoặc thử giữ lâu; chất lượng lựa chọn và khả năng dừng mới là tiêu chí.",
+            "en": "Build a repeatable structure using familiar options. A fifteen-minute plan might allow two minutes to prepare, eight to practice, three to rest and two to reflect. This is a planning framework and can be shortened to five minutes. Avoid adding advanced poses or longer holds simply to make a session seem complete."
+          },
+          "steps": {
+            "vi": [
+              "Viết phần mở đầu, hai lựa chọn quen và một cách nghỉ cuối buổi.",
+              "Bên cạnh mỗi lựa chọn, ghi một phiên bản nhẹ hơn hoặc một lý do sẽ bỏ.",
+              "Tập thử ngắn với đồng hồ chỉ để quản lý thời gian, không để ép tiến độ.",
+              "Sau buổi, sửa kế hoạch theo cảm giác thực tế và lưu lại để lần sau dùng."
+            ],
+            "en": [
+              "Write preparation, two familiar choices and a closing rest.",
+              "Add an easier option or reason to skip beside each movement.",
+              "Try a short version using a clock for organization, not pressure.",
+              "Revise the plan from your observations and keep it for next time."
+            ]
+          },
+          "adapt": {
+            "vi": "Nếu tự sắp chuỗi chưa tự tin, dùng một video đã quen và chỉ thay thời lượng, điểm tựa. Không tự ghép động tác chưa được hướng dẫn.",
+            "en": "If sequencing feels uncertain, repeat a familiar video with suitable timing and support rather than assembling unfamiliar movements."
+          },
+          "question": {
+            "vi": "Một kế hoạch tốt cần ghi gì ngoài tên tư thế?",
+            "en": "What belongs in a plan besides pose names?"
+          },
+          "answer": {
+            "vi": "Điểm tựa, cách giảm mức, khoảng nghỉ, cách dừng và thời gian ghi chép.",
+            "en": "Support, easier options, rest, a stopping plan and reflection time."
+          }
+        },
+        {
+          "title": {
+            "vi": "14 · Lịch 4 tuần và ngày nghỉ",
+            "en": "14 · A four-week routine with rest days"
+          },
+          "video": "chair",
+          "focus": {
+            "vi": "Lịch là lời nhắc linh hoạt, không phải chuỗi ngày phải giữ bằng mọi giá. Tuần 1 ưu tiên chuẩn bị và bài 1–4; tuần 2 khám phá bài 5–8; tuần 3 chọn buổi hướng dẫn trong bài 9–12; tuần 4 dùng bài 13–16 để tự điều chỉnh. Mỗi tuần chọn 2–3 buổi ngắn nếu phù hợp, xen ngày nghỉ. Có thể học chậm hơn hoặc lặp lại một tuần; không cần bù nhiều buổi khi bỏ lỡ.",
+            "en": "Use the calendar as a flexible reminder. Week one covers preparation in lessons 1–4, week two explores foundations in 5–8, week three selects guided options in 9–12 and week four uses 13–16 to personalize the routine. Choose two or three short sessions per week if suitable, with rest days. Repeat a week or slow down rather than making up missed sessions."
+          },
+          "steps": {
+            "vi": [
+              "Chọn hai thời điểm dễ duy trì trong tuần và một thời điểm dự phòng.",
+              "Ghi rõ video/bài sẽ dùng và phiên bản ghế hoặc sàn phù hợp.",
+              "Đặt ngày nghỉ giữa các buổi khi cần; nếu bỏ lỡ, trở lại lịch ở mức cũ.",
+              "Cuối tuần xem nhật ký và quyết định giữ, rút ngắn hay hỏi thêm người hướng dẫn."
+            ],
+            "en": [
+              "Choose two realistic time slots and one optional alternative.",
+              "Name the lesson or video and appropriate seated or floor options.",
+              "Allow rest days and return at a familiar level after a missed session.",
+              "Review your log before keeping, shortening or seeking guidance on your plan."
+            ]
+          },
+          "adapt": {
+            "vi": "Nếu mệt, đang ốm hoặc có triệu chứng mới, bỏ lịch tập và ưu tiên nghỉ/chăm sóc phù hợp. Lịch khóa học không thay tư vấn cá nhân.",
+            "en": "Skip scheduled practice when unwell or experiencing new symptoms and prioritize appropriate rest or care. The course calendar is not individual advice."
+          },
+          "question": {
+            "vi": "Bỏ lỡ hai buổi có nên tập gấp đôi để bù không?",
+            "en": "Should you double the next session after missing practice?"
+          },
+          "answer": {
+            "vi": "Không cần. Trở lại một lựa chọn quen, quan sát và điều chỉnh lịch thực tế hơn.",
+            "en": "No. Return to a familiar option and make the schedule more realistic."
+          }
+        },
+        {
+          "title": {
+            "vi": "15 · Tự đánh giá kỹ năng lựa chọn",
+            "en": "15 · Assess your practice decisions"
+          },
+          "video": "beginner",
+          "focus": {
+            "vi": "Bài đánh giá này dựa trên lựa chọn có thể giải thích, không dựa vào độ dẻo hoặc hình ảnh tư thế. Xem lại một video đã quen và ghi chỗ bạn sẽ dừng, giảm mức hoặc dùng ghế. Sau đó thực hiện một đoạn ngắn nếu sẵn sàng. Nếu muốn được đánh giá kỹ thuật động tác, cần người hướng dẫn đủ chuyên môn quan sát; khóa trực tuyến không tự xác nhận kỹ thuật chỉ bằng nút hoàn thành.",
+            "en": "Assess decisions you can explain rather than flexibility or appearance. Review a familiar resource and identify where you would pause, reduce the range or use a chair. Try a short suitable section if ready. Physical technique requires qualified observation rather than an automatic completion badge."
+          },
+          "steps": {
+            "vi": [
+              "Không nhìn ghi chú, kể lại cách chuẩn bị khu vực tập và một dấu hiệu cần dừng.",
+              "Chọn một động tác, nêu một phiên bản nhẹ hơn và khi nào sẽ bỏ hẳn.",
+              "Thực hiện một đoạn ngắn hoặc quan sát; ghi lý do lựa chọn của mình.",
+              "Đối chiếu: có chuẩn bị, có điểm tựa, có nghỉ và có ghi chép hay chưa."
+            ],
+            "en": [
+              "Recall your setup and one reason to stop without looking at notes.",
+              "Choose a movement and explain an easier option and when to skip it.",
+              "Practice or observe a short section and record why you chose it.",
+              "Check for preparation, support, rest and reflection in your plan."
+            ]
+          },
+          "adapt": {
+            "vi": "Không quay phim cơ thể để tự chấm theo hình mẫu nếu điều đó gây áp lực. Có thể nộp nhật ký chữ và câu hỏi cho người hướng dẫn.",
+            "en": "You may use a written log instead of filming yourself or comparing your body with an example."
+          },
+          "question": {
+            "vi": "Nêu ba dấu hiệu cần dừng thay vì cố hoàn thành.",
+            "en": "Name three reasons to stop rather than finish."
+          },
+          "answer": {
+            "vi": "Ví dụ: đau nhói, choáng hoặc khó thở. Dừng, nghỉ an toàn và tìm hỗ trợ phù hợp khi triệu chứng không hết hoặc đáng lo.",
+            "en": "Examples include sharp pain, dizziness or breathing difficulty. Stop, rest safely and seek appropriate help for persistent or concerning symptoms."
+          }
+        },
+        {
+          "title": {
+            "vi": "16 · Kế hoạch sau khóa và học cùng người hướng dẫn",
+            "en": "16 · Your next month and instructor feedback"
+          },
+          "video": "rest",
+          "focus": {
+            "vi": "Kết thúc khóa bằng một kế hoạch vừa sức cho tháng tới. Chọn một video ngắn, một phương án ghế và một cách nghỉ đã quen làm thư viện cá nhân. Mục tiêu có thể đơn giản là dành thời gian chú ý cho cơ thể hai lần mỗi tuần. Khi tìm lớp hoặc người hướng dẫn, hỏi về kinh nghiệm dạy người mới, khả năng điều chỉnh và cách họ phản hồi khi học viên đau hoặc muốn nghỉ. Không cần hứa hẹn thay đổi hình thể hay đạt tư thế nâng cao.",
+            "en": "Finish with a realistic plan for the next month. Keep a short resource, a chair option and a familiar rest as your personal library. A goal can be as simple as making time for attentive practice twice a week. Ask prospective instructors about beginner teaching, adaptations and how they respond to pain or requests to rest. Advanced poses and body changes are not required outcomes."
+          },
+          "steps": {
+            "vi": [
+              "Chọn ba bài/video muốn giữ và ghi lý do từng lựa chọn.",
+              "Viết lịch hai tuần đầu tháng tới, có thời điểm dự phòng và ngày nghỉ.",
+              "Ghi hai câu hỏi cho người hướng dẫn về điều chỉnh động tác phù hợp với mình.",
+              "Xem lại nhật ký bài 1 và bài 16; mô tả điều mình hiểu rõ hơn, không so hình thể."
+            ],
+            "en": [
+              "Choose three lessons or resources and explain each choice.",
+              "Plan the first two weeks of next month with alternatives and rest days.",
+              "Write two questions about suitable adaptations for an instructor.",
+              "Compare your first and final logs in terms of understanding rather than appearance."
+            ]
+          },
+          "adapt": {
+            "vi": "Khóa này là nhập môn tổng quát, không cấp chứng chỉ hành nghề yoga và không thay chương trình phục hồi hay chăm sóc y tế.",
+            "en": "This is a general introduction, not teacher certification, rehabilitation or a substitute for medical care."
+          },
+          "question": {
+            "vi": "Sau khóa, lựa chọn nào tốt hơn: một lịch vừa sức hay ép theo thử thách nâng cao?",
+            "en": "What is a better next step: a sustainable plan or an advanced challenge?"
+          },
+          "answer": {
+            "vi": "Một kế hoạch phù hợp với mình, có điểm tựa, nghỉ và phản hồi chuyên môn khi cần.",
+            "en": "A suitable plan with support, rest and qualified feedback when needed."
+          }
+        }
+      ]
+    }
+  ],
+  "videos": {
+    "beginner": {
+      "id": "v7AYKMP6rOE",
+      "title": "Yoga For Complete Beginners",
+      "url": "https://yogawithadriene.com/yoga-complete-beginners/",
+      "minutes": 20
+    },
+    "short": {
+      "id": "j7rKKpwdXNE",
+      "title": "10-Minute Yoga for Beginners",
+      "url": "https://yogawithadriene.com/10-minute-yoga-for-beginners/",
+      "minutes": 10
+    },
+    "mountain": {
+      "id": "NYhH8Gr35cI",
+      "title": "Tadasana (Mountain Pose)",
+      "url": "https://yogawithadriene.com/tadasana-mountain-pose/",
+      "minutes": 12
+    },
+    "catcow": {
+      "id": "y39PrKY_4JM",
+      "title": "Cat-Cow Pose",
+      "url": "https://yogawithadriene.com/cat-cow-pose/",
+      "minutes": 8
+    },
+    "chair": {
+      "id": "-Ts01MC2mIo",
+      "title": "Chair Yoga",
+      "url": "https://yogawithadriene.com/chair-yoga/",
+      "minutes": 17
+    },
+    "rest": {
+      "id": "VpW33Celubg",
+      "title": "10-Minute Yoga For Self Care",
+      "url": "https://yogawithadriene.com/10-minute-yoga-for-self-care/",
+      "minutes": 10
+    }
+  }
+}

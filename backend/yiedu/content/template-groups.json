@@ -1,0 +1,9 @@
+[
+  {"id":"ai-data","label":{"vi":"AI & Dữ liệu","en":"AI & Data"},"description":{"vi":"Xây năng lực cho thời đại AI","en":"Skills for an AI-powered world"},"color":"#6b5ba6","featured":true},
+  {"id":"software-cloud","label":{"vi":"Lập trình & Cloud","en":"Coding & Cloud"},"description":{"vi":"Từ dòng code đến sản phẩm","en":"From code to working products"},"color":"#32718b","featured":true},
+  {"id":"robotics-stem","label":{"vi":"Robotics & STEM","en":"Robotics & STEM"},"description":{"vi":"Tư duy, mô phỏng và chế tạo","en":"Explore, simulate and build"},"color":"#7553a2","featured":true},
+  {"id":"business","label":{"vi":"Kinh doanh & Lãnh đạo","en":"Business & Leadership"},"description":{"vi":"Phát triển đội ngũ và tổ chức","en":"Grow teams and organizations"},"color":"#ac693a","featured":false},
+  {"id":"wellness","label":{"vi":"Yoga & Sống khỏe","en":"Yoga & Wellbeing"},"description":{"vi":"Một nhịp sống cân bằng hơn","en":"A more balanced everyday life"},"color":"#557a60","featured":false},
+  {"id":"languages","label":{"vi":"Ngoại ngữ","en":"Languages"},"description":{"vi":"Mở rộng kết nối, mở thêm cơ hội","en":"Connect across languages"},"color":"#b25d77","featured":false},
+  {"id":"creative-education","label":{"vi":"Sáng tạo & Giáo dục","en":"Creative & Education"},"description":{"vi":"Dạy điều bạn yêu, tạo giá trị mới","en":"Teach what you love to create"},"color":"#468478","featured":false}
+]

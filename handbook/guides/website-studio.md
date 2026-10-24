@@ -1,6 +1,6 @@
 # Website Studio 0.7 và quản trị bài học
 
-Ngày 24/10/2026. [Phạm vi](../product/release-0.7.md), [yêu cầu và nghiệm thu](../product/changes/CR-005-authoring-workspaces.md).
+Ngày 24/10/2026. Cập nhật [trải nghiệm 0.8](experience-yoga.md) cho template, Yoga và Back/Studio.  [Phạm vi](../product/release-0.7.md), [yêu cầu và nghiệm thu](../product/changes/CR-005-authoring-workspaces.md).
 
 ## Cập nhật local
 

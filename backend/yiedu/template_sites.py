@@ -14,6 +14,10 @@ def tr(locale, vi, en):
 
 
 def source_for(t, page, locale, brand):
+    if t["layout"] == "yoga":
+        from yiedu.yoga_site import yoga_source
+
+        return yoga_source(t, page, locale, brand)
     modules = curriculum(t["id"])
     name = escape(brand)
     headline = escape(t["subtitle" if locale == "vi" else "subtitle_en"])
@@ -131,6 +135,14 @@ def site_document(template_id, brand=None):
         ("projects", "projects", "Dự án", "Projects"),
         ("about", "about", "Giới thiệu", "About"),
     ]
+    if t["layout"] == "yoga":
+        names = [
+            ("home", "", "Trang chủ", "Home"),
+            ("programs", "programs", "Khóa học", "Course"),
+            ("roadmap", "roadmap", "Lộ trình 4 tuần", "Four-week pathway"),
+            ("projects", "projects", "Nhật ký thực hành", "Practice journal"),
+            ("about", "about", "Về chúng tôi", "Our approach"),
+        ]
     pages = [
         {
             "id": key,

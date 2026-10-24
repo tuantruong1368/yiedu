@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { Render } from "@puckeditor/core";
 import Link from "next/link";
 import { makeConfig } from "./page-blocks";
-import { TenantBrand } from "./tenant-brand";
-import { useI18n, LocaleSwitch } from "./locale-provider";
+import SiteNavigation from "./site-navigation";
+import { useI18n } from "./locale-provider";
 import SiteRuntime from "./authoring/site-runtime";
 export default function SiteView({
   data,
@@ -27,7 +27,6 @@ export default function SiteView({
     )
       setLocale(doc.default_locale);
   }, [isNew, doc?.default_locale]);
-  const url = (p: any) => "/t/" + tenant.slug + (p.slug ? "/p/" + p.slug : "");
   return (
     <div
       className="tenant-site"
@@ -35,32 +34,7 @@ export default function SiteView({
         { "--brand": tenant.branding.color || "#215d4c" } as React.CSSProperties
       }
     >
-      <header className="site-nav">
-        <TenantBrand tenant={tenant} />
-        <nav>
-          {isNew ? (
-            doc.menu.map((m: any) => {
-              const p = doc.pages.find((p: any) => p.id === m.page_id);
-              return (
-                p && (
-                  <Link key={m.id} href={url(p)}>
-                    {m.label[locale] || m.label[doc.default_locale]}
-                  </Link>
-                )
-              );
-            })
-          ) : (
-            <a href="#courses">{t("Khóa học", "Courses")}</a>
-          )}
-          <Link href={"/t/" + tenant.slug + "/learn"}>
-            {t("Không gian học tập", "Learning")}
-          </Link>
-        </nav>
-        <LocaleSwitch />
-        <Link href={"/t/" + tenant.slug + "/learn"} className="button small">
-          {t("Tham gia học tập ↗", "Start learning ↗")}
-        </Link>
-      </header>
+      <SiteNavigation tenant={tenant} document={doc} pageId={page?.id} />
       {isNew ? (
         page ? (
           <SiteRuntime

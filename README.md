@@ -3,7 +3,13 @@
 Tạo và vận hành hệ thống e-learning mang thương hiệu riêng.
 Yisoft và Yirobot là tenant demo, không phải khóa học do YiEdu bán.
 
-## Bản chạy local 0.7.0
+## Bản chạy local 0.8.0
+
+Mới: [Nhóm template, An Nhiên Yoga và điều hướng ổn định](handbook/guides/experience-yoga.md):
+15 mẫu/7 nhóm, Yoga 16 bài có video, preview đủ logo/menu, Studio trong panel quản trị và Back giữ ngữ cảnh.
+[Phạm vi 0.8](handbook/product/release-0.8.md).
+
+## Website Studio 0.7
 
 Mới: [Website Studio và quản trị bài học](handbook/guides/website-studio.md): sửa hiển thị khi điều hướng,
 23 gadget có preview SVG, PostCSS, theme/preview và editor bài học ngay cạnh danh sách.
@@ -13,7 +19,7 @@ Mới: [Content Studio toàn màn hình](handbook/guides/content-studio.md), web
 slide/video/mô phỏng độc lập, bài giảng có học liệu và nâng cấp bài mẫu giữ nội dung khách đã sửa.
 [Phạm vi 0.6 và giới hạn](handbook/product/release-0.6.md).
 
-Mới: [14 template và học liệu Việt/Anh](handbook/guides/template-library.md), xem trước website/bài học và copy nội dung riêng cho tenant khi xuất bản.
+Mới: [15 template và học liệu Việt/Anh](handbook/guides/template-library.md), xem trước website/bài học và copy nội dung riêng cho tenant khi xuất bản.
 
 Đã có website Next.js + GrapesJS builder, Tiptap lesson editor, API FastAPI, PostgreSQL
 và mã nguồn app React Native/Expo. Puck renderer giữ cho trang cũ.

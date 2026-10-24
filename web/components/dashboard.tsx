@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useI18n } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -14,6 +15,7 @@ import { api, slugify } from "@/lib/api";
 import { Header, Logout, ErrorBox, Loading, Empty } from "./shared";
 export default function Dashboard({ template = "" }: { template?: string }) {
   const { t: tr } = useI18n();
+  const router = useRouter();
 
   const [templates, setTemplates] = useState<any[]>([]);
   const [data, setData] = useState<any>(null),
@@ -26,7 +28,7 @@ export default function Dashboard({ template = "" }: { template?: string }) {
       .catch((e) => setError(e.message));
     api("/me/dashboard")
       .then(setData)
-      .catch(() => (location.href = "/login"));
+      .catch(() => router.replace("/login"));
   }, []);
   async function create(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -43,7 +45,7 @@ export default function Dashboard({ template = "" }: { template?: string }) {
           include_sample_content: f.get("include_sample_content") === "on",
         }),
       });
-      location.href = "/builder/" + w.id;
+      router.push("/builder/" + w.id);
     } catch (e) {
       setError((e as Error).message);
       setCreating(false);

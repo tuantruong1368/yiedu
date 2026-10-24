@@ -10,6 +10,23 @@ import TaskItem from "@tiptap/extension-task-item";
 import Mathematics from "@tiptap/extension-mathematics";
 import { StudioNode } from "@/lib/studio/lesson-node";
 import { useState } from "react";
+import ExternalVideo from "@/components/lesson/external-video";
+const LessonYoutube = Youtube.extend({
+  addAttributes() {
+    return { ...this.parent?.(), title: { default: "" } };
+  },
+  addNodeView() {
+    return ReactNodeViewRenderer(({ node }: any) => (
+      <NodeViewWrapper contentEditable={false}>
+        <ExternalVideo
+          key={node.attrs.src}
+          url={node.attrs.src}
+          title={node.attrs.title}
+        />
+      </NodeViewWrapper>
+    ));
+  },
+});
 export type LessonTool = {
   packageId: string;
   version: string;
@@ -239,7 +256,7 @@ export function lessonExtensions() {
     StudioNode,
     TableKit,
     Image.configure({ allowBase64: false }),
-    Youtube.configure({ nocookie: true }),
+    LessonYoutube.configure({ nocookie: true }),
     TaskList,
     TaskItem.configure({ nested: true }),
     Mathematics.configure({

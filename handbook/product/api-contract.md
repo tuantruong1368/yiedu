@@ -97,3 +97,17 @@ GET `/api/v1/sites/{slug}/render?page=<slug>&locale=vi|en` trả HTML cho iframe
 Chỉ lấy course đã publish cùng tenant, rewrite page ID/slug, fallback nội dung theo default locale.
 Response no-store, CSP nonce và nosniff; BFF giữ các header này. Trang thiếu trả 404, tham số không hợp lệ 422.
 Không có endpoint mới ghi dữ liệu, không thay ACL của workspace/learning. [Hướng dẫn](../guides/website-studio.md).
+
+## Catalog và preview 0.8
+
+| Method | Endpoint | Hành vi |
+|---|---|---|
+| GET | `/api/v1/catalog/template-groups` | Bảy nhóm public: id, label/description VI/EN, color và featured biên tập |
+| GET | `/api/v1/catalog/templates` | 15 mẫu, thêm `group_ids`; số course/lesson/page vẫn theo dữ liệu gốc |
+| GET | `/api/v1/catalog/templates/{id}/render?page=home&locale=vi` | HTML preview từ cùng renderer public, rewrite link về template; CSP nonce/nosniff, cache 300 giây |
+
+Preview nhận page ID hoặc slug trong mẫu; mẫu/trang thiếu trả 404, locale ngoài VI/EN hoặc page
+quá dài trả 422. Course link trong preview mở đúng phần bài học, không dùng tenant giả.
+Không cần session cho catalog/preview; bản copy/seed vẫn nằm trong transaction publish có quyền.
+Yoga dùng SiteDocument 2.0/rich lesson hiện hành, không thêm schema API ghi hoặc migration.
+[Sử dụng và giới hạn](../guides/experience-yoga.md).

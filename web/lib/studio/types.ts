@@ -51,5 +51,10 @@ export function defaultProject(kind: ProjectKind): ProjectData {
         source_url: "",
       };
 }
-export const studioURL = (slug: string, kind?: string, id = "new") =>
-  `/t/${slug}/administrator/studio${kind ? `/${kind}/${id}` : ""}`;
+export const studioURL = (
+  slug: string,
+  kind?: string,
+  id = "new",
+  returnTo?: string,
+) =>
+  `/t/${encodeURIComponent(slug)}/administrator${kind ? `/studio/${kind}/${id}${returnTo ? `?returnTo=${encodeURIComponent(returnTo)}` : ""}` : "?tab=studio"}`;

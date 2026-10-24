@@ -1,9 +1,9 @@
 # Cấu trúc dự án YiEdu — tài liệu cho developer
 
-Cập nhật 24/10/2026, đối chiếu mã nguồn Website Studio 0.7, dựa trên commit
-`34fae91f4e85657b010950869fe40e0784e488c8` làm baseline.
-Danh mục bên dưới bao phủ toàn bộ **236 file được quản lý bằng Git** sau lần cập nhật tài liệu.
-Có 68 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6/0.7 cuối tài liệu.
+Cập nhật 24/10/2026, đối chiếu trải nghiệm 0.8, dựa trên commit
+`742f9580750b569b890dcdf94423d55a3bd28525` làm baseline.
+Danh mục bên dưới bao phủ toàn bộ **252 file được quản lý bằng Git** sau lần cập nhật tài liệu.
+Có 70 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6/0.7/0.8 cuối tài liệu.
 Các thư mục build/dependency/backup sinh ở máy developer được giải thích riêng ở mục 6.
 
 ## 1. Đọc tài liệu này để làm gì?
@@ -612,3 +612,31 @@ và [ma trận 0.7](../product/release-0.7.md). Không thêm thư mục hoặc m
 
 `builder.tsx` tiếp tục là entry point GrapesJS; `SiteRuntime` phục vụ iframe preview và render endpoint.
 `CourseWorkspace` được gọi từ `AdminScreen`; editor full page vẫn dùng Content Studio và schema 0.6.
+
+## Bổ sung trải nghiệm 0.8 — danh mục từng file mới
+
+[Hướng dẫn](experience-yoga.md), [CR-006](../product/changes/CR-006-discovery-yoga-navigation.md),
+[phạm vi](../product/release-0.8.md). Hai thư mục mới `web/public/` và `web/public/illustrations/`
+chứa asset tĩnh do Next phục vụ; Docker và standalone ZIP đóng gói cùng source.
+
+| File | Chức năng |
+|---|---|
+| `backend/yiedu/content/template-groups.json` | Bảy nhóm, nhãn/mô tả VI/EN và màu cho catalog. |
+| `backend/yiedu/content/yoga.json` | Mẫu Yoga, bốn chuyên đề, 16 bài hai ngôn ngữ và sáu video chính thức. |
+| `backend/yiedu/yoga_site.py` | HTML/CSS năm trang Yoga, placeholder course và nhật ký. |
+| `handbook/guides/experience-yoga.md` | Hướng dẫn sử dụng, nguồn nội dung, navigation và SDK 0.8. |
+| `handbook/product/changes/CR-006-discovery-yoga-navigation.md` | Chín nhóm AC và kiểm chứng theo yêu cầu. |
+| `handbook/product/release-0.8.md` | Ma trận hành vi, tương thích dữ liệu và giới hạn 0.8. |
+| `web/app/error.tsx` | Lỗi có retry và link về website, không lộ exception nội bộ. |
+| `web/app/experience.css` | Giao diện discovery/preview/Studio, responsive và giảm chuyển động. |
+| `web/app/not-found.tsx` | Trang 404 có lối về website/thư viện và dashboard. |
+| `web/components/lesson/external-video.tsx` | Player YouTube theo yêu cầu, video HTTPS và link nguồn. |
+| `web/components/site-navigation.tsx` | Brand/menu/CTA chung website tenant và template preview. |
+| `web/components/studio/studio-library.tsx` | Thư viện trong panel phải, tìm/lọc project và lesson riêng. |
+| `web/lib/navigation.ts` | Đích quay lại cùng tenant và gallery return URL có kiểm tra. |
+| `web/lib/use-url-filters.ts` | Bộ lọc phản hồi ngay, ghép URL hiện tại và Back/Forward. |
+| `web/public/illustrations/yoga-practice.svg` | Minh họa tự vẽ, không phải ảnh hướng dẫn tư thế. |
+| `web/tests/experience.spec.ts` | Nhóm/hover/preview, sidebar/Back/nested tool, Yoga learner và URL safety. |
+
+Không thêm migration. `template_library.py` nạp nội dung Yoga và tạo rich lesson;
+`portable.py` bổ sung source mobile/SVG; `mobile/App.tsx` mở nguồn video trong rich lesson.

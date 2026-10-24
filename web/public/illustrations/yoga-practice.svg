@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 640" role="img" aria-label="Illustration of a person resting in a seated yoga practice">
+  <rect width="600" height="640" rx="180" fill="#e4e8d9"/>
+  <circle cx="310" cy="270" r="182" fill="#f5f1e4"/>
+  <path d="M40 545C155 500 420 490 560 545L550 580H50Z" fill="#cbb9a2"/>
+  <path d="M472 525C460 380 486 205 540 110" fill="none" stroke="#769177" stroke-width="5"/>
+  <g fill="#89a084"><ellipse cx="503" cy="206" rx="18" ry="50" transform="rotate(32 503 206)"/><ellipse cx="473" cy="293" rx="18" ry="52" transform="rotate(-35 473 293)"/><ellipse cx="509" cy="342" rx="18" ry="53" transform="rotate(42 509 342)"/><ellipse cx="473" cy="420" rx="18" ry="52" transform="rotate(-34 473 420)"/></g>
+  <ellipse cx="292" cy="543" rx="168" ry="16" fill="#a29b852d"/>
+  <path d="M255 385C198 404 131 449 123 478C117 503 149 528 192 516L303 478L401 518C447 537 471 509 459 484C441 448 382 408 339 386Z" fill="#53715b"/>
+  <path d="M191 487L310 460L410 488" fill="none" stroke="#3d5a47" stroke-width="18" stroke-linecap="round"/>
+  <path d="M253 291C230 322 231 371 243 412C274 428 321 429 351 411C365 366 361 324 338 291Z" fill="#bc8067"/>
+  <path d="M254 293C265 308 325 309 338 293L350 383C323 405 269 405 242 385Z" fill="#fff9eb"/>
+  <path d="M252 307C233 337 222 374 190 413L160 447M338 308C359 345 372 379 401 413L430 447" fill="none" stroke="#bc8067" stroke-width="22" stroke-linecap="round"/>
+  <path d="M146 449L174 450M419 450L447 449" stroke="#bc8067" stroke-width="14" stroke-linecap="round"/>
+  <path d="M278 265H314V300C305 310 288 310 278 300Z" fill="#b77760"/>
+  <ellipse cx="296" cy="234" rx="42" ry="51" fill="#c58b6d"/>
+  <path d="M254 234C239 174 264 147 301 157C345 148 348 191 338 218C326 210 317 198 314 181C300 205 277 212 254 214Z" fill="#423c31"/>
+  <circle cx="307" cy="154" r="22" fill="#423c31"/>
+  <path d="M275 237Q283 243 290 237M306 237Q314 243 322 237" fill="none" stroke="#634938" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M287 259Q297 265 307 259" fill="none" stroke="#955f49" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="90" cy="100" r="25" fill="#c3ccaf"/><path d="M75 100H105M90 85V115" stroke="#f5f1e4" stroke-width="2"/>
+</svg>

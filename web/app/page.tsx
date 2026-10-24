@@ -16,7 +16,12 @@ import SiteView from "@/components/site-view";
 export const dynamic = "force-dynamic";
 export default async function Home() {
   const tr = await getT();
-  const templates = (await publicApi("/catalog/templates")) || [];
+  const [templateData, groupData] = await Promise.all([
+    publicApi("/catalog/templates"),
+    publicApi("/catalog/template-groups"),
+  ]);
+  const templates = templateData || [],
+    groups = groupData || [];
 
   if (process.env.INSTANCE_MODE === "standalone") {
     const info = await publicApi("/instance");
@@ -175,7 +180,7 @@ export default async function Home() {
             ))}
           </div>
         </section>
-        <section id="templates" className="section">
+        <section id="templates" className="section template-section">
           <div className="section-heading">
             <div>
               <span className="eyebrow">{tr("01 / CHỌN ĐIỂM KHỞI ĐẦU")}</span>
@@ -191,7 +196,7 @@ export default async function Home() {
               {tr("Mọi nội dung đều có thể chỉnh sửa.")}
             </p>
           </div>
-          <TemplateGallery templates={templates} />
+          <TemplateGallery templates={templates} groups={groups} />
         </section>
         <section className="closing">
           <span className="eyebrow">

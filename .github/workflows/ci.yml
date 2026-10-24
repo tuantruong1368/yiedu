@@ -92,6 +92,7 @@ jobs:
       - run: docker compose up --build -d
       - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:8000/health/ready
       - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:3000/ > /tmp/yiedu-home.html
+      - run: curl --fail http://localhost:3000/illustrations/yoga-practice.svg > /tmp/yiedu-yoga.svg
       - run: docker compose logs --tail 60
         if: failure()
       - run: docker compose down

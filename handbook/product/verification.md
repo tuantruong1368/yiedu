@@ -221,3 +221,29 @@ bundles), compose (build/ready/homepage), database-upgrade (PostgreSQL 17→18 g
 chạy lại app). Luồng danh sách dài còn kiểm phím Enter lưu bài mà không chuyển sang Studio.
 Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay code đã kiểm tra.
 
+## Trải nghiệm 0.8 — 24/10/2026
+
+Nguồn local 0.8 trên Python 3.15.1/Node.js 26.12.1: Ruff, contracts/5 metadata examples,
+docs links, MkDocs strict và Next production build thành công. PGlite socket chạy Alembic
+lên head/check không drift; **47 pytest** qua, gồm catalog groups, HTML preview/CSP/404/422,
+Yoga copy riêng tenant, learner enrollment/completion và ZIP giữ SVG/source mobile.
+PGlite là PostgreSQL WASM qua protocol, không thay thế PostgreSQL native trong CI.
+
+**11 Playwright tests** qua trên production build: 10 luồng browser và một kiểm tra return URL.
+Đã kiểm tìm không dấu, đổi nhóm/thao tác nhanh, hover opacity, preview có logo/menu/năm trang,
+ảnh SVG nạp được, mobile menu, Back giữ gallery filter; sidebar chỉ một logo và giữ DOM qua tab;
+Studio nhúng → tool → lưu không remount → Back đúng filter; đăng nhập lại về đúng panel;
+lesson → tạo slide trong cùng tab → Back về đúng lesson rồi đúng khóa/bài; Yoga learner đọc,
+mở player theo yêu cầu, reload và hoàn thành. Các luồng cũ builder/import/VI/EN/events, course
+list dài, public history, slide/video/mô phỏng và owner→learner→ZIP đều chạy lại thành công.
+
+Đã xem ảnh thư viện nhóm/Yoga và Studio nhúng, sửa căn lề course gadget, search hàng ngang và
+ẩn poster khi lỗi. Video gốc được đối chiếu từ trang chính thức của tác giả; kiểm thử browser
+chặn request player ngoài trong case Yoga để kiểm hợp đồng iframe/nguồn, không xác nhận playback
+YouTube trực tiếp trên mọi vùng/mạng. Có nguồn dự phòng để người dùng mở video tại nhà cung cấp.
+
+Mobile typecheck, Expo offline dependency check và export bundle Android/iOS qua.
+Danh mục developer đối chiếu **252 file/70 thư mục**. Chưa có Docker daemon local, UAT thiết bị
+thật, benchmark mọi trình duyệt/mạng hoặc nghiệm thu giáo trình bởi chuyên gia Yoga.
+Kết quả Docker, native PostgreSQL 18.6 và upgrade 17→18 ghi riêng từ CI nguồn cuối.
+

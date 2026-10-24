@@ -568,3 +568,46 @@ def test_published_render_is_public_fresh_scoped_and_keeps_security_headers(clie
     assert "PLACEHOLDER" not in response.text
     assert visitor.get(url + "?page=missing").status_code == 404
     assert visitor.get(url + "?locale=unsupported").status_code == 422
+
+
+def test_yoga_publishing_copies_private_curriculum_and_learner_can_study(clients):
+    owner, learner, _, _ = clients
+    register(owner, "YogaOwner")
+    register(learner, "YogaLearner")
+    slug = "yoga-" + uuid.uuid4().hex[:10]
+    workspace = owner.post(
+        "/api/v1/workspaces",
+        json={
+            "name": "My Yoga School",
+            "slug": slug,
+            "template_id": "yoga-studio",
+            "include_sample_content": True,
+        },
+    )
+    assert workspace.status_code == 201, workspace.text
+    wid = workspace.json()["id"]
+    published = owner.post(f"/api/v1/workspaces/{wid}/publish")
+    assert published.status_code == 200, published.text
+    tenant = published.json()["tenant"]
+    base = f"/api/v1/runtime/{tenant['id']}"
+    overview = owner.get(base + "/overview").json()
+    assert len(overview["courses"]) == 4
+    assert len(overview["lessons"]) == 16
+    assert len(overview["paths"]) == 1
+    assert len(owner.get(base + "/studio").json()) == 16
+    assert owner.post(f"/api/v1/workspaces/{wid}/publish").status_code == 200
+    assert len(owner.get(base + "/overview").json()["lessons"]) == 16
+    assert learner.post(f"/api/v1/sites/{slug}/join").status_code == 200
+    course = overview["courses"][0]
+    assert learner.post(f"{base}/courses/{course['id']}/enroll").status_code == 200
+    row = next(item for item in overview["lessons"] if item["course_id"] == course["id"])
+    lesson = learner.get(f"{base}/lessons/{row['id']}").json()
+    assert any(n["type"] == "youtube" for n in lesson["document"]["content"])
+    assert lesson["translations"]["en"]["document"]
+    assert learner.post(f"{base}/lessons/{row['id']}/complete").status_code == 200
+    assert row["id"] in learner.get(base + "/overview").json()["completed"]
+    exported = owner.get(base + "/export")
+    assert exported.status_code == 200
+    archive = zipfile.ZipFile(io.BytesIO(exported.content))
+    assert "web/public/illustrations/yoga-practice.svg" in archive.namelist()
+    assert "mobile/App.tsx" in archive.namelist()

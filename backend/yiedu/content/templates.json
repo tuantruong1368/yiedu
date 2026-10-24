@@ -26,6 +26,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "creative-education"
     ]
   },
   {
@@ -55,6 +58,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "creative-education"
     ]
   },
   {
@@ -84,6 +90,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "robotics-stem"
     ]
   },
   {
@@ -114,6 +123,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "business"
     ]
   },
   {
@@ -144,6 +156,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "business"
     ]
   },
   {
@@ -174,6 +189,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "business"
     ]
   },
   {
@@ -203,6 +221,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "languages"
     ]
   },
   {
@@ -232,6 +253,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "creative-education"
     ]
   },
   {
@@ -264,6 +288,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "software-cloud"
     ]
   },
   {
@@ -371,6 +398,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "robotics-stem"
     ]
   },
   {
@@ -478,6 +508,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "software-cloud"
     ]
   },
   {
@@ -508,6 +541,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "robotics-stem"
     ]
   },
   {
@@ -537,6 +573,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "ai-data"
     ]
   },
   {
@@ -566,6 +605,9 @@
     "languages": [
       "vi",
       "en"
+    ],
+    "group_ids": [
+      "creative-education"
     ]
   }
 ]
