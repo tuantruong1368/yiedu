@@ -151,3 +151,11 @@ Local: Python 3.15.1, Node 26.12.1. `ruff check .`, check_contracts, check_docs,
 3 Playwright qua với Chromium: authoring, owner/learner/export, template preview VI/EN.
 Ví dụ code của 65 module được chạy và đối chiếu expected output; không kiểm chứng toàn bộ
 nội dung chuyên môn hoặc hiệu quả học tập. CI native PostgreSQL được ghi bổ sung sau khi chạy.
+
+CI nguồn cuối `07046d77813e420ad24f7e3b9373bc07fa9ba54b`:
+[run 40072085554](https://github.com/tuantruong1368/yiedu/actions/runs/40072085554)
+đã thành công cả 4 job: product (PostgreSQL 18.6 native, migration upgrade/downgrade,
+29 pytest, Next production build, 3 Playwright), mobile (typecheck, Expo iOS/Android bundles),
+compose (build/ready/homepage), database-upgrade (PostgreSQL 17→18 giữ dữ liệu và chạy lại app).
+Đã xem ảnh preview Yirobot desktop: bố cục hero, chữ Việt, robot CSS và CTA hiển thị đúng.
+Không có kiểm chứng chuyên gia nội dung, thiết bị mobile thật hoặc triển khai production.
