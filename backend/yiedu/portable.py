@@ -78,6 +78,7 @@ def create_export(db, tenant):
                 if path.suffix in {
                     ".py",
                     ".json",
+                    ".js",
                     ".ts",
                     ".tsx",
                     ".css",

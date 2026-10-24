@@ -611,3 +611,5 @@ def test_yoga_publishing_copies_private_curriculum_and_learner_can_study(clients
     archive = zipfile.ZipFile(io.BytesIO(exported.content))
     assert "web/public/illustrations/yoga-practice.svg" in archive.namelist()
     assert "mobile/App.tsx" in archive.namelist()
+    mobile_package = json.loads(archive.read("mobile/package.json"))
+    assert "mobile/" + mobile_package["main"] in archive.namelist()
