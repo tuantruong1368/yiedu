@@ -7,7 +7,7 @@ cho toàn bộ source. Không suy ra quyền phân phối lại từ quyền đ�
 ## 1. Đọc trước khi nhận việc
 
 1. [README](README.md): cách chạy và giới hạn sản phẩm.
-2. [Trạng thái](handbook/product/status.md), [ma trận 0.3](handbook/product/release-0.3.md): phân biệt đã chạy và kế hoạch.
+2. [Trạng thái](handbook/product/status.md), [ma trận 0.4](handbook/product/release-0.4.md): phân biệt đã chạy và kế hoạch.
 3. [Cấu trúc dự án](handbook/guides/project-structure.md): từng thư mục/file, entry point và nơi sửa tính năng.
 4. [Yêu cầu](handbook/product/requirements.md), [backlog](handbook/product/backlog.md), [truy vết](handbook/product/traceability-v2.md): mục tiêu của công việc.
 5. [Quyết định](handbook/product/decision-log.md), [kiến trúc](handbook/product/architecture.md), [AGENTS](AGENTS.md): ràng buộc và phối hợp với AI.
@@ -118,3 +118,10 @@ Một công việc đủ điều kiện review khi: đáp ứng AC, kiểm tra l
 không mở rộng quyền ngoài tenant và có cách áp dụng/khôi phục nếu thay đổi dữ liệu.
 Việc merge/chấp nhận cuối cùng theo phân công của chủ dự án. Xem [Git workflow](handbook/guides/git-workflow.md)
 và [UAT](handbook/product/uat.md) cho bối cảnh quản lý dự án.
+
+## Authoring Studio và module mở rộng
+
+Đọc [SDK gadget/lesson tool](handbook/guides/authoring-sdk.md) và
+[CR-002](handbook/product/changes/CR-002-authoring-i18n.md). Page gadget dùng GrapesJS,
+lesson tool dùng Tiptap. Đăng ký module build-time tin cậy và đồng bộ validator/render/tests;
+không import code từ ZIP/URL tenant. Thêm UI phải có nhãn VI/EN và giữ fallback nội dung cũ.

@@ -67,3 +67,14 @@ phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn
 API product thực ở `/auth`, `/me/dashboard`, `/workspaces`, `/sites`, `/runtime`, `/developer/packages`,
 `/catalog`, `/instance`, `/marketplace`; xem `/openapi.json` của bản 0.3.0.
 Chưa có provider OAuth, billing, AI hoặc signed updater endpoint thực thi.
+
+## Cập nhật authoring 0.4 — 24/10/2026
+
+[CR-002: FR-026–034](changes/CR-002-authoring-i18n.md) và [trạng thái 0.4](release-0.4.md)
+quản lý phần đa ngôn ngữ, builder mới và công cụ tạo bài học.
+Workspace data chấp nhận Puck cũ hoặc SiteDocument 2.0 (pages/menu/branding/VI/EN);
+LessonWrite/lesson response thêm document và translations. Alembic 0003 thêm JSONB document nullable,
+translations mặc định {}; body/document/translation không trả trong overview cho học viên.
+Snapshot mới 0003, restore nhận 0002/0003.
+GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
+EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.

@@ -80,6 +80,8 @@ class Lesson(Base):
     content: Mapped[str] = mapped_column(sa.Text, default="")
     video_url: Mapped[str] = mapped_column(String(2000), default="")
     position: Mapped[int] = mapped_column(default=0)
+    document: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    translations: Mapped[dict] = mapped_column(JSONB, default=dict)
 
 
 class LearningPath(Base):

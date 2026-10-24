@@ -56,6 +56,13 @@ test("owner creates a tenant and lesson, learner completes it, ZIP downloads", a
   await page
     .getByLabel("Nội dung", { exact: true })
     .fill("Nội dung bài học thật để kiểm tra luồng học tập.");
+  page.once("dialog", (dialog) => dialog.accept("x^2 + y^2 = z^2"));
+  await page
+    .getByRole("button", { name: "Công thức toán", exact: true })
+    .click();
+  await expect(page.locator(".katex")).toBeVisible();
+  await page.getByRole("button", { name: "Mô phỏng", exact: true }).click();
+  await expect(page.getByLabel("Interactive sine simulation")).toBeVisible();
   await page.getByRole("button", { name: "Lưu bài học", exact: true }).click();
   await expect(
     page.getByRole("status").filter({ hasText: "Đã lưu bài học" }),
@@ -109,6 +116,8 @@ test("owner creates a tenant and lesson, learner completes it, ZIP downloads", a
   await expect(
     student.getByText("Nội dung bài học thật để kiểm tra luồng học tập."),
   ).toBeVisible();
+  await expect(student.getByLabel("Interactive sine simulation")).toBeVisible();
+  await expect(student.locator(".katex")).toBeVisible();
   await student
     .getByRole("button", { name: "Đánh dấu hoàn thành", exact: true })
     .click();

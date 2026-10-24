@@ -45,3 +45,14 @@ DEC-019: Shared runtime kiểm membership/role tại API; chưa dùng RLS nên k
 DEC-020: Chỉ first-party code được chạy; developer submission hiện là metadata pending.
 DEC-021: ZIP local không mang password hash/session; restore tạo mật khẩu mới, không dùng lại token SaaS.
 Các lựa chọn này là quyết định triển khai có thể review; không thay phạm vi đầy đủ trong vision v0.2.
+
+## Cập nhật authoring 0.4 — 24/10/2026
+
+[CR-002: FR-026–034](changes/CR-002-authoring-i18n.md) và [trạng thái 0.4](release-0.4.md)
+quản lý phần đa ngôn ngữ, builder mới và công cụ tạo bài học.
+Workspace data chấp nhận Puck cũ hoặc SiteDocument 2.0 (pages/menu/branding/VI/EN);
+LessonWrite/lesson response thêm document và translations. Alembic 0003 thêm JSONB document nullable,
+translations mặc định {}; body/document/translation không trả trong overview cho học viên.
+Snapshot mới 0003, restore nhận 0002/0003.
+GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
+EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.

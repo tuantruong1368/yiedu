@@ -33,6 +33,8 @@ nav:
 - Hồ sơ YiEdu:
   - Trạng thái: product/status.md
   - Triển khai 0.3: product/release-0.3.md
+  - Authoring 0.4: product/release-0.4.md
+  - CR-002 authoring và đa ngôn ngữ: product/changes/CR-002-authoring-i18n.md
   - Charter: product/charter.md
   - Stakeholder và RACI: product/stakeholders.md
   - Phạm vi: product/scope.md
@@ -61,6 +63,7 @@ nav:
   - Nghiên cứu: product/research.md
 - Hướng dẫn:
   - Cấu trúc dự án cho developer: guides/project-structure.md
+  - Authoring Studio và SDK: guides/authoring-sdk.md
   - Local setup: guides/local-setup.md
   - Git: guides/git-workflow.md
   - Testing: guides/testing.md

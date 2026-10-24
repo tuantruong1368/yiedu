@@ -25,7 +25,7 @@ from yiedu.models import (
 def snapshot(db, tenant):
     memberships = list(db.scalars(select(Membership).where(Membership.tenant_id == tenant.id)))
     user_ids = [m.user_id for m in memberships]
-    data = {"schema_version": "0002", "tenant": row_data(tenant), "tables": {}}
+    data = {"schema_version": "0003", "tenant": row_data(tenant), "tables": {}}
     # Passwords are reset at the destination. No password hash or session token is exported.
     data["users"] = [
         {"id": str(u.id), "email": u.email, "name": u.name}
@@ -113,8 +113,8 @@ def create_export(db, tenant):
         raise HTTPException(413, "Gói vượt giới hạn exporter local")
     manifest = {
         "tenant_id": str(tenant.id),
-        "core_version": "0.3.0",
-        "schema_version": "0002",
+        "core_version": "0.4.0",
+        "schema_version": "0003",
         "files": {name: hashlib.sha256(body).hexdigest() for name, body in files.items()},
         "signed": False,
         "passwords_reset_required": True,

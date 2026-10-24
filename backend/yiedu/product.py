@@ -243,6 +243,8 @@ def publish_workspace(workspace_id: uuid.UUID, user: UserDep, db: DB):
         row.tenant_id = tenant.id
     tenant.name = row.name
     tenant.published_page = row.data
+    if row.data.get("schema_version") == "2.0":
+        tenant.branding = row.data["branding"]
     audit(db, tenant.id, user.id, "site.published", {"revision": row.revision})
     commit(db)
     return {"tenant": encode(tenant), "workspace": encode(row)}
@@ -299,7 +301,11 @@ def overview(tenant_id: uuid.UUID, user: UserDep, db: DB):
         lessons = lessons.where(Course.published.is_(True), Course.id.in_(enrolled))
     # Return metadata only here. Lesson body is served after enrollment/prerequisite checks.
     lesson_rows = [
-        {k: v for k, v in encode(lesson).items() if k not in {"content", "video_url"}}
+        {
+            k: v
+            for k, v in encode(lesson).items()
+            if k not in {"content", "video_url", "document", "translations"}
+        }
         for lesson in db.scalars(lessons)
     ]
     completed = list(
@@ -673,7 +679,7 @@ def marketplace(db: DB):
 def update_status(tenant_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin"])
     return {
-        "current_version": "0.3.0",
+        "current_version": "0.4.0",
         "configured": False,
         "message": (
             "Chưa cấu hình release registry và trust key. Không có bản cập nhật được xác minh."
@@ -703,7 +709,7 @@ def export_tenant(tenant_id: uuid.UUID, user: UserDep, db: DB):
 def instance_info(db: DB):
     mode = get_settings().instance_mode
     tenant = db.scalar(select(Tenant)) if mode == "standalone" else None
-    return {"mode": mode, "version": "0.3.0", "tenant": encode(tenant) if tenant else None}
+    return {"mode": mode, "version": "0.4.0", "tenant": encode(tenant) if tenant else None}
 
 
 @router.put("/runtime/{tenant_id}/paths/{path_id}")

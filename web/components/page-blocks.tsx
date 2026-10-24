@@ -1,4 +1,5 @@
 "use client";
+import { Translate, translator } from "@/lib/i18n/locale";
 import type { Config } from "@puckeditor/core";
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
@@ -8,22 +9,26 @@ export type Course = {
   description: string;
   slug: string;
 };
-export function makeConfig(courses: Course[] = [], slug = ""): Config {
+export function makeConfig(
+  courses: Course[] = [],
+  slug = "",
+  tr: Translate = translator("vi"),
+): Config {
   return {
     components: {
       Hero: {
-        label: "Banner chính",
+        label: tr("Banner chính"),
         fields: {
-          eyebrow: { type: "text", label: "Dòng giới thiệu" },
-          title: { type: "text", label: "Tiêu đề" },
-          description: { type: "textarea", label: "Mô tả" },
-          buttonText: { type: "text", label: "Nút hành động" },
+          eyebrow: { type: "text", label: tr("Dòng giới thiệu") },
+          title: { type: "text", label: tr("Tiêu đề") },
+          description: { type: "textarea", label: tr("Mô tả") },
+          buttonText: { type: "text", label: tr("Nút hành động") },
         },
         defaultProps: {
-          eyebrow: "CHÀO MỪNG BẠN",
-          title: "Không gian học tập của bạn.",
-          description: "Bắt đầu một hành trình mới.",
-          buttonText: "Khám phá khóa học",
+          eyebrow: tr("CHÀO MỪNG BẠN"),
+          title: tr("Không gian học tập của bạn."),
+          description: tr("Bắt đầu một hành trình mới."),
+          buttonText: tr("Khám phá khóa học"),
         },
         render: ({ eyebrow, title, description, buttonText }: any) => (
           <section className="site-hero">
@@ -41,14 +46,14 @@ export function makeConfig(courses: Course[] = [], slug = ""): Config {
         ),
       },
       Text: {
-        label: "Nội dung giới thiệu",
+        label: tr("Nội dung giới thiệu"),
         fields: {
-          title: { type: "text", label: "Tiêu đề" },
-          body: { type: "textarea", label: "Nội dung" },
+          title: { type: "text", label: tr("Tiêu đề") },
+          body: { type: "textarea", label: tr("Nội dung") },
         },
         defaultProps: {
-          title: "Điều làm chúng tôi khác biệt.",
-          body: "Thay nội dung này bằng câu chuyện của bạn.",
+          title: tr("Điều làm chúng tôi khác biệt."),
+          body: tr("Thay nội dung này bằng câu chuyện của bạn."),
         },
         render: ({ title, body }: any) => (
           <section className="site-text">
@@ -58,12 +63,12 @@ export function makeConfig(courses: Course[] = [], slug = ""): Config {
         ),
       },
       Courses: {
-        label: "Danh sách khóa học",
-        fields: { title: { type: "text", label: "Tiêu đề" } },
-        defaultProps: { title: "Khóa học nổi bật" },
+        label: tr("Danh sách khóa học"),
+        fields: { title: { type: "text", label: tr("Tiêu đề") } },
+        defaultProps: { title: tr("Khóa học nổi bật") },
         render: ({ title }: any) => (
           <section className="site-courses" id="courses">
-            <span className="eyebrow">HỌC TẬP VÀ PHÁT TRIỂN</span>
+            <span className="eyebrow">{tr("HỌC TẬP VÀ PHÁT TRIỂN")}</span>
             <h2>{title}</h2>
             <div className="course-grid">
               {courses.length ? (
@@ -78,14 +83,15 @@ export function makeConfig(courses: Course[] = [], slug = ""): Config {
                       <span>0{i + 1}</span>
                     </div>
                     <div>
-                      <small>KHÓA HỌC</small>
+                      <small>{tr("KHÓA HỌC")}</small>
                       <h3>{c.title}</h3>
                       <p>
                         {c.description ||
-                          "Khám phá kiến thức và thực hành theo lộ trình."}
+                          tr("Khám phá kiến thức và thực hành theo lộ trình.")}
                       </p>
                       <span className="text-link">
-                        Vào học <ArrowRight size={15} />
+                        {tr("Vào học")}
+                        <ArrowRight size={15} />
                       </span>
                     </div>
                   </Link>
@@ -93,8 +99,10 @@ export function makeConfig(courses: Course[] = [], slug = ""): Config {
               ) : (
                 <div className="empty">
                   <BookOpen />
-                  <h3>Những bài học đang được chuẩn bị.</h3>
-                  <p>Khóa học sẽ xuất hiện tại đây khi được xuất bản.</p>
+                  <h3>{tr("Những bài học đang được chuẩn bị.")}</h3>
+                  <p>
+                    {tr("Khóa học sẽ xuất hiện tại đây khi được xuất bản.")}
+                  </p>
                 </div>
               )}
             </div>
@@ -102,16 +110,16 @@ export function makeConfig(courses: Course[] = [], slug = ""): Config {
         ),
       },
       Stats: {
-        label: "Ba điểm nổi bật",
+        label: tr("Ba điểm nổi bật"),
         fields: {
-          first: { type: "text", label: "Điểm thứ nhất" },
-          second: { type: "text", label: "Điểm thứ hai" },
-          third: { type: "text", label: "Điểm thứ ba" },
+          first: { type: "text", label: tr("Điểm thứ nhất") },
+          second: { type: "text", label: tr("Điểm thứ hai") },
+          third: { type: "text", label: tr("Điểm thứ ba") },
         },
         defaultProps: {
-          first: "Học theo lộ trình",
-          second: "Thực hành thực tế",
-          third: "Tiến bộ mỗi ngày",
+          first: tr("Học theo lộ trình"),
+          second: tr("Thực hành thực tế"),
+          third: tr("Tiến bộ mỗi ngày"),
         },
         render: ({ first, second, third }: any) => (
           <section className="site-stats">

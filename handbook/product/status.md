@@ -1,6 +1,6 @@
 # Trạng thái thực tế YiEdu
 
-Cập nhật: bản chạy local 0.3.0. [Ma trận chi tiết](release-0.3.md) là nguồn trạng thái triển khai hiện tại.
+Cập nhật: bản chạy local 0.4.0. [Authoring/đa ngôn ngữ 0.4](release-0.4.md) mở rộng bản 0.3. [Ma trận chi tiết](release-0.3.md) là nguồn trạng thái triển khai hiện tại.
 
 ## Đã có code chạy
 
@@ -34,3 +34,10 @@ FastAPI/PostgreSQL là quyết định đã chốt. Next.js/Puck và Expo đư�
 Python 3.15.1, Node.js 26.12.1, PostgreSQL 18.6, FastAPI 0.162.0, Next.js 16.4.3.
 React mobile giữ 19.3.0 theo Expo 58; web dùng 19.3.1. Không thay đổi phạm vi tính năng.
 [Hướng dẫn nâng cấp](../guides/upgrade-latest.md) có backup/restore PostgreSQL 17 và kiểm tra dữ liệu.
+
+## Authoring và đa ngôn ngữ 0.4
+
+VI/EN, GrapesJS builder đa trang/menu/logo/events, template auth routing, white-label tenant,
+Tiptap rich lesson/math/simulation và registry developer.
+[CR-002](changes/CR-002-authoring-i18n.md), [SDK và cách chạy](../guides/authoring-sdk.md).
+Chưa có marketplace thanh toán/cài arbitrary code, AI provider hoặc rich custom node native.

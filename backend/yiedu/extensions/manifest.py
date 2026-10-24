@@ -47,6 +47,15 @@ class Dependency(ContractModel):
     versions: VersionRange
 
 
+class EditorContribution(ContractModel):
+    id: Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9-]{0,63}$")]
+    slot: Literal["page-gadget", "lesson-tool"]
+    api_version: Literal["1.0.0"]
+    export_name: Annotated[str, StringConstraints(pattern=r"^[A-Za-z][A-Za-z0-9_]{0,99}$")]
+    license: Literal["free", "commercial"] = "free"
+    props_schema: dict = Field(default_factory=dict)
+
+
 class ExtensionManifest(ContractModel):
     schema_version: Literal["0.1"]
     package_id: PackageId
@@ -69,6 +78,7 @@ class ExtensionManifest(ContractModel):
         ]
     ] = Field(default_factory=list, max_length=6)
     dependencies: list[Dependency] = Field(default_factory=list, max_length=50)
+    editor_contributions: list[EditorContribution] = Field(default_factory=list, max_length=30)
     portable: bool
     data_schema_version: StableVersion
 
@@ -78,6 +88,9 @@ class ExtensionManifest(ContractModel):
             raise ValueError("Duplicate surfaces")
         if len(set(self.capabilities)) != len(self.capabilities):
             raise ValueError("Duplicate capabilities")
+        contributions = [item.id for item in self.editor_contributions]
+        if len(contributions) != len(set(contributions)):
+            raise ValueError("Duplicate editor contribution IDs")
         ids = [dependency.package_id for dependency in self.dependencies]
         if len(set(ids)) != len(ids):
             raise ValueError("Duplicate dependencies")

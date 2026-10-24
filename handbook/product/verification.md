@@ -114,3 +114,15 @@ Không có Docker daemon trong môi trường kiểm tra local của tác nhân;
 đến từ GitHub Actions Ubuntu x86_64. Có wheel Python 3.15 Linux ARM64 cho Psycopg/Pydantic/SQLAlchemy,
 nhưng chưa trực tiếp chạy bản nâng cấp trên Mac M1 của anh hoặc thiết bị mobile thật.
 Có cảnh báo upstream Starlette về httpx TestClient; chưa ảnh hưởng kết quả test.
+
+## Authoring Studio 0.4 — 24/10/2026
+
+- Python 3.15.1: Ruff, contract schema/bốn manifest ví dụ, docs links, MkDocs strict.
+- Local PGlite socket (PostgreSQL WASM, không thay bằng chứng PostgreSQL native): Alembic lên head/check không drift; 25 pytest tests pass.
+- Next production build trên Node 26.12.1/npm 12.2.1 pass; browser journeys kiểm template đã login, import VI/EN, page/menu, events và tenant branding.
+- Journey owner/learner lưu/read lại công thức KaTeX và simulation Tiptap, học và tải ZIP.
+- Mobile typecheck và bundle Android/iOS pass; chưa thử trên thiết bị thật.
+- Danh mục project-structure đối chiếu đủ 184 file/58 thư mục, gồm SDK và migration mới.
+
+Native PostgreSQL 18.6, Compose, migration round-trip và chuyển database cần xác nhận bằng CI của commit triển khai.
+Giới hạn sản phẩm tại [release 0.4](release-0.4.md); chưa có checkout/installer/AI provider hoặc native interactive lesson renderer.

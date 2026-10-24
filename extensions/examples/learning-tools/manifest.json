@@ -1,0 +1,6 @@
+{
+ "schema_version":"0.1","package_id":"example.learning-tools","kind":"component","version":"1.0.0","display_name":"Learning tools example",
+ "core":{"min_inclusive":"0.4.0","max_exclusive":"0.5.0"},"extension_api":{"min_inclusive":"0.1.0","max_exclusive":"0.2.0"},
+ "surfaces":["web","admin"],"capabilities":["pages:write","courses:write"],"dependencies":[],"portable":true,"data_schema_version":"1.0.0",
+ "editor_contributions":[{"id":"banner","slot":"page-gadget","api_version":"1.0.0","export_name":"registerBanner","license":"commercial","props_schema":{"type":"object","properties":{"title":{"type":"string","maxLength":200}}}},{"id":"note","slot":"lesson-tool","api_version":"1.0.0","export_name":"registerNote","license":"free","props_schema":{"type":"object"}}]
+}

@@ -1,4 +1,8 @@
 "use client";
+import { useI18n } from "./locale-provider";
+import LessonEditor from "./lesson/lesson-editor";
+import { TenantBrand } from "./tenant-brand";
+import { LocaleSwitch } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -29,6 +33,8 @@ const tabs = [
   ["updates", "Cập nhật", RefreshCw],
 ] as const;
 export default function AdminScreen({ slug }: { slug: string }) {
+  const { t: tr, locale } = useI18n();
+
   const [data, setData] = useState<any>(null),
     [tab, setTab] = useState("overview"),
     [error, setError] = useState(""),
@@ -40,8 +46,10 @@ export default function AdminScreen({ slug }: { slug: string }) {
     [lessonEdit, setLessonEdit] = useState<any>(null),
     [pathCourses, setPathCourses] = useState<string[]>([]),
     [pathEdit, setPathEdit] = useState<any>(null);
+  const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
   async function refresh() {
     const site = await api("/sites/" + slug);
+    setTenant(site.tenant);
     const d = await api("/runtime/" + site.tenant.id + "/overview");
     setData(d);
     return d;
@@ -84,7 +92,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
             published: f.get("published") === "on",
           }),
         }),
-      "Đã lưu khóa học.",
+      tr("Đã lưu khóa học."),
     );
     if (!success) return;
     setEditing(null);
@@ -104,12 +112,14 @@ export default function AdminScreen({ slug }: { slug: string }) {
             body: JSON.stringify({
               title: f.get("title"),
               content: f.get("content"),
+              document: JSON.parse(String(f.get("document") || "null")),
+              translations: JSON.parse(String(f.get("translations") || "{}")),
               video_url: f.get("video_url"),
               position: Number(f.get("position")),
             }),
           },
         ),
-      "Đã lưu bài học.",
+      tr("Đã lưu bài học."),
     );
     if (success) setLessonEdit(null);
   }
@@ -117,16 +127,16 @@ export default function AdminScreen({ slug }: { slug: string }) {
     return (
       <>
         <header className="topbar">
-          <Brand />
-          <Link href="/dashboard">Về dashboard</Link>
+          <TenantBrand tenant={data?.tenant || tenant} />
+          <Link href="/dashboard">{tr("Về dashboard")}</Link>
         </header>
         <ErrorBox message={error} />
         {error ? (
           <div className="empty">
-            <h2>Chưa thể mở trang quản trị</h2>
-            <p>Đăng nhập bằng tài khoản có quyền của tenant.</p>
+            <h2>{tr("Chưa thể mở trang quản trị")}</h2>
+            <p>{tr("Đăng nhập bằng tài khoản có quyền của tenant.")}</p>
             <Link className="button" href="/login">
-              Đăng nhập
+              {tr("Đăng nhập")}
             </Link>
           </div>
         ) : (
@@ -137,16 +147,16 @@ export default function AdminScreen({ slug }: { slug: string }) {
   if (!["owner", "admin", "instructor"].includes(data.role))
     return (
       <div className="empty">
-        <h2>Bạn đang là học viên.</h2>
+        <h2>{tr("Bạn đang là học viên.")}</h2>
         <Link className="button" href={"/t/" + slug + "/learn"}>
-          Vào không gian học tập
+          {tr("Vào không gian học tập")}
         </Link>
       </div>
     );
   return (
     <div className="admin-layout">
       <aside className="sidebar">
-        <Brand />
+        <TenantBrand tenant={data?.tenant || tenant} />
         <div className="tenant-label">
           <span style={{ background: data.tenant.branding.color || "#215d4c" }}>
             {data.tenant.name[0]}
@@ -156,7 +166,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
             <small>{data.role.toUpperCase()}</small>
           </div>
         </div>
-        <span className="nav-caption">KHÔNG GIAN QUẢN TRỊ</span>
+        <span className="nav-caption">{tr("KHÔNG GIAN QUẢN TRỊ")}</span>
         <nav>
           {tabs
             .filter(
@@ -175,17 +185,18 @@ export default function AdminScreen({ slug }: { slug: string }) {
                 }}
               >
                 <Icon size={18} />
-                {label}
+                {tr(label)}
                 {tab === id && <ChevronRight size={15} />}
               </button>
             ))}
         </nav>
         <div className="sidebar-bottom">
           <Link href="/dashboard">
-            <Layers3 size={17} /> Không gian của tôi
+            <Layers3 size={17} />
+            {tr("Không gian của tôi")}
           </Link>
           <Link href={"/t/" + slug} target="_blank">
-            <Globe2 size={17} /> Xem website <ArrowUpRight size={14} />
+            <Globe2 size={17} /> {tr("Xem website")} <ArrowUpRight size={14} />
           </Link>
         </div>
       </aside>
@@ -193,31 +204,36 @@ export default function AdminScreen({ slug }: { slug: string }) {
         <header className="admin-top">
           <span>
             {data.tenant.name} <ChevronRight size={13} />{" "}
-            {tabs.find((t) => t[0] === tab)?.[1]}
+            {tr(tabs.find((t) => t[0] === tab)?.[1] || "")}
           </span>
           <div className="actions">
             <Link href={"/t/" + slug + "/learn"} className="text-link">
-              <GraduationCap size={17} /> Khu học tập
+              <GraduationCap size={17} />
+              {tr("Khu học tập")}
             </Link>
+            <LocaleSwitch />
             <Logout />
           </div>
         </header>
         <main className="admin-content">
           <div className="page-heading">
             <div>
-              <span className="eyebrow">QUẢN TRỊ HỆ THỐNG</span>
+              <span className="eyebrow">{tr("QUẢN TRỊ HỆ THỐNG")}</span>
               <h1>
-                {tabs.find((t) => t[0] === tab)?.[1]}
+                {tr(tabs.find((t) => t[0] === tab)?.[1] || "")}
                 <span className="brand-dot">.</span>
               </h1>
               <p>
                 {tab === "overview"
-                  ? "Một góc nhìn rõ ràng để bạn tiếp tục phát triển."
-                  : "Tổ chức nội dung, theo dõi và làm chủ hệ thống của bạn."}
+                  ? tr("Một góc nhìn rõ ràng để bạn tiếp tục phát triển.")
+                  : tr(
+                      "Tổ chức nội dung, theo dõi và làm chủ hệ thống của bạn.",
+                    )}
               </p>
             </div>
             <span className="pill">
-              <span className="status-dot" /> Đang hoạt động
+              <span className="status-dot" />
+              {tr("Đang hoạt động")}
             </span>
           </div>
           <ErrorBox message={error} />
@@ -233,55 +249,57 @@ export default function AdminScreen({ slug }: { slug: string }) {
                 <div>
                   <BookOpen />
                   <b>{data.courses.length}</b>
-                  <span>Khóa học</span>
+                  <span>{tr("Khóa học")}</span>
                 </div>
                 <div>
                   <Route />
                   <b>{data.paths.length}</b>
-                  <span>Lộ trình</span>
+                  <span>{tr("Lộ trình")}</span>
                 </div>
                 <div>
                   <Users />
                   <b>{data.members.length}</b>
-                  <span>Thành viên</span>
+                  <span>{tr("Thành viên")}</span>
                 </div>
               </div>
               <div className="panel">
                 <div className="section-title">
-                  <h2>Tiếp tục xây hệ thống</h2>
+                  <h2>{tr("Tiếp tục xây hệ thống")}</h2>
                   <Link href={"/t/" + slug} className="text-link">
-                    Xem website ↗
+                    {tr("Xem website")} ↗
                   </Link>
                 </div>
                 <div className="quick-actions">
                   <button onClick={() => setTab("courses")}>
                     <BookOpen />
-                    <b>Tạo bài học đầu tiên</b>
-                    <span>Chia sẻ điều bạn biết với học viên.</span>
+                    <b>{tr("Tạo bài học đầu tiên")}</b>
+                    <span>{tr("Chia sẻ điều bạn biết với học viên.")}</span>
                   </button>
                   <button onClick={() => setTab("paths")}>
                     <Route />
-                    <b>Thiết kế một lộ trình</b>
-                    <span>Đưa học viên đi từng bước rõ ràng.</span>
+                    <b>{tr("Thiết kế một lộ trình")}</b>
+                    <span>{tr("Đưa học viên đi từng bước rõ ràng.")}</span>
                   </button>
                   <button onClick={() => setTab("extensions")}>
                     <Puzzle />
-                    <b>Mở rộng khả năng</b>
-                    <span>Kích hoạt tiện ích cho hệ thống.</span>
+                    <b>{tr("Mở rộng khả năng")}</b>
+                    <span>{tr("Kích hoạt tiện ích cho hệ thống.")}</span>
                   </button>
                 </div>
               </div>
               <div className="panel">
-                <h2>Hoạt động gần đây</h2>
+                <h2>{tr("Hoạt động gần đây")}</h2>
                 {!data.events.length ? (
-                  <p>Chưa có hoạt động được ghi nhận.</p>
+                  <p>{tr("Chưa có hoạt động được ghi nhận.")}</p>
                 ) : (
                   data.events.slice(0, 8).map((e: any) => (
                     <div className="activity-row" key={e.id}>
                       <span className="status-dot" />
                       <b>{e.event_type}</b>
                       <small>
-                        {new Date(e.created_at).toLocaleString("vi-VN")}
+                        {new Date(e.created_at).toLocaleString(
+                          locale === "vi" ? "vi-VN" : "en-US",
+                        )}
                       </small>
                     </div>
                   ))
@@ -294,13 +312,13 @@ export default function AdminScreen({ slug }: { slug: string }) {
               <div className="content-columns">
                 <section className="panel">
                   <div className="section-title">
-                    <h2>Danh sách khóa học</h2>
+                    <h2>{tr("Danh sách khóa học")}</h2>
                     <span className="pill">{data.courses.length}</span>
                   </div>
                   {!data.courses.length ? (
                     <Empty
-                      title="Khóa học đầu tiên đang chờ bạn"
-                      body="Tạo nội dung bên phải để bắt đầu."
+                      title={tr("Khóa học đầu tiên đang chờ bạn")}
+                      body={tr("Tạo nội dung bên phải để bắt đầu.")}
                     />
                   ) : (
                     data.courses.map((c: any) => (
@@ -309,7 +327,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                           <span
                             className={"pill " + (c.published ? "green" : "")}
                           >
-                            {c.published ? "Đã xuất bản" : "Bản nháp"}
+                            {c.published ? tr("Đã xuất bản") : tr("Bản nháp")}
                           </span>
                           <h3>{c.title}</h3>
                           <p>{c.description}</p>
@@ -319,7 +337,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                                 (l: any) => l.course_id === c.id,
                               ).length
                             }{" "}
-                            bài học
+                            {tr("bài học")}
                           </small>
                         </div>
                         <div className="actions">
@@ -327,7 +345,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                             className="button ghost small"
                             onClick={() => setEditing(c)}
                           >
-                            Chỉnh sửa
+                            {tr("Chỉnh sửa")}
                           </button>
                           <button
                             className="button small"
@@ -336,7 +354,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                               setLessonEdit(null);
                             }}
                           >
-                            Bài học
+                            {tr("Bài học")}
                           </button>
                         </div>
                       </article>
@@ -344,14 +362,16 @@ export default function AdminScreen({ slug }: { slug: string }) {
                   )}
                 </section>
                 <section className="panel">
-                  <h2>{editing ? "Chỉnh sửa khóa học" : "Tạo khóa học"}</h2>
+                  <h2>
+                    {editing ? tr("Chỉnh sửa khóa học") : tr("Tạo khóa học")}
+                  </h2>
                   <form
                     id="course-form"
                     key={editing?.id || "new"}
                     onSubmit={saveCourse}
                   >
                     <label>
-                      Tên khóa học
+                      {tr("Tên khóa học")}
                       <input
                         name="title"
                         defaultValue={editing?.title}
@@ -367,7 +387,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                       />
                     </label>
                     <label>
-                      Đường dẫn
+                      {tr("Đường dẫn")}
                       <input
                         name="slug"
                         defaultValue={editing?.slug}
@@ -376,7 +396,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                       />
                     </label>
                     <label>
-                      Mô tả
+                      {tr("Mô tả")}
                       <textarea
                         name="description"
                         defaultValue={editing?.description}
@@ -389,10 +409,10 @@ export default function AdminScreen({ slug }: { slug: string }) {
                         type="checkbox"
                         defaultChecked={editing?.published}
                       />{" "}
-                      Xuất bản cho học viên
+                      {tr("Xuất bản cho học viên")}
                     </label>
                     <button disabled={busy} className="button full">
-                      Lưu khóa học
+                      {tr("Lưu khóa học")}
                     </button>
                     {editing && (
                       <button
@@ -400,7 +420,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                         className="button ghost full"
                         onClick={() => setEditing(null)}
                       >
-                        Hủy chỉnh sửa
+                        {tr("Hủy chỉnh sửa")}
                       </button>
                     )}
                   </form>
@@ -410,14 +430,14 @@ export default function AdminScreen({ slug }: { slug: string }) {
                 <div className="panel spaced">
                   <div className="section-title">
                     <h2>
-                      Bài học ·{" "}
+                      {tr("Bài học ·")}{" "}
                       {data.courses.find((c: any) => c.id === course)?.title}
                     </h2>
                     <button
                       className="button ghost small"
                       onClick={() => setCourse("")}
                     >
-                      Đóng
+                      {tr("Đóng")}
                     </button>
                   </div>
                   <div className="content-columns">
@@ -440,30 +460,28 @@ export default function AdminScreen({ slug }: { slug: string }) {
                           >
                             <BookOpen size={17} />
                             {l.position + 1}. {l.title}
-                            <span>Chỉnh sửa ↗</span>
+                            <span>{tr("Chỉnh sửa ↗")}</span>
                           </button>
                         ))}
                     </div>
                     <form key={lessonEdit?.id || course} onSubmit={saveLesson}>
-                      <h3>{lessonEdit ? "Sửa bài học" : "Thêm bài học"}</h3>
+                      <h3>
+                        {lessonEdit ? tr("Sửa bài học") : tr("Thêm bài học")}
+                      </h3>
                       <label>
-                        Tiêu đề
+                        {tr("Tiêu đề")}
                         <input
                           name="title"
                           required
                           defaultValue={lessonEdit?.title}
                         />
                       </label>
+                      <LessonEditor
+                        key={lessonEdit?.id || course}
+                        initial={lessonEdit}
+                      />
                       <label>
-                        Nội dung
-                        <textarea
-                          name="content"
-                          rows={7}
-                          defaultValue={lessonEdit?.content}
-                        />
-                      </label>
-                      <label>
-                        Video HTTPS (tùy chọn)
+                        {tr("Video HTTPS (tùy chọn)")}
                         <input
                           name="video_url"
                           type="url"
@@ -471,7 +489,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                         />
                       </label>
                       <label>
-                        Thứ tự (bắt đầu từ 0)
+                        {tr("Thứ tự (bắt đầu từ 0)")}
                         <input
                           name="position"
                           type="number"
@@ -480,7 +498,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                         />
                       </label>
                       <button disabled={busy} className="button">
-                        Lưu bài học
+                        {tr("Lưu bài học")}
                       </button>
                       {lessonEdit && (
                         <button
@@ -488,7 +506,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                           className="button ghost"
                           onClick={() => setLessonEdit(null)}
                         >
-                          Thêm bài mới
+                          {tr("Thêm bài mới")}
                         </button>
                       )}
                     </form>
@@ -500,11 +518,13 @@ export default function AdminScreen({ slug }: { slug: string }) {
           {tab === "paths" && (
             <div className="content-columns">
               <section className="panel">
-                <h2>Lộ trình học tập</h2>
+                <h2>{tr("Lộ trình học tập")}</h2>
                 {!data.paths.length ? (
                   <Empty
-                    title="Tạo một hành trình rõ ràng"
-                    body="Chọn các khóa học theo thứ tự học viên cần hoàn thành."
+                    title={tr("Tạo một hành trình rõ ràng")}
+                    body={tr(
+                      "Chọn các khóa học theo thứ tự học viên cần hoàn thành.",
+                    )}
                   />
                 ) : (
                   data.paths.map((p: any) => (
@@ -518,22 +538,22 @@ export default function AdminScreen({ slug }: { slug: string }) {
                             setPathCourses(p.course_ids);
                           }}
                         >
-                          Chỉnh sửa
+                          {tr("Chỉnh sửa")}
                         </button>
                         <button
                           className="button ghost small"
                           onClick={() => {
-                            if (confirm("Xóa lộ trình này?"))
+                            if (confirm(tr("Xóa lộ trình này?")))
                               action(
                                 () =>
                                   api(base + "/paths/" + p.id, {
                                     method: "DELETE",
                                   }),
-                                "Đã xóa lộ trình.",
+                                tr("Đã xóa lộ trình."),
                               );
                           }}
                         >
-                          Xóa
+                          {tr("Xóa")}
                         </button>
                       </div>
                       <ol className="path-list">
@@ -563,13 +583,15 @@ export default function AdminScreen({ slug }: { slug: string }) {
                           }),
                         },
                       ),
-                    "Đã tạo lộ trình.",
+                    tr("Đã tạo lộ trình."),
                   );
                 }}
               >
-                <h2>{pathEdit ? "Chỉnh sửa lộ trình" : "Lộ trình mới"}</h2>
+                <h2>
+                  {pathEdit ? tr("Chỉnh sửa lộ trình") : tr("Lộ trình mới")}
+                </h2>
                 <label>
-                  Tên lộ trình
+                  {tr("Tên lộ trình")}
                   <input
                     key={pathEdit?.id || "new"}
                     name="title"
@@ -577,7 +599,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                     defaultValue={pathEdit?.title}
                   />
                 </label>
-                <p>Chọn theo thứ tự. Nhấn lại để bỏ chọn.</p>
+                <p>{tr("Chọn theo thứ tự. Nhấn lại để bỏ chọn.")}</p>
                 {data.courses.map((c: any) => (
                   <button
                     className={
@@ -606,7 +628,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                   className="button full"
                   disabled={!pathCourses.length || busy}
                 >
-                  {pathEdit ? "Lưu thay đổi" : "Tạo lộ trình"}
+                  {pathEdit ? tr("Lưu thay đổi") : tr("Tạo lộ trình")}
                 </button>
                 {pathEdit && (
                   <button
@@ -617,7 +639,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
                       setPathCourses([]);
                     }}
                   >
-                    Tạo lộ trình khác
+                    {tr("Tạo lộ trình khác")}
                   </button>
                 )}
               </form>
@@ -626,7 +648,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
           {tab === "members" && (
             <div className="content-columns">
               <div className="panel">
-                <h2>Thành viên hệ thống</h2>
+                <h2>{tr("Thành viên hệ thống")}</h2>
                 {data.members.map((m: any) => (
                   <div className="member-row" key={m.id}>
                     <span className="avatar">{m.name[0]}</span>
@@ -652,29 +674,30 @@ export default function AdminScreen({ slug }: { slug: string }) {
                             role: f.get("role"),
                           }),
                         }),
-                      "Đã cập nhật quyền.",
+                      tr("Đã cập nhật quyền."),
                     );
                   }}
                 >
-                  <h2>Phân quyền thành viên</h2>
+                  <h2>{tr("Phân quyền thành viên")}</h2>
                   <p>
-                    Người dùng cần đăng ký tài khoản trước. Học viên có thể tự
-                    tham gia tại website của hệ thống.
+                    {tr(
+                      "Người dùng cần đăng ký tài khoản trước. Học viên có thể tự tham gia tại website của hệ thống.",
+                    )}
                   </p>
                   <label>
                     Email
                     <input type="email" name="email" required />
                   </label>
                   <label>
-                    Vai trò
+                    {tr("Vai trò")}
                     <select name="role">
-                      <option value="learner">Học viên</option>
-                      <option value="instructor">Giảng viên</option>
-                      <option value="admin">Quản trị</option>
+                      <option value="learner">{tr("Học viên")}</option>
+                      <option value="instructor">{tr("Giảng viên")}</option>
+                      <option value="admin">{tr("Quản trị")}</option>
                     </select>
                   </label>
                   <button className="button" disabled={busy}>
-                    Cập nhật quyền
+                    {tr("Cập nhật quyền")}
                   </button>
                 </form>
               )}
@@ -683,8 +706,9 @@ export default function AdminScreen({ slug }: { slug: string }) {
           {tab === "extensions" && (
             <>
               <div className="notice">
-                Tiện ích first-party được tích hợp sẵn. Chưa hỗ trợ tải/chạy mã
-                bên thứ ba.
+                {tr(
+                  "Tiện ích first-party được tích hợp sẵn. Chưa hỗ trợ tải/chạy mã bên thứ ba.",
+                )}
               </div>
               <div className="extension-grid">
                 {catalog.map((p) => {
@@ -700,8 +724,8 @@ export default function AdminScreen({ slug }: { slug: string }) {
                         <Puzzle />
                       </span>
                       <span className="pill">{p.kind}</span>
-                      <h2>{p.name}</h2>
-                      <p>{p.description}</p>
+                      <h2>{tr(p.name)}</h2>
+                      <p>{tr(p.description)}</p>
                       <button
                         className={"button " + (enabled ? "ghost" : "")}
                         disabled={busy}
@@ -713,12 +737,12 @@ export default function AdminScreen({ slug }: { slug: string }) {
                                 body: JSON.stringify({ enabled: !enabled }),
                               }),
                             enabled
-                              ? "Đã tắt tiện ích, dữ liệu vẫn được giữ."
-                              : "Đã kích hoạt tiện ích.",
+                              ? tr("Đã tắt tiện ích, dữ liệu vẫn được giữ.")
+                              : tr("Đã kích hoạt tiện ích."),
                           )
                         }
                       >
-                        {enabled ? "Tắt tiện ích" : "Kích hoạt"}
+                        {enabled ? tr("Tắt tiện ích") : tr("Kích hoạt")}
                       </button>
                     </article>
                   );
@@ -732,25 +756,27 @@ export default function AdminScreen({ slug }: { slug: string }) {
                 <Download />
               </span>
               <h2>
-                Hệ thống của bạn.
+                {tr("Hệ thống của bạn.")}
                 <br />
-                Hạ tầng của bạn.
+                {tr("Hạ tầng của bạn.")}
               </h2>
               <p>
-                Tải mã nguồn web/API và snapshot dữ liệu tenant để triển khai
-                trên database sạch. Tài khoản sẽ được tạo mật khẩu mới khi phục
-                hồi. Không bao gồm session, secret SaaS hay video từ URL ngoài.
+                {tr(
+                  "Tải mã nguồn web/API và snapshot dữ liệu tenant để triển khai trên database sạch. Tài khoản sẽ được tạo mật khẩu mới khi phục hồi. Không bao gồm session, secret SaaS hay video từ URL ngoài.",
+                )}
               </p>
               <div className="notice">
-                Bản xuất local có checksum, chưa ký bằng khóa phát hành
-                production. Hướng dẫn phục hồi nằm trong RESTORE.md của ZIP.
+                {tr(
+                  "Bản xuất local có checksum, chưa ký bằng khóa phát hành production. Hướng dẫn phục hồi nằm trong RESTORE.md của ZIP.",
+                )}
               </div>
               {data.role === "owner" ? (
                 <a className="button" href={"/api/v1" + base + "/export"}>
-                  Tải hệ thống ZIP <Download size={18} />
+                  {tr("Tải hệ thống ZIP")}
+                  <Download size={18} />
                 </a>
               ) : (
-                <p>Chỉ chủ sở hữu có quyền xuất dữ liệu.</p>
+                <p>{tr("Chỉ chủ sở hữu có quyền xuất dữ liệu.")}</p>
               )}
             </section>
           )}
@@ -759,11 +785,12 @@ export default function AdminScreen({ slug }: { slug: string }) {
               <span className="feature-icon">
                 <RefreshCw />
               </span>
-              <span className="pill">CORE 0.3.0</span>
-              <h2>Cập nhật có kiểm soát.</h2>
+              <span className="pill">CORE 0.4.0</span>
+              <h2>{tr("Cập nhật có kiểm soát.")}</h2>
               <p>
-                Chưa cấu hình release registry và khóa tin cậy cho hệ thống này.
-                Tự động cập nhật production chưa được bật.
+                {tr(
+                  "Chưa cấu hình release registry và khóa tin cậy cho hệ thống này. Tự động cập nhật production chưa được bật.",
+                )}
               </p>
               <button
                 className="button"
@@ -771,10 +798,10 @@ export default function AdminScreen({ slug }: { slug: string }) {
                   action(async () => {
                     const info = await api(base + "/updates");
                     if (!info.configured) throw new Error(info.message);
-                  }, "Đã kiểm tra cập nhật.")
+                  }, tr("Đã kiểm tra cập nhật."))
                 }
               >
-                Kiểm tra cấu hình
+                {tr("Kiểm tra cấu hình")}
               </button>
             </section>
           )}

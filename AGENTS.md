@@ -1,6 +1,6 @@
 # Hướng dẫn làm việc với YiEdu
 - Đọc README.md và handbook/product/status.md trước khi sửa.
-- Handbook bằng tiếng Việt; sản phẩm public dự kiến hỗ trợ Việt/Anh.
+- Handbook bằng tiếng Việt; giao diện web/app hỗ trợ Việt/Anh; nội dung tenant được biên dịch riêng.
 - FastAPI và PostgreSQL đã chốt. Các lựa chọn khác xem decision-log.md.
 - Không đánh dấu mục hoàn thành nếu thiếu bằng chứng. Không biến giả định thành quyết định.
 - Sửa yêu cầu/API/schema thì cập nhật tài liệu truy vết và migration tương ứng.
@@ -12,4 +12,6 @@
 
 - Phạm vi hiện tại: handbook/product/vision-v2.md và traceability-v2.md. Đừng đánh đồng spec/metadata validator với installer hoặc runtime extension.
 
-- Bản triển khai hiện tại: handbook/product/release-0.3.md. Kiểm Next build/browser và Expo typecheck/bundle khi sửa client.
+- Bản triển khai hiện tại: handbook/product/release-0.4.md. Kiểm Next build/browser và Expo typecheck/bundle khi sửa client.
+
+- Authoring SDK: handbook/guides/authoring-sdk.md. Giữ Puck legacy, validate SiteDocument và rich lesson; cập nhật VI/EN cho UI mới.

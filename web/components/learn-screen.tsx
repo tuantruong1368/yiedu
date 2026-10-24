@@ -1,4 +1,5 @@
 "use client";
+import { useI18n } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -12,15 +13,22 @@ import {
   Lock,
 } from "lucide-react";
 import { api } from "@/lib/api";
-import { Header, ErrorBox, Loading, Empty } from "./shared";
+import { ErrorBox, Loading, Empty, Logout } from "./shared";
+import { TenantBrand } from "./tenant-brand";
+import { LocaleSwitch } from "./locale-provider";
+import LessonView from "./lesson/lesson-view";
 export default function LearnScreen({ slug }: { slug: string }) {
+  const { t: tr, locale } = useI18n();
+
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [courseId, setCourseId] = useState(""),
     [lesson, setLesson] = useState<any>(null),
     [certificate, setCertificate] = useState<any>(null);
+  const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
   async function refresh() {
     const site = await api("/sites/" + slug);
+    setTenant(site.tenant);
     return api("/runtime/" + site.tenant.id + "/overview").then(setData);
   }
   useEffect(() => {
@@ -37,20 +45,27 @@ export default function LearnScreen({ slug }: { slug: string }) {
   const base = data ? "/runtime/" + data.tenant.id : "";
   return (
     <>
-      <Header />
+      <header className="topbar">
+        <TenantBrand tenant={data?.tenant || tenant} />
+        <LocaleSwitch />
+        <Logout />
+      </header>
       {!data ? (
         <div className="workspace">
           <ErrorBox message={error} />
           {error ? (
             <div className="empty">
-              <h2>Tham gia không gian học tập.</h2>
-              <p>Đăng nhập hoặc tạo tài khoản để tham gia {slug}.</p>
+              <h2>{tr("Tham gia không gian học tập.")}</h2>
+              <p>
+                {tr("Đăng nhập hoặc tạo tài khoản để tham gia")}
+                {slug}.
+              </p>
               <div className="actions">
                 <Link className="button" href={"/register?site=" + slug}>
-                  Tạo tài khoản
+                  {tr("Tạo tài khoản")}
                 </Link>
                 <Link className="button ghost" href={"/login?site=" + slug}>
-                  Đăng nhập
+                  {tr("Đăng nhập")}
                 </Link>
               </div>
             </div>
@@ -64,33 +79,37 @@ export default function LearnScreen({ slug }: { slug: string }) {
             <div>
               <span className="eyebrow">{data.tenant.name}</span>
               <h1>
-                Hôm nay, học điều mới<span className="brand-dot">.</span>
+                {tr("Hôm nay, học điều mới")}
+                <span className="brand-dot">.</span>
               </h1>
-              <p>Mỗi bước nhỏ đều đưa bạn đến gần mục tiêu hơn.</p>
+              <p>{tr("Mỗi bước nhỏ đều đưa bạn đến gần mục tiêu hơn.")}</p>
             </div>
             <Link href={"/t/" + slug} className="text-link">
-              Website hệ thống ↗
+              {tr("Website hệ thống ↗")}
             </Link>
           </div>
           <ErrorBox message={error} />
           {certificate && (
             <section className="certificate">
               <Award size={48} />
-              <span className="eyebrow">CHỨNG NHẬN HOÀN THÀNH</span>
+              <span className="eyebrow">{tr("CHỨNG NHẬN HOÀN THÀNH")}</span>
               <h2>{certificate.learner}</h2>
-              <p>đã hoàn thành khóa học</p>
+              <p>{tr("đã hoàn thành khóa học")}</p>
               <h3>{certificate.course}</h3>
               <p>{certificate.school}</p>
-              <small>Mã tham chiếu: {certificate.reference}</small>
+              <small>
+                {tr("Mã tham chiếu:")}
+                {certificate.reference}
+              </small>
               <div className="actions">
                 <button className="button" onClick={() => window.print()}>
-                  In chứng nhận
+                  {tr("In chứng nhận")}
                 </button>
                 <button
                   className="button ghost"
                   onClick={() => setCertificate(null)}
                 >
-                  Đóng
+                  {tr("Đóng")}
                 </button>
               </div>
             </section>
@@ -99,7 +118,8 @@ export default function LearnScreen({ slug }: { slug: string }) {
             <div className="learning-layout">
               <aside className="panel">
                 <button className="text-link" onClick={() => setLesson(null)}>
-                  <ArrowLeft size={15} /> Danh sách khóa học
+                  <ArrowLeft size={15} />
+                  {tr("Danh sách khóa học")}
                 </button>
                 <h2>
                   {
@@ -131,14 +151,12 @@ export default function LearnScreen({ slug }: { slug: string }) {
                   ))}
               </aside>
               <article className="panel lesson-content">
-                <span className="eyebrow">BÀI HỌC</span>
-                <h1>{lesson.title}</h1>
+                <span className="eyebrow">{tr("BÀI HỌC")}</span>
+                <h1>{lesson.translations?.[locale]?.title || lesson.title}</h1>
                 {lesson.video_url && (
                   <video controls preload="metadata" src={lesson.video_url} />
                 )}
-                <div className="lesson-text">
-                  {lesson.content || "Nội dung đang được giảng viên cập nhật."}
-                </div>
+                <LessonView lesson={lesson} />
                 <button
                   className="button"
                   onClick={() =>
@@ -152,8 +170,8 @@ export default function LearnScreen({ slug }: { slug: string }) {
                 >
                   <CheckCircle2 size={18} />
                   {data.completed.includes(lesson.id)
-                    ? "Đã hoàn thành"
-                    : "Đánh dấu hoàn thành"}
+                    ? tr("Đã hoàn thành")
+                    : tr("Đánh dấu hoàn thành")}
                 </button>
               </article>
             </div>
@@ -161,8 +179,8 @@ export default function LearnScreen({ slug }: { slug: string }) {
             <>
               {data.paths.length > 0 && (
                 <section className="panel">
-                  <span className="eyebrow">HÀNH TRÌNH CỦA BẠN</span>
-                  <h2>Lộ trình học tập</h2>
+                  <span className="eyebrow">{tr("HÀNH TRÌNH CỦA BẠN")}</span>
+                  <h2>{tr("Lộ trình học tập")}</h2>
                   {data.paths.map((p: any) => (
                     <div className="learning-path" key={p.id}>
                       <b>
@@ -174,7 +192,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                           <button key={id} onClick={() => setCourseId(id)}>
                             <span>{i + 1}</span>
                             {data.courses.find((c: any) => c.id === id)
-                              ?.title || "Khóa học chưa xuất bản"}
+                              ?.title || tr("Khóa học chưa xuất bản")}
                             <ArrowRight size={15} />
                           </button>
                         ))}
@@ -184,10 +202,10 @@ export default function LearnScreen({ slug }: { slug: string }) {
                 </section>
               )}
               <div className="section-title spaced">
-                <h2>Khóa học dành cho bạn</h2>
+                <h2>{tr("Khóa học dành cho bạn")}</h2>
                 {courseId && (
                   <button className="text-link" onClick={() => setCourseId("")}>
-                    Xem tất cả
+                    {tr("Xem tất cả")}
                   </button>
                 )}
               </div>
@@ -210,7 +228,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                         </div>
                         <div>
                           <small>
-                            {enrolled ? "ĐANG HỌC" : "SẴN SÀNG BẮT ĐẦU"}
+                            {enrolled ? tr("ĐANG HỌC") : tr("SẴN SÀNG BẮT ĐẦU")}
                           </small>
                           <h3>{c.title}</h3>
                           <p>{c.description}</p>
@@ -227,7 +245,8 @@ export default function LearnScreen({ slug }: { slug: string }) {
                                 />
                               </div>
                               <small>
-                                {done}/{lessons.length} bài học hoàn thành
+                                {done}/{lessons.length}
+                                {tr("bài học hoàn thành")}
                               </small>
                               <div className="lesson-buttons">
                                 {lessons.map((l: any) => (
@@ -268,7 +287,8 @@ export default function LearnScreen({ slug }: { slug: string }) {
                                       )
                                     }
                                   >
-                                    <Award size={16} /> Chứng nhận
+                                    <Award size={16} />
+                                    {tr("Chứng nhận")}
                                   </button>
                                 )}
                             </>
@@ -285,7 +305,8 @@ export default function LearnScreen({ slug }: { slug: string }) {
                                 })
                               }
                             >
-                              Ghi danh miễn phí <ArrowRight size={17} />
+                              {tr("Ghi danh miễn phí")}
+                              <ArrowRight size={17} />
                             </button>
                           )}
                         </div>
@@ -295,8 +316,10 @@ export default function LearnScreen({ slug }: { slug: string }) {
               </div>
               {!data.courses.length && (
                 <Empty
-                  title="Khóa học đang được chuẩn bị"
-                  body="Hãy quay lại sau khi giảng viên xuất bản nội dung."
+                  title={tr("Khóa học đang được chuẩn bị")}
+                  body={tr(
+                    "Hãy quay lại sau khi giảng viên xuất bản nội dung.",
+                  )}
                 />
               )}
             </>

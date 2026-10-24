@@ -1,4 +1,5 @@
 "use client";
+import { useI18n } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Code2, Package, ArrowUpRight } from "lucide-react";
@@ -19,6 +20,8 @@ const example = {
   data_schema_version: "0.1.0",
 };
 export default function Developer() {
+  const { t: tr } = useI18n();
+
   const [list, setList] = useState<any[]>([]),
     [error, setError] = useState(""),
     [manifest, setManifest] = useState(JSON.stringify(example, null, 2)),
@@ -27,7 +30,7 @@ export default function Developer() {
     api<any[]>("/developer/packages")
       .then(setList)
       .catch(() =>
-        setError("Đăng nhập để gửi package và quản lý hồ sơ developer."),
+        setError(tr("Đăng nhập để gửi package và quản lý hồ sơ developer.")),
       );
   }, []);
   async function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -44,7 +47,9 @@ export default function Developer() {
       });
       setList(await api("/developer/packages"));
       setNotice(
-        "Đã gửi metadata. Package đang chờ review; chưa được phân phối hoặc chạy trên tenant.",
+        tr(
+          "Đã gửi metadata. Package đang chờ review; chưa được phân phối hoặc chạy trên tenant.",
+        ),
       );
     } catch (e) {
       setError((e as Error).message);
@@ -58,25 +63,30 @@ export default function Developer() {
           <div>
             <span className="eyebrow">YIEDU DEVELOPERS</span>
             <h1>
-              Cùng xây khả năng mới<span className="brand-dot">.</span>
+              {tr("Cùng xây khả năng mới")}
+              <span className="brand-dot">.</span>
             </h1>
-            <p>Template, component và plugin cho hệ sinh thái học tập.</p>
+            <p>
+              {tr("Template, component và plugin cho hệ sinh thái học tập.")}
+            </p>
           </div>
           <Link className="button ghost" href="/login">
-            Đăng nhập ↗
+            {tr("Đăng nhập ↗")}
           </Link>
         </div>
         <div className="notice">
-          Developer portal hiện nhận và kiểm tra metadata manifest. Artifact
-          upload, review ký phát hành, mua bán và payout chưa được bật.
+          {tr(
+            "Developer portal hiện nhận và kiểm tra metadata manifest. Artifact upload, review ký phát hành, mua bán và payout chưa được bật.",
+          )}
         </div>
         <div className="content-columns">
           <section className="panel">
             <h2>
-              <Package size={22} /> Package của bạn
+              <Package size={22} />
+              {tr("Package của bạn")}
             </h2>
             {!list.length ? (
-              <p>Chưa có package được gửi.</p>
+              <p>{tr("Chưa có package được gửi.")}</p>
             ) : (
               list.map((p) => (
                 <article className="admin-course" key={p.id}>
@@ -88,11 +98,11 @@ export default function Developer() {
                 </article>
               ))
             )}
-            <h3 className="spaced">Bắt đầu với hợp đồng rõ ràng.</h3>
+            <h3 className="spaced">{tr("Bắt đầu với hợp đồng rõ ràng.")}</h3>
             <p>
-              Manifest có version, range tương thích, capability và surface.
-              Việc kiểm tra metadata không thay thế kiểm tra code, giấy phép và
-              bảo mật.
+              {tr(
+                "Manifest có version, range tương thích, capability và surface. Việc kiểm tra metadata không thay thế kiểm tra code, giấy phép và bảo mật.",
+              )}
             </p>
             <a
               className="text-link"
@@ -100,12 +110,14 @@ export default function Developer() {
               target="_blank"
               rel="noreferrer"
             >
-              Đọc developer quickstart <ArrowUpRight size={16} />
+              {tr("Đọc developer quickstart")}
+              <ArrowUpRight size={16} />
             </a>
           </section>
           <form className="panel" onSubmit={submit}>
             <h2>
-              <Code2 size={22} /> Gửi metadata package
+              <Code2 size={22} />
+              {tr("Gửi metadata package")}
             </h2>
             <label>
               Manifest JSON
@@ -117,13 +129,14 @@ export default function Developer() {
               />
             </label>
             <label>
-              Mô tả
+              {tr("Mô tả")}
               <textarea name="description" rows={3} />
             </label>
             <ErrorBox message={error} />
             {notice && <p className="notice">{notice}</p>}
             <button className="button">
-              Gửi để review <ArrowUpRight size={17} />
+              {tr("Gửi để review")}
+              <ArrowUpRight size={17} />
             </button>
           </form>
         </div>

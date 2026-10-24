@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from yiedu.authoring import validate_lesson_document, validate_site
 from yiedu.schemas import Name, TenantSlug
 
 
@@ -45,6 +46,10 @@ class WorkspaceUpdate(StrictModel):
     @field_validator("data")
     @classmethod
     def page_valid(cls, value):
+        if "schema_version" in value:
+            if value["schema_version"] != "2.0":
+                raise ValueError("Unsupported site document version")
+            return validate_site(value)
         import json
 
         if len(json.dumps(value)) > 100000:
@@ -85,6 +90,33 @@ class LessonWrite(StrictModel):
     content: str = Field(default="", max_length=100000)
     video_url: str = Field(default="", max_length=2000)
     position: int = Field(default=0, ge=0, le=10000)
+    document: dict | None = None
+    translations: dict = Field(default_factory=dict)
+
+    @field_validator("document")
+    @classmethod
+    def document_valid(cls, value):
+        return validate_lesson_document(value)
+
+    @field_validator("translations")
+    @classmethod
+    def translations_valid(cls, value):
+        if set(value) - {"vi", "en"}:
+            raise ValueError("Supported locales: vi, en")
+        for translation in value.values():
+            if not isinstance(translation, dict) or set(translation) - {
+                "title",
+                "content",
+                "document",
+            }:
+                raise ValueError("Invalid lesson translation")
+            if any(
+                not isinstance(translation.get(k, ""), str) or len(translation.get(k, "")) > 100000
+                for k in ["title", "content"]
+            ):
+                raise ValueError("Invalid translated text")
+            validate_lesson_document(translation.get("document"))
+        return value
 
     @field_validator("video_url")
     @classmethod

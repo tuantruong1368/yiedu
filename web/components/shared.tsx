@@ -1,8 +1,11 @@
 "use client";
+import { useI18n, LocaleSwitch } from "./locale-provider";
 import Link from "next/link";
 import { ArrowUpRight, Layers3, LogOut } from "lucide-react";
 import { api } from "@/lib/api";
 export function Brand() {
+  const { t: tr } = useI18n();
+
   return (
     <Link href="/" className="brand">
       <span className="brand-icon">
@@ -13,35 +16,46 @@ export function Brand() {
   );
 }
 export function Header() {
+  const { t: tr } = useI18n();
+
   return (
     <header className="topbar">
       <Brand />
+      <LocaleSwitch />
       <nav>
-        <Link href="/#templates">Mẫu giao diện</Link>
-        <Link href="/marketplace">Tiện ích</Link>
-        <Link href="/developer">Dành cho developer</Link>
+        <Link href="/#templates">{tr("Mẫu giao diện")}</Link>
+        <Link href="/marketplace">{tr("Tiện ích")}</Link>
+        <Link href="/developer">{tr("Dành cho developer")}</Link>
       </nav>
       <Link href="/dashboard" className="button small">
-        Không gian của tôi <ArrowUpRight size={16} />
+        {tr("Không gian của tôi")}
+        <ArrowUpRight size={16} />
       </Link>
     </header>
   );
 }
 export function ErrorBox({ message }: { message: string }) {
+  const { t: tr } = useI18n();
+
   return message ? (
     <div role="alert" className="error">
-      {message}
+      {tr(message)}
     </div>
   ) : null;
 }
 export function Loading() {
+  const { t: tr } = useI18n();
+
   return (
     <div className="loading">
-      <span className="spinner" /> Đang tải không gian của bạn…
+      <span className="spinner" />
+      {tr("Đang tải không gian của bạn…")}
     </div>
   );
 }
 export function Logout() {
+  const { t: tr } = useI18n();
+
   return (
     <button
       className="button ghost small"
@@ -50,11 +64,14 @@ export function Logout() {
         location.href = "/login";
       }}
     >
-      <LogOut size={16} /> Đăng xuất
+      <LogOut size={16} />
+      {tr("Đăng xuất")}
     </button>
   );
 }
 export function Empty({ title, body }: { title: string; body: string }) {
+  const { t: tr } = useI18n();
+
   return (
     <div className="empty">
       <Layers3 size={30} />

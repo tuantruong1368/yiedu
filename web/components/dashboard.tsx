@@ -1,4 +1,5 @@
 "use client";
+import { useI18n } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -12,6 +13,8 @@ import {
 import { api, slugify } from "@/lib/api";
 import { Header, Logout, ErrorBox, Loading, Empty } from "./shared";
 export default function Dashboard({ template = "" }: { template?: string }) {
+  const { t: tr } = useI18n();
+
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [creating, setCreating] = useState(false),
@@ -50,12 +53,13 @@ export default function Dashboard({ template = "" }: { template?: string }) {
         <main className="workspace">
           <div className="page-heading">
             <div>
-              <span className="eyebrow">KHÔNG GIAN CỦA BẠN</span>
+              <span className="eyebrow">{tr("KHÔNG GIAN CỦA BẠN")}</span>
               <h1>
-                Xin chào, {data.user.name.split(" ").at(-1)}
+                {tr("Xin chào,")}
+                {data.user.name.split(" ").at(-1)}
                 <span className="brand-dot">.</span>
               </h1>
-              <p>Mỗi bài học là khởi đầu của một điều mới.</p>
+              <p>{tr("Mỗi bài học là khởi đầu của một điều mới.")}</p>
             </div>
             <Logout />
           </div>
@@ -63,29 +67,31 @@ export default function Dashboard({ template = "" }: { template?: string }) {
             <div>
               <Globe2 />
               <b>{data.sites.length}</b>
-              <span>Hệ thống đã tham gia</span>
+              <span>{tr("Hệ thống đã tham gia")}</span>
             </div>
             <div>
               <PencilRuler />
               <b>{data.workspaces.length}</b>
-              <span>Bản thiết kế</span>
+              <span>{tr("Bản thiết kế")}</span>
             </div>
             <div>
               <BookOpen />
               <b>YiEdu</b>
-              <span>Học tập & phát triển</span>
+              <span>{tr("Học tập & phát triển")}</span>
             </div>
           </div>
           <div className="dashboard-columns">
             <section>
               <div className="section-title">
-                <h2>Hệ thống của bạn</h2>
+                <h2>{tr("Hệ thống của bạn")}</h2>
                 <span className="pill">{data.sites.length}</span>
               </div>
               {!data.sites.length ? (
                 <Empty
-                  title="Chưa có hệ thống nào"
-                  body="Tạo không gian đầu tiên hoặc tham gia một hệ thống để bắt đầu học."
+                  title={tr("Chưa có hệ thống nào")}
+                  body={tr(
+                    "Tạo không gian đầu tiên hoặc tham gia một hệ thống để bắt đầu học.",
+                  )}
                 />
               ) : (
                 <div className="site-list">
@@ -112,14 +118,14 @@ export default function Dashboard({ template = "" }: { template?: string }) {
                           (s.role === "learner" ? "/learn" : "/administrator")
                         }
                       >
-                        {s.role === "learner" ? "Vào học" : "Quản trị"}
+                        {s.role === "learner" ? tr("Vào học") : tr("Quản trị")}
                         <ArrowRight size={15} />
                       </Link>
                     </article>
                   ))}
                 </div>
               )}
-              <h2 className="spaced">Bản thiết kế</h2>
+              <h2 className="spaced">{tr("Bản thiết kế")}</h2>
               {data.workspaces.map((w: any) => (
                 <Link
                   className="draft-row"
@@ -130,25 +136,29 @@ export default function Dashboard({ template = "" }: { template?: string }) {
                   <div>
                     <b>{w.name}</b>
                     <small>
-                      {w.template_id} · Phiên bản {w.revision}
+                      {w.template_id}
+                      {tr("· Phiên bản")}
+                      {w.revision}
                     </small>
                   </div>
-                  <span>{w.tenant_id ? "Đã xuất bản" : "Bản nháp"}</span>
+                  <span>
+                    {w.tenant_id ? tr("Đã xuất bản") : tr("Bản nháp")}
+                  </span>
                   <ArrowUpRight size={17} />
                 </Link>
               ))}
             </section>
             <aside className="create-panel">
-              <span className="eyebrow">TẠO ĐIỀU TIẾP THEO</span>
-              <h2>Không gian mới.</h2>
-              <p>Bắt đầu từ một mẫu, rồi biến nó thành của bạn.</p>
+              <span className="eyebrow">{tr("TẠO ĐIỀU TIẾP THEO")}</span>
+              <h2>{tr("Không gian mới.")}</h2>
+              <p>{tr("Bắt đầu từ một mẫu, rồi biến nó thành của bạn.")}</p>
               <form onSubmit={create}>
                 <label>
-                  Tên hệ thống
+                  {tr("Tên hệ thống")}
                   <input
                     name="name"
                     required
-                    placeholder="Ví dụ: Yisoft Academy"
+                    placeholder={tr("Ví dụ: Yisoft Academy")}
                     maxLength={200}
                     onChange={(e) => {
                       const form = e.target.form;
@@ -160,7 +170,7 @@ export default function Dashboard({ template = "" }: { template?: string }) {
                   />
                 </label>
                 <label>
-                  Địa chỉ hệ thống
+                  {tr("Địa chỉ hệ thống")}
                   <div className="input-addon">
                     <input
                       name="slug"
@@ -173,20 +183,26 @@ export default function Dashboard({ template = "" }: { template?: string }) {
                   </div>
                 </label>
                 <label>
-                  Mẫu giao diện
+                  {tr("Mẫu giao diện")}
                   <select
                     value={selected}
                     onChange={(e) => setSelected(e.target.value)}
                   >
-                    <option value="academy">Academy · Trung tâm đào tạo</option>
-                    <option value="creator">Studio · Giảng viên độc lập</option>
-                    <option value="technology">Future Lab · Công nghệ</option>
+                    <option value="academy">
+                      {tr("Academy · Trung tâm đào tạo")}
+                    </option>
+                    <option value="creator">
+                      {tr("Studio · Giảng viên độc lập")}
+                    </option>
+                    <option value="technology">
+                      {tr("Future Lab · Công nghệ")}
+                    </option>
                   </select>
                 </label>
                 <ErrorBox message={error} />
                 <button className="button full" disabled={creating}>
                   <Plus size={17} />
-                  {creating ? "Đang tạo…" : "Mở trình thiết kế"}
+                  {creating ? tr("Đang tạo…") : tr("Mở trình thiết kế")}
                 </button>
               </form>
             </aside>

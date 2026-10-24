@@ -3,9 +3,13 @@
 Tạo và vận hành hệ thống e-learning mang thương hiệu riêng.
 Yisoft và Yirobot là tenant demo, không phải khóa học do YiEdu bán.
 
-## Bản chạy local 0.3.0
+## Bản chạy local 0.4.0
 
-Đã có website Next.js + Puck builder, API FastAPI, PostgreSQL và mã nguồn app React Native/Expo.
+Đã có website Next.js + GrapesJS builder, Tiptap lesson editor, API FastAPI, PostgreSQL
+và mã nguồn app React Native/Expo. Puck renderer giữ cho trang cũ.
+Mới: VI/EN, page/menu, logo tenant, HTML/CSS import, gadget/events và lesson tool registry.
+[Hướng dẫn Authoring Studio và SDK](handbook/guides/authoring-sdk.md),
+[ma trận 0.4 và giới hạn](handbook/product/release-0.4.md).
 Luồng chính đã được chạy thử: đăng ký email → chọn template → thiết kế → xuất bản tenant →
 quản trị khóa học/bài học/lộ trình → học viên tham gia/học/ghi tiến độ → tải ZIP.
 

@@ -1,6 +1,6 @@
 {
   "name": "yiedu-web",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,21 @@
     "lucide-react": "1.61.0",
     "next": "16.4.3",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "grapesjs": "0.23.8",
+    "@tiptap/react": "3.32.0",
+    "@tiptap/starter-kit": "3.32.0",
+    "@tiptap/extension-mathematics": "3.32.0",
+    "@tiptap/extension-table": "3.32.0",
+    "@tiptap/extension-image": "3.32.0",
+    "@tiptap/extension-youtube": "3.32.0",
+    "@tiptap/extension-task-list": "3.32.0",
+    "@tiptap/extension-task-item": "3.32.0",
+    "@tiptap/extension-placeholder": "3.32.0",
+    "@tiptap/core": "3.32.0",
+    "@tiptap/pm": "3.32.0",
+    "katex": "0.18.10",
+    "dompurify": "3.4.17"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",
@@ -26,7 +40,8 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "prettier": "3.9.10",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "@types/katex": "0.16.8"
   },
   "private": true,
   "engines": {

@@ -66,3 +66,14 @@ phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn
 Migration 0002 tạo users/auth_sessions/memberships/workspaces/lessons/learning_paths/enrollments/
 completions/package_listings/tenant_extensions/audit_events, bổ sung published_page/template_id
 và course description/published. Đây là schema thực, khác với các bảng mục tiêu chưa tạo ở v0.2.
+
+## Cập nhật authoring 0.4 — 24/10/2026
+
+[CR-002: FR-026–034](changes/CR-002-authoring-i18n.md) và [trạng thái 0.4](release-0.4.md)
+quản lý phần đa ngôn ngữ, builder mới và công cụ tạo bài học.
+Workspace data chấp nhận Puck cũ hoặc SiteDocument 2.0 (pages/menu/branding/VI/EN);
+LessonWrite/lesson response thêm document và translations. Alembic 0003 thêm JSONB document nullable,
+translations mặc định {}; body/document/translation không trả trong overview cho học viên.
+Snapshot mới 0003, restore nhận 0002/0003.
+GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
+EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.

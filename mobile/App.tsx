@@ -1,3 +1,4 @@
+import {mobileTranslator} from "./i18n";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -24,6 +25,8 @@ function LessonVideo({ url }: { url: string }) {
   );
 }
 export default function App() {
+ const [locale,setLocale]=useState<"vi"|"en">("vi"); const tr=mobileTranslator(locale);
+ useEffect(()=>{SecureStore.getItemAsync("yiedu.locale").then(v=>{if(v==="en")setLocale(v)})},[]);
   const [session, setSession] = useState<Session | null>(null),
     [base, setBase] = useState(process.env.EXPO_PUBLIC_API_URL || ""),
     [email, setEmail] = useState(""),
@@ -50,7 +53,7 @@ export default function App() {
     const data = await res.json();
     if (!res.ok)
       throw new Error(
-        typeof data.detail === "string" ? data.detail : "Dữ liệu không hợp lệ",
+        typeof data.detail === "string" ? data.detail : tr("Dữ liệu không hợp lệ"),
       );
     return data;
   }
@@ -88,7 +91,7 @@ export default function App() {
       origin.search ||
       origin.hash
     )
-      throw new Error("Nhập origin máy chủ, ví dụ https://api.example.com");
+      throw new Error(tr("Nhập origin máy chủ, ví dụ https://api.example.com"));
     if (
       origin.protocol !== "https:" &&
       !(
@@ -96,7 +99,7 @@ export default function App() {
         origin.protocol === "http:"
       )
     )
-      throw new Error("Cần HTTPS; HTTP chỉ bật riêng cho phát triển.");
+      throw new Error(tr("Cần HTTPS; HTTP chỉ bật riêng cho phát triển."));
     const trusted = { base: origin.origin, token: "" };
     const data = await request(
       "/auth/login",
@@ -136,28 +139,25 @@ export default function App() {
   );
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar style="dark" />
+      <StatusBar style="dark" /><TouchableOpacity onPress={()=>{const next=locale==="vi"?"en":"vi";setLocale(next);SecureStore.setItemAsync("yiedu.locale",next)}}><Text style={s.link}>Tiếng Việt / English</Text></TouchableOpacity>
       <ScrollView contentContainerStyle={s.page}>
         <View style={s.top}>
           <Text style={s.brand}>
-            YiEdu<Text style={{ color: "#d97446" }}>.</Text>
+            {school?.tenant.name||"YiEdu"}
           </Text>
           {session && (
             <TouchableOpacity onPress={() => perform(logout)}>
-              <Text style={s.link}>Đăng xuất</Text>
+              <Text style={s.link}>{tr("Đăng xuất")}</Text>
             </TouchableOpacity>
           )}
         </View>
         {!session ? (
           <>
-            <Text style={s.kicker}>KHÔNG GIAN HỌC TẬP CỦA BẠN</Text>
-            <Text style={s.title}>Học hôm nay.{`\n`}Tiến xa ngày mai.</Text>
-            <Text style={s.muted}>
-              Dùng tài khoản đã đăng ký tại website tenant. Nhập máy chủ tin
-              cậy; token được lưu riêng cho máy chủ đó.
-            </Text>
+            <Text style={s.kicker}>{tr("KHÔNG GIAN HỌC TẬP CỦA BẠN")}</Text>
+            <Text style={s.title}>{tr("Học hôm nay.")}{`\n`}{tr("Tiến xa ngày mai.")}</Text>
+            <Text style={s.muted}>{tr("Dùng tài khoản đã đăng ký tại website tenant. Nhập máy chủ tin cậy; token được lưu riêng cho máy chủ đó.")}</Text>
             <View style={s.panel}>
-              <Text style={s.label}>Máy chủ API</Text>
+              <Text style={s.label}>{tr("Máy chủ API")}</Text>
               <TextInput
                 style={s.input}
                 value={base}
@@ -175,26 +175,23 @@ export default function App() {
                 keyboardType="email-address"
                 placeholder="ban@example.com"
               />
-              <Text style={s.label}>Mật khẩu</Text>
+              <Text style={s.label}>{tr("Mật khẩu")}</Text>
               <TextInput
                 style={s.input}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
               />
-              {button("Đăng nhập →", () => perform(login))}
+              {button(tr("Đăng nhập →"), () => perform(login))}
             </View>
           </>
         ) : !school ? (
           <>
-            <Text style={s.kicker}>CHÀO MỪNG TRỞ LẠI</Text>
-            <Text style={s.title}>
-              Xin chào,{`\n`}
+            <Text style={s.kicker}>{tr("CHÀO MỪNG TRỞ LẠI")}</Text>
+            <Text style={s.title}>{tr("Xin chào,")}{`\n`}
               {dashboard?.user.name}.
             </Text>
-            <Text style={s.muted}>
-              Chọn hệ thống để tiếp tục hành trình học tập.
-            </Text>
+            <Text style={s.muted}>{tr("Chọn hệ thống để tiếp tục hành trình học tập.")}</Text>
             {dashboard?.sites.map((site: any) => (
               <TouchableOpacity
                 key={site.id}
@@ -202,28 +199,26 @@ export default function App() {
                 onPress={() => perform(() => openSchool(site.id))}
               >
                 <Text style={s.cardTitle}>{site.name}</Text>
-                <Text style={s.link}>{site.role} · Vào học →</Text>
+                <Text style={s.link}>{site.role}{tr("· Vào học →")}</Text>
               </TouchableOpacity>
             ))}
             {dashboard?.sites.length === 0 && (
-              <Text style={s.muted}>
-                Chưa tham gia hệ thống nào. Tham gia tại website tenant trước.
-              </Text>
+              <Text style={s.muted}>{tr("Chưa tham gia hệ thống nào. Tham gia tại website tenant trước.")}</Text>
             )}
           </>
         ) : lesson ? (
           <>
-            {button("← Khóa học", () => setLesson(null), true)}
-            <Text style={s.kicker}>BÀI HỌC</Text>
-            <Text style={s.title}>{lesson.title}</Text>
+            {button(tr("← Khóa học"), () => setLesson(null), true)}
+            <Text style={s.kicker}>{tr("BÀI HỌC")}</Text>
+            <Text style={s.title}>{lesson.translations?.[locale]?.title||lesson.title}</Text>
             {lesson.video_url && <LessonVideo url={lesson.video_url} />}
             <View style={s.panel}>
-              <Text style={s.content}>{lesson.content}</Text>
+              <Text style={s.content}>{lesson.translations?.[locale]?.content||lesson.content}</Text>
             </View>
             {button(
               school.completed.includes(lesson.id)
-                ? "✓ Đã hoàn thành"
-                : "Đánh dấu hoàn thành",
+                ? tr("✓ Đã hoàn thành")
+                : tr("Đánh dấu hoàn thành"),
               () =>
                 perform(async () => {
                   await request(
@@ -240,9 +235,9 @@ export default function App() {
           </>
         ) : (
           <>
-            {button("← Hệ thống của tôi", () => setSchool(null), true)}
+            {button(tr("← Hệ thống của tôi"), () => setSchool(null), true)}
             <Text style={s.kicker}>{school.tenant.name}</Text>
-            <Text style={s.title}>Từng bước{`\n`}đến mục tiêu.</Text>
+            <Text style={s.title}>{tr("Từng bước")}{`\n`}{tr("đến mục tiêu.")}</Text>
             {school.paths.map((path: any) => (
               <View style={s.panel} key={path.id}>
                 <Text style={s.cardTitle}>{path.title}</Text>
@@ -250,14 +245,14 @@ export default function App() {
                   <Text key={id} style={s.path}>
                     {i + 1}.{" "}
                     {school.courses.find((c: any) => c.id === id)?.title ||
-                      "Khóa học chưa xuất bản"}
+                      tr("Khóa học chưa xuất bản")}
                   </Text>
                 ))}
               </View>
             ))}
             {school.courses.map((course: any) => (
               <View style={s.panel} key={course.id}>
-                <Text style={s.kicker}>KHÓA HỌC</Text>
+                <Text style={s.kicker}>{tr("KHÓA HỌC")}</Text>
                 <Text style={s.cardTitle}>{course.title}</Text>
                 <Text style={s.muted}>{course.description}</Text>
                 {school.enrolled.includes(course.id)
@@ -286,7 +281,7 @@ export default function App() {
                           </Text>
                         </TouchableOpacity>
                       ))
-                  : button("Ghi danh miễn phí", () =>
+                  : button(tr("Ghi danh miễn phí"), () =>
                       perform(async () => {
                         await request(
                           "/runtime/" +
@@ -309,7 +304,7 @@ export default function App() {
           </View>
         )}
         {busy && <ActivityIndicator color="#215d4c" style={{ margin: 20 }} />}
-        <Text style={s.footer}>YIEDU / LEARN · BUILD · GROW</Text>
+        <Text style={s.footer}>{school?.tenant.name||"YIEDU / LEARN · BUILD · GROW"}</Text>
       </ScrollView>
     </SafeAreaView>
   );

@@ -11,7 +11,7 @@ async function proxy(
   const data = ["GET", "HEAD"].includes(request.method)
     ? undefined
     : await request.arrayBuffer();
-  if (data && data.byteLength > 1024 * 1024)
+  if (data && data.byteLength > 2 * 1024 * 1024)
     return new Response("Too large", { status: 413 });
   const headers = new Headers();
   for (const name of ["cookie", "content-type", "authorization", "origin"]) {

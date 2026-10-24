@@ -20,6 +20,56 @@
       "title": "Dependency",
       "type": "object"
     },
+    "EditorContribution": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9-]{0,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "slot": {
+          "enum": [
+            "page-gadget",
+            "lesson-tool"
+          ],
+          "title": "Slot",
+          "type": "string"
+        },
+        "api_version": {
+          "const": "1.0.0",
+          "title": "Api Version",
+          "type": "string"
+        },
+        "export_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_]{0,99}$",
+          "title": "Export Name",
+          "type": "string"
+        },
+        "license": {
+          "default": "free",
+          "enum": [
+            "free",
+            "commercial"
+          ],
+          "title": "License",
+          "type": "string"
+        },
+        "props_schema": {
+          "additionalProperties": true,
+          "title": "Props Schema",
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "slot",
+        "api_version",
+        "export_name"
+      ],
+      "title": "EditorContribution",
+      "type": "object"
+    },
     "VersionRange": {
       "additionalProperties": false,
       "properties": {
@@ -118,6 +168,14 @@
       },
       "maxItems": 50,
       "title": "Dependencies",
+      "type": "array"
+    },
+    "editor_contributions": {
+      "items": {
+        "$ref": "#/$defs/EditorContribution"
+      },
+      "maxItems": 30,
+      "title": "Editor Contributions",
       "type": "array"
     },
     "portable": {

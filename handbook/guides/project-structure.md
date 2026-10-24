@@ -1,8 +1,8 @@
 # Cấu trúc dự án YiEdu — tài liệu cho developer
 
 Cập nhật 24/10/2026, đối chiếu mã nguồn sau nâng cấp công nghệ, dựa trên commit
-`0c681bc2ec7affb794b45cd1098ed8dec23a99df` và bổ sung tài liệu onboarding trong lần cập nhật này.
-Danh mục bên dưới bao phủ toàn bộ **159 file được quản lý bằng Git** sau lần cập nhật tài liệu.
+`e9730f1b812a2b979d4029d63446b177a2970e92` làm baseline và cập nhật Authoring Studio 0.4 trong lần thay đổi này.
+Danh mục bên dưới bao phủ toàn bộ **184 file được quản lý bằng Git** sau lần cập nhật tài liệu.
 Các thư mục build/dependency/backup sinh ở máy developer được giải thích riêng ở mục 6.
 
 ## 1. Đọc tài liệu này để làm gì?
@@ -24,7 +24,7 @@ hoặc plugin runtime chỉ vì đã có file mang tên tương ứng.
 
 | Thành phần | Thư mục chính | Vai trò | Chạy ở đâu? |
 |---|---|---|---|
-| Web | `web/` | Marketing, builder, tenant public/admin/learn; BFF chuyển API | Next.js server và trình duyệt |
+| Web | `web/` | Marketing, GrapesJS builder, tenant public/admin/learn; BFF chuyển API | Next.js server và trình duyệt |
 | API | `backend/yiedu/` | Auth, quyền tenant, nghiệp vụ, database, export | FastAPI/Uvicorn |
 | App | `mobile/` | Học bằng tài khoản tenant qua cùng API | Expo/React Native trên iOS/Android |
 | Handbook | `handbook/` | Tài liệu sản phẩm, quy trình P0–P9 và hướng dẫn | MkDocs, không phải một phần website khách hàng |
@@ -133,6 +133,16 @@ Các đường dẫn đều tính từ gốc repo. Những thư mục con chứa
 | `web/lib/` | Helper gọi API và chuẩn hóa slug. |
 | `web/tests/` | Kiểm thử trình duyệt Playwright. |
 
+| Thư mục bổ sung 0.4 | Trách nhiệm |
+|---|---|
+| `extensions/examples/learning-tools/` | Ví dụ package đóng góp gadget và lesson tool. |
+| `web/app/t/[slug]/p/` | Nhóm route trang con tenant. |
+| `web/app/t/[slug]/p/[page]/` | Trang nội dung tenant theo page slug. |
+| `web/components/authoring/` | Runtime sandbox cho page HTML/CSS. |
+| `web/components/lesson/` | Rich editor và viewer lesson. |
+| `web/lib/authoring/` | Kiểu document, sanitizer client và registry gadget/tool. |
+| `web/lib/i18n/` | Locale và dictionary dùng chung client/server. |
+
 ## 4. Ranh giới module cần hiểu trước khi sửa
 
 | Khái niệm | Định nghĩa trong repo | Dễ nhầm với |
@@ -141,7 +151,7 @@ Các đường dẫn đều tính từ gốc repo. Những thư mục con chứa
 | Request/response schema | `schemas.py`, `product_schemas.py` kiểm input/output | Migration thay đổi DB |
 | Migration | File revision Alembic biến đổi schema thật | Sửa model rồi mong DB tự đổi |
 | BFF | Next route chuyển request, cookie và response | Nơi xử lý nghiệp vụ/quyền tenant |
-| Puck component | Block giao diện cấu hình trong `page-blocks.tsx` | Package plugin của bên thứ ba |
+| Puck component legacy | Block giao diện cũ trong `page-blocks.tsx` | Package plugin của bên thứ ba |
 | Extension manifest | Metadata hợp đồng package | Code extension được cài/chạy |
 | Tenant snapshot | Dữ liệu có giới hạn của một tenant để standalone restore | Backup PostgreSQL toàn hệ thống giữ nguyên tài khoản |
 
@@ -192,15 +202,15 @@ Khi đọc offline, dùng đường dẫn ở cột File để mở nguồn tron
 | `backend/yiedu/main.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/main.py) | Entry point yiedu.main:app. Tạo FastAPI, gắn product router, CORS/CSRF/security headers, health và API platform-admin cũ dùng X-Admin-Key. |
 | `backend/yiedu/config.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/config.py) | Đọc/kiểm tra env bằng Pydantic Settings; DB, admin secret, mode saas/standalone, domain, cookie và origin. get_settings được cache. |
 | `backend/yiedu/db.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/db.py) | Tạo/cached SQLAlchemy Engine và cung cấp Session cho mỗi request bằng dependency get_session. |
-| `backend/yiedu/models.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/models.py) | ORM và metadata các bảng PostgreSQL: tenant, user/session/membership, workspace, course/lesson/path, enrollment/completion, listing/extension/audit. |
+| `backend/yiedu/models.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/models.py) | ORM PostgreSQL identity/tenant/workspace/learning/extension/audit; lesson có document/translations JSONB từ revision 0003. |
 | `backend/yiedu/schemas.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/schemas.py) | Pydantic request/response cho API admin nền và kiểu dùng chung như Name, TenantSlug. Schema API không tự tạo bảng DB. |
-| `backend/yiedu/product_schemas.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/product_schemas.py) | Validate request sản phẩm: tài khoản, workspace/Puck blocks, course/lesson, path, role, extension toggle và listing. Giới hạn kích thước và video HTTPS. |
+| `backend/yiedu/product_schemas.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/product_schemas.py) | Validate request cũ/mới: SiteDocument 2.0/Puck legacy, lesson rich document/translations và nghiệp vụ sản phẩm. |
 | `backend/yiedu/auth.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/auth.py) | Băm mật khẩu scrypt, session token ngẫu nhiên lưu dạng digest, cookie web/bearer native, xác định user và kiểm membership/role. |
 | `backend/yiedu/catalog.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/catalog.py) | Catalog template/extension first-party và dữ liệu trang khởi tạo. Là dữ liệu tích hợp sẵn, chưa phải trình nạp package của developer bên ngoài. |
 | `backend/yiedu/product.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/product.py) | Router /api/v1 cho hành trình sản phẩm. Hiện tập trung nhiều nghiệp vụ trong một file: auth, builder/publish, runtime học, quản trị, export và metadata developer. |
 | `backend/yiedu/portable.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/portable.py) | Tạo snapshot theo tenant và ZIP nguồn theo allowlist, checksum manifest; loại password hash/session/secret. Không phải gói update có chữ ký. |
 | `backend/yiedu/extensions/__init__.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/extensions/__init__.py) | Đánh dấu namespace Python cho mã hợp đồng extension. |
-| `backend/yiedu/extensions/manifest.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/extensions/manifest.py) | Model Pydantic và kiểm tra ngữ nghĩa manifest: stable version/range, loại package, dependency và capability. Chưa install/chạy code extension. |
+| `backend/yiedu/extensions/manifest.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/extensions/manifest.py) | Manifest package và editor_contributions (page-gadget/lesson-tool, license/props_schema); metadata không cấp quyền chạy code. |
 | `backend/migrations/env.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/migrations/env.py) | Nối Alembic với settings, Engine và Base.metadata; hỗ trợ chế độ online/offline và kiểm drift. |
 | `backend/migrations/script.py.mako` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/migrations/script.py.mako) | Template Mako dùng khi Alembic tạo file revision mới. |
 | `backend/migrations/versions/0001_initial.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/migrations/versions/0001_initial.py) | Revision nền: tạo cấu trúc tenant/course ban đầu; có upgrade/downgrade. |
@@ -226,7 +236,7 @@ Khi đọc offline, dùng đường dẫn ở cột File để mở nguồn tron
 
 | File | Chức năng và lưu ý |
 |---|---|
-| `web/app/layout.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/app/layout.tsx) | Root layout HTML tiếng Việt, global metadata và import CSS dùng chung. |
+| `web/app/layout.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/app/layout.tsx) | Root HTML/layout, LocaleProvider và metadata ngôn ngữ từ cookie; import global CSS. |
 | `web/app/globals.css` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/app/globals.css) | CSS toàn website: màu sắc, bố cục, component, responsive, admin và trang học. |
 | `web/app/page.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/app/page.tsx) | URL /. Trang marketing/template ở mode saas; mode standalone có thể render tenant duy nhất tại gốc. |
 | `web/app/login/page.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/app/login/page.tsx) | URL /login. Đọc template/site trong query rồi truyền sang AuthScreen đăng nhập. |
@@ -247,11 +257,11 @@ Khi đọc offline, dùng đường dẫn ở cột File để mở nguồn tron
 | `web/components/shared.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/shared.tsx) | Brand, Header và ErrorBox dùng chung; có thao tác logout. |
 | `web/components/auth-screen.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/auth-screen.tsx) | Form email/password đăng nhập/đăng ký và điều hướng tiếp theo; nút social chưa cấu hình. |
 | `web/components/dashboard.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/dashboard.tsx) | Hiển thị membership/workspace của user, chọn template và tạo workspace. |
-| `web/components/builder.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/builder.tsx) | Puck editor: tải workspace, chỉnh dữ liệu, lưu theo revision và xuất bản tenant. |
-| `web/components/page-blocks.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/page-blocks.tsx) | Định nghĩa config/render cho các block Hero, Text, Courses, Stats; dùng chung giữa editor và trang đã xuất bản. |
-| `web/components/site-view.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/site-view.tsx) | Render published_page bằng Puck Render, cung cấp dữ liệu khóa học và liên kết vào quản trị/học. |
-| `web/components/admin-screen.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/admin-screen.tsx) | Giao diện quản trị: tổng quan, khóa học/bài học/lộ trình, thành viên, extension, ZIP và trạng thái update. |
-| `web/components/learn-screen.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/learn-screen.tsx) | Học viên tham gia tenant/khóa học, xem bài/video, lộ trình, hoàn thành và chứng nhận khi đủ điều kiện. |
+| `web/components/builder.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/builder.tsx) | GrapesJS Studio: inspector trái, block/style/traits/layers, free/flow/fixed/resize/zoom, import HTML/CSS, page/menu/branding VI/EN, revision save/publish. |
+| `web/components/page-blocks.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/page-blocks.tsx) | Puck config/render legacy cho Hero/Text/Courses/Stats; giữ tương thích website cũ, builder mới không dùng Puck editor. |
+| `web/components/site-view.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/site-view.tsx) | Tenant public shell/logo/menu/locale; SiteDocument 2.0 dùng sandbox runtime, Puck cũ dùng legacy Render. |
+| `web/components/admin-screen.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/admin-screen.tsx) | Quản trị tenant white-label, UI VI/EN; course/path/member/extension/export và Tiptap lesson editor. |
+| `web/components/learn-screen.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/learn-screen.tsx) | Learner web white-label VI/EN, enroll/prerequisite/progress/certificate và rich LessonView. |
 | `web/components/developer-screen.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/developer-screen.tsx) | Form gửi manifest/description và xem package metadata của developer. |
 
 ### 5.7. Mobile
@@ -263,14 +273,14 @@ Khi đọc offline, dùng đường dẫn ở cột File để mở nguồn tron
 | `mobile/package-lock.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/package-lock.json) | Dependency lock riêng của app; không dùng lock của web thay thế. |
 | `mobile/app.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/app.json) | Metadata Expo, app scheme và identifier iOS/Android dự kiến; chưa đồng nghĩa app đã ký hoặc có trên store. |
 | `mobile/index.js` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/index.js) | Entry point Expo: registerRootComponent(App). |
-| `mobile/App.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/App.tsx) | App hiện tại trong một file: chọn API origin, login/SecureStore token, chọn tenant, xem khóa học/lộ trình/bài/video, enroll và hoàn thành. |
+| `mobile/App.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/App.tsx) | App VI/EN với locale lưu SecureStore; login/origin/token, chọn tenant, course/path/lesson/progress; lesson hiện text/video fallback. |
 | `mobile/tsconfig.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/tsconfig.json) | TypeScript strict dựa trên cấu hình Expo. |
 
 ### 5.8. Contract và ví dụ extension
 
 | File | Chức năng và lưu ý |
 |---|---|
-| `contracts/extension-manifest.schema.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/contracts/extension-manifest.schema.json) | JSON Schema sinh từ ExtensionManifest; được check_contracts kiểm tra để tránh lệch nguồn Python. |
+| `contracts/extension-manifest.schema.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/contracts/extension-manifest.schema.json) | JSON Schema sinh từ ExtensionManifest, gồm editor_contributions; check_contracts kiểm drift và bốn mẫu. |
 | `extensions/examples/training-template/manifest.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/extensions/examples/training-template/manifest.json) | Manifest template minh họa; không phải template artifact thực thi. |
 | `extensions/examples/training-template/README.md` [mở](https://github.com/tuantruong1368/yiedu/blob/main/extensions/examples/training-template/README.md) | Giải thích giới hạn ví dụ template: chỉ metadata, chưa có code/installer/license grant. |
 | `extensions/examples/certificates-component/manifest.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/extensions/examples/certificates-component/manifest.json) | Manifest component chứng nhận minh họa; không phải implementation chứng nhận đang tích hợp trong product.py. |
@@ -288,7 +298,7 @@ Khi đọc offline, dùng đường dẫn ở cột File để mở nguồn tron
 | `scripts/validate_extension.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/validate_extension.py) | CLI validate một manifest và tùy chọn kiểm range core/extension-api. Không install, xác minh chữ ký hoặc cấp license. |
 | `scripts/smoke.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/smoke.py) | Gọi API platform-admin local để tạo tenant/course mẫu và đọc lại. Có ghi dữ liệu; không tạo account/membership của hành trình builder. |
 | `scripts/test_postgres.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/test_postgres.py) | Chạy migration lên/check/xuống/lên và pytest trên database tên yiedu_test. Có thao tác xóa schema test; tuyệt đối không chứa dữ liệu thật trong DB này. |
-| `scripts/restore_snapshot.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/restore_snapshot.py) | Import tenant snapshot vào DB sạch ở mode standalone, kiểm quan hệ và tạo mật khẩu mới. Khác với restore toàn DB giữ tài khoản của upgrade_postgres. |
+| `scripts/restore_snapshot.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/restore_snapshot.py) | Restore tenant snapshot 0002/0003 vào DB sạch, kiểm quan hệ/site/lesson schema và tạo mật khẩu mới; giữ workspace published page. |
 | `scripts/verify_export.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/verify_export.py) | Kiểm đường dẫn và SHA-256 của gói ZIP đã giải nén. Chỉ kiểm tính toàn vẹn, không xác thực nhà phát hành. |
 | `scripts/upgrade_postgres.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/scripts/upgrade_postgres.py) | Chuyển DB Compose 17 → 18: dừng app, backup riêng tư, restore transaction vào DB rỗng, so số dòng, giữ volume cũ. Chỉ chạy khi cần chuyển phiên bản. |
 
@@ -384,6 +394,36 @@ Khi đọc offline, dùng đường dẫn ở cột File để mở nguồn tron
 | `handbook/forms/release.md` [mở](../forms/release.md) | Mẫu checklist phát hành. |
 | `handbook/forms/incident.md` [mở](../forms/incident.md) | Mẫu sự cố và postmortem. Tất cả file forms là mẫu trống, không chứng minh hoạt động đã diễn ra. |
 
+### 5.15. Authoring Studio 0.4 và đa ngôn ngữ
+
+| File | Chức năng và lưu ý |
+|---|---|
+| `backend/migrations/versions/0003_authoring.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/migrations/versions/0003_authoring.py) | Thêm lesson.document JSONB nullable và lesson.translations JSONB mặc định rỗng; giữ nội dung cũ. |
+| `backend/yiedu/authoring.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/backend/yiedu/authoring.py) | Schema SiteDocument 2.0, sanitize HTML/CSS nh3/tinycss2, validate rich lesson nodes/marks/URL/size/depth. |
+| `extensions/examples/learning-tools/README.md` [mở](https://github.com/tuantruong1368/yiedu/blob/main/extensions/examples/learning-tools/README.md) | Giải thích mẫu đóng góp page-gadget/lesson-tool và giới hạn metadata commercial. |
+| `extensions/examples/learning-tools/manifest.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/extensions/examples/learning-tools/manifest.json) | Mẫu editor_contributions khai slot, API version, export name, license và props_schema; chưa install code. |
+| `handbook/guides/authoring-sdk.md` [mở](authoring-sdk.md) | Cách dùng builder mới, VI/EN, import, logo, events, Tiptap và API đăng ký gadget/lesson tool; lệnh nâng local. |
+| `handbook/product/release-0.4.md` [mở](../product/release-0.4.md) | Ma trận tính năng/giới hạn Authoring Studio 0.4. |
+| `handbook/product/changes/CR-002-authoring-i18n.md` [mở](../product/changes/CR-002-authoring-i18n.md) | Yêu cầu và AC FR-026–034, tác động editor, i18n, lesson schema và kiểm thử. |
+| `mobile/i18n.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/i18n.ts) | Hàm dịch giao diện native theo locale VI/EN. |
+| `mobile/messages.en.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/mobile/messages.en.json) | Dictionary tiếng Anh của app; lựa chọn locale lưu SecureStore. |
+| `tests/test_authoring.py` [mở](https://github.com/tuantruong1368/yiedu/blob/main/tests/test_authoring.py) | Kiểm HTML/CSS/event sanitizer, menu/page integrity, Puck legacy, rich lesson và editor manifest. |
+| `web/app/t/[slug]/p/[page]/page.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/app/t/%5Bslug%5D/p/%5Bpage%5D/page.tsx) | Route trang con tenant /t/<slug>/p/<page-slug>, metadata theo ngôn ngữ và kiểm tồn tại page. |
+| `web/components/authoring/site-runtime.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/authoring/site-runtime.tsx) | Render HTML/CSS đã sanitize trong iframe sandbox/CSP; inject published courses; trusted event bridge và auto height. |
+| `web/components/lesson/lesson-editor.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/lesson/lesson-editor.tsx) | Tiptap UI/toolbars cho nội dung lesson VI/EN, hidden JSON/text fields để lưu API. |
+| `web/components/lesson/lesson-view.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/lesson/lesson-view.tsx) | Rich lesson viewer web dùng cùng extension registry; fallback nội dung cũ và ngôn ngữ. |
+| `web/components/locale-provider.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/locale-provider.tsx) | React context ngôn ngữ, locale switch, cookie, cập nhật html lang và router refresh. |
+| `web/components/template-link.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/template-link.tsx) | Kiểm session: user đã login tạo workspace và mở builder; guest chuyển đăng ký. |
+| `web/components/tenant-brand.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/components/tenant-brand.tsx) | Logo ảnh hoặc monogram từ text/màu/shape; TenantBrand thay branding platform trong tenant runtime. |
+| `web/grapesjs-locale.d.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/grapesjs-locale.d.ts) | Type declaration cho locale Việt tích hợp sẵn của GrapesJS. |
+| `web/lib/authoring/gadgets.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/lib/authoring/gadgets.ts) | Registry đăng ký gadget/optional setup(editor), 15 mẫu, catalog metadata và install vào GrapesJS. |
+| `web/lib/authoring/lesson-tools.tsx` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/lib/authoring/lesson-tools.tsx) | Registry lesson tool và extension; bảng/math/media/checklist/code/callout và custom simulation node view. |
+| `web/lib/authoring/site.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/lib/authoring/site.ts) | Kiểu SiteDocument/Page/Source, CSS nền, HTML import sanitizer, escape và chuyển Puck sang document mới. |
+| `web/lib/i18n/locale.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/lib/i18n/locale.ts) | Kiểu Locale/Translate và hàm tra dictionary với fallback. |
+| `web/lib/i18n/messages.en.json` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/lib/i18n/messages.en.json) | Dictionary UI tiếng Anh của platform/admin/learn; nội dung tenant do tenant biên tập riêng. |
+| `web/lib/i18n/server.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/lib/i18n/server.ts) | Đọc cookie locale và tạo translator cho Server Components/metadata. |
+| `web/tests/authoring.spec.ts` [mở](https://github.com/tuantruong1368/yiedu/blob/main/web/tests/authoring.spec.ts) | Browser test login-template shortcut, import VI/EN, positioning/size/zoom, pages/menu, event runtime và tenant logo. |
+
 ## 6. Thư mục/file sinh ở máy developer
 
 Các mục này không thuộc danh mục source đã commit. Một số chỉ xuất hiện khi chạy lệnh tương ứng.
@@ -411,6 +451,14 @@ Password hash/session không nằm trong snapshot tenant; standalone restore c�
 Backup chuyển PostgreSQL thì giữ nguyên dữ liệu DB, bao gồm hash mật khẩu: cần bảo vệ như dữ liệu thật.
 
 ## 7. Lần theo các luồng thực tế
+
+### 7.0. Authoring mới từ bản 0.4
+
+Builder hiện dùng GrapesJS và rich lesson dùng Tiptap. LocaleProvider/i18n bao phủ UI Việt/Anh;
+SiteDocument pages/menu/branding được validate ở authoring.py. Chi tiết luồng mới và SDK nằm trong
+[Authoring Studio](authoring-sdk.md); các đoạn về Puck bên dưới mô tả dữ liệu legacy vẫn được hỗ trợ.
+Khi thêm gadget mới, bắt đầu ở lib/authoring/gadgets.ts; lesson tool ở lesson-tools.tsx;
+nhớ đồng bộ validator và runtime. SRS mở rộng: [CR-002](../product/changes/CR-002-authoring-i18n.md).
 
 ### 7.1. Đăng ký và thiết kế website
 

@@ -10,6 +10,7 @@ from pathlib import Path
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from yiedu.auth import hash_password
+from yiedu.authoring import validate_site
 from yiedu.config import get_settings
 from yiedu.db import get_engine
 from yiedu.models import (
@@ -24,10 +25,11 @@ from yiedu.models import (
     User,
     Workspace,
 )
+from yiedu.product_schemas import LessonWrite
 
 
 def restore(data, db):
-    if data.get("schema_version") != "0002":
+    if data.get("schema_version") not in {"0002", "0003"}:
         raise ValueError("Unsupported snapshot schema")
     if db.scalar(select(Tenant.id).limit(1)) or db.scalar(select(User.id).limit(1)):
         raise ValueError("Destination must be an empty migrated database")
@@ -49,6 +51,16 @@ def restore(data, db):
     for path in tables["learning_paths"]:
         if not set(path["course_ids"]).issubset(course_ids):
             raise ValueError("Unknown path course")
+    page = data["tenant"].get("published_page", {})
+    if page.get("schema_version") == "2.0":
+        data["tenant"]["published_page"] = validate_site(page)
+    for lesson in tables["lessons"]:
+        fields = {
+            k: lesson[k]
+            for k in ["title", "content", "video_url", "position", "document", "translations"]
+            if k in lesson
+        }
+        LessonWrite.model_validate(fields)
     credentials = []
     db.add(Tenant(**convert(data["tenant"])))
     db.flush()

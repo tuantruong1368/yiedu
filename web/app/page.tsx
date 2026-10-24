@@ -1,3 +1,5 @@
+import { getT } from "@/lib/i18n/server";
+import TemplateLink from "@/components/template-link";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -36,6 +38,8 @@ const templates = [
   },
 ];
 export default async function Home() {
+  const tr = await getT();
+
   if (process.env.INSTANCE_MODE === "standalone") {
     const info = await publicApi("/instance");
     if (info?.tenant) {
@@ -50,36 +54,43 @@ export default async function Home() {
         <section className="hero-home">
           <div>
             <span className="eyebrow">
-              <span className="status-dot" /> NỀN TẢNG HỌC TẬP CỦA RIÊNG BẠN
+              <span className="status-dot" />
+              {tr("NỀN TẢNG HỌC TẬP CỦA RIÊNG BẠN")}
             </span>
             <h1>
-              Tri thức của bạn.
+              {tr("Tri thức của bạn.")}
               <br />
-              Một thế giới
+              {tr("Một thế giới")}
               <br />
-              <em>khả năng mới.</em>
+              <em>{tr("khả năng mới.")}</em>
             </h1>
             <p>
-              Từ ý tưởng đến một hệ thống đào tạo mang thương hiệu riêng. Tạo
-              không gian để giảng dạy, kết nối và cùng học viên tiến xa.
+              {tr(
+                "Từ ý tưởng đến một hệ thống đào tạo mang thương hiệu riêng. Tạo không gian để giảng dạy, kết nối và cùng học viên tiến xa.",
+              )}
             </p>
             <div className="actions">
               <Link className="button" href="#templates">
-                Bắt đầu từ một mẫu <ArrowRight size={18} />
+                {tr("Bắt đầu từ một mẫu")}
+                <ArrowRight size={18} />
               </Link>
               <Link className="text-link" href="/dashboard">
-                Mở không gian của tôi <ArrowUpRight size={16} />
+                {tr("Mở không gian của tôi")}
+                <ArrowUpRight size={16} />
               </Link>
             </div>
             <div className="hero-trust">
               <span>
-                <Check size={15} /> Thiết kế linh hoạt
+                <Check size={15} />
+                {tr("Thiết kế linh hoạt")}
               </span>
               <span>
-                <Check size={15} /> Dữ liệu thuộc về bạn
+                <Check size={15} />
+                {tr("Dữ liệu thuộc về bạn")}
               </span>
               <span>
-                <Check size={15} /> Sẵn sàng mở rộng
+                <Check size={15} />
+                {tr("Sẵn sàng mở rộng")}
               </span>
             </div>
           </div>
@@ -98,23 +109,24 @@ export default async function Home() {
                   YOUR ACADEMY <ArrowUpRight size={16} />
                 </div>
                 <h2>
-                  Những điều lớn lao
+                  {tr("Những điều lớn lao")}
                   <br />
-                  bắt đầu từ
+                  {tr("bắt đầu từ")}
                   <br />
-                  <em>một bài học.</em>
+                  <em>{tr("một bài học.")}</em>
                 </h2>
                 <div className="mock-button">
-                  Khám phá hành trình <ArrowRight size={15} />
+                  {tr("Khám phá hành trình")}
+                  <ArrowRight size={15} />
                 </div>
                 <div className="mock-grid">
                   <div className="mock-course moss">
                     <BookOpen />
-                    <span>Kỹ năng nền tảng</span>
+                    <span>{tr("Kỹ năng nền tảng")}</span>
                   </div>
                   <div className="mock-course clay">
                     <Sparkles />
-                    <span>Thực hành sáng tạo</span>
+                    <span>{tr("Thực hành sáng tạo")}</span>
                   </div>
                 </div>
               </div>
@@ -124,69 +136,70 @@ export default async function Home() {
                 <Globe2 />
               </span>
               <div>
-                <b>Thương hiệu của bạn</b>
-                <small>Một không gian. Nhiều khả năng.</small>
+                <b>{tr("Thương hiệu của bạn")}</b>
+                <small>{tr("Một không gian. Nhiều khả năng.")}</small>
               </div>
             </div>
             <div className="art-caption">
-              THIẾT KẾ ĐỂ HỌC TẬP. XÂY DỰNG ĐỂ PHÁT TRIỂN.
+              {tr("THIẾT KẾ ĐỂ HỌC TẬP. XÂY DỰNG ĐỂ PHÁT TRIỂN.")}
             </div>
           </div>
         </section>
         <section className="value-strip">
           <p>
-            Không chỉ là một website.
+            {tr("Không chỉ là một website.")}
             <br />
-            <b>Là nền tảng cho điều bạn muốn xây.</b>
+            <b>{tr("Là nền tảng cho điều bạn muốn xây.")}</b>
           </p>
           <span>
-            <BookOpen /> Giảng dạy có cấu trúc
+            <BookOpen />
+            {tr("Giảng dạy có cấu trúc")}
           </span>
           <span>
-            <Globe2 /> Web & ứng dụng
+            <Globe2 />
+            {tr("Web & ứng dụng")}
           </span>
           <span>
-            <ShieldCheck /> Sở hữu và mở rộng
+            <ShieldCheck />
+            {tr("Sở hữu và mở rộng")}
           </span>
         </section>
         <section id="templates" className="section">
           <div className="section-heading">
             <div>
-              <span className="eyebrow">01 / CHỌN ĐIỂM KHỞI ĐẦU</span>
+              <span className="eyebrow">{tr("01 / CHỌN ĐIỂM KHỞI ĐẦU")}</span>
               <h2>
-                Một mẫu phù hợp.
+                {tr("Một mẫu phù hợp.")}
                 <br />
-                Vô vàn cách thể hiện.
+                {tr("Vô vàn cách thể hiện.")}
               </h2>
             </div>
             <p>
-              Chọn một nền tảng cho ý tưởng của bạn.
+              {tr("Chọn một nền tảng cho ý tưởng của bạn.")}
               <br />
-              Mọi nội dung đều có thể chỉnh sửa.
+              {tr("Mọi nội dung đều có thể chỉnh sửa.")}
             </p>
           </div>
           <div className="template-grid">
             {templates.map((t, i) => (
-              <Link
-                key={t.id}
-                href={"/register?template=" + t.id}
-                className="template-card"
-              >
+              <TemplateLink key={t.id} template={t.id}>
                 <div
                   className="template-preview"
                   style={{ background: t.color }}
                 >
                   <div className="mini-nav">
                     <b>{t.name.toUpperCase()}</b>
-                    <span>Khóa học &nbsp; Giới thiệu ↗</span>
+                    <span>{tr("Khóa học Giới thiệu ↗")}</span>
                   </div>
                   <div className="mini-title">
-                    {t.text.split("\n").map((s, j) => (
-                      <span key={j}>
-                        {s}
-                        <br />
-                      </span>
-                    ))}
+                    {tr(t.text)
+                      .split("\n")
+                      .map((s, j) => (
+                        <span key={j}>
+                          {s}
+                          <br />
+                        </span>
+                      ))}
                   </div>
                   <div className="mini-lines">
                     <i />
@@ -195,36 +208,40 @@ export default async function Home() {
                   </div>
                   <span className="template-number">0{i + 1}</span>
                   <div className="preview-hover">
-                    Dùng mẫu này <ArrowUpRight size={19} />
+                    {tr("Dùng mẫu này")}
+                    <ArrowUpRight size={19} />
                   </div>
                 </div>
                 <div className="template-info">
                   <div>
-                    <small>{t.category}</small>
+                    <small>{tr(t.category)}</small>
                     <h3>{t.name}</h3>
                   </div>
                   <ArrowUpRight />
                 </div>
-              </Link>
+              </TemplateLink>
             ))}
           </div>
         </section>
         <section className="closing">
-          <span className="eyebrow">BẮT ĐẦU NHỎ. XÂY DỰNG ĐIỀU LỚN.</span>
+          <span className="eyebrow">
+            {tr("BẮT ĐẦU NHỎ. XÂY DỰNG ĐIỀU LỚN.")}
+          </span>
           <h2>
-            Không gian tiếp theo
+            {tr("Không gian tiếp theo")}
             <br />
-            cho tri thức của bạn.
+            {tr("cho tri thức của bạn.")}
           </h2>
           <Link className="button light" href="#templates">
-            Tạo hệ thống đầu tiên <ArrowRight size={18} />
+            {tr("Tạo hệ thống đầu tiên")}
+            <ArrowRight size={18} />
           </Link>
         </section>
       </main>
       <footer>
-        <span>© YiEdu · Không gian cho tri thức.</span>
-        <Link href="/developer">Cùng xây hệ sinh thái ↗</Link>
-        <span>Được tạo để bạn làm chủ.</span>
+        <span>{tr("© YiEdu · Không gian cho tri thức.")}</span>
+        <Link href="/developer">{tr("Cùng xây hệ sinh thái ↗")}</Link>
+        <span>{tr("Được tạo để bạn làm chủ.")}</span>
       </footer>
     </>
   );

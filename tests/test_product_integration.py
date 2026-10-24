@@ -220,3 +220,70 @@ def test_login_logout_and_reserved_domain(clients):
         },
     )
     assert response.status_code == 200
+
+
+def test_bilingual_site_rich_lesson_and_tenant_isolation(clients):
+    from test_authoring import site
+
+    owner, learner, outsider, _ = clients
+    register(owner, "author")
+    register(outsider, "other-author")
+    w, tenant = create_site(owner)
+    document = site()
+    document["branding"]["text"] = "Own brand"
+    document["pages"][0]["vi"]["html"] += "<script>alert(1)</script>"
+    response = owner.put(
+        "/api/v1/workspaces/" + w["id"],
+        json={"name": w["name"], "slug": w["slug"], "revision": 1, "data": document},
+    )
+    assert response.status_code == 200, response.text
+    assert "<script" not in response.json()["data"]["pages"][0]["vi"]["html"]
+    assert (
+        outsider.put(
+            "/api/v1/workspaces/" + w["id"],
+            json={"name": w["name"], "slug": w["slug"], "revision": 2, "data": document},
+        ).status_code
+        == 404
+    )
+    response = owner.post("/api/v1/workspaces/" + w["id"] + "/publish")
+    assert response.status_code == 200, response.text
+    assert (
+        owner.get("/api/v1/sites/" + w["slug"]).json()["tenant"]["branding"]["text"] == "Own brand"
+    )
+    base = "/api/v1/runtime/" + tenant["id"]
+    course = owner.post(
+        base + "/courses", json={"title": "Rich course", "slug": "rich", "published": True}
+    ).json()
+    rich = {
+        "type": "doc",
+        "content": [{"type": "simulation", "attrs": {"frequency": 2, "amplitude": 1}}],
+    }
+    lesson = owner.post(
+        base + "/courses/" + course["id"] + "/lessons",
+        json={
+            "title": "Rich lesson",
+            "content": "Plain fallback",
+            "document": rich,
+            "translations": {"en": {"title": "English lesson", "document": rich}},
+        },
+    )
+    assert lesson.status_code == 201, lesson.text
+    lid = lesson.json()["id"]
+    assert owner.get(base + "/lessons/" + lid).json()["document"] == rich
+    assert outsider.get(base + "/lessons/" + lid).status_code == 403
+    register(learner, "rich-learner")
+    learner.post("/api/v1/sites/" + w["slug"] + "/join")
+    assert learner.get(base + "/lessons/" + lid).status_code == 403
+    learner.post(base + "/courses/" + course["id"] + "/enroll")
+    assert (
+        learner.get(base + "/lessons/" + lid).json()["translations"]["en"]["title"]
+        == "English lesson"
+    )
+    overview = learner.get(base + "/overview").json()
+    assert "document" not in overview["lessons"][0]
+    assert "translations" not in overview["lessons"][0]
+
+    bundle = zipfile.ZipFile(io.BytesIO(owner.get(base + "/export").content))
+    exported = json.loads(bundle.read("snapshot.json"))
+    assert exported["schema_version"] == "0003"
+    assert exported["tables"]["lessons"][0]["document"] == rich
