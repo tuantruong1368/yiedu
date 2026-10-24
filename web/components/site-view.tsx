@@ -65,7 +65,10 @@ export default function SiteView({
         page ? (
           <SiteRuntime
             source={page[locale].html ? page[locale] : page[doc.default_locale]}
-            courses={data.courses}
+            courses={data.courses.map((c: any) => ({
+              ...c,
+              ...c.translations?.[locale],
+            }))}
             slug={tenant.slug}
             title={page.title[locale] || tenant.name}
           />

@@ -230,7 +230,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                           <small>
                             {enrolled ? tr("ĐANG HỌC") : tr("SẴN SÀNG BẮT ĐẦU")}
                           </small>
-                          <h3>{c.title}</h3>
+                          <h3>{c.translations?.[locale]?.title || c.title}</h3>
                           <p>{c.description}</p>
                           {enrolled ? (
                             <>

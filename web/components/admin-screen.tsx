@@ -90,6 +90,13 @@ export default function AdminScreen({ slug }: { slug: string }) {
             slug: f.get("slug"),
             description: f.get("description"),
             published: f.get("published") === "on",
+            translations: {
+              ...(editing?.translations || {}),
+              en: {
+                title: f.get("title_en"),
+                description: f.get("description_en"),
+              },
+            },
           }),
         }),
       tr("Đã lưu khóa học."),
@@ -401,6 +408,21 @@ export default function AdminScreen({ slug }: { slug: string }) {
                         name="description"
                         defaultValue={editing?.description}
                         rows={4}
+                      />
+                    </label>
+                    <label>
+                      {tr("Tên khóa học tiếng Anh", "English course title")}
+                      <input
+                        name="title_en"
+                        defaultValue={editing?.translations?.en?.title}
+                        maxLength={200}
+                      />
+                    </label>
+                    <label>
+                      {tr("Mô tả tiếng Anh", "English description")}
+                      <textarea
+                        name="description_en"
+                        defaultValue={editing?.translations?.en?.description}
                       />
                     </label>
                     <label className="checkbox">

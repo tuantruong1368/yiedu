@@ -29,6 +29,7 @@ test("owner creates a tenant and lesson, learner completes it, ZIP downloads", a
   await expect(page).toHaveURL(/dashboard/);
   await page.locator('input[name="name"]').fill("School " + suffix);
   await page.locator('input[name="slug"]').fill(slug);
+  await page.locator('input[name="include_sample_content"]').uncheck();
   await page.getByRole("button", { name: "Mở trình thiết kế" }).click();
   await expect(page).toHaveURL(/builder/);
   await expect(

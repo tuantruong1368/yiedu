@@ -1,0 +1,3869 @@
+[
+  {
+    "id": "study-skills",
+    "title": {
+      "vi": "Phương pháp học và nghiên cứu",
+      "en": "Learning and investigation"
+    },
+    "concept": {
+      "vi": "Đọc lại nhiều lần dễ tạo cảm giác quen thuộc nhưng chưa chứng minh nhớ được kiến thức. Học chủ động bắt đầu bằng mục tiêu quan sát được: giải thích một cơ chế, dự đoán kết quả và tự làm một bài mới. Sau mỗi buổi, đóng tài liệu rồi viết lại ý chính; so với đáp án để phát hiện lỗ hổng. Nhật ký thí nghiệm phải ghi giả thuyết, đầu vào, phiên bản công cụ, kết quả và điều chưa biết. Kết luận chỉ có giá trị trong điều kiện đã kiểm tra; một lần chạy thành công không chứng minh mọi trường hợp.",
+      "en": "Familiarity is not recall. Define an observable learning objective, predict an outcome and solve a new problem without notes. Retrieval practice reveals gaps that rereading can hide. An investigation log records a hypothesis, inputs, tool versions, observations and limitations. Distinguish a measured result from an assumption, and do not generalize beyond the conditions you tested."
+    },
+    "example": {
+      "vi": "Giả thuyết: nghỉ giữa các buổi giúp nhớ tốt hơn. Hai nhóm câu hỏi có độ khó tương đương; làm một nhóm ngay và nhóm kia sau một ngày. Nếu khác cả nội dung lẫn thời gian thì không thể quy toàn bộ khác biệt cho thời gian nghỉ. Ghi số câu đúng, câu sai và độ tự tin thay vì chỉ ghi đã học xong.",
+      "en": "Test recall immediately and the next day using matched questions. Changing both content and timing confounds the comparison. Record correct answers, errors and confidence instead of merely ticking a completion box."
+    },
+    "lab": {
+      "vi": [
+        "Chọn một khái niệm và viết mục tiêu bằng động từ đo được.",
+        "Tự kiểm tra năm câu không nhìn tài liệu, ghi lỗi cụ thể.",
+        "Một ngày sau làm bộ câu tương đương; nộp nhật ký và sửa lời giải."
+      ],
+      "en": [
+        "Choose one concept and write a measurable objective.",
+        "Answer five questions without notes and record specific errors.",
+        "Repeat with matched questions next day; submit the log and corrected solutions."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Quen mặt một công thức có đủ chứng minh hiểu không?",
+        "Vì sao phải giữ độ khó hai bộ câu tương đương?",
+        "Nhật ký cần gì để người khác lặp lại?"
+      ],
+      "en": [
+        "Does recognizing a formula prove understanding?",
+        "Why match question difficulty?",
+        "What makes a log reproducible?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không; cần giải thích và vận dụng trên ví dụ mới.",
+        "Để giảm biến nhiễu khi so sánh thời điểm.",
+        "Đầu vào, quy trình, phiên bản, kết quả và giới hạn."
+      ],
+      "en": [
+        "No: explain it and apply it to a new case.",
+        "To reduce confounding in the timing comparison.",
+        "Inputs, procedure, versions, outputs and limitations."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "python",
+    "title": {
+      "vi": "Lập trình Python",
+      "en": "Python programming"
+    },
+    "concept": {
+      "vi": "Biến là tên tham chiếu đến đối tượng; phép gán không tự sao chép danh sách. Hàm nhận đầu vào, trả kết quả và nên tách tính toán khỏi nhập/xuất để dễ kiểm thử. Vòng lặp xử lý từng phần tử; điều kiện quyết định nhánh chạy. Với dữ liệu cảm biến, cần xác định hợp đồng: danh sách số hữu hạn, không rỗng và đơn vị rõ ràng. Không giấu lỗi bằng một kết quả mặc định có vẻ hợp lệ. Khi ngoại lệ xảy ra, báo lỗi gần nơi dữ liệu sai để người gọi biết phải sửa gì.",
+      "en": "Variables reference objects; assignment does not copy a list. Separate computation from input/output so functions can be tested. Define input contracts, including empty data and units. A plausible default can hide a failed calculation; use an explicit exception when the contract is violated. Loops process collections and conditionals select behavior."
+    },
+    "example": {
+      "vi": "Dữ liệu 20, 22, 24 độ C có trung bình 22. Nếu dùng tổng chia độ dài mà không kiểm tra danh sách rỗng sẽ gặp chia cho 0. Hàm dưới đây từ chối trường hợp rỗng, còn giá trị trung bình được kiểm tra bằng assert. Thử thay một phép gán bằng copy để thấy hai danh sách có còn chia sẻ dữ liệu không.",
+      "en": "The mean of 20, 22 and 24 is 22. Reject empty input before division. The assertion checks a known result. Compare assignment with list.copy() to observe shared mutable state."
+    },
+    "lab": {
+      "vi": [
+        "Viết hàm trung bình có kiểm tra đầu vào rỗng.",
+        "Thêm hàm đổi Celsius sang Fahrenheit và ba test có kết quả biết trước.",
+        "Tạo bản sao danh sách, sửa bản sao và chứng minh bản gốc không đổi."
+      ],
+      "en": [
+        "Implement mean with an empty-input check.",
+        "Add Celsius-to-Fahrenheit conversion and three known-answer tests.",
+        "Copy a list, modify the copy and demonstrate that the original is unchanged."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Mean của 10, 20, 30 là gì?",
+        "Đầu vào rỗng nên trả 0 hay báo lỗi trong hợp đồng này?",
+        "Gán b=a có sao chép danh sách không?"
+      ],
+      "en": [
+        "What is the mean of 10, 20, 30?",
+        "Should empty input return zero under this contract?",
+        "Does b=a copy a list?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "20.",
+        "Báo lỗi vì không có phép đo; số 0 dễ bị hiểu là giá trị đo.",
+        "Không; hai tên tham chiếu cùng đối tượng."
+      ],
+      "en": [
+        "20.",
+        "Raise an error: zero could be mistaken for a measurement.",
+        "No; both names reference the same object."
+      ]
+    },
+    "sources": [
+      "python"
+    ],
+    "code": "def mean(values):\n    if not values:\n        raise ValueError(\"empty measurements\")\n    return sum(values) / len(values)\nassert mean([20, 22, 24]) == 22\nprint(mean([20, 22, 24]))",
+    "code_output": "22.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "calculus",
+    "title": {
+      "vi": "Giải tích ứng dụng",
+      "en": "Applied calculus"
+    },
+    "concept": {
+      "vi": "Đạo hàm biểu diễn tốc độ thay đổi tức thời; tích phân cộng dồn một đại lượng biến thiên. Nếu vị trí x(t) đo bằng mét thì đạo hàm theo giây có đơn vị m/s, đạo hàm lần hai có đơn vị m/s². Sai phân hữu hạn x(t+h)-x(t) chia h xấp xỉ đạo hàm nhưng h quá nhỏ có thể làm sai số số học trội lên. Trong mô phỏng, phải phân biệt công thức liên tục với phép rời rạc: bước thời gian ảnh hưởng sai số và ổn định.",
+      "en": "A derivative measures instantaneous change; an integral accumulates a varying quantity. Differentiate position in meters with respect to seconds to obtain velocity, then acceleration. Finite differences approximate derivatives, but very small steps can amplify numerical error. A continuous equation and its discrete approximation are different objects."
+    },
+    "example": {
+      "vi": "Với x(t)=t², v(t)=2t. Tại t=3 s vận tốc là 6 m/s. Sai phân tiến h=0.1 cho (3.1²-3²)/0.1=6.1; giảm h xuống 0.01 cho 6.01. Quãng đường từ t=0 đến 2 bằng tích phân 2t, kết quả 4 m.",
+      "en": "For x(t)=t², velocity is 2t: at three seconds it is 6 m/s. A forward difference with h=0.1 gives 6.1; h=0.01 gives 6.01. Integrating 2t from zero to two gives four meters."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ x, v và a của x=t² trên cùng trục thời gian.",
+        "So sai phân tiến ở ba bước h và lập bảng sai số.",
+        "Tính diện tích dưới đồ thị v bằng tổng hình thang và so kết quả giải tích."
+      ],
+      "en": [
+        "Plot position, velocity and acceleration for x=t².",
+        "Compare forward differences at three step sizes and tabulate errors.",
+        "Integrate velocity with the trapezoid rule and compare with the exact result."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Đạo hàm t³ tại t=2 là gì?",
+        "Đơn vị của tích phân vận tốc theo thời gian?",
+        "Có nên giảm h vô hạn trên máy tính không?"
+      ],
+      "en": [
+        "What is the derivative of t³ at t=2?",
+        "What are the units of integrated velocity?",
+        "Should a computer step size approach zero indefinitely?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "3t²=12.",
+        "Mét nếu vận tốc là m/s và thời gian là s.",
+        "Không; phải cân bằng sai số rời rạc và sai số số học."
+      ],
+      "en": [
+        "3t²=12.",
+        "Meters when velocity is m/s and time is seconds.",
+        "No: balance discretization and floating-point error."
+      ]
+    },
+    "sources": [
+      "calculus"
+    ],
+    "code": "f = lambda t: t*t\nfor h in [0.1, 0.01]:\n    print(round((f(3+h)-f(3))/h, 2))",
+    "code_output": "6.1\n6.01",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "linear-algebra",
+    "title": {
+      "vi": "Đại số tuyến tính",
+      "en": "Linear algebra"
+    },
+    "concept": {
+      "vi": "Vector mô tả nhiều đại lượng cùng lúc; ma trận biểu diễn ánh xạ tuyến tính giữa các vector. Thứ tự nhân ma trận quan trọng vì đổi hệ tọa độ rồi quay không luôn giống quay rồi đổi hệ. Tích vô hướng cho biết mức cùng hướng, chuẩn Euclid cho độ dài. Hệ Ax=b có nghiệm duy nhất khi ma trận vuông khả nghịch; dữ liệu dư hoặc nhiễu thường cần bình phương tối thiểu. Không nên gọi nghịch đảo ma trận như một thao tác mặc định; giải hệ trực tiếp thường phù hợp hơn.",
+      "en": "Vectors collect quantities; matrices represent linear maps. Matrix multiplication is order-sensitive. Dot products measure alignment and Euclidean norms measure length. An invertible square system has one solution; noisy overdetermined systems motivate least squares. Prefer solving a linear system to explicitly forming an inverse."
+    },
+    "example": {
+      "vi": "Quay vector (1,0) góc 90 độ ngược chiều kim đồng hồ bằng R=[[0,-1],[1,0]] được (0,1). RᵀR=I nên độ dài được giữ. Hai phương trình x+y=3 và x-y=1 cho x=2, y=1; thay nghiệm vào cả hai phương trình để kiểm chứng.",
+      "en": "R=[[0,-1],[1,0]] rotates (1,0) to (0,1), preserving length because RᵀR=I. Solving x+y=3 and x-y=1 gives x=2 and y=1; substitution verifies both equations."
+    },
+    "lab": {
+      "vi": [
+        "Viết hàm nhân ma trận 2x2 với vector hai chiều.",
+        "Kiểm tra chuẩn vector trước và sau ba góc quay.",
+        "Giải một hệ suy biến và giải thích vì sao không thể kết luận nghiệm duy nhất."
+      ],
+      "en": [
+        "Implement a 2x2 matrix-vector product.",
+        "Check vector norms before and after three rotations.",
+        "Analyze a singular system and explain why uniqueness fails."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "R quay 90 độ tác động (0,1) cho kết quả nào?",
+        "Tích vô hướng (1,2) với (3,4)?",
+        "Hai hàng giống nhau có đảm bảo khả nghịch không?"
+      ],
+      "en": [
+        "What does a 90-degree rotation do to (0,1)?",
+        "What is the dot product of (1,2) and (3,4)?",
+        "Can identical rows guarantee invertibility?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "(-1,0).",
+        "11.",
+        "Không; các hàng phụ thuộc tuyến tính."
+      ],
+      "en": [
+        "(-1,0).",
+        "11.",
+        "No: the rows are linearly dependent."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "calculus"
+    ],
+    "code": "R = [[0, -1], [1, 0]]\nv = [1, 0]\nprint([sum(a*b for a,b in zip(row,v)) for row in R])",
+    "code_output": "[0, 1]",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "discrete-math",
+    "title": {
+      "vi": "Toán rời rạc và logic",
+      "en": "Discrete mathematics and logic"
+    },
+    "concept": {
+      "vi": "Mệnh đề có giá trị đúng hoặc sai; phép kéo theo A⇒B chỉ sai khi A đúng nhưng B sai. Muốn bác bỏ một khẳng định với mọi phần tử, chỉ cần một phản ví dụ. Đồ thị biểu diễn đối tượng và quan hệ; quan hệ tiên quyết của môn học cần là đồ thị có hướng không chu trình. Quy nạp chứng minh một tính chất bằng trường hợp cơ sở và bước từ n sang n+1. Chạy thử hữu hạn ví dụ có ích để tìm lỗi nhưng không thay thế chứng minh tổng quát.",
+      "en": "A proposition is true or false. A⇒B fails only when A is true and B false. One counterexample refutes a universal claim. Prerequisite relationships form a directed graph that should be acyclic. Induction needs both a base case and an inductive step; finite tests do not establish a general theorem."
+    },
+    "example": {
+      "vi": "Cho A→B, B→C. Một thứ tự hợp lệ là A,B,C. Nếu thêm C→A thì không còn môn đầu tiên hợp lệ: mỗi môn đều chờ một môn khác. Với tổng 1+…+n=n(n+1)/2, bước quy nạp cộng n+1 vào cả hai vế và thu được (n+1)(n+2)/2.",
+      "en": "A→B and B→C permit order A,B,C. Adding C→A creates a cycle with no valid starting course. For the sum formula, add n+1 to the inductive hypothesis and simplify to (n+1)(n+2)/2."
+    },
+    "lab": {
+      "vi": [
+        "Lập bảng chân trị của phép kéo theo.",
+        "Vẽ đồ thị tiên quyết sáu môn và tìm một thứ tự topo.",
+        "Thêm một cạnh tạo chu trình và chỉ ra đường đi khép kín."
+      ],
+      "en": [
+        "Construct an implication truth table.",
+        "Draw prerequisites for six courses and find a topological order.",
+        "Add one edge that creates a cycle and identify the closed walk."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "A sai, B sai thì A⇒B có đúng không?",
+        "Một chu trình trong prerequisite gây vấn đề gì?",
+        "Kiểm tra 100 số có phải chứng minh quy nạp không?"
+      ],
+      "en": [
+        "Is A⇒B true when both are false?",
+        "What does a prerequisite cycle cause?",
+        "Is checking 100 numbers an induction proof?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Đúng theo định nghĩa kéo theo.",
+        "Không có lịch thỏa tất cả ràng buộc trong chu trình.",
+        "Không; thiếu bước suy luận cho mọi n."
+      ],
+      "en": [
+        "True by the definition of implication.",
+        "No schedule can satisfy every dependency in the cycle.",
+        "No: a general inductive step is missing."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "probability",
+    "title": {
+      "vi": "Xác suất và thống kê",
+      "en": "Probability and statistics"
+    },
+    "concept": {
+      "vi": "Xác suất mô tả sự bất định của một mô hình, không khẳng định kết quả của từng lần thử. Trung bình mô tả vị trí, phương sai mô tả độ phân tán; hai bộ dữ liệu cùng trung bình có thể có rủi ro rất khác nhau. Xác suất có điều kiện P(A|B) khác P(B|A). Khi đánh giá bộ phát hiện sự kiện hiếm, phải tính cả tỉ lệ nền: độ nhạy cao chưa đủ để suy ra mọi cảnh báo đều đúng. Mẫu thuận tiện hoặc dữ liệu rò rỉ có thể làm kết quả đánh giá lạc quan.",
+      "en": "Probability models uncertainty rather than guaranteeing individual outcomes. Equal means can hide different variances. P(A|B) is not P(B|A). For rare events, sensitivity alone does not determine how trustworthy an alert is: base rates and false positives matter. Sampling bias and leakage can invalidate an evaluation."
+    },
+    "example": {
+      "vi": "Có 1000 trường hợp, 10 thật sự dương tính. Bộ phát hiện bắt được 9 trong 10 nhưng báo nhầm 99 trong 990 trường hợp âm tính. Trong 108 cảnh báo, chỉ 9 đúng, nên precision=9/108≈8.33%, dù recall=90%. Đây là khác biệt giữa đo độ nhạy và độ tin cậy của cảnh báo.",
+      "en": "Among 1000 cases, ten are positive. Detecting nine and falsely flagging 99 produces precision 9/108≈8.33% but recall 90%. These metrics answer different questions."
+    },
+    "lab": {
+      "vi": [
+        "Tạo hai bộ dữ liệu cùng trung bình nhưng khác phương sai.",
+        "Lập confusion matrix từ ví dụ và tự tính precision/recall.",
+        "Thay tỉ lệ nền, giữ nguyên sensitivity và false-positive rate; giải thích kết quả."
+      ],
+      "en": [
+        "Create two datasets with equal means and different variances.",
+        "Build the confusion matrix and calculate precision/recall.",
+        "Change prevalence while keeping sensitivity and false-positive rate fixed."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Precision trong ví dụ là bao nhiêu?",
+        "P(A",
+        "B) có luôn bằng P(B",
+        "A) không?",
+        "Có nên đánh giá trên dữ liệu huấn luyện không?"
+      ],
+      "en": [
+        "What is precision in the example?",
+        "Is conditional probability symmetric?",
+        "Should training data be the only evaluation set?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Khoảng 8.33%.",
+        "Không.",
+        "Không; cần tập đánh giá độc lập phù hợp bối cảnh."
+      ],
+      "en": [
+        "About 8.33%.",
+        "No.",
+        "No: use a suitable independent evaluation set."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "tp, fp, fn = 9, 99, 1\nprint(round(tp/(tp+fp)*100, 2))\nprint(round(tp/(tp+fn)*100, 2))",
+    "code_output": "8.33\n90.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "physics",
+    "title": {
+      "vi": "Cơ học và năng lượng",
+      "en": "Mechanics and energy"
+    },
+    "concept": {
+      "vi": "Mô hình vật lý bắt đầu bằng hệ quy chiếu, đơn vị và giả định. Định luật F=ma liên hệ tổng lực với gia tốc của khối lượng không đổi trong hệ quán tính. Động năng tịnh tiến là mv²/2; công của lực không đổi cùng hướng chuyển động là Fs. Đồ thị hoặc số đo phải ghi đơn vị. Một mô hình bỏ qua ma sát có thể dự đoán tốt trong một khoảng nhưng sai khi tải hoặc vận tốc đổi. Phải so dự đoán với dữ liệu, không chỉ điều chỉnh tham số đến khi đồ thị đẹp.",
+      "en": "Start a physical model with frames, units and assumptions. For constant mass in an inertial frame, net force equals mass times acceleration. Translational kinetic energy is mv²/2; constant aligned force does work Fs. State units and test assumptions such as negligible friction against observations."
+    },
+    "example": {
+      "vi": "Xe mô phỏng khối lượng 2 kg chịu tổng lực 6 N thì a=3 m/s². Từ nghỉ sau 2 s, vận tốc là 6 m/s nếu lực không đổi. Động năng lúc đó là 36 J. Không nhầm tổng lực với lực động cơ khi còn lực cản ngược chiều.",
+      "en": "A simulated 2 kg vehicle under a net 6 N accelerates at 3 m/s². Starting from rest, two seconds gives 6 m/s and kinetic energy 36 J. Motor force is not necessarily net force when resistance exists."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng chuyển động một chiều bằng Euler với ba bước thời gian.",
+        "Thêm lực cản và so đường vận tốc với mô hình không ma sát.",
+        "Nộp bảng đơn vị, đồ thị và sai số so nghiệm lực không đổi."
+      ],
+      "en": [
+        "Simulate one-dimensional motion with three Euler time steps.",
+        "Add drag and compare with the frictionless model.",
+        "Submit units, plots and error against the constant-force solution."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Khối lượng 3 kg, tổng lực 12 N: gia tốc?",
+        "Vận tốc tăng gấp đôi thì động năng tăng mấy lần?",
+        "Vì sao phải nêu giả định bỏ ma sát?"
+      ],
+      "en": [
+        "What acceleration follows from 12 N on 3 kg?",
+        "How does doubling speed change kinetic energy?",
+        "Why state that friction is neglected?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "4 m/s².",
+        "Bốn lần.",
+        "Để biết phạm vi áp dụng và nguyên nhân sai lệch."
+      ],
+      "en": [
+        "4 m/s².",
+        "Fourfold.",
+        "To define applicability and explain discrepancies."
+      ]
+    },
+    "sources": [
+      "mit-ee"
+    ],
+    "code": "mass, force, time = 2, 6, 2\nv = force/mass*time\nprint(v, mass*v*v/2)",
+    "code_output": "6.0 36.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "circuits",
+    "title": {
+      "vi": "Mạch điện và đo lường",
+      "en": "Circuits and measurement"
+    },
+    "concept": {
+      "vi": "Điện áp là chênh lệch thế giữa hai điểm; dòng điện là tốc độ dịch chuyển điện tích. Định luật Ohm V=IR dùng cho điện trở lý tưởng, còn tổng dòng tại nút và tổng điện áp quanh vòng thể hiện bảo toàn điện tích/năng lượng. Công suất P=VI cho biết tốc độ tiêu thụ năng lượng. Mạch cảm biến có thể bị tải bởi thiết bị đo: không được coi điện áp hở mạch là điện áp khi nối tải. Bài này chỉ làm trên mô phỏng hoặc nguồn USB điện áp thấp; không nối điện lưới hay thử động cơ công suất lớn.",
+      "en": "Voltage is a potential difference between points; current is charge flow. Ohm’s law describes an ideal resistor, while node and loop laws express conservation. Power is VI. Loading changes a voltage divider’s output, so open-circuit voltage is not automatically the loaded voltage. Use simulation or low-voltage USB circuits only."
+    },
+    "example": {
+      "vi": "Nguồn 5 V qua hai điện trở 1 kΩ nối tiếp có dòng 2.5 mA. Điện áp giữa hai điện trở là 2.5 V nếu chưa mắc tải. Nếu tải 1 kΩ song song với điện trở dưới, điện trở dưới tương đương 500 Ω và điện áp ra giảm còn 5×500/1500≈1.67 V.",
+      "en": "Two series 1 kΩ resistors across 5 V carry 2.5 mA and give 2.5 V unloaded. A 1 kΩ load across the lower resistor makes it 500 Ω equivalent, reducing output to about 1.67 V."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng bộ chia áp và ghi điện áp không tải.",
+        "Thêm ba tải khác nhau và so kết quả tính tay.",
+        "Tính công suất điện trở; ghi lý do không nối trực tiếp tải động cơ vào chân MCU."
+      ],
+      "en": [
+        "Simulate the unloaded divider.",
+        "Add three loads and compare with hand calculations.",
+        "Calculate resistor power and explain why an MCU pin is not a motor supply."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "5 V qua 2 kΩ cho dòng bao nhiêu?",
+        "Tải song song làm điện trở tương đương tăng hay giảm?",
+        "Chân MCU có thay driver động cơ được không?"
+      ],
+      "en": [
+        "What current flows through 2 kΩ at 5 V?",
+        "Does a parallel load increase resistance?",
+        "Can an MCU pin replace a motor driver?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "2.5 mA.",
+        "Giảm.",
+        "Không; giới hạn dòng và tải cảm cần driver/bảo vệ phù hợp."
+      ],
+      "en": [
+        "2.5 mA.",
+        "It decreases.",
+        "No: current limits and inductive loads require suitable drivers and protection."
+      ]
+    },
+    "sources": [
+      "mit-ee"
+    ],
+    "code": "r_lower = 1/(1/1000+1/1000)\nprint(round(5*r_lower/(1000+r_lower), 3))",
+    "code_output": "1.667",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "digital-logic",
+    "title": {
+      "vi": "Logic số và kiến trúc máy tính",
+      "en": "Digital logic and architecture"
+    },
+    "concept": {
+      "vi": "Bit chỉ có hai giá trị nhưng cách diễn giải một chuỗi bit phụ thuộc vào kiểu dữ liệu. Số không dấu n bit biểu diễn 0 đến 2^n−1; số bù hai n bit có miền −2^(n−1) đến 2^(n−1)−1. Mạch tổ hợp chỉ phụ thuộc đầu vào hiện tại, mạch tuần tự có trạng thái. CPU có thể được nhìn như đường dữ liệu cộng bộ điều khiển: lệnh được lấy, giải mã và thực hiện. Tràn số là vấn đề của biểu diễn, không phải máy tính tự có số nguyên vô hạn.",
+      "en": "Bit strings need an interpretation. Unsigned n-bit integers span 0 to 2^n−1; two’s complement spans −2^(n−1) to 2^(n−1)−1. Combinational logic depends on current inputs; sequential logic stores state. A CPU combines datapath and control through fetch, decode and execution."
+    },
+    "example": {
+      "vi": "Chuỗi 11111111 là 255 nếu không dấu nhưng −1 nếu bù hai 8 bit. Cộng 1 vào 255 rồi chỉ giữ 8 bit cho 0. Một bộ đếm cần phần tử nhớ để giữ giá trị giữa các cạnh clock; bảng chân trị của cổng AND không cần trạng thái.",
+      "en": "11111111 means 255 unsigned or −1 in eight-bit two’s complement. Keeping only eight bits after adding one to 255 yields zero. A counter needs memory between clock edges; an AND gate does not."
+    },
+    "lab": {
+      "vi": [
+        "Lập bảng chân trị bộ cộng một bit.",
+        "Mô phỏng bộ đếm 8 bit và trường hợp tràn.",
+        "Vẽ datapath tối giản gồm thanh ghi, ALU, bộ nhớ và tín hiệu điều khiển."
+      ],
+      "en": [
+        "Build a one-bit adder truth table.",
+        "Simulate an eight-bit counter including overflow.",
+        "Draw a minimal register/ALU/memory/control datapath."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Số không dấu 8 bit lớn nhất?",
+        "11111111 bù hai 8 bit là bao nhiêu?",
+        "Bộ đếm là mạch tổ hợp hay tuần tự?"
+      ],
+      "en": [
+        "What is the maximum unsigned eight-bit integer?",
+        "What is 11111111 in eight-bit two’s complement?",
+        "Is a counter combinational or sequential?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "255.",
+        "−1.",
+        "Tuần tự vì lưu trạng thái."
+      ],
+      "en": [
+        "255.",
+        "−1.",
+        "Sequential because it retains state."
+      ]
+    },
+    "sources": [
+      "cs2023",
+      "mit-ee"
+    ],
+    "code": "print((255+1) & 0xff)\nprint(int(\"11111111\", 2))",
+    "code_output": "0\n255",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "c-programming",
+    "title": {
+      "vi": "C, bộ nhớ và firmware nền tảng",
+      "en": "C and memory fundamentals"
+    },
+    "concept": {
+      "vi": "C yêu cầu người viết theo dõi kiểu, thời gian sống của dữ liệu và giới hạn bộ nhớ. Con trỏ là địa chỉ, không tự chứa độ dài vùng dữ liệu. Hàm nhận buffer nên nhận cả kích thước; truy cập ngoài mảng có thể tạo hành vi không xác định chứ không nhất thiết báo lỗi ngay. Stack phù hợp dữ liệu cục bộ có thời gian sống theo hàm; heap cần quản lý vòng đời rõ. Với firmware, dùng kiểu nguyên có độ rộng xác định khi giao tiếp phần cứng và kiểm tra chuyển đổi dấu.",
+      "en": "In C, track types, lifetimes and bounds explicitly. A pointer does not carry a buffer length. Pass sizes alongside buffers; out-of-bounds access is undefined behavior rather than a guaranteed immediate error. Distinguish function-local lifetimes from dynamically allocated storage, and use explicit-width integers in hardware interfaces."
+    },
+    "example": {
+      "vi": "Mảng năm phần tử có chỉ số hợp lệ 0..4. Vòng lặp i<=5 sẽ đọc ngoài mảng; điều kiện đúng là i<5. Trả địa chỉ của biến cục bộ làm con trỏ trỏ vào đối tượng đã hết thời gian sống. Kiểm tra biên và lifetime quan trọng hơn việc chương trình tình cờ chạy được một lần.",
+      "en": "A five-element array permits indices zero through four; i<=5 is wrong. Returning a local variable’s address creates a dangling pointer. A program appearing to work once does not establish valid memory access."
+    },
+    "lab": {
+      "vi": [
+        "Viết hàm cộng mảng nhận pointer và length.",
+        "Kiểm tra length=0 và mảng một phần tử; không truy cập ngoài biên.",
+        "Biên dịch một ví dụ thử với cảnh báo và sanitizer trên máy local, giải thích thông báo."
+      ],
+      "en": [
+        "Write an array-sum function with pointer and length.",
+        "Test empty and single-element inputs without out-of-bounds access.",
+        "Compile a local example with warnings and sanitizers, then explain diagnostics."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Mảng length=8 có chỉ số cuối là gì?",
+        "Pointer có tự biết length không?",
+        "Có được trả địa chỉ biến cục bộ không?"
+      ],
+      "en": [
+        "What is the final index of a length-eight array?",
+        "Does a pointer know its length?",
+        "May a function return a local variable’s address?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "7.",
+        "Không.",
+        "Không nếu đối tượng hết lifetime khi hàm kết thúc."
+      ],
+      "en": [
+        "7.",
+        "No.",
+        "Not when the object’s lifetime ends on return."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "linux-git",
+    "title": {
+      "vi": "Linux, Git và quy trình tái lập",
+      "en": "Linux, Git and reproducibility"
+    },
+    "concept": {
+      "vi": "Process là chương trình đang chạy với môi trường, thư mục hiện hành và quyền truy cập. Đường dẫn tương đối phụ thuộc thư mục hiện hành; biến môi trường là cấu hình chứ không phải chỗ để công khai secret. Git lưu lịch sử snapshot; working tree, staging area và commit là ba trạng thái khác nhau. Một commit tốt giải thích một thay đổi có thể review và có bằng chứng kiểm tra. Reproducibility cần ghi dependency/version, đầu vào và lệnh chạy; chỉ gửi một ảnh màn hình không đủ để người khác tái lập.",
+      "en": "A process has an environment, working directory and permissions. Relative paths depend on that directory. Git separates working tree, index and commits. Make reviewable commits with test evidence. Reproducibility requires versions, inputs and commands; a screenshot alone is insufficient. Keep secrets out of both commits and logs."
+    },
+    "example": {
+      "vi": "Sửa hai file nhưng chỉ stage một file thì commit chỉ chứa thay đổi đã stage. git diff xem phần chưa stage; git diff --cached xem phần sắp commit. Dùng branch riêng cho thí nghiệm để so sánh và bỏ thay đổi mà không ghi đè công việc của người khác.",
+      "en": "Editing two files and staging one commits only the staged change. git diff and git diff --cached inspect different states. A separate branch makes experiments reviewable without overwriting someone else’s work."
+    },
+    "lab": {
+      "vi": [
+        "Tạo repo thử, commit một file và giải thích ba trạng thái Git.",
+        "Thêm script chạy với đầu vào cố định, ghi phiên bản và kết quả vào README.",
+        "Tạo branch, sửa một lỗi nhỏ và review diff; không commit .env."
+      ],
+      "en": [
+        "Create a scratch repo and explain Git’s three states.",
+        "Add a deterministic script and document versions, input and output.",
+        "Fix one issue on a branch and review its diff without committing .env."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "git diff --cached cho biết gì?",
+        "Vì sao cùng lệnh tương đối chạy ở hai thư mục có thể khác?",
+        "Có nên dùng reset --hard để sửa mọi xung đột không?"
+      ],
+      "en": [
+        "What does git diff --cached show?",
+        "Why can relative commands behave differently in two directories?",
+        "Should every conflict be fixed with reset --hard?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Thay đổi đã stage.",
+        "Đường dẫn/môi trường khác nhau.",
+        "Không; có thể mất công việc chưa lưu."
+      ],
+      "en": [
+        "The staged changes.",
+        "Paths and environments can differ.",
+        "No: uncommitted work may be lost."
+      ]
+    },
+    "sources": [
+      "git"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "technical-communication",
+    "title": {
+      "vi": "Giao tiếp kỹ thuật và viết báo cáo",
+      "en": "Technical communication"
+    },
+    "concept": {
+      "vi": "Báo cáo kỹ thuật cần giúp người đọc ra quyết định. Bắt đầu bằng vấn đề, kết quả và bằng chứng; tách dữ kiện quan sát khỏi diễn giải. Một yêu cầu mơ hồ như hệ thống nhanh phải được chuyển thành điều kiện đo được: thao tác nào, tải nào, percentile nào và ngưỡng nào. Biểu đồ phải có đơn vị và phạm vi dữ liệu. Khi phản biện, mô tả hành vi và tác động thay vì phán xét người thực hiện. Ghi nguồn, giới hạn và phần chưa chắc chắn để người khác kiểm tra lập luận.",
+      "en": "Technical communication supports decisions. Lead with the problem, result and evidence, separating observations from interpretation. Replace “fast” with a measurable operation, workload, percentile and threshold. Label plots with units and scope; discuss behavior and impact rather than judging people."
+    },
+    "example": {
+      "vi": "Không viết API nhanh hơn nhiều. Viết: trên tập 1000 request đọc course, cùng máy và DB snapshot, p95 giảm từ 420 ms xuống 260 ms. Phải nêu warm-up và cách đo; không suy ra hệ thống đáp ứng mọi tải hoặc production từ phép đo local này.",
+      "en": "Instead of “much faster”, report that p95 dropped from 420 to 260 ms for 1000 course-read requests on the same host and snapshot. State warm-up and measurement method; a local benchmark is not universal production evidence."
+    },
+    "lab": {
+      "vi": [
+        "Viết báo cáo một trang về một thí nghiệm đã làm.",
+        "Nhờ người khác chạy lại từ hướng dẫn mà không hỏi thêm.",
+        "Sửa các câu mơ hồ và bổ sung dữ kiện còn thiếu."
+      ],
+      "en": [
+        "Write a one-page report about an experiment.",
+        "Ask someone to reproduce it without extra instructions.",
+        "Replace vague claims and supply missing evidence."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Đo latency cần ghi đơn vị gì?",
+        "Quan sát và nguyên nhân có phải một không?",
+        "Báo cáo lỗi cần thông tin tối thiểu nào?"
+      ],
+      "en": [
+        "What units should latency use?",
+        "Are observation and cause identical?",
+        "What belongs in a minimal bug report?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Ms hoặc s, nêu rõ.",
+        "Không; nguyên nhân cần kiểm chứng.",
+        "Bước tái hiện, mong đợi, thực tế, môi trường và bằng chứng."
+      ],
+      "en": [
+        "Milliseconds or seconds, explicitly.",
+        "No: causal claims require investigation.",
+        "Reproduction steps, expected/actual behavior, environment and evidence."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "data-structures",
+    "title": {
+      "vi": "Cấu trúc dữ liệu",
+      "en": "Data structures"
+    },
+    "concept": {
+      "vi": "Chọn cấu trúc dữ liệu dựa trên thao tác cần làm và bất biến phải giữ. Mảng hỗ trợ truy cập theo chỉ số, danh sách liên kết thuận tiện một số thao tác nối nhưng có chi phí con trỏ và locality. Stack là LIFO, queue là FIFO; hash map ánh xạ khóa sang bucket nhưng vẫn phải xử lý va chạm. Độ phức tạp trung bình không đồng nghĩa mọi thao tác đều có cùng thời gian. Một cấu trúc đúng cần cả bất biến dữ liệu lẫn kiểm thử các trường hợp rỗng, trùng và biên.",
+      "en": "Choose structures from required operations and invariants. Arrays offer indexed access, linked structures have pointer/locality costs, stacks are LIFO and queues FIFO. Hash maps need collision handling. Average complexity does not guarantee identical latency. Test empty, duplicate and boundary cases."
+    },
+    "example": {
+      "vi": "Đẩy A rồi B vào stack thì lấy B trước. Đưa A rồi B vào queue thì lấy A trước. Với hàng đợi xử lý công việc, dùng pop ở đầu một mảng lớn có thể dịch nhiều phần tử; deque phù hợp hơn cho thao tác hai đầu.",
+      "en": "Pushing A then B onto a stack returns B first; a queue returns A first. Removing the first element of a large array may shift many entries, while a deque supports efficient end operations."
+    },
+    "lab": {
+      "vi": [
+        "Cài stack với push/pop/peek và nêu bất biến.",
+        "Mô phỏng queue công việc, test rỗng và thứ tự.",
+        "So hai cách xử lý 10000 phần tử, ghi cách đo thay vì kết luận từ một lần chạy."
+      ],
+      "en": [
+        "Implement push/pop/peek with an invariant.",
+        "Simulate a work queue and test emptiness/order.",
+        "Compare two methods on 10000 items with a documented measurement procedure."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Stack lấy phần tử nào trước?",
+        "Hash collision có nghĩa hai khóa giống nhau không?",
+        "Vì sao test rỗng quan trọng?"
+      ],
+      "en": [
+        "Which item leaves a stack first?",
+        "Does a collision mean equal keys?",
+        "Why test empty structures?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Phần tử vào sau cùng.",
+        "Không; hai khóa khác có thể cùng bucket.",
+        "Để xác định hợp đồng khi không có dữ liệu."
+      ],
+      "en": [
+        "The most recently inserted item.",
+        "No: distinct keys may share a bucket.",
+        "To define behavior when data is absent."
+      ]
+    },
+    "sources": [
+      "cs2023",
+      "python"
+    ],
+    "code": "from collections import deque\nq=deque([\"A\", \"B\"])\nprint(q.popleft())\nstack=[\"A\", \"B\"]\nprint(stack.pop())",
+    "code_output": "A\nB",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "algorithms",
+    "title": {
+      "vi": "Thiết kế và phân tích thuật toán",
+      "en": "Algorithm design and analysis"
+    },
+    "concept": {
+      "vi": "Thuật toán cần đầu vào, đầu ra và điều kiện đúng rõ ràng. Big-O mô tả xu hướng tăng của chi phí khi kích thước dữ liệu tăng, không phải thời gian tính bằng giây. Tìm kiếm nhị phân chỉ hợp lệ trên dữ liệu có thứ tự và giảm miền tìm kiếm còn khoảng một nửa sau mỗi bước. Chứng minh bất biến vòng lặp giúp xác định biên trái/phải và tránh bỏ sót đáp án. Greedy không đúng cho mọi bài toán; cần chứng minh lựa chọn cục bộ không làm mất nghiệm tối ưu.",
+      "en": "An algorithm needs explicit inputs, outputs and correctness conditions. Big-O describes scaling, not seconds. Binary search requires sorted data and halves a maintained search interval. Loop invariants clarify boundaries. Greedy choices need a proof rather than an assumption that local improvement is globally optimal."
+    },
+    "example": {
+      "vi": "Tìm 7 trong [1,3,5,7,9]: xét giữa là 5, bỏ nửa trái; miền còn [7,9], tiếp tục sẽ gặp 7. Với 1024 phần tử, khoảng 10 lần chia đôi thu về một phần tử. Danh sách chưa sắp xếp không cho phép loại nửa dữ liệu theo cách đó.",
+      "en": "Searching for seven in [1,3,5,7,9] first compares five and retains the right half. About ten halvings reduce 1024 candidates to one. The same elimination is invalid on unsorted data."
+    },
+    "lab": {
+      "vi": [
+        "Viết binary search với quy ước miền rõ ràng.",
+        "Test không tìm thấy, phần tử đầu/cuối và mảng rỗng.",
+        "Đếm phép so sánh ở nhiều kích thước và đối chiếu O(log n)."
+      ],
+      "en": [
+        "Implement binary search with a documented interval convention.",
+        "Test absence, first/last elements and an empty array.",
+        "Count comparisons over several input sizes and compare with O(log n)."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Binary search cần điều kiện gì?",
+        "O(n) có luôn chậm hơn O(log n) ở n nhỏ không?",
+        "Một ví dụ thành công có chứng minh greedy đúng không?"
+      ],
+      "en": [
+        "What does binary search require?",
+        "Is O(n) always slower for small n?",
+        "Does one successful example prove a greedy rule?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Dữ liệu được sắp theo cùng tiêu chí so sánh.",
+        "Không; hằng số và môi trường cũng ảnh hưởng.",
+        "Không; cần lập luận tổng quát hoặc tìm phản ví dụ."
+      ],
+      "en": [
+        "Sorted data using the same comparison order.",
+        "No: constants and environment also matter.",
+        "No: prove it or seek a counterexample."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "from bisect import bisect_left\na=[1,3,5,7,9]\ni=bisect_left(a,7)\nassert a[i]==7\nprint(i)",
+    "code_output": "3",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "databases",
+    "title": {
+      "vi": "Cơ sở dữ liệu quan hệ",
+      "en": "Relational databases"
+    },
+    "concept": {
+      "vi": "Bảng biểu diễn tập bản ghi với khóa và ràng buộc. Khóa ngoại giữ quan hệ hợp lệ; transaction gom nhiều thay đổi thành một đơn vị commit/rollback. Chuẩn hóa giảm lặp dữ liệu nhưng không thay thế thiết kế truy vấn theo workload. Index có thể tăng tốc đọc và làm ghi tốn hơn. Trong hệ multi-tenant, mọi truy vấn và khóa quan hệ phải giữ ranh giới tenant; việc frontend giấu một ID không phải kiểm soát truy cập.",
+      "en": "Tables need keys and constraints; foreign keys preserve relationships. Transactions commit or roll back groups of changes. Normalization reduces duplication, while indexes trade write cost for read performance. Multi-tenant queries must enforce tenant boundaries independently of hidden frontend IDs."
+    },
+    "example": {
+      "vi": "Một lần ghi danh cần tạo enrollment và bản ghi audit. Nếu audit thất bại mà enrollment vẫn commit thì trạng thái không còn nguyên tử theo hợp đồng. Đặt cả hai trong cùng transaction. UNIQUE(tenant_id,user_id,course_id) ngăn ghi danh trùng ngay cả khi hai request chạy đồng thời.",
+      "en": "Enrollment and its audit record should commit together when atomicity is required. A unique tenant/user/course constraint prevents duplicate enrollment even under concurrent requests."
+    },
+    "lab": {
+      "vi": [
+        "Thiết kế users/courses/enrollments với khóa và UNIQUE.",
+        "Thử transaction có lỗi giữa chừng và kiểm rollback.",
+        "Tạo index cho truy vấn theo tenant và đọc EXPLAIN trên dữ liệu thử."
+      ],
+      "en": [
+        "Design users/courses/enrollments with keys and uniqueness.",
+        "Inject a mid-transaction failure and verify rollback.",
+        "Index a tenant-scoped query and inspect EXPLAIN on test data."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Khóa ngoại bảo vệ điều gì?",
+        "Index có miễn phí cho thao tác ghi không?",
+        "Chỉ kiểm tenant ở UI có đủ không?"
+      ],
+      "en": [
+        "What does a foreign key protect?",
+        "Are indexes free for writes?",
+        "Is UI-only tenant checking enough?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Tham chiếu tới bản ghi hợp lệ.",
+        "Không; cần cập nhật index khi ghi.",
+        "Không; API và truy vấn phải kiểm quyền/ràng buộc."
+      ],
+      "en": [
+        "Valid references.",
+        "No: writes must maintain indexes.",
+        "No: enforce authorization and query constraints."
+      ]
+    },
+    "sources": [
+      "postgres",
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "operating-systems",
+    "title": {
+      "vi": "Hệ điều hành",
+      "en": "Operating systems"
+    },
+    "concept": {
+      "vi": "Hệ điều hành quản lý tài nguyên và cô lập process. Thread trong cùng process thường chia sẻ không gian địa chỉ nên có thể xảy ra race khi cùng cập nhật dữ liệu. Virtual memory tạo ánh xạ địa chỉ và quyền truy cập; không có nghĩa RAM vô hạn. Scheduling quyết định ai được chạy, còn lock bảo vệ vùng tới hạn. Deadlock có thể xuất hiện khi nhiều tác vụ giữ và chờ tài nguyên theo vòng; một thứ tự lấy lock thống nhất giúp loại một kiểu chờ vòng.",
+      "en": "An OS manages resources and process isolation. Threads share address space, so concurrent updates can race. Virtual memory maps addresses and permissions rather than creating infinite RAM. Scheduling and locking solve different problems. A consistent lock order can prevent circular waiting."
+    },
+    "example": {
+      "vi": "Hai thread cùng đọc counter=0, cùng tính 1 rồi cùng ghi 1 làm mất một lần tăng. Vùng tới hạn hoặc primitive nguyên tử cần bao quanh thao tác read-modify-write, không chỉ thao tác gán cuối cùng.",
+      "en": "Two threads reading zero and each writing one lose an increment. Protect the entire read-modify-write operation, not merely the final assignment."
+    },
+    "lab": {
+      "vi": [
+        "Mô tả interleaving gây mất cập nhật.",
+        "Viết phiên bản có lock và so invariant tổng cuối.",
+        "Vẽ hai lock/two-thread wait graph rồi sửa thứ tự lấy lock."
+      ],
+      "en": [
+        "Describe an interleaving that loses an update.",
+        "Protect it with a lock and check the final-count invariant.",
+        "Draw a two-lock wait graph and repair lock ordering."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Process và thread có giống nhau không?",
+        "Chỉ lock lệnh ghi cuối có đủ không?",
+        "Virtual memory có xóa giới hạn bộ nhớ không?"
+      ],
+      "en": [
+        "Are processes and threads identical?",
+        "Is locking only the final write sufficient?",
+        "Does virtual memory eliminate memory limits?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không; mức chia sẻ tài nguyên khác.",
+        "Không; cần bảo vệ cả vùng thao tác phụ thuộc dữ liệu.",
+        "Không; tài nguyên vật lý vẫn hữu hạn."
+      ],
+      "en": [
+        "No: their resource sharing differs.",
+        "No: protect the dependent operation as a whole.",
+        "No: physical resources remain finite."
+      ]
+    },
+    "sources": [
+      "ostep"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "networks",
+    "title": {
+      "vi": "Mạng máy tính và HTTP",
+      "en": "Networks and HTTP"
+    },
+    "concept": {
+      "vi": "Mạng phân lớp tách các trách nhiệm như định tuyến, truyền tin và ngữ nghĩa ứng dụng. Địa chỉ IP xác định điểm mạng; port chọn dịch vụ trên host. TCP cung cấp byte stream có thứ tự, không tự biết ranh giới message; HTTP định nghĩa request/response bên trên. DNS ánh xạ tên, còn TLS bảo vệ kết nối và xác thực theo chứng thư. Timeout không chứng minh server chưa thực hiện thao tác; retry một lệnh ghi có thể tạo dữ liệu trùng nếu không có thiết kế idempotent.",
+      "en": "Layering separates routing, transport and application semantics. IP locates a network endpoint and ports select services. TCP is an ordered byte stream, not a message protocol. HTTP defines request/response semantics; DNS and TLS serve different roles. A timeout does not prove that a write was never executed."
+    },
+    "example": {
+      "vi": "Client POST ghi danh rồi mất kết nối trước khi nhận response. Nếu retry tạo một enrollment mới mỗi lần, có thể trùng. Dùng idempotency key hoặc ràng buộc duy nhất và trả kết quả nhất quán cho cùng thao tác logic.",
+      "en": "A client may lose the response after enrollment commits. Retrying a non-idempotent write can duplicate data. Use a logical operation key or uniqueness rule and return a consistent result."
+    },
+    "lab": {
+      "vi": [
+        "Quan sát một request HTTP local bằng DevTools/curl.",
+        "Ghi method, status, headers và body; không công khai cookie.",
+        "Mô phỏng response bị mất và thiết kế retry an toàn."
+      ],
+      "en": [
+        "Observe a local HTTP request.",
+        "Record method, status, headers and body without exposing cookies.",
+        "Simulate a lost response and design safe retries."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Timeout có chứng minh thao tác thất bại không?",
+        "DNS và TLS có cùng nhiệm vụ không?",
+        "TCP có tự giữ ranh giới JSON message không?"
+      ],
+      "en": [
+        "Does timeout prove failure?",
+        "Do DNS and TLS have the same role?",
+        "Does TCP preserve JSON message boundaries?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không: phân giải tên khác bảo vệ/xác thực kết nối.",
+        "Không; ứng dụng cần framing."
+      ],
+      "en": [
+        "No.",
+        "No: name resolution differs from transport protection/authentication.",
+        "No: the application needs framing."
+      ]
+    },
+    "sources": [
+      "mdn",
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "web-foundations",
+    "title": {
+      "vi": "HTML, CSS và JavaScript",
+      "en": "HTML, CSS and JavaScript"
+    },
+    "concept": {
+      "vi": "HTML mô tả ngữ nghĩa nội dung, CSS bố trí và trình bày, JavaScript xử lý hành vi. Chọn button cho hành động và anchor cho điều hướng để giữ hành vi bàn phím đúng. Responsive không chỉ thu nhỏ desktop: lưới, thứ tự đọc, chiều rộng tối thiểu và ảnh hưởng zoom đều phải được kiểm. Input của người dùng không được nối trực tiếp vào HTML có thể thực thi; ưu tiên textContent hoặc render text của framework.",
+      "en": "HTML provides semantics, CSS presentation and JavaScript behavior. Use buttons for actions and anchors for navigation. Responsive design must preserve reading order, keyboard access and usable minimum sizes. Render untrusted strings as text rather than executable HTML."
+    },
+    "example": {
+      "vi": "Grid hai cột có thể chuyển thành một cột ở màn hình hẹp. Một nút lưu phải có tên truy cập được và trạng thái đang xử lý. Đặt nội dung nhập vào textContent sẽ hiển thị chuỗi <script> như văn bản thay vì chạy nó.",
+      "en": "A two-column grid can become one column on narrow screens. A save button needs an accessible name and a busy state. textContent displays a script-looking string as text instead of executing it."
+    },
+    "lab": {
+      "vi": [
+        "Xây trang khóa học với heading theo cấp và button/anchor đúng nghĩa.",
+        "Kiểm ở 390px, bàn phím và zoom 200%.",
+        "Thử dữ liệu chứa dấu < > và chứng minh không thực thi HTML."
+      ],
+      "en": [
+        "Build a semantic course page.",
+        "Test at 390px, keyboard-only and 200% zoom.",
+        "Enter angle brackets and demonstrate that content is not executed."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Hành động lưu nên dùng button hay div click?",
+        "Responsive có chỉ là giảm font không?",
+        "Vì sao tránh innerHTML với dữ liệu chưa kiểm?"
+      ],
+      "en": [
+        "Should save use a button or clickable div?",
+        "Is responsive design only smaller fonts?",
+        "Why avoid untrusted innerHTML?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Button.",
+        "Không; bố cục và khả năng thao tác cũng quan trọng.",
+        "Có thể tạo XSS."
+      ],
+      "en": [
+        "A button.",
+        "No: layout and operability also matter.",
+        "It can introduce XSS."
+      ]
+    },
+    "sources": [
+      "mdn",
+      "wcag"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "requirements",
+    "title": {
+      "vi": "Phân tích yêu cầu",
+      "en": "Requirements engineering"
+    },
+    "concept": {
+      "vi": "Yêu cầu tốt xác định người dùng, mục tiêu, điều kiện và kết quả kiểm được. Phân biệt vấn đề với giải pháp được đề xuất: khách nói cần chatbot có thể thực sự cần giảm thời gian tìm tài liệu. Acceptance criteria mô tả hành vi quan sát được, kể cả lỗi và quyền truy cập. Ràng buộc phi chức năng cần có cách đo. Khi yêu cầu đổi, cập nhật truy vết từ FR tới thiết kế, code và test thay vì chỉ thêm một câu vào tài liệu.",
+      "en": "A requirement identifies users, goals, conditions and observable outcomes. Separate the problem from a proposed solution. Acceptance criteria include errors and authorization, while nonfunctional requirements need measurement methods. Trace changes through design, implementation and tests."
+    },
+    "example": {
+      "vi": "Given học viên chưa ghi danh, when mở body lesson, then API trả 403 và không trả nội dung. Tiêu chí này rõ hơn câu bài học phải an toàn vì chỉ ra cả response và dữ liệu không được lộ.",
+      "en": "Given an unenrolled learner, requesting a lesson body returns 403 without content. This is more testable than “lessons must be secure”."
+    },
+    "lab": {
+      "vi": [
+        "Phỏng vấn giả lập một người dùng và ghi vấn đề chưa có giải pháp.",
+        "Viết năm AC cho ghi danh, gồm lỗi/quyền.",
+        "Liên kết từng AC tới test và ghi tác động của một thay đổi."
+      ],
+      "en": [
+        "Capture a user problem without prescribing a solution.",
+        "Write five enrollment criteria including failures and permissions.",
+        "Map them to tests and analyze one change."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Yêu cầu và giải pháp có giống nhau không?",
+        "AC phải có kết quả quan sát được không?",
+        "Đổi yêu cầu mà không sửa test có rủi ro gì?"
+      ],
+      "en": [
+        "Are requirements identical to solutions?",
+        "Must criteria be observable?",
+        "What happens if requirements change but tests do not?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Có.",
+        "Test có thể bảo vệ hành vi cũ và bỏ sót hành vi mới."
+      ],
+      "en": [
+        "No.",
+        "Yes.",
+        "Tests may protect obsolete behavior and miss the new requirement."
+      ]
+    },
+    "sources": [
+      "cs2023",
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "software-design",
+    "title": {
+      "vi": "Thiết kế phần mềm và mô hình miền",
+      "en": "Software design and domain modeling"
+    },
+    "concept": {
+      "vi": "Thiết kế chia trách nhiệm và đặt ranh giới thay đổi. High cohesion gom các hành vi cùng mục đích, low coupling giảm phụ thuộc không cần thiết. Mô hình miền cần bất biến: enrollment phải trỏ tới course và user hợp lệ trong cùng tenant. Interface nên biểu diễn ý định nghiệp vụ thay vì để mọi màn hình tự viết query. Trừu tượng hóa có chi phí; không tạo hàng chục lớp chỉ để đổi tên một lời gọi đơn giản.",
+      "en": "Design establishes responsibilities and change boundaries. Cohesion groups related behavior; loose coupling limits unnecessary dependencies. Model domain invariants explicitly. Interfaces should express intent, but abstractions have costs: extra layers without a change boundary can obscure simple code."
+    },
+    "example": {
+      "vi": "Tách tính prerequisite thành hàm nhận tiến độ và lộ trình sẽ cho phép kiểm thử không cần trình duyệt. Tuy nhiên quyền tenant vẫn phải được xác nhận ở nơi lấy dữ liệu; một helper thuần túy không tự biết người gọi có quyền không.",
+      "en": "A pure prerequisite function is testable without a browser, but it cannot independently authorize the caller. Validate tenant scope at the data boundary and keep the calculation deterministic."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ domain model user/tenant/course/enrollment.",
+        "Nêu ba invariant và nơi enforce.",
+        "Tách một phép tính thuần túy, viết test không cần DB rồi review xem đã tách quá mức chưa."
+      ],
+      "en": [
+        "Model user/tenant/course/enrollment.",
+        "Locate enforcement for three invariants.",
+        "Extract one pure calculation, test it and review whether the boundary is useful."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Cohesion nói về điều gì?",
+        "Helper tính toán có thay authorization không?",
+        "Nhiều lớp hơn có luôn là thiết kế tốt hơn không?"
+      ],
+      "en": [
+        "What is cohesion?",
+        "Does a calculation helper replace authorization?",
+        "Do more layers always improve design?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Mức liên quan của trách nhiệm trong một module.",
+        "Không.",
+        "Không; cần lợi ích rõ cho thay đổi/test."
+      ],
+      "en": [
+        "Related responsibilities within a module.",
+        "No.",
+        "No: boundaries need a concrete benefit."
+      ]
+    },
+    "sources": [
+      "swe",
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "api-engineering",
+    "title": {
+      "vi": "Thiết kế và xây API",
+      "en": "API engineering"
+    },
+    "concept": {
+      "vi": "API là hợp đồng giữa các bên có thể phát triển độc lập. Schema kiểm hình dạng dữ liệu, authorization kiểm quyền; hai việc không thay thế nhau. Dùng status code nhất quán và không trả stack trace hoặc secret. Phân trang, giới hạn kích thước và idempotency là một phần hợp đồng. Khi tài nguyên có tenant_id, truy vấn phải kiểm cả ID lẫn tenant, tránh truy cập object của hệ thống khác chỉ vì đoán được UUID.",
+      "en": "An API is a contract between independently evolving clients and services. Validation and authorization are distinct. Use consistent statuses, bounded payloads and pagination; do not expose traces or secrets. Scope object lookups by both tenant and identifier."
+    },
+    "example": {
+      "vi": "PUT workspace gửi revision=3 trong khi DB đã ở revision=4 phải trả 409 thay vì ghi đè. Client tải lại bản mới, cho người dùng quyết định gộp thay đổi. Điều này giải quyết lost update, không phải xác thực người dùng.",
+      "en": "A PUT with revision three against database revision four should return 409 rather than overwrite edits. The client reloads and reconciles. Optimistic concurrency addresses lost updates, not authentication."
+    },
+    "lab": {
+      "vi": [
+        "Viết contract tạo/sửa course với schema và lỗi.",
+        "Test user ngoài tenant và payload quá lớn.",
+        "Thêm revision check hoặc idempotency cho một thao tác ghi."
+      ],
+      "en": [
+        "Define create/update course contracts and errors.",
+        "Test cross-tenant access and oversized input.",
+        "Implement revision checking or write idempotency."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Validation có chứng minh user được phép sửa không?",
+        "Revision cũ nên trả status gì theo hợp đồng này?",
+        "UUID khó đoán có thay authorization không?"
+      ],
+      "en": [
+        "Does valid input authorize an edit?",
+        "What status handles stale revision here?",
+        "Does an unpredictable UUID replace authorization?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "409.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "409.",
+        "No."
+      ]
+    },
+    "sources": [
+      "fastapi",
+      "mdn"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "testing",
+    "title": {
+      "vi": "Kiểm thử phần mềm",
+      "en": "Software testing"
+    },
+    "concept": {
+      "vi": "Test tốt phát hiện hành vi sai có ý nghĩa với người dùng hoặc invariant hệ thống. Unit test phù hợp logic cục bộ; integration test kiểm ranh giới thật như transaction/SQL; browser test kiểm hành trình qua UI. Mock giúp cô lập nhưng có thể che khác biệt với dependency thật. Coverage cao không chứng minh đủ tình huống. Ưu tiên biên, lỗi, quyền, retry và concurrency khi chúng là rủi ro thực tế.",
+      "en": "Useful tests detect meaningful behavioral or invariant failures. Units isolate logic, integration tests exercise real boundaries, and browser tests cover user journeys. Mocks can hide dependency differences. Coverage is not proof of completeness; target boundaries, errors and real risks."
+    },
+    "example": {
+      "vi": "Hàm lấy trung bình cần test rỗng, một phần tử và số âm, không chỉ [1,2,3]. API enrollment cần test retry không tạo trùng và học viên không thuộc tenant bị từ chối. SQLite không thể chứng minh hành vi JSONB của PostgreSQL.",
+      "en": "Test a mean function on empty, single and negative inputs. Test enrollment retry and tenant isolation. A SQLite substitute cannot prove PostgreSQL JSONB behavior."
+    },
+    "lab": {
+      "vi": [
+        "Lập risk matrix cho một tính năng.",
+        "Viết unit, integration và một browser journey có mục đích khác nhau.",
+        "Cố ý tạo lỗi để thấy test thất bại, rồi sửa lại."
+      ],
+      "en": [
+        "Build a feature risk matrix.",
+        "Write complementary unit, integration and browser checks.",
+        "Introduce a deliberate defect, observe failure and repair it."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Coverage 100% có chứng minh đúng hoàn toàn không?",
+        "Vì sao cần DB thật khi kiểm JSONB?",
+        "Test luôn pass dù code sai có ích không?"
+      ],
+      "en": [
+        "Does full coverage prove correctness?",
+        "Why test JSONB with the real DB?",
+        "Is an always-passing test useful?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Ngữ nghĩa phụ thuộc PostgreSQL.",
+        "Không; cần chứng minh test có thể phát hiện lỗi liên quan."
+      ],
+      "en": [
+        "No.",
+        "Its semantics depend on PostgreSQL.",
+        "No: establish that the check detects relevant defects."
+      ]
+    },
+    "sources": [
+      "swe",
+      "fastapi"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "security",
+    "title": {
+      "vi": "An toàn và bảo mật phần mềm",
+      "en": "Software security"
+    },
+    "concept": {
+      "vi": "Bảo mật bắt đầu bằng tài sản, tác nhân và đường dữ liệu, không phải chỉ thêm một thư viện mã hóa. Authentication xác định user, authorization quyết định quyền. Input cần validate và output cần encode đúng ngữ cảnh. Secret phải ở server, session có thể thu hồi và quyền nên tối thiểu. Threat model ghi giả định và cách kiểm chứng; một công cụ scan không chứng minh không còn lỗ hổng.",
+      "en": "Start with assets, actors and data flows. Authentication identifies users; authorization grants actions. Validate inputs, encode outputs and keep server secrets out of clients. Use least privilege and revocable sessions. A scanner is one source of evidence, not proof of security."
+    },
+    "example": {
+      "vi": "User A đổi URL từ course của mình sang course tenant B. Nếu API chỉ tìm theo course ID sẽ có nguy cơ lộ dữ liệu. Query theo cả course ID và tenant được phép, rồi kiểm role cho hành động.",
+      "en": "Changing a course ID must not cross tenant boundaries. Scope the lookup to an authorized tenant and check the role required by the action."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ luồng đăng nhập và đánh dấu nơi chứa secret.",
+        "Viết test negative cho tài nguyên tenant khác.",
+        "Thử chuỗi HTML nguy hiểm trên môi trường test và xác nhận được render như text."
+      ],
+      "en": [
+        "Draw login data flows and secret boundaries.",
+        "Add negative cross-tenant tests.",
+        "Verify that hostile-looking text is not executed in a test environment."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Login thành công có cho phép mọi hành động không?",
+        "Secret server có được đưa vào biến public frontend không?",
+        "Scan sạch có bảo đảm an toàn tuyệt đối không?"
+      ],
+      "en": [
+        "Does login authorize everything?",
+        "May server secrets be public frontend variables?",
+        "Does a clean scan guarantee safety?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không; cần nhiều lớp kiểm tra và review."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No: use layered checks and review."
+      ]
+    },
+    "sources": [
+      "owasp"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "distributed-systems",
+    "title": {
+      "vi": "Hệ phân tán",
+      "en": "Distributed systems"
+    },
+    "concept": {
+      "vi": "Trong hệ phân tán, mạng có thể chậm hoặc mất kết nối trong khi process vẫn chạy. Không có đồng hồ hoàn hảo để suy ra một thứ tự toàn cục chỉ từ timestamp máy. Retry, duplicate và message đến lệch thứ tự là tình huống thiết kế thường gặp. Tính nhất quán phải được mô tả theo thao tác và invariant cụ thể. Khi một dịch vụ không phản hồi, hệ thống phải có quyết định rõ về chờ, từ chối hay trả dữ liệu cũ.",
+      "en": "Networks can fail while processes remain alive. Machine timestamps alone do not establish a perfect global order. Expect retries, duplicates and reordering. Specify consistency through concrete operations and invariants, with explicit behavior for unavailable dependencies."
+    },
+    "example": {
+      "vi": "Consumer nhận cùng event completion hai lần. Nếu mỗi lần cộng điểm thì học viên được nhân đôi điểm. Lưu event ID đã xử lý trong cùng transaction với thay đổi điểm để retry trả cùng kết quả logic.",
+      "en": "A duplicate completion event must not award points twice. Record the event identifier atomically with the points update so retries preserve the invariant."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng queue có duplicate và reordering.",
+        "Thiết kế consumer idempotent.",
+        "Ghi những đảm bảo vẫn đúng khi một dependency ngừng trả lời."
+      ],
+      "en": [
+        "Simulate duplicate and reordered messages.",
+        "Build an idempotent consumer.",
+        "Document guarantees under dependency failure."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Timeout có nghĩa remote process đã dừng không?",
+        "Duplicate có thể xuất hiện không?",
+        "Idempotency giải quyết điều gì?"
+      ],
+      "en": [
+        "Does timeout mean the remote process stopped?",
+        "Can duplicate delivery occur?",
+        "What does idempotency address?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Có.",
+        "Retry không lặp tác động logic ngoài ý muốn."
+      ],
+      "en": [
+        "No.",
+        "Yes.",
+        "Retries do not repeat unintended logical effects."
+      ]
+    },
+    "sources": [
+      "cs2023",
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "devops",
+    "title": {
+      "vi": "CI/CD và vận hành ứng dụng",
+      "en": "CI/CD and operations"
+    },
+    "concept": {
+      "vi": "CI tích hợp thay đổi thường xuyên bằng các kiểm tra tự động. CD cần artifact tái lập, cấu hình môi trường và cách rollback. Health live cho biết process còn phản hồi; readiness cho biết có thể phục vụ request cần dependency. Migration dữ liệu có thể không rollback được chỉ bằng đổi image. Quan sát logs/metrics phải giữ secret và thông tin cá nhân riêng tư.",
+      "en": "CI checks integrated changes; delivery also needs reproducible artifacts, configuration and rollback. Liveness and readiness answer different questions. Reverting an image may not reverse a data migration. Keep sensitive values out of telemetry."
+    },
+    "example": {
+      "vi": "API process chạy nhưng database mất kết nối: live có thể 200 còn ready phải 503. Nếu web khởi động trước migration, người dùng có thể gặp lỗi schema dù container Up.",
+      "en": "An API may be live while its DB is unavailable, requiring readiness 503. Starting web traffic before schema migration can expose errors even when containers are running."
+    },
+    "lab": {
+      "vi": [
+        "Viết pipeline lint/test/build cho ứng dụng local.",
+        "Thử dừng dependency và quan sát readiness.",
+        "Diễn tập backup/restore DB thử; ghi rõ rollback code khác rollback dữ liệu."
+      ],
+      "en": [
+        "Build a lint/test/build pipeline.",
+        "Stop a dependency and observe readiness.",
+        "Rehearse test-DB backup/restore and separate code from data rollback."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Container Up có chứng minh hệ thống sẵn sàng không?",
+        "Đổi image có luôn hoàn tác dữ liệu không?",
+        "Tại sao pin dependency?"
+      ],
+      "en": [
+        "Does Up prove readiness?",
+        "Does reverting an image always revert data?",
+        "Why pin dependencies?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Để tái lập bộ phiên bản đã kiểm tra."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "To reproduce the verified dependency set."
+      ]
+    },
+    "sources": [
+      "docker",
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "hci",
+    "title": {
+      "vi": "Tương tác người máy và accessibility",
+      "en": "Human-computer interaction"
+    },
+    "concept": {
+      "vi": "Giao diện tốt giảm chi phí hiểu và thao tác. Thiết kế theo tác vụ người dùng, có phản hồi trạng thái và cách phục hồi lỗi. Accessibility liên quan khả năng nhận biết, thao tác và hiểu được; không chỉ chọn màu đẹp. Một control cần tên truy cập được, focus hiển thị và thao tác bàn phím. Kiểm với người dùng thật có thể phát hiện vấn đề mà người làm giao diện không nhận ra.",
+      "en": "Good interfaces reduce cognitive and operational effort. Design around tasks, feedback and recovery. Accessibility includes perceivability, operability and understanding. Controls need accessible names, visible focus and keyboard behavior. User observation reveals issues that designers can miss."
+    },
+    "example": {
+      "vi": "Nút chỉ có icon thùng rác có thể không có tên đối với screen reader. Thêm aria-label phù hợp, hỗ trợ focus và xác nhận khi xóa dữ liệu khó phục hồi. Không dùng màu đỏ như tín hiệu duy nhất của lỗi.",
+      "en": "An icon-only delete control may lack a screen-reader name. Supply a label, visible focus and suitable confirmation. Color alone should not communicate errors."
+    },
+    "lab": {
+      "vi": [
+        "Thử luồng đăng ký chỉ bằng bàn phím.",
+        "Kiểm tên control, focus và thông báo lỗi.",
+        "Quan sát một người mới thực hiện tác vụ, ghi vướng mắc trước khi đề xuất sửa."
+      ],
+      "en": [
+        "Test registration keyboard-only.",
+        "Inspect names, focus and error messages.",
+        "Observe a new user completing a task before proposing fixes."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Placeholder có thay label bền vững không?",
+        "Có nên chỉ dùng màu để báo lỗi không?",
+        "Kiểm tự động có thay usability testing không?"
+      ],
+      "en": [
+        "Is a placeholder a durable label?",
+        "Should color alone convey errors?",
+        "Does automation replace usability testing?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không; hai cách bổ sung nhau."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No: they complement each other."
+      ]
+    },
+    "sources": [
+      "wcag",
+      "mdn"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "machine-learning",
+    "title": {
+      "vi": "Học máy nền tảng",
+      "en": "Machine learning foundations"
+    },
+    "concept": {
+      "vi": "Mô hình học từ dữ liệu để tối ưu một hàm mục tiêu, không tự hiểu thế giới như người. Tách train/validation/test theo cách phản ánh lúc triển khai; dữ liệu tương lai hoặc cùng đối tượng lọt qua ranh giới có thể gây leakage. So với baseline đơn giản trước khi tăng độ phức tạp. Metric cần phù hợp tác vụ và phân bố lỗi; trung bình tốt có thể che nhóm người dùng bị phục vụ kém.",
+      "en": "A model optimizes an objective from data. Split training, validation and test sets to reflect deployment; leakage can inflate performance. Establish a simple baseline first. Choose task-relevant metrics and inspect error distribution rather than relying on one average."
+    },
+    "example": {
+      "vi": "Dự đoán y=2x+1 với x=0,1,2 cho y=1,3,5. Mô hình baseline hằng số không mô tả xu hướng; đường thẳng đúng trên ví dụ này. Nhưng khớp ba điểm không chứng minh quan hệ đúng ngoài miền đo hoặc trong môi trường khác.",
+      "en": "For x=0,1,2, y=2x+1 produces 1,3,5. A constant baseline misses this trend, but fitting three points does not prove the relation outside the observed range."
+    },
+    "lab": {
+      "vi": [
+        "Tạo tập dữ liệu nhỏ có train/test độc lập.",
+        "So baseline với mô hình tuyến tính và MAE.",
+        "Thêm outlier và giải thích thay đổi metric, không chỉ xóa điểm khó."
+      ],
+      "en": [
+        "Create independent training/test samples.",
+        "Compare a baseline and linear model using MAE.",
+        "Add an outlier and explain its effect without silently deleting it."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Leakage là gì?",
+        "Baseline có ích gì?",
+        "Test tốt có bảo đảm mọi dữ liệu tương lai không?"
+      ],
+      "en": [
+        "What is leakage?",
+        "Why use a baseline?",
+        "Does a good test score guarantee all future behavior?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Thông tin không nên có ở lúc dự đoán lọt vào quá trình học/đánh giá.",
+        "Mốc so sánh để biết độ phức tạp có ích không.",
+        "Không; cần theo dõi drift và giới hạn."
+      ],
+      "en": [
+        "Information unavailable at prediction time contaminates training/evaluation.",
+        "A comparison point for added complexity.",
+        "No: monitor drift and limitations."
+      ]
+    },
+    "sources": [
+      "ml"
+    ],
+    "code": "pred=[2*x+1 for x in [0,1,2]]\ntruth=[1,3,5]\nprint(sum(abs(a-b) for a,b in zip(pred,truth))/len(truth))",
+    "code_output": "0.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "data-engineering",
+    "title": {
+      "vi": "Kỹ thuật dữ liệu",
+      "en": "Data engineering"
+    },
+    "concept": {
+      "vi": "Pipeline dữ liệu gồm nguồn, biến đổi, lưu trữ và kiểm tra chất lượng. Phải ghi schema, đơn vị, múi giờ và nguồn gốc dữ liệu. Chạy lại pipeline không nên tự tạo bản ghi trùng. Phân biệt thời gian sự kiện với thời gian nhận; dữ liệu đến muộn có thể làm báo cáo thay đổi. Kiểm completeness, validity và uniqueness trước khi tạo dashboard có vẻ chính xác.",
+      "en": "Data pipelines need schemas, units, time zones and lineage. Reprocessing should not duplicate records. Event time differs from arrival time, and late data may revise aggregates. Check completeness, validity and uniqueness before presenting apparently precise dashboards."
+    },
+    "example": {
+      "vi": "Log cùng event ID được tải hai lần. Deduplicate theo ID trước khi cộng số lượt học. Nếu dùng thời gian tải thay thời gian học, hoạt động hôm qua có thể bị tính vào hôm nay.",
+      "en": "Deduplicate repeated event IDs before counting learning activity. Aggregating by ingestion time can assign yesterday’s delayed event to today."
+    },
+    "lab": {
+      "vi": [
+        "Định nghĩa schema event với ID, event_time và received_time.",
+        "Viết pipeline loại trùng và báo dòng sai.",
+        "Chạy lại cùng đầu vào; tổng không được tăng lần hai."
+      ],
+      "en": [
+        "Define event IDs and event/arrival timestamps.",
+        "Build deduplication and invalid-row reporting.",
+        "Rerun the same input without increasing the total."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Tại sao cần event ID?",
+        "Dữ liệu đến muộn có thể đổi aggregate không?",
+        "Bỏ mọi dòng lỗi âm thầm có tốt không?"
+      ],
+      "en": [
+        "Why keep event identifiers?",
+        "Can late data change aggregates?",
+        "Should invalid rows silently disappear?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Để nhận diện bản ghi và loại trùng.",
+        "Có.",
+        "Không; cần báo cáo chất lượng và khả năng điều tra."
+      ],
+      "en": [
+        "To identify and deduplicate records.",
+        "Yes.",
+        "No: report quality issues and retain investigability."
+      ]
+    },
+    "sources": [
+      "postgres",
+      "cs2023"
+    ],
+    "code": "events=[{\"id\":1},{\"id\":1},{\"id\":2}]\nprint(len({e[\"id\"] for e in events}))",
+    "code_output": "2",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "mobile-engineering",
+    "title": {
+      "vi": "Phát triển ứng dụng di động",
+      "en": "Mobile application engineering"
+    },
+    "concept": {
+      "vi": "App di động phải hoạt động trong điều kiện mạng và vòng đời không ổn định. Screen có thể bị tháo, app chuyển nền và request về sau khi người dùng đổi tenant. Token phải được lưu trong cơ chế phù hợp của nền tảng, không ghi log hoặc gửi sang origin người dùng vừa đổi. UI cần thể hiện loading/error/retry và giữ ngữ cảnh. Bundle JavaScript thành công chưa chứng minh binary đã ký hoặc đã chạy đúng trên thiết bị thật.",
+      "en": "Mobile apps face unreliable networks and lifecycle changes. Responses may arrive after a screen or tenant changes. Store tokens using platform facilities and never reuse them for a newly entered origin. Model loading/error/retry states. A successful JS bundle is not proof of a signed, device-tested application."
+    },
+    "example": {
+      "vi": "Người dùng đang đăng nhập server A rồi nhập server B. Không gửi bearer token A để thăm dò B. Xóa session hoặc yêu cầu đăng nhập lại ở origin B; giữ token ràng buộc với origin đã tin cậy.",
+      "en": "When switching from server A to B, do not probe B with A’s bearer token. Bind credentials to the trusted origin and require a new login."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ state machine login/loading/ready/error.",
+        "Test mất mạng và response đến muộn khi đổi tenant.",
+        "Kiểm trên thiết bị thật hoặc ghi rõ giới hạn nếu mới bundle."
+      ],
+      "en": [
+        "Model login/loading/ready/error states.",
+        "Test offline behavior and stale responses during tenant changes.",
+        "Test on a device or explicitly record bundle-only coverage."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Token A có được gửi sang B không?",
+        "Bundle có phải APK/IPA đã ký không?",
+        "Vì sao cần xử lý response cũ?"
+      ],
+      "en": [
+        "May A’s token be sent to B?",
+        "Is a bundle a signed APK/IPA?",
+        "Why handle stale responses?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Để không ghi dữ liệu màn hình/tenant cũ vào ngữ cảnh mới."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "To avoid applying old-screen or old-tenant data to the new context."
+      ]
+    },
+    "sources": [
+      "expo"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "project-management",
+    "title": {
+      "vi": "Quản lý dự án và sản phẩm",
+      "en": "Project and product management"
+    },
+    "concept": {
+      "vi": "Quản lý dự án biến mục tiêu thành công việc có thể theo dõi, không chỉ lập danh sách ngày. Phạm vi, nguồn lực và thời gian ảnh hưởng lẫn nhau; ước lượng là thông tin bất định cần cập nhật. Backlog ưu tiên theo giá trị và rủi ro, còn Definition of Done xác định bằng chứng hoàn thành. Sprint review kiểm kết quả với người dùng; retrospective cải tiến cách làm việc. Không đánh dấu Done chỉ vì có một tài liệu hoặc một màn hình.",
+      "en": "Project management connects goals to verifiable work. Scope, resources and time interact; estimates carry uncertainty. Prioritize value and risk, and define evidence for completion. Reviews inspect outcomes with users, while retrospectives improve the process."
+    },
+    "example": {
+      "vi": "Story học viên xem bài học không Done chỉ khi UI mở được. AC còn yêu cầu chưa enroll bị từ chối, dữ liệu được giữ và nội dung đúng tenant. Nếu thiếu kiểm quyền thì phần giao diện đã làm nhưng story chưa đủ nghiệm thu.",
+      "en": "A lesson-viewing story includes unenrolled-access rejection, persistence and tenant correctness. A working screen alone does not satisfy those acceptance criteria."
+    },
+    "lab": {
+      "vi": [
+        "Viết charter ngắn với mục tiêu đo được.",
+        "Tách backlog thành lát cắt đầu-cuối có AC.",
+        "Sau một buổi thực hành, review bằng chứng và ghi một cải tiến cụ thể."
+      ],
+      "en": [
+        "Write a short charter with measurable goals.",
+        "Slice the backlog end-to-end with acceptance criteria.",
+        "Review evidence and record one concrete process improvement."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Done có đồng nghĩa đã viết code không?",
+        "Ước lượng có phải cam kết chắc chắn không?",
+        "Review và retrospective khác gì?"
+      ],
+      "en": [
+        "Does code written mean Done?",
+        "Is an estimate a certainty?",
+        "How do review and retrospective differ?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Review sản phẩm; retrospective cách làm việc."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "Review inspects the product; retrospective inspects the process."
+      ]
+    },
+    "sources": [
+      "swe",
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "software-architecture",
+    "title": {
+      "vi": "Kiến trúc phần mềm",
+      "en": "Software architecture"
+    },
+    "concept": {
+      "vi": "Kiến trúc là các quyết định có ảnh hưởng lớn tới chất lượng và khả năng thay đổi. Bắt đầu từ workload, ràng buộc và failure modes, không từ một danh sách công nghệ thời thượng. Monolith có module rõ có thể phù hợp hơn nhiều dịch vụ nhỏ khi đội còn ít người. Ghi trade-off bằng ADR: bối cảnh, lựa chọn, lý do và hệ quả. Kiến trúc cần được kiểm bằng thí nghiệm đo được thay vì chỉ sơ đồ.",
+      "en": "Architecture addresses consequential decisions about quality and change. Start from workloads, constraints and failures rather than fashionable technologies. A modular monolith may suit a small team better than many services. Record context, choices and consequences in an ADR and validate decisions experimentally."
+    },
+    "example": {
+      "vi": "Tách video processing thành worker có thể giảm latency request nhưng thêm queue, retry và quan sát job. Nếu chưa có workload video, thêm worker ngay có thể làm hệ thống khó vận hành mà chưa tạo giá trị.",
+      "en": "A video worker can shorten request latency but introduces queues, retries and job observability. Without that workload, the extra service may add complexity without benefit."
+    },
+    "lab": {
+      "vi": [
+        "Viết quality scenarios cho tenant isolation và export.",
+        "So hai phương án kiến trúc theo cùng tiêu chí.",
+        "Làm một spike nhỏ, ghi dữ liệu và quyết định thay vì chấm điểm cảm tính."
+      ],
+      "en": [
+        "Write quality scenarios for tenant isolation and export.",
+        "Compare two designs using identical criteria.",
+        "Run a small spike and base the decision on evidence."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Microservices có luôn tốt hơn monolith không?",
+        "ADR cần ghi hệ quả không?",
+        "Sơ đồ có chứng minh hiệu năng không?"
+      ],
+      "en": [
+        "Are microservices always superior?",
+        "Should an ADR include consequences?",
+        "Does a diagram prove performance?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Có.",
+        "Không; cần đo trong điều kiện cụ thể."
+      ],
+      "en": [
+        "No.",
+        "Yes.",
+        "No: measure defined conditions."
+      ]
+    },
+    "sources": [
+      "swe",
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "quality-engineering",
+    "title": {
+      "vi": "Chất lượng, hiệu năng và độ tin cậy",
+      "en": "Quality, performance and reliability"
+    },
+    "concept": {
+      "vi": "Chất lượng gồm tính đúng, khả dụng, bảo trì, an toàn và trải nghiệm. Đo latency bằng phân vị cùng throughput/error rate; trung bình có thể che các request rất chậm. SLO là mục tiêu dịch vụ được định nghĩa theo cửa sổ và phạm vi đo. Tối ưu cần baseline và profiling, sau đó kiểm cả correctness để tránh nhanh nhưng sai. Chaos thử nghiệm chỉ nên diễn tập trên môi trường được phép và có khả năng phục hồi.",
+      "en": "Quality spans correctness, availability, maintainability, security and experience. Measure latency percentiles alongside throughput and errors. Define SLO scope and windows. Establish a baseline, profile and recheck correctness after optimization. Run failure experiments only in authorized, recoverable environments."
+    },
+    "example": {
+      "vi": "99 request mất 10 ms, một request mất 1000 ms: trung bình 19.9 ms nhưng một người dùng chờ gần một giây. Một metric đơn lẻ không mô tả toàn bộ trải nghiệm.",
+      "en": "With 99 requests at 10 ms and one at 1000 ms, the mean is 19.9 ms while one user waits a second. A single metric hides the distribution."
+    },
+    "lab": {
+      "vi": [
+        "Tạo workload local cố định và đo latency/error rate.",
+        "Profiling tìm một bottleneck trước khi sửa.",
+        "Chạy lại cùng workload và kiểm kết quả nghiệp vụ không đổi."
+      ],
+      "en": [
+        "Measure a fixed local workload.",
+        "Profile before changing a bottleneck.",
+        "Repeat the workload and verify unchanged business results."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Trung bình trong ví dụ là gì?",
+        "Tối ưu nhanh nhưng trả sai có đạt chất lượng không?",
+        "Có được thử lỗi lên production tùy ý không?"
+      ],
+      "en": [
+        "What is the example mean?",
+        "Is fast but incorrect acceptable?",
+        "May failures be injected into production without authorization?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "19.9 ms.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "19.9 ms.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "swe"
+    ],
+    "code": "values=[10]*99+[1000]\nprint(sum(values)/len(values))",
+    "code_output": "19.9",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "professional-practice",
+    "title": {
+      "vi": "Đạo đức và thực hành nghề nghiệp",
+      "en": "Ethics and professional practice"
+    },
+    "concept": {
+      "vi": "Kỹ sư chịu trách nhiệm về tác động của sản phẩm, không chỉ chức năng chạy được. Cần xem ai được lợi, ai có thể chịu hại và ai chưa được tham gia quyết định. Dữ liệu cá nhân nên được thu tối thiểu và dùng đúng mục đích. Công bố giới hạn, nguồn và xung đột lợi ích. Khi phát hiện vấn đề, báo cho đúng người và theo quy trình xử lý; không công khai credential để chứng minh lỗi.",
+      "en": "Engineers consider impact beyond functionality: who benefits, who may be harmed and whose voice is missing. Minimize personal data, use it for stated purposes and disclose limitations and conflicts. Report issues through an appropriate process without publishing credentials."
+    },
+    "example": {
+      "vi": "Không ghi đã được trường đại học chứng nhận chỉ vì chương trình tham khảo một giáo trình của trường. Nguồn đọc thêm không phải sự bảo trợ. Chứng nhận hoàn thành nội bộ cũng khác văn bằng được kiểm định.",
+      "en": "Referencing university material does not establish university endorsement. An internal completion certificate is not an accredited degree."
+    },
+    "lab": {
+      "vi": [
+        "Viết impact assessment ngắn cho hệ thống học tập.",
+        "Liệt kê dữ liệu thật sự cần và dữ liệu có thể bỏ.",
+        "Review một lời quảng cáo để loại cam kết chưa có bằng chứng."
+      ],
+      "en": [
+        "Write a short learning-platform impact assessment.",
+        "Identify necessary and unnecessary data.",
+        "Review a claim and remove unsupported guarantees."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Tham khảo tài liệu có đồng nghĩa được bảo trợ không?",
+        "Hoàn thành bài có chứng minh thành thạo không?",
+        "Có nên chia sẻ credential khi báo lỗi không?"
+      ],
+      "en": [
+        "Does a reference imply endorsement?",
+        "Does completion alone prove mastery?",
+        "Should credentials be shared in bug reports?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không; cần đánh giá năng lực thực tế.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "No: competence requires practical assessment.",
+        "No."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "se-capstone",
+    "title": {
+      "vi": "Đồ án kỹ thuật phần mềm",
+      "en": "Software engineering capstone"
+    },
+    "concept": {
+      "vi": "Đồ án tổng hợp cần một vấn đề thật có phạm vi đủ nhỏ để hoàn thành đầu-cuối. Chọn invariant quan trọng, mô hình dữ liệu, API và trải nghiệm người dùng trước khi mở rộng tính năng. Tài liệu bàn giao phải cho người khác chạy từ đầu, kiểm thử, backup và khôi phục. Báo cáo cuối phân biệt phần triển khai, phần thử nghiệm và phần dự kiến; không dùng ảnh mockup làm bằng chứng hệ thống đang hoạt động.",
+      "en": "Choose a real but bounded problem and deliver it end-to-end. Define invariants, data, API and user experience before expanding scope. Handover must support setup, testing, backup and recovery. Distinguish implemented, experimental and planned work."
+    },
+    "example": {
+      "vi": "Xây mini-LMS cho hai tenant: owner tạo course, learner enroll và học, tenant khác không đọc được body. Demo cả trường hợp thành công và bị từ chối; tạo backup, phục hồi vào DB sạch rồi kiểm dữ liệu.",
+      "en": "Build a two-tenant mini-LMS with authoring, enrollment and tenant isolation. Demonstrate allowed and denied cases, then restore a backup into a clean database."
+    },
+    "lab": {
+      "vi": [
+        "Viết charter, SRS ngắn và threat model.",
+        "Triển khai một lát cắt owner-to-learner có CI.",
+        "Demo restore, đo workload local và nộp repository kèm bằng chứng."
+      ],
+      "en": [
+        "Write a short charter, requirements and threat model.",
+        "Implement one owner-to-learner slice with CI.",
+        "Demonstrate restore, measure a local workload and submit evidence."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Demo chỉ happy path có đủ không?",
+        "README cần giúp người khác làm gì?",
+        "Chỉ số tốt trên local có phải cam kết production không?"
+      ],
+      "en": [
+        "Is happy-path-only evidence enough?",
+        "What should the README enable?",
+        "Is a local benchmark a production promise?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Chạy, kiểm tra và khôi phục hệ thống.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "Run, verify and recover the system.",
+        "No."
+      ]
+    },
+    "sources": [
+      "cs2023",
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "mechanics",
+    "title": {
+      "vi": "Cơ cấu và thiết kế cơ khí",
+      "en": "Mechanisms and mechanical design"
+    },
+    "concept": {
+      "vi": "Cơ cấu chuyển chuyển động hoặc lực giữa các bộ phận. Trước khi chọn động cơ, xác định tải, tay đòn, tốc độ và độ cứng cần thiết. Torque là tích có hướng giữa tay đòn và lực; trong trường hợp vuông góc, độ lớn là rF. Tăng tỉ số truyền thường đổi tốc độ lấy torque, kèm tổn hao và backlash. Bản CAD đẹp không chứng minh chịu tải; cần giả định vật liệu, liên kết và thử nghiệm phù hợp.",
+      "en": "Mechanisms transmit motion and forces. Specify load, lever arm, speed and stiffness before selecting actuation. For perpendicular force, torque magnitude is rF. Gearing trades speed and torque with losses and backlash. CAD appearance alone does not establish load capacity."
+    },
+    "example": {
+      "vi": "Tải 10 N ở khoảng cách vuông góc 0.2 m tạo torque 2 N·m. Nếu cánh tay dài gấp đôi và lực không đổi, torque yêu cầu thành 4 N·m. Không dùng torque stall như khả năng chạy liên tục của động cơ.",
+      "en": "A 10 N perpendicular force at 0.2 m produces 2 N·m. Doubling the arm doubles torque demand. Stall torque is not a continuous operating rating."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ free-body diagram của một khớp mô phỏng.",
+        "Tính tải ở ba chiều dài tay đòn.",
+        "Ghi tolerances, backlash và phép kiểm trước khi chế tạo."
+      ],
+      "en": [
+        "Draw a joint free-body diagram.",
+        "Calculate torque for three lever arms.",
+        "Document tolerances, backlash and pre-build checks."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "10 N ở 0.3 m vuông góc cho torque bao nhiêu?",
+        "Tỉ số truyền có tạo năng lượng miễn phí không?",
+        "CAD có chứng minh an toàn tải không?"
+      ],
+      "en": [
+        "What torque follows from 10 N at 0.3 m?",
+        "Does gearing create free energy?",
+        "Does CAD prove load safety?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "3 N·m.",
+        "Không.",
+        "Không; cần tính và kiểm chứng."
+      ],
+      "en": [
+        "3 N·m.",
+        "No.",
+        "No: calculate and verify."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "mit-ee"
+    ],
+    "code": "force, arm = 10, 0.2\nprint(force*arm)",
+    "code_output": "2.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "signals",
+    "title": {
+      "vi": "Tín hiệu và hệ thống",
+      "en": "Signals and systems"
+    },
+    "concept": {
+      "vi": "Tín hiệu mang thông tin theo thời gian; sampling chuyển nó thành dãy số. Tần số lấy mẫu phải phù hợp băng thông và cần lọc trước khi lấy mẫu để giảm aliasing. Một hệ tuyến tính bất biến theo thời gian có thể phân tích bằng đáp ứng xung hoặc miền tần số. Lọc làm mượt thường tăng trễ, nên không chỉ nhìn đồ thị ít nhiễu. Phương trình vi phân liên tục phải được rời rạc hóa khi chạy trên máy.",
+      "en": "Sampling converts time-varying signals into sequences. Choose a sampling rate for the bandwidth and use anti-alias filtering. Linear time-invariant systems admit impulse/frequency analysis. Smoothing often adds delay; a prettier curve is not automatically a better control signal."
+    },
+    "example": {
+      "vi": "Tín hiệu sin 7 Hz lấy mẫu 10 Hz có thể bị diễn giải như thành phần 3 Hz. Để tái tạo lý tưởng tín hiệu giới hạn băng 7 Hz cần sampling lớn hơn 14 Hz và vẫn phải xét bộ lọc/thực tế đo.",
+      "en": "A 7 Hz sinusoid sampled at 10 Hz can alias to 3 Hz. Ideal reconstruction of a 7 Hz band-limited signal needs more than 14 Hz sampling, with real filtering constraints still considered."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ sin 7 Hz ở các sampling rate 10, 20 và 100 Hz.",
+        "Thêm moving average và đo độ trễ.",
+        "Ghi rõ giới hạn mô hình và không suy ra mọi nhiễu đều được loại."
+      ],
+      "en": [
+        "Plot a 7 Hz sine at 10, 20 and 100 Hz sampling.",
+        "Apply a moving average and measure delay.",
+        "Document model limits rather than claiming all noise is removed."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "7 Hz lấy mẫu 10 Hz có thể alias không?",
+        "Lọc mượt có thể tăng trễ không?",
+        "Sampling nhanh có tự thay anti-alias filter không?"
+      ],
+      "en": [
+        "Can 7 Hz alias at 10 Hz sampling?",
+        "Can smoothing add delay?",
+        "Does faster sampling automatically replace filtering?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Có.",
+        "Có.",
+        "Không trong mọi hệ thực tế."
+      ],
+      "en": [
+        "Yes.",
+        "Yes.",
+        "Not in every real system."
+      ]
+    },
+    "sources": [
+      "mit-ee"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "embedded",
+    "title": {
+      "vi": "Hệ thống nhúng",
+      "en": "Embedded systems"
+    },
+    "concept": {
+      "vi": "Firmware cần đáp ứng deadline và tương tác ngoại vi với tài nguyên hữu hạn. Tránh vòng chờ dài trong đường xử lý cần phản hồi; dùng state machine và lịch tick để chia nhiệm vụ. Interrupt nên ngắn, phần xử lý nặng chuyển sang vòng chính hoặc task phù hợp. Shared data giữa interrupt và main cần thiết kế đồng bộ, không chỉ thêm volatile. Watchdog phát hiện một số kiểu treo nhưng không thay thế thiết kế trạng thái an toàn.",
+      "en": "Firmware interacts with peripherals under finite resources and timing constraints. State machines and periodic work avoid long blocking waits. Keep interrupt handlers short and synchronize shared data deliberately; volatile alone is not concurrency control. A watchdog is not a substitute for a safe state."
+    },
+    "example": {
+      "vi": "Nhấp nháy LED mỗi 100 ms đồng thời đọc cảm biến mỗi 20 ms nên dựa trên mốc thời gian, không sleep 100 ms rồi mới đọc. Ghi thời gian thực tế để thấy jitter và deadline miss.",
+      "en": "Blinking every 100 ms while sampling every 20 ms calls for scheduled work rather than a blocking 100 ms sleep. Measure actual timing and jitter."
+    },
+    "lab": {
+      "vi": [
+        "Viết state machine IDLE/RUN/FAULT trong mô phỏng.",
+        "Mô phỏng tick và hai nhiệm vụ có chu kỳ khác nhau.",
+        "Chèn một tác vụ quá chậm; phát hiện deadline miss và chuyển trạng thái lỗi."
+      ],
+      "en": [
+        "Simulate IDLE/RUN/FAULT states.",
+        "Schedule two periodic tasks.",
+        "Inject a slow task, detect the missed deadline and enter a fault state."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "ISR có nên chạy xử lý nặng không?",
+        "Volatile có thay lock/atomic không?",
+        "Watchdog có chứng minh mọi hành vi đều an toàn không?"
+      ],
+      "en": [
+        "Should an ISR do heavy processing?",
+        "Does volatile replace synchronization?",
+        "Does a watchdog prove safety?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "mit-ee"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "sensors",
+    "title": {
+      "vi": "Cảm biến và hiệu chuẩn",
+      "en": "Sensors and calibration"
+    },
+    "concept": {
+      "vi": "Đo lường gồm giá trị, đơn vị, timestamp và độ không chắc chắn. Bias là sai lệch có hệ thống; noise làm phép đo phân tán. Hiệu chuẩn liên hệ output cảm biến với chuẩn tham chiếu trong điều kiện xác định. Độ phân giải cao không tự đồng nghĩa độ chính xác cao. Kiểm saturation, mất mẫu và timeout trước khi dùng dữ liệu cho điều khiển.",
+      "en": "Measurements need values, units, timestamps and uncertainty. Bias is systematic error and noise creates spread. Calibration relates output to a reference under stated conditions. Resolution is not accuracy; detect saturation, missing samples and timeouts."
+    },
+    "example": {
+      "vi": "Cảm biến luôn đọc cao hơn chuẩn 0.2 đơn vị thì có thể trừ bias sau khi kiểm trên nhiều điểm. Nếu hệ số khuếch đại cũng sai, một hằng số bù không đủ; cần mô hình tuyến tính hoặc mô hình phù hợp hơn.",
+      "en": "A consistent +0.2 offset may be corrected after checking multiple points. A gain error needs more than one offset correction."
+    },
+    "lab": {
+      "vi": [
+        "Tạo bộ số đo có bias và noise giả lập.",
+        "Ước lượng offset từ tập calibration, kiểm trên tập khác.",
+        "Báo sai số trước/sau và phát hiện một mẫu vượt dải."
+      ],
+      "en": [
+        "Generate biased noisy measurements.",
+        "Estimate offset on calibration data and validate separately.",
+        "Report before/after error and detect an out-of-range sample."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Resolution có đồng nghĩa accuracy không?",
+        "Một điểm calibration có đủ phát hiện gain error không?",
+        "Vì sao cần timestamp?"
+      ],
+      "en": [
+        "Is resolution the same as accuracy?",
+        "Can one point reliably reveal gain error?",
+        "Why keep timestamps?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Để biết tuổi dữ liệu và phối hợp nhiều cảm biến."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "To assess data age and align sensors."
+      ]
+    },
+    "sources": [
+      "mit-ee"
+    ],
+    "code": "raw=[1.2,2.2,3.2]\nprint([round(x-0.2,1) for x in raw])",
+    "code_output": "[1.0, 2.0, 3.0]",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "control",
+    "title": {
+      "vi": "Điều khiển phản hồi và PID",
+      "en": "Feedback control and PID"
+    },
+    "concept": {
+      "vi": "Điều khiển phản hồi đo sai lệch giữa setpoint và trạng thái rồi tác động lên hệ. P phản ứng với sai lệch hiện tại, I tích lũy sai lệch, D liên quan tốc độ thay đổi và nhạy với noise. Tăng gain không luôn cải thiện: có thể gây overshoot, dao động hoặc saturation. Khi actuator bị giới hạn, integral windup cần được xử lý. Đánh giá bằng tracking error, overshoot, settling time và nỗ lực điều khiển.",
+      "en": "Feedback compares a setpoint with measured state. P responds to current error, I accumulates it and D is noise-sensitive rate action. Higher gains can cause overshoot, oscillation or saturation. Address integral windup under actuator limits and measure tracking and control effort."
+    },
+    "example": {
+      "vi": "Hệ mô phỏng x[k+1]=x[k]+0.1u[k], setpoint=1, P gain=2: từ x=0, u=2 và x mới=0.2. Sai lệch giảm còn 0.8. Đây là ví dụ tích phân đơn giản, không phải mô hình đầy đủ của động cơ.",
+      "en": "For x[k+1]=x[k]+0.1u[k] with target one and gain two, x=0 gives u=2 and next x=0.2. This is a simplified integrator, not a complete motor model."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng P controller và vẽ error theo thời gian.",
+        "Thử ba gain và giới hạn u; ghi overshoot/saturation.",
+        "Thêm tích phân có anti-windup và so trạng thái khi thoát saturation."
+      ],
+      "en": [
+        "Simulate proportional control and plot error.",
+        "Compare gains under actuator limits.",
+        "Add integral action with anti-windup and inspect recovery."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Với x=0.2, target=1, Kp=2 thì u là gì?",
+        "Gain lớn có luôn tốt không?",
+        "Vì sao integral có thể windup?"
+      ],
+      "en": [
+        "What is u at x=0.2, target one and Kp two?",
+        "Are larger gains always better?",
+        "Why can integral windup occur?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "1.6.",
+        "Không.",
+        "Sai lệch tiếp tục tích lũy khi actuator đã bão hòa."
+      ],
+      "en": [
+        "1.6.",
+        "No.",
+        "Error can accumulate while the actuator is saturated."
+      ]
+    },
+    "sources": [
+      "underactuated"
+    ],
+    "code": "x=0.0\nfor _ in range(3):\n    u=2*(1-x)\n    x+=0.1*u\nprint(round(x,3))",
+    "code_output": "0.488",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "robot-kinematics",
+    "title": {
+      "vi": "Động học robot",
+      "en": "Robot kinematics"
+    },
+    "concept": {
+      "vi": "Động học liên hệ cấu hình khớp với vị trí/hướng của robot, chưa xét lực gây chuyển động. Forward kinematics tính pose từ joint values; inverse kinematics tìm joint values cho pose mong muốn và có thể có nhiều nghiệm hoặc không có nghiệm. Frame phải nhất quán và góc phải có đơn vị rõ. Jacobian ánh xạ vận tốc khớp sang vận tốc tác vụ cục bộ; gần singularity, một số hướng chuyển động trở nên khó hoặc không thể tạo.",
+      "en": "Kinematics maps joint configurations to pose without modeling forces. Forward kinematics is direct; inverse kinematics may have multiple or no solutions. Keep frames and angle units consistent. A Jacobian relates local velocities, with singularities limiting reachable velocity directions."
+    },
+    "example": {
+      "vi": "Tay máy phẳng hai khâu dài 1 m: x=cos(q1)+cos(q1+q2), y=sin(q1)+sin(q1+q2). q1=0, q2=π/2 cho (1,1). Điểm cách gốc hơn 2 m không nằm trong workspace của mô hình này.",
+      "en": "For two unit links, x=cos(q1)+cos(q1+q2) and y=sin(q1)+sin(q1+q2). Angles zero and π/2 yield (1,1). A point farther than two meters is unreachable."
+    },
+    "lab": {
+      "vi": [
+        "Viết forward kinematics hai khâu và vẽ workspace.",
+        "Kiểm ba cấu hình bằng tay và code.",
+        "Thử target ngoài workspace; báo không có nghiệm thay vì ép một kết quả."
+      ],
+      "en": [
+        "Implement two-link forward kinematics and plot workspace.",
+        "Verify three configurations by hand and code.",
+        "Reject an unreachable target rather than forcing a solution."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "q1=q2=0 cho tọa độ nào?",
+        "Inverse kinematics có luôn duy nhất không?",
+        "Dùng độ trong hàm sin nhận radian có đúng không?"
+      ],
+      "en": [
+        "What pose results from zero angles?",
+        "Is inverse kinematics always unique?",
+        "May degree values be passed directly to a radian sine function?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "(2,0).",
+        "Không.",
+        "Không; cần chuyển đơn vị."
+      ],
+      "en": [
+        "(2,0).",
+        "No.",
+        "No: convert units."
+      ]
+    },
+    "sources": [
+      "robotics"
+    ],
+    "code": "from math import cos,sin,pi\nq1,q2=0,pi/2\nprint(round(cos(q1)+cos(q1+q2),6),round(sin(q1)+sin(q1+q2),6))",
+    "code_output": "1.0 1.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "robot-dynamics",
+    "title": {
+      "vi": "Động lực học robot",
+      "en": "Robot dynamics"
+    },
+    "concept": {
+      "vi": "Động lực học liên hệ lực/torque với gia tốc và chuyển động. Một mô hình khớp có thể gồm quán tính, trọng lực, ma sát và ghép giữa khớp. Dạng tổng quát M(q)q̈+C(q,q̇)q̇+g(q)=τ cho thấy torque cần phụ thuộc trạng thái, không chỉ vị trí đích. Tham số sai và saturation làm phản hồi thực tế khác mô phỏng. Kiểm năng lượng/đơn vị và so với mô hình đơn giản trước khi tin một simulator phức tạp.",
+      "en": "Dynamics connects forces and torques to acceleration. Inertia, gravity, friction and coupling can matter. M(q)q̈+C(q,q̇)q̇+g(q)=τ depends on state, not merely the target position. Check units and simple limits before trusting a complex simulator."
+    },
+    "example": {
+      "vi": "Với rotor quán tính J=0.5 kg·m², bỏ ma sát và trọng lực, torque 1 N·m tạo gia tốc góc 2 rad/s². Nếu thêm torque cản 0.25 N·m thì gia tốc còn 1.5 rad/s².",
+      "en": "A rotor with J=0.5 under 1 N·m accelerates at 2 rad/s² when other terms vanish. A 0.25 N·m opposing torque reduces it to 1.5 rad/s²."
+    },
+    "lab": {
+      "vi": [
+        "Tích phân chuyển động một khớp trong mô phỏng.",
+        "So mô hình không ma sát với có ma sát.",
+        "Kiểm đơn vị, năng lượng và ảnh hưởng time step."
+      ],
+      "en": [
+        "Integrate a simulated single joint.",
+        "Compare frictionless and frictional models.",
+        "Check units, energy and time-step effects."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Tăng quán tính gấp đôi với cùng torque thì gia tốc ra sao?",
+        "Động học có xét torque không?",
+        "Mô phỏng đẹp có chứng minh mô hình đúng không?"
+      ],
+      "en": [
+        "How does doubling inertia affect acceleration at fixed torque?",
+        "Does kinematics model torque?",
+        "Does a smooth simulation prove correctness?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Giảm một nửa trong mô hình đơn giản.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "It halves in the simplified model.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "underactuated"
+    ],
+    "code": "J,tau,drag=0.5,1,0.25\nprint((tau-drag)/J)",
+    "code_output": "1.5",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "mobile-robots",
+    "title": {
+      "vi": "Robot di động và odometry",
+      "en": "Mobile robots and odometry"
+    },
+    "concept": {
+      "vi": "Robot differential-drive suy chuyển động thân từ vận tốc hai bánh. Với bán kính r và khoảng cách bánh L, v=r(ωR+ωL)/2 và ω=r(ωR−ωL)/L. Tích phân odometry cần timestamp và frame nhất quán. Trượt bánh hoặc sai bán kính làm sai số tích lũy; odometry không phải ground truth. Kiểm chiều quay, dấu và đơn vị trước khi kết hợp cảm biến.",
+      "en": "For a differential drive, v=r(ωR+ωL)/2 and angular rate is r(ωR−ωL)/L. Integrate with consistent frames and timestamps. Wheel slip and calibration errors accumulate, so odometry is not ground truth. Verify signs and units first."
+    },
+    "example": {
+      "vi": "r=0.05 m, L=0.3 m, hai bánh cùng 4 rad/s cho v=0.2 m/s và ω=0. Nếu phải=5, trái=3 thì v vẫn 0.2 m/s nhưng ω≈0.333 rad/s.",
+      "en": "With r=0.05, L=0.3 and both wheels at 4 rad/s, speed is 0.2 m/s with no turn. Right five and left three keep speed 0.2 but give angular rate about 0.333 rad/s."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng đi thẳng và quay tại chỗ.",
+        "Thêm sai số bán kính bánh và vẽ drift.",
+        "So quỹ đạo dự đoán với ground truth mô phỏng, không dùng robot thật khi chưa có stop."
+      ],
+      "en": [
+        "Simulate straight motion and in-place turns.",
+        "Introduce wheel-radius error and plot drift.",
+        "Compare with simulated ground truth before any physical test."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Hai bánh cùng vận tốc thì ω bao nhiêu?",
+        "Odometry có drift không?",
+        "L phải có đơn vị gì trong công thức SI?"
+      ],
+      "en": [
+        "What is angular rate for equal wheel speeds?",
+        "Can odometry drift?",
+        "What SI unit should L use?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "0.",
+        "Có.",
+        "Mét."
+      ],
+      "en": [
+        "Zero.",
+        "Yes.",
+        "Meters."
+      ]
+    },
+    "sources": [
+      "robotics"
+    ],
+    "code": "r,L,wr,wl=0.05,0.3,5,3\nprint(round(r*(wr+wl)/2,3),round(r*(wr-wl)/L,3))",
+    "code_output": "0.2 0.333",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "state-estimation",
+    "title": {
+      "vi": "Ước lượng trạng thái",
+      "en": "State estimation"
+    },
+    "concept": {
+      "vi": "Trạng thái robot thường không được đo trực tiếp hoàn toàn. Bộ ước lượng kết hợp mô hình dự đoán với phép đo và độ không chắc chắn. Bias, covariance và giả định noise cần được ghi rõ. Một phép đo chính xác nhưng quá cũ có thể gây sai khi ghép với dữ liệu mới. Ước lượng tốt không có nghĩa ground truth; phải theo dõi residual và thử các tình huống model mismatch.",
+      "en": "Robot state is rarely fully observable directly. Estimation combines predictions, measurements and uncertainty. Document bias and noise assumptions, align timestamps and inspect residuals. An estimate is not ground truth, especially under model mismatch."
+    },
+    "example": {
+      "vi": "Hai ước lượng độc lập x1=10 với variance 4 và x2=12 với variance 1. Trọng số theo inverse variance cho x=(10/4+12)/(1/4+1)=11.6. Cách này dựa trên giả định phù hợp, không áp dụng mù quáng cho hai cảm biến có cùng bias.",
+      "en": "Independent estimates ten with variance four and twelve with variance one combine to 11.6 using inverse-variance weights. Shared bias violates the independence assumptions."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng hai cảm biến có mức noise khác nhau.",
+        "So trung bình thường với trọng số inverse variance.",
+        "Thêm bias chung và giải thích vì sao kết quả tự tin nhưng vẫn sai."
+      ],
+      "en": [
+        "Simulate sensors with unequal noise.",
+        "Compare equal and inverse-variance weighting.",
+        "Add shared bias and explain overconfidence."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Kết quả ví dụ là gì?",
+        "Covariance có giống bias không?",
+        "Hai nguồn cùng lỗi có luôn cải thiện khi ghép không?"
+      ],
+      "en": [
+        "What is the example estimate?",
+        "Is covariance the same as bias?",
+        "Does combining correlated failures always help?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "11.6.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "11.6.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "underactuated"
+    ],
+    "code": "print((10/4+12/1)/(1/4+1/1))",
+    "code_output": "11.6",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "ros",
+    "title": {
+      "vi": "ROS 2 và tích hợp robot",
+      "en": "ROS 2 integration"
+    },
+    "concept": {
+      "vi": "ROS 2 tổ chức hệ thành node giao tiếp qua topic, service và action. Topic phù hợp luồng dữ liệu, service cho request/response ngắn, action cho tác vụ dài có feedback/cancel. Frame và timestamp là hợp đồng chung; message có số đúng nhưng frame sai vẫn gây lỗi hệ thống. Dùng ROS 2 Lyrical Luth làm mốc stable của học liệu này; đọc hướng dẫn chính thức theo đúng distribution thay vì trộn Rolling với bản đang cài.",
+      "en": "ROS 2 uses nodes, topics, services and actions. Topics carry streams, services handle short requests, and actions support long tasks with feedback/cancellation. Frames and timestamps are shared contracts. This unit targets stable ROS 2 Lyrical Luth rather than mixing distribution-specific instructions."
+    },
+    "example": {
+      "vi": "Camera liên tục publish image qua topic. Yêu cầu lấy trạng thái cấu hình có thể dùng service. Lệnh di chuyển tới goal kéo dài nhiều giây nên dùng action để theo dõi tiến độ và hủy khi cần.",
+      "en": "A camera stream fits a topic, a short configuration query a service, and navigation to a goal an action with feedback and cancellation."
+    },
+    "lab": {
+      "vi": [
+        "Đọc tutorial Lyrical và tạo publisher/subscriber trong môi trường riêng.",
+        "Ghi frame_id/timestamp và thử message sai frame trong mô phỏng.",
+        "Thiết kế action có cancel cho một tác vụ giả lập."
+      ],
+      "en": [
+        "Follow Lyrical publisher/subscriber tutorials in an isolated setup.",
+        "Record frame/timestamps and simulate a mismatch.",
+        "Design a cancellable mock action."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Tác vụ dài cần cancel nên chọn gì?",
+        "Có nên trộn lệnh từ distribution khác không?",
+        "Message đúng số nhưng sai frame có đáng tin không?"
+      ],
+      "en": [
+        "What suits a long cancellable task?",
+        "Should instructions from different distributions be mixed blindly?",
+        "Is a numerically plausible message with the wrong frame valid?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Action.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "An action.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "ros"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "computer-vision",
+    "title": {
+      "vi": "Thị giác máy tính",
+      "en": "Computer vision"
+    },
+    "concept": {
+      "vi": "Ảnh là phép đo hình học và ánh sáng, không phải bản sao hoàn hảo của thế giới. Camera cần calibration; pixel chỉ biến thành kích thước thật khi có mô hình và độ sâu phù hợp. Tách detection, tracking và estimation để biết mỗi bước tạo thông tin gì. Đánh giá trên điều kiện ánh sáng/góc nhìn khác và xem cả false positive/negative. Không lấy một demo đẹp làm bằng chứng nhận thức luôn đúng.",
+      "en": "An image measures geometry and light. Calibration and depth assumptions are required to turn pixels into physical dimensions. Separate detection, tracking and estimation, and evaluate lighting/viewpoint changes and both false positives and negatives."
+    },
+    "example": {
+      "vi": "Mô hình pinhole u=fX/Z: cùng vật có X=0.1 m, f=500 pixel thì Z=1 m cho u=50 pixel, còn Z=2 m cho 25 pixel. Một kích thước pixel không xác định được khoảng cách nếu chưa biết kích thước thật hoặc thông tin khác.",
+      "en": "With u=fX/Z, X=0.1 and f=500 yield 50 pixels at one meter and 25 at two. Pixel size alone does not determine distance without additional assumptions."
+    },
+    "lab": {
+      "vi": [
+        "Tạo ảnh bàn cờ giả lập và đánh dấu hệ tọa độ.",
+        "Tính hình chiếu của điểm ở ba độ sâu.",
+        "Đánh giá một detector trên hai điều kiện khác nhau và ghi lỗi."
+      ],
+      "en": [
+        "Create a simulated calibration grid and define coordinates.",
+        "Project a point at three depths.",
+        "Evaluate a detector under two conditions and record failures."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Độ sâu tăng gấp đôi thì kích thước ảnh pinhole ra sao?",
+        "Detection có phải tracking không?",
+        "Vì sao cần tập đánh giá khác ánh sáng?"
+      ],
+      "en": [
+        "How does doubling depth change pinhole image size?",
+        "Is detection identical to tracking?",
+        "Why vary evaluation lighting?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Giảm một nửa trong mô hình này.",
+        "Không.",
+        "Để kiểm giới hạn tổng quát hóa."
+      ],
+      "en": [
+        "It halves in this model.",
+        "No.",
+        "To test generalization limits."
+      ]
+    },
+    "sources": [
+      "vision"
+    ],
+    "code": "f,X=500,0.1\nprint(f*X/1,f*X/2)",
+    "code_output": "50.0 25.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "slam",
+    "title": {
+      "vi": "Định vị và lập bản đồ SLAM",
+      "en": "Localization and SLAM"
+    },
+    "concept": {
+      "vi": "SLAM đồng thời ước lượng quỹ đạo và bản đồ từ dữ liệu cảm biến. Khi chưa có mốc tuyệt đối, map và pose có thể chỉ xác định tới một phép biến đổi toàn cục. Data association sai có thể làm hỏng cả nghiệm; loop closure là ràng buộc cần kiểm chứ không phải phép sửa thần kỳ. So quỹ đạo/map với ground truth mô phỏng, báo drift và các đoạn thất bại thay vì chỉ chụp bản đồ nhìn hợp lý.",
+      "en": "SLAM jointly estimates trajectory and map. Without an absolute reference, a global transformation may remain unobservable. Incorrect associations can corrupt the solution; loop closure needs validation. Measure drift and failures against simulated ground truth rather than judging map appearance."
+    },
+    "example": {
+      "vi": "Robot đi vòng kín nhưng odometry kết thúc lệch 0.5 m. Một loop closure đúng giúp phân bố lại sai số. Ghép nhầm hai hành lang giống nhau có thể kéo bản đồ về cấu hình sai dù đường vẽ trông gọn.",
+      "en": "A closed loop with 0.5 m odometry drift may benefit from a correct loop closure. A false match between similar corridors can instead deform the map."
+    },
+    "lab": {
+      "vi": [
+        "Tạo quỹ đạo vòng kín và cảm biến giả lập.",
+        "Thêm noise, đo sai số cuối vòng.",
+        "Thử một loop match sai và giải thích dấu hiệu residual tăng."
+      ],
+      "en": [
+        "Simulate a closed trajectory and measurements.",
+        "Add noise and measure endpoint drift.",
+        "Inject a false match and inspect residuals."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "SLAM cần ước lượng những gì?",
+        "Loop closure có luôn đúng không?",
+        "Bản đồ đẹp có đủ chứng minh đúng không?"
+      ],
+      "en": [
+        "What does SLAM estimate?",
+        "Are loop closures always correct?",
+        "Does a visually neat map prove correctness?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Pose/quỹ đạo và bản đồ.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "Pose/trajectory and map.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "ros"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "motion-planning",
+    "title": {
+      "vi": "Lập kế hoạch chuyển động",
+      "en": "Motion planning"
+    },
+    "concept": {
+      "vi": "Planner tìm đường hoặc quỹ đạo thỏa ràng buộc, không chỉ nối hai điểm. Phân biệt không gian vật lý với configuration space; vật cản cần xét hình dạng robot và khoảng an toàn. Một đường ngắn có thể không khả thi do giới hạn độ cong, tốc độ hoặc torque. Search cần cost và heuristic phù hợp; đường tìm được trên map cũ không chứng minh môi trường hiện tại vẫn trống.",
+      "en": "Planning must respect robot geometry and motion constraints. Configuration space differs from physical space. A short path can violate curvature, speed or torque limits. Search needs a suitable cost/heuristic and must account for changing environments."
+    },
+    "example": {
+      "vi": "Robot hình tròn bán kính 0.2 m không đi qua khe rộng 0.3 m dù điểm tâm có một đường hình học. Có thể inflate vật cản 0.2 m để tìm đường cho tâm robot trong mô hình phẳng đơn giản.",
+      "en": "A radius-0.2 m robot cannot pass a 0.3 m gap even if a point path exists. Obstacle inflation can turn a simple circular-robot problem into center-point planning."
+    },
+    "lab": {
+      "vi": [
+        "Viết tìm đường trên grid bằng BFS hoặc A*.",
+        "Thêm footprint bằng obstacle inflation.",
+        "Kiểm đường có va chạm và thử map thay đổi sau khi lập kế hoạch."
+      ],
+      "en": [
+        "Implement grid search using BFS or A*.",
+        "Add footprint inflation.",
+        "Check collisions and a changed map after planning."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Đường cho một điểm có luôn dùng được cho robot thật không?",
+        "Khe 0.3 m có đủ cho đường kính 0.4 m không?",
+        "Planner có thay bộ theo dõi quỹ đạo không?"
+      ],
+      "en": [
+        "Is a point path always feasible for a robot?",
+        "Does a 0.3 m gap fit a 0.4 m diameter?",
+        "Does planning replace trajectory tracking?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không; cần controller và phản hồi."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No: tracking needs control and feedback."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "underactuated"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "robot-manipulation",
+    "title": {
+      "vi": "Thao tác và grasping",
+      "en": "Robot manipulation"
+    },
+    "concept": {
+      "vi": "Thao tác cần phối hợp hình học, tiếp xúc, lực và điều khiển. Một grasp nhìn hợp lý có thể trượt nếu ma sát hoặc lực kẹp không đủ. Phải kiểm workspace, collision và khả năng tiếp cận trước khi điều khiển tới pose đích. Mô hình friction cone đơn giản cho giới hạn lực tiếp tuyến xấp xỉ μN ở một tiếp xúc Coulomb. Đây là mô hình học tập, không phải chứng nhận độ an toàn của gripper thật.",
+      "en": "Manipulation combines geometry, contact, force and control. A plausible grasp can slip. Check reachability and collision before execution. A simplified Coulomb contact bounds tangential force by μN; real grippers need further validation."
+    },
+    "example": {
+      "vi": "Với μ=0.5 và lực pháp tuyến 10 N, giới hạn lực tiếp tuyến của một tiếp xúc lý tưởng là 5 N. Không được nhân kết quả thành tải nâng cho mọi hình dạng grasp mà bỏ qua số tiếp xúc, trọng tâm và mô hình tiếp xúc.",
+      "en": "At μ=0.5 and normal force 10 N, one ideal contact supports up to 5 N tangential force. This is not a universal lifting rating independent of contact layout or center of mass."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng vật và hai pose grasp khác nhau.",
+        "Kiểm tiếp cận/va chạm và giả định ma sát.",
+        "Báo điều kiện trượt và đề xuất phép đo để kiểm mô hình."
+      ],
+      "en": [
+        "Simulate two grasp poses.",
+        "Check approach collisions and friction assumptions.",
+        "Identify slip conditions and propose a validating measurement."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "μN trong ví dụ là bao nhiêu?",
+        "Grasp pose đẹp có đủ không?",
+        "Tăng lực kẹp vô hạn có hợp lý không?"
+      ],
+      "en": [
+        "What is μN in the example?",
+        "Is a visually good pose sufficient?",
+        "Is unlimited gripping force reasonable?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "5 N.",
+        "Không.",
+        "Không; có giới hạn actuator và nguy cơ làm hỏng vật."
+      ],
+      "en": [
+        "5 N.",
+        "No.",
+        "No: actuators and objects have limits."
+      ]
+    },
+    "sources": [
+      "robotics"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "realtime-systems",
+    "title": {
+      "vi": "Hệ thời gian thực",
+      "en": "Real-time systems"
+    },
+    "concept": {
+      "vi": "Thời gian thực nghĩa là kết quả phải đến trong deadline, không chỉ nhanh trung bình. Cần xác định chu kỳ, worst-case execution time, jitter và tài nguyên dùng chung. Priority inversion có thể làm task ưu tiên cao chờ task thấp giữ lock. Đo thời gian trong điều kiện tải dự kiến và phân biệt soft với hard deadline. Cơ chế scheduling không tự chứng minh deadline nếu giả định thời gian thực thi sai.",
+      "en": "Real-time correctness includes deadlines, not merely average speed. Specify periods, worst-case execution, jitter and shared resources. Priority inversion can delay high-priority work. Scheduling guarantees depend on execution-time assumptions and workload."
+    },
+    "example": {
+      "vi": "Control loop chu kỳ 10 ms nhưng có một task blocking 15 ms thì có thể miss deadline dù trung bình task chỉ 2 ms. Cần xem trường hợp xấu và đường chặn tài nguyên.",
+      "en": "A 15 ms blocking event can break a 10 ms control-loop deadline even if average execution is only 2 ms. Analyze worst cases and blocking."
+    },
+    "lab": {
+      "vi": [
+        "Lập bảng period/WCET/deadline của ba task.",
+        "Mô phỏng lịch có blocking và ghi deadline miss.",
+        "Giảm vùng tới hạn hoặc phân tách task, rồi đo lại."
+      ],
+      "en": [
+        "Tabulate periods, WCET and deadlines for three tasks.",
+        "Simulate blocking and missed deadlines.",
+        "Reduce critical sections or split work, then remeasure."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Average latency có đủ cho hard deadline không?",
+        "Jitter là gì?",
+        "Priority cao có miễn nhiễm blocking không?"
+      ],
+      "en": [
+        "Is average latency enough for a hard deadline?",
+        "What is jitter?",
+        "Can high-priority work still be blocked?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Biến thiên thời điểm thực thi/hoàn thành theo định nghĩa đo.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "Variation in defined execution/completion timing.",
+        "Yes."
+      ]
+    },
+    "sources": [
+      "mit-ee",
+      "ros"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "human-robot",
+    "title": {
+      "vi": "Tương tác người và robot",
+      "en": "Human-robot interaction"
+    },
+    "concept": {
+      "vi": "Robot phải truyền đạt trạng thái và ý định để con người dự đoán hành vi. Phản hồi bằng một đèn nhỏ có thể không đủ trong môi trường ồn hoặc khi người dùng không nhìn trực tiếp. Thiết kế cách bắt đầu, tạm dừng, hủy và báo lỗi rõ ràng. Quan sát usability ở mô phỏng trước, không đặt người gần robot đang thử hành vi chưa kiểm chứng. Sự hài lòng và an toàn là hai kết quả khác nhau, đều cần đánh giá.",
+      "en": "People need clear robot state and intent. A small indicator may fail in noisy or attention-limited settings. Design start, pause, cancel and fault feedback. Evaluate usability in simulation before exposing people to unverified physical behavior. Satisfaction and safety are distinct outcomes."
+    },
+    "example": {
+      "vi": "Tác vụ lấy vật có các trạng thái waiting, planning, moving và fault. Nút Cancel phải có ý nghĩa xác định: ngừng yêu cầu mới, giảm tốc theo cơ chế đã kiểm và báo trạng thái cuối, không chỉ đổi chữ trên màn hình.",
+      "en": "A pick task has waiting, planning, moving and fault states. Cancel needs defined physical and software behavior rather than merely changing a label."
+    },
+    "lab": {
+      "vi": [
+        "Vẽ state diagram với feedback cho từng trạng thái.",
+        "Cho người khác dùng prototype không nối robot thật.",
+        "Ghi chỗ hiểu nhầm và sửa tên/feedback, không suy ra safety từ usability."
+      ],
+      "en": [
+        "Draw states and feedback.",
+        "Test a disconnected prototype with another person.",
+        "Record misunderstandings without treating usability as safety validation."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Feedback có chỉ là màu sắc không?",
+        "Cancel UI có tự làm robot dừng không?",
+        "Usability tốt có chứng minh an toàn không?"
+      ],
+      "en": [
+        "Is feedback only color?",
+        "Does a UI cancel automatically stop hardware?",
+        "Does good usability prove safety?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không; cần chuỗi xử lý thật được kiểm.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "No: verify the actual stopping chain.",
+        "No."
+      ]
+    },
+    "sources": [
+      "wcag",
+      "robotics"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "safety",
+    "title": {
+      "vi": "An toàn thử nghiệm robotics",
+      "en": "Robotics experiment safety"
+    },
+    "concept": {
+      "vi": "Phân tích an toàn bắt đầu từ năng lượng và tình huống gây hại: chuyển động, nguồn điện, vật rơi, kẹt và mất điều khiển. Giảm rủi ro theo thiết kế trước khi dựa vào hướng dẫn người dùng. Mô phỏng, giới hạn tốc độ/lực và vùng thử cô lập giúp kiểm từng bước nhưng không thay chứng nhận chuyên môn. Dừng phần mềm và ngắt năng lượng là hai cơ chế khác nhau. Nội dung này là bài học nhận diện rủi ro, không hướng dẫn đấu nối điện công suất hay chứng nhận máy.",
+      "en": "Identify energy and hazards such as motion, electricity, falling objects and loss of control. Reduce risk by design before relying on instructions. Simulation and bounded, isolated trials help but do not establish certification. A software stop and energy isolation are different mechanisms."
+    },
+    "example": {
+      "vi": "Một lệnh stop gửi qua mạng không đủ nếu mạng mất. Thiết kế thử nghiệm cần trạng thái khi không nhận heartbeat và cơ chế dừng phù hợp được người có chuyên môn kiểm; không nối robot thật chỉ để xem điều gì xảy ra.",
+      "en": "A network stop is insufficient when the network fails. Define missing-heartbeat behavior and have suitable stopping measures reviewed before physical tests."
+    },
+    "lab": {
+      "vi": [
+        "Lập hazard log cho robot giả lập.",
+        "Mô phỏng mất cảm biến, mất lệnh và saturation.",
+        "Ghi điều kiện cho phép chuyển sang thử nghiệm thật và người cần review."
+      ],
+      "en": [
+        "Create a simulated-robot hazard log.",
+        "Inject sensor loss, missing commands and saturation.",
+        "Define review gates before any physical trial."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Stop qua mạng có đủ khi mạng hỏng không?",
+        "Mô phỏng pass có chứng minh hardware an toàn không?",
+        "Có nên bỏ review chuyên môn vì robot nhỏ không?"
+      ],
+      "en": [
+        "Is a network stop sufficient under network failure?",
+        "Does simulation certify hardware safety?",
+        "Should small robots skip professional review?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không; rủi ro phụ thuộc năng lượng và tình huống."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No: risk depends on energy and context."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "ros"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "humanoids",
+    "title": {
+      "vi": "Robot hình người và cân bằng",
+      "en": "Humanoids and balance"
+    },
+    "concept": {
+      "vi": "Robot nhiều chân/khớp có tiếp xúc thay đổi theo thời gian, nên cân bằng không chỉ là giữ một góc bằng 0. Trọng tâm, vùng hỗ trợ, quán tính và khả năng tạo lực tiếp xúc đều quan trọng. Trong mô hình đứng tĩnh đơn giản, hình chiếu trọng tâm cần nằm trong vùng hỗ trợ; chuyển động động lực học cần mô hình và tiêu chí khác. Bắt đầu với con lắc và mô phỏng trước khi nghĩ đến gait trên robot thật.",
+      "en": "Legged robots have changing contacts. Center of mass, support geometry, inertia and contact forces matter. A simple static model uses the center-of-mass projection within the support region; dynamic balance requires additional analysis. Start with pendulum simulations rather than physical gait experiments."
+    },
+    "example": {
+      "vi": "Khối lượng đứng yên giữa hai chân trên mặt phẳng có thể thỏa tiêu chí tĩnh. Nghiêng hoặc tăng tốc thân làm yêu cầu lực thay đổi; ảnh chụp một tư thế không chứng minh robot đi ổn định.",
+      "en": "A still pose between two feet may satisfy a static criterion, but acceleration changes required forces. A snapshot cannot establish stable walking."
+    },
+    "lab": {
+      "vi": [
+        "Mô phỏng con lắc và xác định equilibrium.",
+        "So đứng tĩnh với trạng thái có vận tốc ban đầu.",
+        "Ghi ràng buộc tiếp xúc và thất bại, không triển khai gait lên hardware chưa review."
+      ],
+      "en": [
+        "Simulate a pendulum equilibrium.",
+        "Compare static and nonzero-initial-velocity states.",
+        "Document contact constraints and failures without deploying unreviewed hardware gait."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Tiêu chí tĩnh có đủ cho đi bộ không?",
+        "Pose và stability có giống nhau không?",
+        "Bước thực hành đầu nên là mô phỏng hay robot thật?"
+      ],
+      "en": [
+        "Is a static criterion enough for walking?",
+        "Are pose and stability identical?",
+        "Should initial practice use simulation or hardware?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Mô phỏng."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "Simulation."
+      ]
+    },
+    "sources": [
+      "underactuated",
+      "robotics"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "robot-systems",
+    "title": {
+      "vi": "Tích hợp và kiểm chứng hệ robot",
+      "en": "Robot systems integration"
+    },
+    "concept": {
+      "vi": "Hệ robot có thể thất bại dù từng module riêng lẻ chạy đúng vì sai hợp đồng giữa module. Ghi interface gồm kiểu dữ liệu, đơn vị, frame, timestamp, frequency và hành vi khi thiếu dữ liệu. Integration test cần kiểm latency, restart và dữ liệu lỗi. Dùng log có thể phát lại để tái hiện lỗi; một bản demo trực tiếp không thay bằng chứng có thể lặp lại.",
+      "en": "Correct individual modules can fail when integrated because their contracts disagree. Specify types, units, frames, timestamps, rates and missing-data behavior. Test delays and restarts, and use replayable logs to reproduce failures."
+    },
+    "example": {
+      "vi": "Planner xuất tọa độ map nhưng controller hiểu là base frame. Mỗi số có thể hợp lệ, nhưng robot đi sai hướng. Thêm frame_id và test một phép biến đổi biết trước tại ranh giới module.",
+      "en": "A planner emitting map coordinates can fail against a controller expecting base-frame coordinates. Add explicit frame identifiers and known-transform boundary tests."
+    },
+    "lab": {
+      "vi": [
+        "Lập interface contract của perception/planner/controller.",
+        "Phát lại một log với delay có chủ đích.",
+        "Demo hệ chạy, dependency lỗi và phục hồi trong mô phỏng."
+      ],
+      "en": [
+        "Define perception/planner/controller interfaces.",
+        "Replay a log with deliberate delay.",
+        "Demonstrate normal, failed and recovered simulated behavior."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Unit tests có thay integration test không?",
+        "Frame/đơn vị có thuộc hợp đồng không?",
+        "Vì sao cần log replay?"
+      ],
+      "en": [
+        "Do unit tests replace integration tests?",
+        "Are frames and units part of the contract?",
+        "Why replay logs?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Có.",
+        "Để tái lập dữ liệu và thời điểm gây lỗi."
+      ],
+      "en": [
+        "No.",
+        "Yes.",
+        "To reproduce failure-inducing data and timing."
+      ]
+    },
+    "sources": [
+      "ros",
+      "robotics"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "robot-capstone",
+    "title": {
+      "vi": "Đồ án robot tự hành",
+      "en": "Autonomous robot capstone"
+    },
+    "concept": {
+      "vi": "Đồ án tích hợp phải có phạm vi và thước đo: môi trường, nhiệm vụ, giới hạn chuyển động và điều kiện thất bại. Tạo hệ mô phỏng perception→estimation→planning→control và một baseline đơn giản trước khi thêm AI. Đánh giá nhiều lượt với seed/môi trường ghi rõ; báo cả thất bại, không chỉ video tốt nhất. Bàn giao code, cấu hình, dữ liệu giả lập, báo cáo và cách chạy lại.",
+      "en": "Define environment, mission, motion limits and failures. Build a simulated perception/estimation/planning/control chain with a simple baseline. Evaluate multiple reproducible runs and include failures, then hand over code, configuration and replay instructions."
+    },
+    "example": {
+      "vi": "Nhiệm vụ đi qua ba waypoint trong grid có vật cản: đo tỉ lệ tới đích, số va chạm mô phỏng và độ dài đường. Một lần đến đích không đủ; thay vị trí xuất phát và điều kiện cảm biến để thử giới hạn.",
+      "en": "For three waypoints among obstacles, measure success, simulated collisions and path length across varied starts and sensor conditions. One successful run is insufficient."
+    },
+    "lab": {
+      "vi": [
+        "Viết mission contract và hazard log.",
+        "Tích hợp mô phỏng với baseline, log và ít nhất năm scenario.",
+        "Nộp video kèm code/replay, metric và giới hạn; hardware chỉ làm sau review riêng."
+      ],
+      "en": [
+        "Define mission and hazards.",
+        "Integrate a baseline simulation with logs and five scenarios.",
+        "Submit code/replay, metrics and limitations; review hardware trials separately."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Có nên chỉ nộp video thành công không?",
+        "Một metric duy nhất có đủ không?",
+        "Khi chuyển sang hardware có cần review mới không?"
+      ],
+      "en": [
+        "Should only successful video be submitted?",
+        "Is one metric sufficient?",
+        "Does hardware transition need another review?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Có."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "Yes."
+      ]
+    },
+    "sources": [
+      "robotics",
+      "ros",
+      "underactuated"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "onboarding",
+    "title": {
+      "vi": "Hội nhập nhân sự",
+      "en": "Employee onboarding"
+    },
+    "concept": {
+      "vi": "Onboarding giúp nhân sự hiểu công việc, quyền truy cập và nơi tìm hỗ trợ. Phân biệt đã gửi tài liệu với đã có khả năng làm việc. Mỗi vai trò cần mục tiêu tuần đầu, người hướng dẫn và bằng chứng thực hành. Cấp quyền theo công việc, không dùng chung tài khoản quản trị. Các chính sách thật phải được doanh nghiệp bổ sung và phê duyệt trước khi dùng cho nhân sự.",
+      "en": "Onboarding establishes role expectations, access and support. Sending documents is not the same as enabling work. Assign first-week outcomes, a mentor and practical evidence. Grant role-based access rather than shared admin accounts. The employer must supply and approve actual policies."
+    },
+    "example": {
+      "vi": "Nhân viên hỗ trợ cần đọc ticket và dữ liệu được phép, không cần quyền xuất toàn bộ database. Checklist ghi rõ ai cấp quyền, ai xác nhận và cách thu hồi khi đổi vai trò.",
+      "en": "A support employee may read authorized tickets without exporting the whole database. Track who grants, verifies and revokes access."
+    },
+    "lab": {
+      "vi": [
+        "Viết checklist ngày 1/tuần 1 cho một vai trò.",
+        "Xác định mentor và kênh hỏi đáp.",
+        "Diễn tập một tác vụ và kiểm quyền tối thiểu trên dữ liệu giả."
+      ],
+      "en": [
+        "Create day-one/week-one outcomes.",
+        "Assign a mentor and help channel.",
+        "Rehearse one task using mock data and least privilege."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Đã gửi tài liệu có đồng nghĩa nhân viên làm được việc không?",
+        "Có nên dùng chung admin account không?",
+        "Ai xác nhận chính sách công ty thật?"
+      ],
+      "en": [
+        "Does document delivery prove readiness?",
+        "Should admin accounts be shared?",
+        "Who approves real company policy?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Người được doanh nghiệp phân quyền."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "An authorized company owner."
+      ]
+    },
+    "sources": [
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "corporate-security",
+    "title": {
+      "vi": "Bảo vệ thông tin nơi làm việc",
+      "en": "Workplace information protection"
+    },
+    "concept": {
+      "vi": "Thông tin cần được phân loại theo mức nhạy cảm và mục đích sử dụng. Kiểm người nhận trước khi chia sẻ và dùng kênh được doanh nghiệp cho phép. Mật khẩu/token không được đưa vào ticket hoặc ảnh chụp màn hình. Khi nghi ngờ phishing, xác minh qua kênh độc lập thay vì trả lời ngay đường dẫn trong tin nhắn. Bài học này không thay chính sách bảo mật được công ty phê duyệt.",
+      "en": "Classify information and verify recipients before sharing through approved channels. Keep passwords and tokens out of tickets/screenshots. Verify suspicious messages through an independent channel. This unit does not replace approved company policy."
+    },
+    "example": {
+      "vi": "Một email yêu cầu gửi danh sách khách hàng gấp cần xác minh người gửi và thẩm quyền. Tên hiển thị quen thuộc không đủ; không đính kèm file chỉ vì có chữ khẩn cấp.",
+      "en": "An urgent request for a customer list requires verification of identity and authority. A familiar display name and urgency are not sufficient."
+    },
+    "lab": {
+      "vi": [
+        "Phân loại năm tài liệu giả theo mức nhạy cảm.",
+        "Viết các bước xác minh một yêu cầu bất thường.",
+        "Diễn tập báo sự cố với dữ liệu đã che, không gửi secret thật."
+      ],
+      "en": [
+        "Classify five mock documents.",
+        "Write an unusual-request verification process.",
+        "Practice reporting with redacted mock data."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Có nên tin tên hiển thị email không?",
+        "Token có được chụp vào ticket không?",
+        "Bài mẫu có thay chính sách công ty không?"
+      ],
+      "en": [
+        "Is an email display name sufficient proof?",
+        "Should tokens appear in tickets?",
+        "Does this sample replace company policy?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "owasp"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "leadership",
+    "title": {
+      "vi": "Lãnh đạo và phản hồi",
+      "en": "Leadership and feedback"
+    },
+    "concept": {
+      "vi": "Lãnh đạo rõ ràng liên kết mục tiêu, trách nhiệm và phản hồi. Giao việc cần đầu ra và quyền quyết định, không chỉ thời hạn. Phản hồi hữu ích mô tả tình huống, hành vi quan sát được và tác động, rồi cùng thống nhất hành động tiếp theo. Không suy động cơ của người khác từ một kết quả. Khi có mâu thuẫn, làm rõ dữ kiện và nhu cầu trước khi chọn giải pháp.",
+      "en": "Leadership connects goals, responsibilities and feedback. Delegate outcomes and decision rights, not just deadlines. Describe observed behavior and impact without assuming motives, then agree on a next action. Clarify facts and needs during conflict."
+    },
+    "example": {
+      "vi": "Thay câu em làm việc cẩu thả bằng: báo cáo hôm qua thiếu đơn vị của hai biểu đồ, khiến nhóm không so sánh được; lần tới dùng checklist trước review. Câu sau có thể kiểm tra và thực hiện.",
+      "en": "Replace a personal judgment with observable missing units, their impact and a checklist-based next step. The feedback becomes actionable."
+    },
+    "lab": {
+      "vi": [
+        "Viết một mục tiêu đội nhóm có thước đo.",
+        "Soạn phản hồi dựa trên tình huống giả, tránh phán xét cá nhân.",
+        "Phân vai người quyết định/thực hiện/tham vấn cho một việc."
+      ],
+      "en": [
+        "Write a measurable team goal.",
+        "Draft behavior-based feedback for a scenario.",
+        "Assign decision, execution and consultation roles."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Phản hồi nên nêu hành vi hay suy đoán tính cách?",
+        "Deadline có đủ làm rõ giao việc không?",
+        "Sau phản hồi cần gì?"
+      ],
+      "en": [
+        "Should feedback describe behavior or inferred character?",
+        "Is a deadline enough for delegation?",
+        "What follows feedback?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Hành vi và tác động.",
+        "Không.",
+        "Hành động và cách theo dõi đã thống nhất."
+      ],
+      "en": [
+        "Behavior and impact.",
+        "No.",
+        "An agreed action and follow-up."
+      ]
+    },
+    "sources": [
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "sales",
+    "title": {
+      "vi": "Khám phá nhu cầu và bán hàng",
+      "en": "Customer discovery and sales"
+    },
+    "concept": {
+      "vi": "Bán hàng phù hợp bắt đầu từ vấn đề của khách, không phải danh sách tính năng. Hỏi quy trình hiện tại, chi phí của vấn đề và tiêu chí quyết định. Tách dữ kiện khách đã làm khỏi ý định khách nói sẽ làm. Đề xuất chỉ nên cam kết phạm vi và kết quả có thể chứng minh; ghi rõ giá, giả định và phần không bao gồm. Không tạo khan hiếm hoặc lời hứa lợi ích giả.",
+      "en": "Start with the customer’s problem, current process and decision criteria. Separate observed behavior from stated intentions. Proposals should make supportable commitments and clarify price, assumptions and exclusions. Avoid fabricated scarcity or benefits."
+    },
+    "example": {
+      "vi": "Khách nói cần app có thể muốn học viên học trên điện thoại. Hỏi điều kiện mạng, nội dung, offline và người dùng trước khi quyết định app native hay web responsive.",
+      "en": "A request for an app may really mean phone-based learning. Investigate connectivity, content and offline needs before choosing native or responsive web."
+    },
+    "lab": {
+      "vi": [
+        "Viết năm câu hỏi mở về một vấn đề cụ thể.",
+        "Phân biệt bằng chứng và giả thuyết trong câu trả lời.",
+        "Soạn đề xuất một trang với phạm vi và tiêu chí nghiệm thu."
+      ],
+      "en": [
+        "Write five open-ended problem questions.",
+        "Label evidence versus assumptions.",
+        "Draft a one-page scoped proposal with acceptance criteria."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Tính năng nhiều có luôn giải quyết đúng vấn đề không?",
+        "Lời hứa mua có giống hành vi mua không?",
+        "Đề xuất cần nêu phần loại trừ không?"
+      ],
+      "en": [
+        "Do more features always solve the right problem?",
+        "Is promised purchase equivalent to purchase?",
+        "Should exclusions be stated?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Có."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "Yes."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "data-literacy",
+    "title": {
+      "vi": "Đọc hiểu dữ liệu kinh doanh",
+      "en": "Business data literacy"
+    },
+    "concept": {
+      "vi": "Số liệu cần mẫu số, kỳ đo và định nghĩa nhất quán. Conversion rate bằng số chuyển đổi chia số cơ hội phù hợp, không tự chọn mẫu số có lợi. Tương quan không chứng minh nguyên nhân; thay đổi mùa vụ hoặc phân khúc có thể giải thích chênh lệch. Dashboard nên giúp ra quyết định và chỉ rõ thiếu dữ liệu, không chỉ trang trí bằng biểu đồ.",
+      "en": "Metrics need consistent denominators, windows and definitions. Conversion is conversions divided by eligible opportunities. Correlation is not causation; seasonality and segmentation can explain changes. A dashboard should support decisions and expose missing data."
+    },
+    "example": {
+      "vi": "10 đơn hàng trên 200 lượt tư vấn cho conversion 5%. Nếu tháng sau có 20 đơn trên 1000 lượt thì số đơn tăng nhưng conversion giảm còn 2%. Cần xem cả hai số trước khi kết luận hiệu quả tăng.",
+      "en": "Ten orders from 200 consultations give 5%; twenty from 1000 give 2%. More orders do not necessarily mean a higher conversion rate."
+    },
+    "lab": {
+      "vi": [
+        "Tạo bảng cơ hội/chuyển đổi theo hai phân khúc.",
+        "Tính rate với mẫu số rõ ràng.",
+        "Viết hai giả thuyết khác nhau giải thích thay đổi và dữ liệu cần bổ sung."
+      ],
+      "en": [
+        "Build a two-segment opportunity/conversion table.",
+        "Calculate explicitly defined rates.",
+        "Propose two explanations and the evidence needed."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "20/1000 là bao nhiêu phần trăm?",
+        "Số tuyệt đối tăng có buộc rate tăng không?",
+        "Tương quan có chứng minh nhân quả không?"
+      ],
+      "en": [
+        "What percentage is 20/1000?",
+        "Must a higher count imply a higher rate?",
+        "Does correlation prove causality?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "2%.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "2%.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "print(10/200*100,20/1000*100)",
+    "code_output": "5.0 2.0",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "learning-design",
+    "title": {
+      "vi": "Thiết kế trải nghiệm học tập",
+      "en": "Learning experience design"
+    },
+    "concept": {
+      "vi": "Thiết kế bài học bắt đầu bằng năng lực cần hình thành và bằng chứng đánh giá, rồi mới chọn hoạt động. Mục tiêu hiểu bài quá mơ hồ; thay bằng giải thích, áp dụng hoặc tạo sản phẩm trong điều kiện cụ thể. Ví dụ đã giải giúp người mới thấy cách suy luận, sau đó cần bài tương tự không có lời giải ngay. Điều chỉnh hỗ trợ theo kết quả quan sát được, không chỉ theo thời gian đã xem video.",
+      "en": "Start with the target competence and assessment evidence, then choose activities. Replace vague understanding goals with observable explanation, application or creation. Worked examples show reasoning, followed by independent practice. Adjust support from observed performance rather than watch time."
+    },
+    "example": {
+      "vi": "Mục tiêu tính tốc độ robot từ encoder cần hoạt động đọc đơn vị, ví dụ có lời giải và một bộ số mới để tự tính. Chỉ xem video về encoder không chứng minh đã tính đúng.",
+      "en": "An encoder-speed objective needs unit interpretation, a worked example and an unseen calculation. Watching an encoder video does not demonstrate the skill."
+    },
+    "lab": {
+      "vi": [
+        "Viết một mục tiêu đo được cho môn của anh.",
+        "Ghép ví dụ đã giải, bài tập mới và rubric.",
+        "Thử với một người học và ghi lỗi để chỉnh hỗ trợ."
+      ],
+      "en": [
+        "Write one measurable objective.",
+        "Align an example, unseen task and rubric.",
+        "Observe a learner and revise support from errors."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Bài học nên bắt đầu từ công cụ hay mục tiêu?",
+        "Xem hết video có chứng minh năng lực không?",
+        "Bài tập có cần khớp mục tiêu không?"
+      ],
+      "en": [
+        "Start from tools or objectives?",
+        "Does watch completion prove competence?",
+        "Should tasks align with objectives?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Mục tiêu.",
+        "Không.",
+        "Có."
+      ],
+      "en": [
+        "Objectives.",
+        "No.",
+        "Yes."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "assessment",
+    "title": {
+      "vi": "Đánh giá và phản hồi học tập",
+      "en": "Assessment and feedback"
+    },
+    "concept": {
+      "vi": "Đánh giá cần đo đúng năng lực dự định và có tiêu chí nhất quán. Trắc nghiệm nhớ thuật ngữ không tự đo được khả năng thiết kế hệ thống. Rubric mô tả mức đạt bằng hành vi/bằng chứng, giúp người học biết cách cải thiện. Tự đánh giá có ích cho luyện tập nhưng không thay review độc lập khi kết quả có hệ quả lớn. Phản hồi nên nêu bước sửa tiếp theo thay vì chỉ một con số.",
+      "en": "Assessment should measure the intended competence with consistent criteria. Terminology quizzes do not automatically measure system design. A rubric describes observable performance levels. Self-checks support practice but do not replace independent review for consequential decisions."
+    },
+    "example": {
+      "vi": "Rubric dự án 10 điểm có thể chia correctness 4, test/evidence 3, giải thích 2, tái lập 1. Người học có code chạy nhưng không có test chưa nhận đủ điểm; rubric phải được chia sẻ trước khi làm.",
+      "en": "A ten-point project rubric can allocate four to correctness, three to evidence, two to explanation and one to reproducibility. Share it before the task; working code alone is not full credit."
+    },
+    "lab": {
+      "vi": [
+        "Chọn một năng lực và thiết kế bài đo trực tiếp.",
+        "Viết rubric bốn mức với ví dụ minh họa.",
+        "Hai người chấm một sản phẩm giả và thảo luận chỗ bất đồng."
+      ],
+      "en": [
+        "Choose a competence and a direct task.",
+        "Write a four-level rubric with examples.",
+        "Have two reviewers score a mock artifact and reconcile differences."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Điểm xem video có đo thiết kế hệ thống không?",
+        "Rubric nên công bố trước hay sau?",
+        "Tự tick hoàn thành có phải chứng nhận nghề nghiệp không?"
+      ],
+      "en": [
+        "Does video watch time measure system design?",
+        "When should a rubric be shared?",
+        "Is self-completion a professional certification?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Trước.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "Before.",
+        "No."
+      ]
+    },
+    "sources": [
+      "cs2023"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "english-writing",
+    "title": {
+      "vi": "Viết tiếng Anh học thuật và công việc",
+      "en": "Academic and workplace English writing"
+    },
+    "concept": {
+      "vi": "Một đoạn văn hiệu quả có ý chính, bằng chứng và liên kết logic. Trong email công việc, nêu mục đích và hành động cần người nhận thực hiện sớm. Chọn từ cụ thể, kiểm chủ-vị, thì và tham chiếu đại từ. Không dùng câu phức dài để che ý chưa rõ. Khi trích nguồn, phân biệt ý của mình với ý người khác; dịch không làm mất nghĩa vụ ghi nguồn.",
+      "en": "An effective paragraph has a main claim, evidence and logical links. Put purpose and requested action early in workplace email. Check agreement, tense and pronoun references. Complexity should not hide an unclear idea, and translation does not remove attribution obligations."
+    },
+    "example": {
+      "vi": "Weak: The system is good. Stronger: In our local test, 98 of 100 requests succeeded; the two failures occurred during database restart. Câu thứ hai cụ thể và nêu giới hạn thay vì quảng cáo chung chung.",
+      "en": "Replace “The system is good” with a scoped observation: 98 of 100 local requests succeeded, and two failed during DB restart. The sentence supplies evidence and limits."
+    },
+    "lab": {
+      "vi": [
+        "Viết email 120 từ yêu cầu review một sản phẩm.",
+        "Gạch ý chính, bằng chứng và hành động mong đợi.",
+        "Sửa một bản theo checklist rồi giải thích ba thay đổi."
+      ],
+      "en": [
+        "Write a 120-word review-request email.",
+        "Mark the claim, evidence and requested action.",
+        "Revise using a checklist and explain three edits."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Email công việc nên nêu yêu cầu ở đâu?",
+        "Cụ thể có đồng nghĩa dài hơn không?",
+        "Dịch nguồn có bỏ cần attribution không?"
+      ],
+      "en": [
+        "Where should an email request appear?",
+        "Does specificity require length?",
+        "Does translation remove attribution needs?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Sớm và rõ.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "Early and clearly.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "writing"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "english-speaking",
+    "title": {
+      "vi": "Thuyết trình và giao tiếp tiếng Anh",
+      "en": "English speaking and presentation"
+    },
+    "concept": {
+      "vi": "Thuyết trình có cấu trúc giúp người nghe theo dõi: vấn đề, cách làm, kết quả và bước tiếp theo. Nói chậm ở thuật ngữ mới, giải thích đơn vị và dùng signposting như first, however, therefore đúng quan hệ ý. Tập trả lời câu hỏi bằng việc xác nhận điều đã biết và điều cần kiểm tra. Không bịa số liệu hoặc giả vờ hiểu câu hỏi; có thể yêu cầu diễn đạt lại.",
+      "en": "Structure a presentation around problem, method, results and next steps. Pace unfamiliar terminology and use signposts that match the logic. In questions, distinguish known facts from issues requiring investigation. Ask for clarification instead of inventing an answer."
+    },
+    "example": {
+      "vi": "A two-minute demo: We tested a simulated robot in five maps. It reached the goal in four; the remaining failure occurred in a narrow passage. Next we will inspect footprint handling. Có kết quả lẫn thất bại, không nói robot luôn tự hành được.",
+      "en": "A two-minute demo can report four successes in five simulated maps and a narrow-passage failure, then propose footprint investigation instead of claiming universal autonomy."
+    },
+    "lab": {
+      "vi": [
+        "Thu âm demo hai phút về một dự án.",
+        "Nghe lại và đánh dấu chỗ thiếu bằng chứng hoặc khó hiểu.",
+        "Tập ba câu hỏi phản biện, cho phép trả lời cần kiểm tra thêm."
+      ],
+      "en": [
+        "Record a two-minute project demo.",
+        "Mark unclear or unsupported claims.",
+        "Practice three critical questions, including a bounded unknown."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Không nghe rõ câu hỏi nên làm gì?",
+        "Có nên giấu lượt thử thất bại không?",
+        "Signposting phục vụ điều gì?"
+      ],
+      "en": [
+        "What if a question is unclear?",
+        "Should failed trials be hidden?",
+        "What is signposting for?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Yêu cầu nhắc lại/diễn đạt lại.",
+        "Không.",
+        "Giúp người nghe theo cấu trúc lập luận."
+      ],
+      "en": [
+        "Ask for repetition or clarification.",
+        "No.",
+        "Helping the audience follow the reasoning."
+      ]
+    },
+    "sources": [
+      "writing"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "visual-design",
+    "title": {
+      "vi": "Thiết kế thị giác và hệ thống giao diện",
+      "en": "Visual design and design systems"
+    },
+    "concept": {
+      "vi": "Hệ thống thị giác dùng thứ bậc, khoảng trắng, màu và typography để dẫn mắt tới điều quan trọng. Nhất quán không có nghĩa mọi trang giống nhau; component có thể tái sử dụng trong nhiều bố cục phù hợp tác vụ. Design token giúp thay màu/khoảng cách theo thương hiệu nhưng vẫn giữ quy tắc. Kiểm tương phản, focus và kích thước control; một hình chụp đẹp ở desktop chưa đủ cho giao diện dùng được.",
+      "en": "Hierarchy, spacing, color and typography guide attention. Reusable components can support distinct task-appropriate layouts. Tokens preserve rules while adapting branding. Test contrast, focus and control size; a desktop screenshot is not proof of usability."
+    },
+    "example": {
+      "vi": "Một trang có ba nút cùng màu, cùng cỡ và cùng chữ đậm không cho biết hành động chính. Chọn một primary action, giảm trọng số hành động phụ và kiểm thứ tự đọc trên mobile.",
+      "en": "Three equally prominent buttons obscure priority. Establish one primary action and verify hierarchy on narrow screens."
+    },
+    "lab": {
+      "vi": [
+        "Tạo token màu/khoảng cách và hai component.",
+        "Thiết kế cùng nội dung ở hai bố cục khác nhau.",
+        "Kiểm mobile, bàn phím và tương phản; ghi điểm còn thiếu."
+      ],
+      "en": [
+        "Define color/spacing tokens and two components.",
+        "Design two layouts for the same content.",
+        "Test narrow screens, keyboard behavior and contrast."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Nhất quán có buộc mọi trang giống nhau không?",
+        "Màu thương hiệu có thể bỏ kiểm tương phản không?",
+        "Screenshot có thay kiểm thao tác không?"
+      ],
+      "en": [
+        "Does consistency require identical pages?",
+        "May brand colors skip contrast checks?",
+        "Does a screenshot replace interaction testing?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Không."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "No."
+      ]
+    },
+    "sources": [
+      "wcag",
+      "mdn"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  },
+  {
+    "id": "customer-success",
+    "title": {
+      "vi": "Hỗ trợ và thành công khách hàng",
+      "en": "Customer support and success"
+    },
+    "concept": {
+      "vi": "Hỗ trợ tốt hiểu tác động của vấn đề và giúp khách tiếp tục công việc. Hỏi bước tái hiện, kỳ vọng và thực tế; thu bằng chứng tối thiểu, không yêu cầu secret. Phân biệt workaround với sửa nguyên nhân. Khi escalation, gửi ngữ cảnh và những gì đã thử để tránh bắt khách kể lại. Đóng ticket sau khi có bằng chứng giải quyết theo tiêu chí đã thống nhất.",
+      "en": "Understand impact and restore the customer’s workflow. Request minimal reproducible evidence without secrets. Separate workarounds from root-cause fixes, and hand off context during escalation. Close work using agreed resolution evidence."
+    },
+    "example": {
+      "vi": "Khách không mở được bài học có thể chưa enroll, sai tenant hoặc session hết hạn. Kiểm status/error code và vai trò trước khi yêu cầu cài lại toàn bộ hệ thống.",
+      "en": "A lesson access failure may be enrollment, tenant or session related. Inspect status and role before recommending a reinstall."
+    },
+    "lab": {
+      "vi": [
+        "Viết cây chẩn đoán cho lỗi 401/403/409.",
+        "Soạn phản hồi rõ bước tiếp theo, không đổ lỗi.",
+        "Diễn tập escalation với log đã che thông tin nhạy cảm."
+      ],
+      "en": [
+        "Build a 401/403/409 diagnostic tree.",
+        "Write an actionable response without blame.",
+        "Practice escalation with redacted logs."
+      ]
+    },
+    "questions": {
+      "vi": [
+        "Có cần mật khẩu khách để debug không?",
+        "Workaround có luôn là sửa gốc không?",
+        "Đóng ticket dựa vào điều gì?"
+      ],
+      "en": [
+        "Is the customer password needed for debugging?",
+        "Is a workaround always a root fix?",
+        "What justifies ticket closure?"
+      ]
+    },
+    "answers": {
+      "vi": [
+        "Không.",
+        "Không.",
+        "Bằng chứng đáp ứng tiêu chí giải quyết."
+      ],
+      "en": [
+        "No.",
+        "No.",
+        "Evidence meeting the resolution criteria."
+      ]
+    },
+    "sources": [
+      "swe"
+    ],
+    "code": "",
+    "code_output": "",
+    "content_depth": "compact-learning-unit",
+    "review_status": "editorial-draft",
+    "estimated_hours": 12
+  }
+]

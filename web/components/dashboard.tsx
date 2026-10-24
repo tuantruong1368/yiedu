@@ -15,11 +15,15 @@ import { Header, Logout, ErrorBox, Loading, Empty } from "./shared";
 export default function Dashboard({ template = "" }: { template?: string }) {
   const { t: tr } = useI18n();
 
+  const [templates, setTemplates] = useState<any[]>([]);
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [creating, setCreating] = useState(false),
     [selected, setSelected] = useState(template || "academy");
   useEffect(() => {
+    api("/catalog/templates")
+      .then(setTemplates)
+      .catch((e) => setError(e.message));
     api("/me/dashboard")
       .then(setData)
       .catch(() => (location.href = "/login"));
@@ -36,6 +40,7 @@ export default function Dashboard({ template = "" }: { template?: string }) {
           name: f.get("name"),
           slug: f.get("slug"),
           template_id: selected,
+          include_sample_content: f.get("include_sample_content") === "on",
         }),
       });
       location.href = "/builder/" + w.id;
@@ -188,16 +193,23 @@ export default function Dashboard({ template = "" }: { template?: string }) {
                     value={selected}
                     onChange={(e) => setSelected(e.target.value)}
                   >
-                    <option value="academy">
-                      {tr("Academy · Trung tâm đào tạo")}
-                    </option>
-                    <option value="creator">
-                      {tr("Studio · Giảng viên độc lập")}
-                    </option>
-                    <option value="technology">
-                      {tr("Future Lab · Công nghệ")}
-                    </option>
+                    {templates.map((x) => (
+                      <option key={x.id} value={x.id}>
+                        {x.name} · {x.course_count} {tr("môn", "courses")}
+                      </option>
+                    ))}
                   </select>
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="include_sample_content"
+                      defaultChecked
+                    />
+                    {tr(
+                      "Sao chép bài học và lộ trình mẫu khi xuất bản",
+                      "Copy sample lessons and pathways on publish",
+                    )}
+                  </label>
                 </label>
                 <ErrorBox message={error} />
                 <button className="button full" disabled={creating}>

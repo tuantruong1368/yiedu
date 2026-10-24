@@ -63,6 +63,7 @@ nav:
   - Nghiên cứu: product/research.md
 - Hướng dẫn:
   - Cấu trúc dự án cho developer: guides/project-structure.md
+  - Thư viện template: guides/template-library.md
   - Authoring Studio và SDK: guides/authoring-sdk.md
   - Local setup: guides/local-setup.md
   - Git: guides/git-workflow.md

@@ -142,3 +142,12 @@ Commit `b2ed93f10ee9fcdad9e6791f1bf57af6de8ee13b` bổ sung title tenant không 
 và hoàn thiện hướng dẫn local. [CI cuối](https://github.com/tuantruong1368/yiedu/actions/runs/40064407301)
 đã pass cả product, mobile, compose, database-upgrade; browser có assertion title không chứa YiEdu.
 Bản ghi tài liệu sau commit này không thay đổi code đã được kiểm tra.
+
+## Template library 0.5 — 24/10/2026
+
+Local: Python 3.15.1, Node 26.12.1. `ruff check .`, check_contracts, check_docs,
+`mkdocs build --strict`, Next production build đều qua. Migration 0004/alembic check và
+28 pytest qua với PGlite PostgreSQL protocol (không thay cho PostgreSQL native trong CI).
+3 Playwright qua với Chromium: authoring, owner/learner/export, template preview VI/EN.
+Ví dụ code của 65 module được chạy và đối chiếu expected output; không kiểm chứng toàn bộ
+nội dung chuyên môn hoặc hiệu quả học tập. CI native PostgreSQL được ghi bổ sung sau khi chạy.

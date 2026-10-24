@@ -1,6 +1,6 @@
 # Trạng thái thực tế YiEdu
 
-Cập nhật: bản chạy local 0.4.0. [Authoring/đa ngôn ngữ 0.4](release-0.4.md) mở rộng bản 0.3. [Ma trận chi tiết](release-0.3.md) là nguồn trạng thái triển khai hiện tại.
+Cập nhật: bản chạy local 0.5.0. [Template và học liệu 0.5](release-0.5.md). [Authoring/đa ngôn ngữ 0.4](release-0.4.md) mở rộng bản 0.3. [Ma trận chi tiết](release-0.3.md) là nguồn trạng thái triển khai hiện tại.
 
 ## Đã có code chạy
 

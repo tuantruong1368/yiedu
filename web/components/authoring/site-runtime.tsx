@@ -7,11 +7,15 @@ export default function SiteRuntime({
   courses,
   slug,
   title,
+  courseBase,
+  pageBase,
 }: {
   source: Source;
   courses: any[];
   slug: string;
   title: string;
+  courseBase?: string;
+  pageBase?: string;
 }) {
   const frame = useRef<HTMLIFrameElement>(null),
     [doc, setDoc] = useState(""),
@@ -22,23 +26,36 @@ export default function SiteRuntime({
       sanitizeImport(source.html),
       "text/html",
     );
+    parsed.querySelectorAll("[data-template-link]").forEach((node) => {
+      node.setAttribute(
+        "href",
+        (pageBase || `/t/${slug}/p/`) + node.getAttribute("data-template-link"),
+      );
+    });
     parsed.querySelectorAll('[data-gadget="yiedu.courses"]').forEach((node) => {
-      node.querySelector("[data-courses-placeholder]")?.remove();
+      node
+        .querySelectorAll("[data-courses-placeholder], [data-template-preview]")
+        .forEach((x) => x.remove());
+      const limit = Math.min(
+        100,
+        Math.max(1, Number(node.getAttribute("data-course-limit")) || 100),
+      );
       const grid = document.createElement("div");
       grid.className = "yd-course-grid";
       grid.innerHTML = courses
+        .slice(0, limit)
         .map(
           (c) =>
-            `<a class="yd-course" href="/t/${esc(slug)}/learn?course=${esc(c.id)}"><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p></a>`,
+            `<a class="yd-course" href="${esc(courseBase || `/t/${slug}/learn?course=`)}${esc(c.id)}"><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p></a>`,
         )
         .join("");
-      node.appendChild(grid);
+      (node.querySelector(".wrap") || node).appendChild(grid);
     });
     const safe = sanitizeImport(parsed.body.innerHTML);
     setDoc(
       `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https: data:; media-src https:; style-src 'unsafe-inline'; script-src 'nonce-yiedu-runtime'; font-src https: data:; form-action 'none'; base-uri 'none'"><style>${source.css.replace(/</g, "\\3c ")}</style></head><body>${safe}<script nonce="yiedu-runtime">${runtime}</script></body></html>`,
     );
-  }, [source.html, source.css, courses, slug]);
+  }, [source.html, source.css, courses, slug, courseBase, pageBase]);
   useEffect(() => {
     function receive(e: MessageEvent) {
       if (

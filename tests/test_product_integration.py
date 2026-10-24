@@ -61,7 +61,13 @@ def register(client, name):
 def create_site(client):
     slug = "lab-" + uuid.uuid4().hex[:10]
     response = client.post(
-        "/api/v1/workspaces", json={"name": "Lab School", "slug": slug, "template_id": "academy"}
+        "/api/v1/workspaces",
+        json={
+            "name": "Lab School",
+            "slug": slug,
+            "template_id": "academy",
+            "include_sample_content": False,
+        },
     )
     assert response.status_code == 201, response.text
     workspace = response.json()
@@ -285,5 +291,36 @@ def test_bilingual_site_rich_lesson_and_tenant_isolation(clients):
 
     bundle = zipfile.ZipFile(io.BytesIO(owner.get(base + "/export").content))
     exported = json.loads(bundle.read("snapshot.json"))
-    assert exported["schema_version"] == "0003"
+    assert exported["schema_version"] == "0004"
     assert exported["tables"]["lessons"][0]["document"] == rich
+
+
+def test_template_seed_is_isolated_and_idempotent(clients):
+    owner, learner, _, _ = clients
+    register(owner, "TemplateOwner")
+    register(learner, "TemplateLearner")
+    preview = learner.get("/api/v1/catalog/templates/yirobot")
+    assert preview.status_code == 200
+    assert len(preview.json()["courses"]) == 32
+    assert learner.get("/api/v1/catalog/templates/yirobot/courses/sales").status_code == 404
+    workspace = owner.post(
+        "/api/v1/workspaces",
+        json={
+            "name": "Robot School",
+            "slug": "robot-" + uuid.uuid4().hex[:8],
+            "template_id": "yirobot",
+        },
+    ).json()
+    response = owner.post(f"/api/v1/workspaces/{workspace['id']}/publish")
+    assert response.status_code == 200, response.text
+    tenant = response.json()["tenant"]
+    base = f"/api/v1/runtime/{tenant['id']}"
+    overview = owner.get(base + "/overview").json()
+    assert len(overview["courses"]) == 32
+    assert len(overview["lessons"]) == 128
+    assert len(overview["paths"]) == 9
+    assert tenant["template_seed"]["version"] == "2026.10.1"
+    ids = {x["id"] for x in overview["courses"]}
+    assert owner.post(f"/api/v1/workspaces/{workspace['id']}/publish").status_code == 200
+    assert {x["id"] for x in owner.get(base + "/overview").json()["courses"]} == ids
+    assert learner.get(base + "/overview").status_code == 403

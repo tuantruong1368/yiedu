@@ -29,7 +29,7 @@ from yiedu.product_schemas import LessonWrite
 
 
 def restore(data, db):
-    if data.get("schema_version") not in {"0002", "0003"}:
+    if data.get("schema_version") not in {"0002", "0003", "0004"}:
         raise ValueError("Unsupported snapshot schema")
     if db.scalar(select(Tenant.id).limit(1)) or db.scalar(select(User.id).limit(1)):
         raise ValueError("Destination must be an empty migrated database")

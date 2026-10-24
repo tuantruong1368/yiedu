@@ -56,7 +56,7 @@ test("signed-in template opens studio; bilingual HTML import, pages, events and 
   await page.getByLabel("Chữ thương hiệu / tạo logo").fill("My School");
   await page.getByRole("button", { name: "Thêm trang", exact: false }).click();
   await page.getByLabel("Tiêu đề trang").fill("Giới thiệu");
-  await page.getByLabel("Slug", { exact: true }).fill("about");
+  await page.getByLabel("Slug", { exact: true }).fill("custom-about");
   await page.getByLabel("Menu 1").fill("Giới thiệu");
   await page.getByLabel("Page", { exact: true }).selectOption("home");
   await page.getByLabel("Content language").selectOption("en");

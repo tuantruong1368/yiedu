@@ -545,3 +545,8 @@ Khi đổi runtime/dependency, cập nhật manifest/lock, version marker, Docke
 Trạng thái và giới hạn: [status](../product/status.md), [release 0.3](../product/release-0.3.md).
 Quy trình tham gia: [CONTRIBUTING](https://github.com/tuantruong1368/yiedu/blob/main/CONTRIBUTING.md). Hợp đồng SDK thử nghiệm:
 [developer quickstart](developer-quickstart.md). Lệnh kiểm tra chi tiết: [testing](testing.md).
+
+## Bổ sung 0.5
+
+[Thư viện template](template-library.md) liệt kê chức năng các file nội dung, provisioning,
+migration 0004, API preview và giao diện gallery mới. Đây là nguồn tra cứu cho developer mở rộng mẫu.

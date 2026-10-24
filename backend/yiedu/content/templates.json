@@ -1,0 +1,571 @@
+[
+  {
+    "id": "academy",
+    "name": "Academy",
+    "category": "Trung tâm đào tạo",
+    "category_en": "Training center",
+    "color": "#215d4c",
+    "layout": "academy",
+    "tagline": {
+      "vi": "HỌC CÓ MỤC TIÊU",
+      "en": "LEARN WITH PURPOSE"
+    },
+    "subtitle": "Kiến thức hôm nay. Khả năng ngày mai.",
+    "subtitle_en": "Learn today. Grow tomorrow.",
+    "description": "Website trung tâm với chương trình, lớp học, lộ trình và thực hành mẫu.",
+    "description_en": "A training center website with programs, pathways and practical learning units.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "study-skills",
+      "learning-design",
+      "assessment"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "creator",
+    "name": "Teacher Studio",
+    "category": "Giáo viên",
+    "category_en": "Independent teacher",
+    "color": "#a84a2b",
+    "layout": "teacher",
+    "tagline": {
+      "vi": "DẠY ĐIỀU BẠN GIỎI",
+      "en": "TEACH WHAT YOU KNOW"
+    },
+    "subtitle": "Mỗi bài học là một cuộc gặp gỡ.",
+    "subtitle_en": "Every lesson starts a connection.",
+    "description": "Không gian riêng cho giáo viên, nội dung chuyên môn và học viên của mình.",
+    "description_en": "A personal teaching space for expertise, courses and learner relationships.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "learning-design",
+      "technical-communication",
+      "assessment"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "technology",
+    "name": "Future Lab",
+    "category": "Công nghệ",
+    "category_en": "Technology lab",
+    "color": "#3449a3",
+    "layout": "lab",
+    "tagline": {
+      "vi": "BUILD · LEARN · SHARE",
+      "en": "BUILD · LEARN · SHARE"
+    },
+    "subtitle": "Học bằng cách tạo ra điều mới.",
+    "subtitle_en": "Learn by making something new.",
+    "description": "Phòng lab công nghệ với các bước lập trình, điện tử và robot di động.",
+    "description_en": "A technology lab connecting programming, electronics and mobile robotics.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "python",
+      "circuits",
+      "mobile-robots"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "corporate-onboarding",
+    "name": "People Academy",
+    "category": "Doanh nghiệp",
+    "category_en": "Enterprise",
+    "color": "#1859a4",
+    "layout": "enterprise",
+    "tagline": {
+      "vi": "SẴN SÀNG CHO NGÀY ĐẦU TIÊN",
+      "en": "READY FOR DAY ONE"
+    },
+    "subtitle": "Đồng hành cùng từng bước hội nhập.",
+    "subtitle_en": "Make every first step count.",
+    "description": "Cổng đào tạo hội nhập, thông tin nội bộ và hỗ trợ nhân sự mới.",
+    "description_en": "An onboarding portal for new employees, workplace information and support.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "onboarding",
+      "corporate-security",
+      "technical-communication",
+      "customer-success"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "corporate-sales",
+    "name": "Revenue School",
+    "category": "Doanh nghiệp",
+    "category_en": "Enterprise",
+    "color": "#a34f25",
+    "layout": "sales",
+    "tagline": {
+      "vi": "HIỂU KHÁCH HÀNG TRƯỚC",
+      "en": "UNDERSTAND CUSTOMERS FIRST"
+    },
+    "subtitle": "Bán hàng bằng sự thấu hiểu.",
+    "subtitle_en": "Build trust. Create customer value.",
+    "description": "Học viện bán hàng với khám phá nhu cầu, dữ liệu và chăm sóc khách hàng.",
+    "description_en": "A sales academy for discovery, data literacy and customer success.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "sales",
+      "data-literacy",
+      "technical-communication",
+      "customer-success"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "leadership",
+    "name": "Lead Forward",
+    "category": "Doanh nghiệp",
+    "category_en": "Enterprise",
+    "color": "#523c91",
+    "layout": "enterprise",
+    "tagline": {
+      "vi": "PHÁT TRIỂN CON NGƯỜI",
+      "en": "GROW PEOPLE AND TEAMS"
+    },
+    "subtitle": "Lãnh đạo rõ ràng. Đội ngũ vững vàng.",
+    "subtitle_en": "Clear leadership. Stronger teams.",
+    "description": "Đào tạo quản lý, phản hồi, dự án và thực hành nghề nghiệp.",
+    "description_en": "Management learning covering feedback, projects and professional practice.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "leadership",
+      "project-management",
+      "technical-communication",
+      "professional-practice"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "language-center",
+    "name": "Language House",
+    "category": "Ngoại ngữ",
+    "category_en": "Language center",
+    "color": "#c34b64",
+    "layout": "language",
+    "tagline": {
+      "vi": "TỰ TIN TỪNG CÂU NÓI",
+      "en": "CONFIDENCE, ONE SENTENCE AT A TIME"
+    },
+    "subtitle": "Ngôn ngữ mở ra những kết nối mới.",
+    "subtitle_en": "Language opens new connections.",
+    "description": "Trung tâm ngôn ngữ với viết, thuyết trình và thói quen tự học.",
+    "description_en": "A language center for writing, speaking and independent learning habits.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "study-skills",
+      "english-writing",
+      "english-speaking"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "school-teacher",
+    "name": "Classroom Circle",
+    "category": "Giáo viên",
+    "category_en": "Classroom teacher",
+    "color": "#9c641d",
+    "layout": "teacher",
+    "tagline": {
+      "vi": "MỘT LỚP HỌC GẦN GŨI",
+      "en": "A CLASSROOM THAT CONNECTS"
+    },
+    "subtitle": "Khơi tò mò. Nuôi năng lực.",
+    "subtitle_en": "Spark curiosity. Build capability.",
+    "description": "Website lớp học, mục tiêu, bài tập và phản hồi theo tiêu chí.",
+    "description_en": "A classroom website for objectives, practice and criterion-based feedback.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "study-skills",
+      "learning-design",
+      "assessment"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "coding-bootcamp",
+    "name": "Buildship",
+    "category": "Bootcamp",
+    "category_en": "Bootcamp",
+    "color": "#126c62",
+    "layout": "software",
+    "tagline": {
+      "vi": "CODE THÀNH SẢN PHẨM",
+      "en": "TURN CODE INTO PRODUCTS"
+    },
+    "subtitle": "Từ dòng code đầu đến sản phẩm chạy được.",
+    "subtitle_en": "From your first line to a working product.",
+    "description": "Bootcamp thực hành Python, web, database, API và kiểm thử.",
+    "description_en": "A hands-on bootcamp connecting Python, web, databases, APIs and testing.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "python",
+      "linux-git",
+      "web-foundations",
+      "databases",
+      "api-engineering",
+      "testing"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "yirobot",
+    "name": "Yirobot",
+    "category": "Đại học · Robotics",
+    "category_en": "University · Robotics",
+    "color": "#8055ce",
+    "layout": "robot",
+    "tagline": {
+      "vi": "OPEN ROBOTICS LEARNING",
+      "en": "OPEN ROBOTICS LEARNING"
+    },
+    "subtitle": "Tự học. Tự chế tạo. Tiến xa cùng robot.",
+    "subtitle_en": "Learn. Build. Move robotics forward.",
+    "description": "Lộ trình tham chiếu 8 học kỳ từ nền tảng đến tự hành và hình người; bài học cô đọng, thí nghiệm và đồ án.",
+    "description_en": "An eight-semester reference pathway from fundamentals to autonomy and humanoids, with compact study units and projects.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "study-skills",
+      "python",
+      "calculus",
+      "physics",
+      "linear-algebra",
+      "c-programming",
+      "circuits",
+      "linux-git",
+      "probability",
+      "digital-logic",
+      "mechanics",
+      "signals",
+      "embedded",
+      "sensors",
+      "control",
+      "robot-kinematics",
+      "robot-dynamics",
+      "mobile-robots",
+      "state-estimation",
+      "ros",
+      "computer-vision",
+      "slam",
+      "motion-planning",
+      "robot-manipulation",
+      "machine-learning",
+      "realtime-systems",
+      "human-robot",
+      "safety",
+      "humanoids",
+      "robot-systems",
+      "professional-practice",
+      "robot-capstone"
+    ],
+    "semesters": [
+      [
+        "study-skills",
+        "python",
+        "calculus",
+        "physics"
+      ],
+      [
+        "linear-algebra",
+        "c-programming",
+        "circuits",
+        "linux-git"
+      ],
+      [
+        "probability",
+        "digital-logic",
+        "mechanics",
+        "signals"
+      ],
+      [
+        "embedded",
+        "sensors",
+        "control",
+        "robot-kinematics"
+      ],
+      [
+        "robot-dynamics",
+        "mobile-robots",
+        "state-estimation",
+        "ros"
+      ],
+      [
+        "computer-vision",
+        "slam",
+        "motion-planning",
+        "robot-manipulation"
+      ],
+      [
+        "machine-learning",
+        "realtime-systems",
+        "human-robot",
+        "safety"
+      ],
+      [
+        "humanoids",
+        "robot-systems",
+        "professional-practice",
+        "robot-capstone"
+      ]
+    ],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "software-engineering",
+    "name": "Software Faculty",
+    "category": "Đại học · Phần mềm",
+    "category_en": "University · Software",
+    "color": "#137a78",
+    "layout": "software",
+    "tagline": {
+      "vi": "THIẾT KẾ · XÂY DỰNG · KIỂM CHỨNG",
+      "en": "DESIGN · BUILD · VERIFY"
+    },
+    "subtitle": "Xây nền tảng. Làm chủ hệ thống.",
+    "subtitle_en": "Build foundations. Engineer dependable systems.",
+    "description": "Lộ trình tham chiếu năm 1–4: toán, lập trình, hệ thống, kỹ nghệ phần mềm và đồ án.",
+    "description_en": "A years-one-to-four reference pathway across mathematics, programming, systems, software engineering and capstone work.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "study-skills",
+      "python",
+      "calculus",
+      "technical-communication",
+      "discrete-math",
+      "linear-algebra",
+      "c-programming",
+      "linux-git",
+      "data-structures",
+      "algorithms",
+      "digital-logic",
+      "probability",
+      "databases",
+      "operating-systems",
+      "networks",
+      "web-foundations",
+      "requirements",
+      "software-design",
+      "api-engineering",
+      "testing",
+      "security",
+      "distributed-systems",
+      "devops",
+      "hci",
+      "machine-learning",
+      "data-engineering",
+      "mobile-engineering",
+      "project-management",
+      "software-architecture",
+      "quality-engineering",
+      "professional-practice",
+      "se-capstone"
+    ],
+    "semesters": [
+      [
+        "study-skills",
+        "python",
+        "calculus",
+        "technical-communication"
+      ],
+      [
+        "discrete-math",
+        "linear-algebra",
+        "c-programming",
+        "linux-git"
+      ],
+      [
+        "data-structures",
+        "algorithms",
+        "digital-logic",
+        "probability"
+      ],
+      [
+        "databases",
+        "operating-systems",
+        "networks",
+        "web-foundations"
+      ],
+      [
+        "requirements",
+        "software-design",
+        "api-engineering",
+        "testing"
+      ],
+      [
+        "security",
+        "distributed-systems",
+        "devops",
+        "hci"
+      ],
+      [
+        "machine-learning",
+        "data-engineering",
+        "mobile-engineering",
+        "project-management"
+      ],
+      [
+        "software-architecture",
+        "quality-engineering",
+        "professional-practice",
+        "se-capstone"
+      ]
+    ],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "university-engineering",
+    "name": "Engineering Foundation",
+    "category": "Đại học · STEM",
+    "category_en": "University · STEM",
+    "color": "#243c72",
+    "layout": "university",
+    "tagline": {
+      "vi": "NỀN TẢNG CHO KỸ SƯ",
+      "en": "FOUNDATIONS FOR ENGINEERS"
+    },
+    "subtitle": "Hiểu nguyên lý. Kiểm bằng thực nghiệm.",
+    "subtitle_en": "Understand principles. Verify through experiments.",
+    "description": "Khoa nền tảng với giải tích, đại số, vật lý và điện tử ứng dụng.",
+    "description_en": "An engineering foundation combining calculus, linear algebra, physics and circuits.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "calculus",
+      "linear-algebra",
+      "physics",
+      "circuits"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "data-ai",
+    "name": "Data Observatory",
+    "category": "Dữ liệu & AI",
+    "category_en": "Data & AI",
+    "color": "#305d9a",
+    "layout": "data",
+    "tagline": {
+      "vi": "BIẾN DỮ LIỆU THÀNH HIỂU BIẾT",
+      "en": "FROM DATA TO UNDERSTANDING"
+    },
+    "subtitle": "Học từ dữ liệu. Quyết định có bằng chứng.",
+    "subtitle_en": "Learn from data. Decide with evidence.",
+    "description": "Đào tạo xác suất, pipeline dữ liệu và học máy với thực hành có kiểm chứng.",
+    "description_en": "Probability, data pipelines and machine learning through evidence-based practice.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "probability",
+      "data-engineering",
+      "machine-learning"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  },
+  {
+    "id": "design-school",
+    "name": "Form & Function",
+    "category": "Thiết kế",
+    "category_en": "Design school",
+    "color": "#8b4332",
+    "layout": "design",
+    "tagline": {
+      "vi": "THIẾT KẾ CÓ CHỦ ĐÍCH",
+      "en": "DESIGN WITH INTENT"
+    },
+    "subtitle": "Rõ ý tưởng. Đúng trải nghiệm.",
+    "subtitle_en": "Clear ideas. Thoughtful experiences.",
+    "description": "Không gian thiết kế thị giác, accessibility và dự án giao diện.",
+    "description_en": "A visual design, accessibility and interface-project studio.",
+    "version": "2026.10.1",
+    "module_ids": [
+      "visual-design",
+      "hci",
+      "project-management"
+    ],
+    "semesters": [],
+    "content_depth": "compact-learning-units",
+    "review_status": "editorial-draft",
+    "languages": [
+      "vi",
+      "en"
+    ]
+  }
+]

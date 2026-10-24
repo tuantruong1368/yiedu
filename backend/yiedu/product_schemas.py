@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from yiedu.authoring import validate_lesson_document, validate_site
 from yiedu.schemas import Name, TenantSlug
+from yiedu.template_library import get_template
 
 
 class StrictModel(BaseModel):
@@ -34,7 +35,17 @@ class Register(Credentials):
 class WorkspaceCreate(StrictModel):
     name: Name
     slug: TenantSlug
-    template_id: Literal["academy", "creator", "technology"] = "academy"
+    template_id: str = Field(default="academy", pattern=r"^[a-z][a-z0-9-]{0,99}$")
+    include_sample_content: bool = True
+
+    @field_validator("template_id")
+    @classmethod
+    def template_exists(cls, value):
+        try:
+            get_template(value)
+        except KeyError:
+            raise ValueError("Unknown template") from None
+        return value
 
 
 class WorkspaceUpdate(StrictModel):
@@ -83,6 +94,21 @@ class CourseWrite(StrictModel):
     slug: TenantSlug
     description: str = Field(default="", max_length=10000)
     published: bool = False
+    translations: dict = Field(default_factory=dict)
+
+    @field_validator("translations")
+    @classmethod
+    def translations_valid(cls, value):
+        if set(value) - {"en", "vi"}:
+            raise ValueError("Supported locales: vi, en")
+        for item in value.values():
+            if not isinstance(item, dict) or set(item) - {"title", "description"}:
+                raise ValueError("Invalid course translation")
+            if any(not isinstance(v, str) or len(v) > 10000 for v in item.values()):
+                raise ValueError("Invalid translated course text")
+            if len(item.get("title", "")) > 200:
+                raise ValueError("Translated title too long")
+        return value
 
 
 class LessonWrite(StrictModel):

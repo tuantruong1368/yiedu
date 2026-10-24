@@ -34,3 +34,11 @@ translations mặc định {}; body/document/translation không trả trong over
 Snapshot mới 0003, restore nhận 0002/0003.
 GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
 EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.
+
+## CR-003 — template và nội dung mẫu
+
+| Yêu cầu | Triển khai | Kiểm chứng | Giới hạn |
+|---|---|---|---|
+| 14 template và preview | template_library/template_sites, gallery/preview | test_template_library | 5 trang/mẫu |
+| Nội dung tenant độc lập | template_seed, migration 0004, publish | test_template_seed_is_isolated_and_idempotent | Không tự cập nhật tenant cũ |
+| Robot/Software 8 học kỳ | content/templates.json, modules.json | curriculum/document/code validators | Học phần cô đọng, chưa đủ giáo trình đại học |

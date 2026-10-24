@@ -99,3 +99,10 @@ translations mặc định {}; body/document/translation không trả trong over
 Snapshot mới 0003, restore nhận 0002/0003.
 GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
 EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.
+
+## CR-003: template và nội dung khởi tạo
+
+FR-035: Danh mục theo mục đích sử dụng, website nhiều trang VI/EN, xem trước bài/lộ trình,
+copy nội dung riêng vào tenant lúc xuất bản đầu; republish giữ nội dung khách sửa.
+Robot/Software có bản đồ 8 học kỳ. Học liệu cô đọng phải công bố trạng thái draft và nguồn đọc;
+bộ giáo trình đại học đầy đủ và nghiệm thu chuyên gia vẫn là phần chưa hoàn tất.

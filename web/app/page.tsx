@@ -1,5 +1,5 @@
 import { getT } from "@/lib/i18n/server";
-import TemplateLink from "@/components/template-link";
+import TemplateGallery from "@/components/template-gallery";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -14,31 +14,9 @@ import { Header } from "@/components/shared";
 import { publicApi } from "@/lib/api";
 import SiteView from "@/components/site-view";
 export const dynamic = "force-dynamic";
-const templates = [
-  {
-    id: "academy",
-    name: "Academy",
-    category: "TRUNG TÂM ĐÀO TẠO",
-    color: "#215d4c",
-    text: "Học có mục tiêu.\nTiến xa hơn mỗi ngày.",
-  },
-  {
-    id: "creator",
-    name: "Studio",
-    category: "GIẢNG VIÊN ĐỘC LẬP",
-    color: "#a84a2b",
-    text: "Điều bạn biết.\nGiá trị bạn trao.",
-  },
-  {
-    id: "technology",
-    name: "Future Lab",
-    category: "CÔNG NGHỆ & ROBOTICS",
-    color: "#3449a3",
-    text: "Build. Learn.\nCreate the future.",
-  },
-];
 export default async function Home() {
   const tr = await getT();
+  const templates = (await publicApi("/catalog/templates")) || [];
 
   if (process.env.INSTANCE_MODE === "standalone") {
     const info = await publicApi("/instance");
@@ -180,48 +158,7 @@ export default async function Home() {
               {tr("Mọi nội dung đều có thể chỉnh sửa.")}
             </p>
           </div>
-          <div className="template-grid">
-            {templates.map((t, i) => (
-              <TemplateLink key={t.id} template={t.id}>
-                <div
-                  className="template-preview"
-                  style={{ background: t.color }}
-                >
-                  <div className="mini-nav">
-                    <b>{t.name.toUpperCase()}</b>
-                    <span>{tr("Khóa học Giới thiệu ↗")}</span>
-                  </div>
-                  <div className="mini-title">
-                    {tr(t.text)
-                      .split("\n")
-                      .map((s, j) => (
-                        <span key={j}>
-                          {s}
-                          <br />
-                        </span>
-                      ))}
-                  </div>
-                  <div className="mini-lines">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                  <span className="template-number">0{i + 1}</span>
-                  <div className="preview-hover">
-                    {tr("Dùng mẫu này")}
-                    <ArrowUpRight size={19} />
-                  </div>
-                </div>
-                <div className="template-info">
-                  <div>
-                    <small>{tr(t.category)}</small>
-                    <h3>{t.name}</h3>
-                  </div>
-                  <ArrowUpRight />
-                </div>
-              </TemplateLink>
-            ))}
-          </div>
+          <TemplateGallery templates={templates} />
         </section>
         <section className="closing">
           <span className="eyebrow">

@@ -49,6 +49,8 @@ from yiedu.product_schemas import (
     WorkspaceCreate,
     WorkspaceUpdate,
 )
+from yiedu.template_library import curriculum, get_template, lessons_for
+from yiedu.template_seed import seed_template
 
 router = APIRouter(prefix="/api/v1", tags=["product"])
 RESERVED = {"www", "api", "admin", "auth", "administrator", "marketplace", "developer", "updates"}
@@ -169,6 +171,29 @@ def templates():
     return TEMPLATES
 
 
+@router.get("/catalog/templates/{template_id}")
+def template_preview(template_id: str):
+    try:
+        get_template(template_id)
+        return {
+            "template": next(t for t in TEMPLATES if t["id"] == template_id),
+            "document": initial_page(template_id),
+            "courses": curriculum(template_id),
+        }
+    except KeyError:
+        raise HTTPException(404, "Template not found") from None
+
+
+@router.get("/catalog/templates/{template_id}/courses/{module_id}")
+def template_lessons(template_id: str, module_id: str):
+    try:
+        if module_id not in get_template(template_id)["module_ids"]:
+            raise KeyError(module_id)
+        return lessons_for(module_id)
+    except KeyError:
+        raise HTTPException(404, "Learning unit not found") from None
+
+
 @router.get("/me/dashboard")
 def dashboard(user: UserDep, db: DB):
     memberships = db.execute(
@@ -189,7 +214,9 @@ def create_workspace(payload: WorkspaceCreate, user: UserDep, db: DB):
         raise HTTPException(403, "Bản độc lập chỉ vận hành hệ thống đã nhập")
     check_slug(payload.slug)
     row = Workspace(
-        owner_id=user.id, **payload.model_dump(), data=initial_page(payload.template_id)
+        owner_id=user.id,
+        **payload.model_dump(),
+        data=initial_page(payload.template_id, payload.name),
     )
     db.add(row)
     commit(db)
@@ -223,6 +250,7 @@ def publish_workspace(workspace_id: uuid.UUID, user: UserDep, db: DB):
     check_slug(row.slug)
     WorkspaceUpdate(name=row.name, slug=row.slug, data=row.data, revision=row.revision)
     template = next(t for t in TEMPLATES if t["id"] == row.template_id)
+    creating_tenant = row.tenant_id is None
     if row.tenant_id:
         require_member(db, user, row.tenant_id, ["owner", "admin"])
         tenant = get_tenant(db, row.tenant_id)
@@ -241,6 +269,8 @@ def publish_workspace(workspace_id: uuid.UUID, user: UserDep, db: DB):
             raise HTTPException(409, "Tên miền đã được sử dụng") from None
         db.add(Membership(tenant_id=tenant.id, user_id=user.id, role="owner"))
         row.tenant_id = tenant.id
+    if creating_tenant and row.include_sample_content:
+        seed_template(db, tenant)
     tenant.name = row.name
     tenant.published_page = row.data
     if row.data.get("schema_version") == "2.0":

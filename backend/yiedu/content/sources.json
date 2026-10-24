@@ -1,0 +1,162 @@
+{
+  "cs2023": {
+    "id": "cs2023",
+    "title": "ACM/IEEE-CS/AAAI CS2023",
+    "url": "https://csed.acm.org/knowledge-areas/",
+    "usage": "reading-link-only",
+    "notes": "Curricular reference; not accreditation",
+    "checked_on": "2026-10-24"
+  },
+  "python": {
+    "id": "python",
+    "title": "Python 3.15 Tutorial",
+    "url": "https://docs.python.org/3.15/tutorial/",
+    "usage": "reading-link-only",
+    "notes": "Official language tutorial",
+    "checked_on": "2026-10-24"
+  },
+  "calculus": {
+    "id": "calculus",
+    "title": "OpenStax Calculus Volume 1",
+    "url": "https://openstax.org/details/books/calculus-volume-1",
+    "usage": "reading-link-only",
+    "notes": "Further reading; original publisher terms apply",
+    "checked_on": "2026-10-24"
+  },
+  "robotics": {
+    "id": "robotics",
+    "title": "Modern Robotics — Lynch and Park",
+    "url": "https://modernrobotics.northwestern.edu/nu-gm-book-resource/",
+    "usage": "reading-link-only",
+    "notes": "Publisher/author video index; linked, not reproduced",
+    "checked_on": "2026-10-24"
+  },
+  "underactuated": {
+    "id": "underactuated",
+    "title": "Underactuated Robotics — Russ Tedrake",
+    "url": "https://underactuated.mit.edu/",
+    "usage": "reading-link-only",
+    "notes": "Advanced reading; original author copyright",
+    "checked_on": "2026-10-24"
+  },
+  "mit-ee": {
+    "id": "mit-ee",
+    "title": "MIT OCW 6.01SC",
+    "url": "https://ocw.mit.edu/courses/6-01sc-introduction-to-electrical-engineering-and-computer-science-i-spring-2011/",
+    "usage": "reading-link-only",
+    "notes": "Reference link only; OCW CC BY-NC-SA restrictions apply to copied material",
+    "checked_on": "2026-10-24"
+  },
+  "git": {
+    "id": "git",
+    "title": "Pro Git",
+    "url": "https://git-scm.com/book/en/v2",
+    "usage": "reading-link-only",
+    "notes": "Official book entry",
+    "checked_on": "2026-10-24"
+  },
+  "ostep": {
+    "id": "ostep",
+    "title": "Operating Systems: Three Easy Pieces",
+    "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+    "usage": "reading-link-only",
+    "notes": "Read at original author site",
+    "checked_on": "2026-10-24"
+  },
+  "swe": {
+    "id": "swe",
+    "title": "Software Engineering at Google",
+    "url": "https://abseil.io/resources/swe-book",
+    "usage": "reading-link-only",
+    "notes": "Reference link only; original CC BY-NC-ND text is not copied or translated",
+    "checked_on": "2026-10-24"
+  },
+  "postgres": {
+    "id": "postgres",
+    "title": "PostgreSQL 18 Tutorial",
+    "url": "https://www.postgresql.org/docs/18/tutorial.html",
+    "usage": "reading-link-only",
+    "notes": "Official database tutorial",
+    "checked_on": "2026-10-24"
+  },
+  "mdn": {
+    "id": "mdn",
+    "title": "MDN Web Curriculum",
+    "url": "https://developer.mozilla.org/en-US/curriculum/",
+    "usage": "reading-link-only",
+    "notes": "Official web learning outline",
+    "checked_on": "2026-10-24"
+  },
+  "fastapi": {
+    "id": "fastapi",
+    "title": "FastAPI Tutorial",
+    "url": "https://fastapi.tiangolo.com/tutorial/",
+    "usage": "reading-link-only",
+    "notes": "Official framework tutorial",
+    "checked_on": "2026-10-24"
+  },
+  "owasp": {
+    "id": "owasp",
+    "title": "OWASP Top 10 2025",
+    "url": "https://owasp.org/www-project-top-ten/",
+    "usage": "reading-link-only",
+    "notes": "Awareness resource, not a security certification",
+    "checked_on": "2026-10-24"
+  },
+  "docker": {
+    "id": "docker",
+    "title": "Docker Get Started",
+    "url": "https://docs.docker.com/get-started/",
+    "usage": "reading-link-only",
+    "notes": "Official container tutorials",
+    "checked_on": "2026-10-24"
+  },
+  "ml": {
+    "id": "ml",
+    "title": "Google Machine Learning Crash Course",
+    "url": "https://developers.google.com/machine-learning/crash-course",
+    "usage": "reading-link-only",
+    "notes": "Optional external course",
+    "checked_on": "2026-10-24"
+  },
+  "expo": {
+    "id": "expo",
+    "title": "Expo Tutorial",
+    "url": "https://docs.expo.dev/tutorial/introduction/",
+    "usage": "reading-link-only",
+    "notes": "Official app tutorial",
+    "checked_on": "2026-10-24"
+  },
+  "wcag": {
+    "id": "wcag",
+    "title": "W3C WCAG 2.2",
+    "url": "https://www.w3.org/TR/WCAG22/",
+    "usage": "reading-link-only",
+    "notes": "Official accessibility reference; no conformance claim",
+    "checked_on": "2026-10-24"
+  },
+  "vision": {
+    "id": "vision",
+    "title": "OpenCV Documentation",
+    "url": "https://docs.opencv.org/",
+    "usage": "reading-link-only",
+    "notes": "Official vision documentation",
+    "checked_on": "2026-10-24"
+  },
+  "ros": {
+    "id": "ros",
+    "title": "ROS 2 Lyrical Luth",
+    "url": "https://docs.ros.org/en/lyrical/",
+    "usage": "reading-link-only",
+    "notes": "Stable ROS 2 reference; host installation must match supported platforms",
+    "checked_on": "2026-10-24"
+  },
+  "writing": {
+    "id": "writing",
+    "title": "Purdue OWL — Academic Writing",
+    "url": "https://owl.purdue.edu/owl/general_writing/academic_writing/index.html",
+    "usage": "reading-link-only",
+    "notes": "External writing guidance",
+    "checked_on": "2026-10-24"
+  }
+}

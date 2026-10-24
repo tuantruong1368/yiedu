@@ -19,6 +19,7 @@ class Tenant(Base):
     branding: Mapped[dict] = mapped_column(JSONB, default=dict)
     published_page: Mapped[dict] = mapped_column(JSONB, default=dict)
     template_id: Mapped[str] = mapped_column(String(100), default="academy")
+    template_seed: Mapped[dict] = mapped_column(JSONB, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
@@ -31,6 +32,8 @@ class Course(Base):
     title: Mapped[str] = mapped_column(String(200))
     description: Mapped[str] = mapped_column(sa.Text, default="")
     published: Mapped[bool] = mapped_column(default=False)
+    curriculum_meta: Mapped[dict] = mapped_column(JSONB, default=dict)
+    translations: Mapped[dict] = mapped_column(JSONB, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
@@ -68,6 +71,7 @@ class Workspace(Base):
     slug: Mapped[str] = mapped_column(String(63))
     data: Mapped[dict] = mapped_column(JSONB, default=dict)
     revision: Mapped[int] = mapped_column(default=1)
+    include_sample_content: Mapped[bool] = mapped_column(default=True)
     tenant_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("tenants.id"), nullable=True)
 
 
