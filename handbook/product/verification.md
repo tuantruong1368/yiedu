@@ -276,4 +276,7 @@ Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay co
   để kiểm review/apply. Không gọi API tính phí, không phát sinh giao dịch tiền thật.
 - Bằng chứng browser: `yiedu-brand-hero.png`, `yiedu-brand-mobile.png`, `verified-checkout.png`,
   `platform-template-editor.png`, `platform-ai-studio.png` trong artifact CI `browser-evidence`.
-- CI PostgreSQL 18.6, Docker và PG17→18 sẽ được gắn với commit nguồn sau khi hoàn tất.
+- [CI nguồn `fae6812`](https://github.com/tuantruong1368/yiedu/actions/runs/40123416075): cả 4 job **product, mobile, compose, database-upgrade** thành công.
+  PostgreSQL 18.6 thật: migration upgrade/downgrade/schema check và **62 pytest**; Next production build
+  và **16 Playwright** qua. Docker Compose khởi động sạch, nâng dữ liệu PostgreSQL 17→18 giữ nguyên.
+  Bài kiểm archive/restore chờ danh sách cập nhật trước khi đọc public API để tránh race trên runner chậm.

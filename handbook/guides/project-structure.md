@@ -1,7 +1,7 @@
 # Cấu trúc dự án YiEdu — tài liệu cho developer
 
 Cập nhật 25/10/2026, đối chiếu quản trị/thương mại 0.9, dựa trên commit
-`742f9580750b569b890dcdf94423d55a3bd28525` làm baseline.
+[`fae6812`](https://github.com/tuantruong1368/yiedu/commit/fae6812b30dab92f66fe9b882d75f75b9bd5d185) đã qua CI.
 Danh mục bên dưới bao phủ toàn bộ **286 file được quản lý bằng Git** sau lần cập nhật tài liệu.
 Có 76 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6/0.7/0.8/0.9 cuối tài liệu.
 Các thư mục build/dependency/backup sinh ở máy developer được giải thích riêng ở mục 6.

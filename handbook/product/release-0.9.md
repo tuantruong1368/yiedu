@@ -23,7 +23,8 @@ AI provider thật hoặc triển khai production được thực hiện trong l
 
 ## Bằng chứng
 
-- Test API và browser tại [verification](verification.md); bằng chứng CI sẽ gắn với commit nguồn.
+- [CI nguồn `fae6812`](https://github.com/tuantruong1368/yiedu/actions/runs/40123416075) qua cả 4 job: 62 API tests trên PostgreSQL thật, 16 browser checks,
+  Docker Compose, Expo và nâng dữ liệu PG17→18. Chi tiết tại [verification](verification.md).
 - Không coi mock provider là chứng minh thanh toán sandbox/live thật.
 - Không tự tạo/gán tài khoản quản trị production, không truy cập máy Mac của chủ hệ thống.
 - OpenAI API và tài khoản nhận tiền do người vận hành kết nối sau khi nâng cấp.
