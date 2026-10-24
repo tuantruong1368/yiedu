@@ -135,3 +135,10 @@ CI của commit `9439fe939af823e6c374943ed61ea253f516fcff` đã hoàn tất cả
 Local browser kiểm cả absolute position, width bằng inspector, zoom, menu/page/VI/EN, sandbox events,
 logo tenant và lưu/read lại math/simulation. Chưa mô phỏng mọi pointer drag/resize trên mọi thiết bị.
 Giới hạn sản phẩm tại [release 0.4](release-0.4.md); chưa có checkout/installer/AI provider hoặc native interactive lesson renderer.
+
+### Chốt metadata white-label
+
+Commit `b2ed93f10ee9fcdad9e6791f1bf57af6de8ee13b` bổ sung title tenant không có suffix YiEdu
+và hoàn thiện hướng dẫn local. [CI cuối](https://github.com/tuantruong1368/yiedu/actions/runs/40064407301)
+đã pass cả product, mobile, compose, database-upgrade; browser có assertion title không chứa YiEdu.
+Bản ghi tài liệu sau commit này không thay đổi code đã được kiểm tra.
