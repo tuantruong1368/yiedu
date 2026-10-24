@@ -1,5 +1,8 @@
 # Developer quickstart — manifest contract v0.1
 
+Developer mới của toàn hệ thống: đọc [cấu trúc dự án](project-structure.md) và
+[CONTRIBUTING](https://github.com/tuantruong1368/yiedu/blob/main/CONTRIBUTING.md) trước. Trang này chỉ dành cho contract extension.
+
 Đây là bài thực hành chuẩn bị SDK, không phải marketplace hoặc installer chạy được.
 Cài dependency/editable package theo local setup, kích hoạt `.venv`, chạy từ gốc repo.
 

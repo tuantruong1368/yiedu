@@ -49,3 +49,8 @@ Nếu muốn xem metadata extension, theo [developer quickstart](guides/develope
 
 Sau khi hiểu mục tiêu P0, theo [product local](guides/product-local.md), tạo một tenant bằng tài khoản
 của anh và chạy thử như owner rồi learner. So sánh thực tế với [ma trận 0.3](product/release-0.3.md).
+
+## Developer mới tham gia
+
+Đọc [bản đồ cấu trúc dự án](guides/project-structure.md) để hiểu từng thư mục/file và luồng request.
+Theo [CONTRIBUTING](https://github.com/tuantruong1368/yiedu/blob/main/CONTRIBUTING.md) để chạy local, nhận issue, kiểm tra và gửi PR.

@@ -17,6 +17,11 @@ Xem [ma trận trạng thái](handbook/product/release-0.3.md) trước khi đá
 
 **Đã có dữ liệu từ bản trước?** Đọc [hướng dẫn nâng cấp và giữ dữ liệu](handbook/guides/upgrade-latest.md) trước khi chạy Compose mới.
 
+## Dành cho developer mới
+
+Đọc [cấu trúc dự án và chức năng từng file](handbook/guides/project-structure.md),
+sau đó làm theo [hướng dẫn tham gia phát triển](CONTRIBUTING.md).
+
 ## Chạy bằng Docker — cách gọn nhất
 
 Cần Git, Python 3.12+ (chỉ cho bootstrap) và Docker Desktop đang chạy.

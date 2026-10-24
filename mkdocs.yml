@@ -60,6 +60,7 @@ nav:
   - Truy vết v0.2: product/traceability-v2.md
   - Nghiên cứu: product/research.md
 - Hướng dẫn:
+  - Cấu trúc dự án cho developer: guides/project-structure.md
   - Local setup: guides/local-setup.md
   - Git: guides/git-workflow.md
   - Testing: guides/testing.md
