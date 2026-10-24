@@ -450,6 +450,10 @@ export default function CourseWorkspace({
                   </span>
                 </div>
                 <div className="actions">
+                  <button type="submit" className="button small">
+                    <Save size={15} />
+                    {t("Lưu bài học", "Save lesson")}
+                  </button>
                   <button
                     type="submit"
                     name="advanced"
@@ -457,10 +461,6 @@ export default function CourseWorkspace({
                   >
                     <ArrowUpRight size={15} />
                     {t("Mở Studio toàn màn hình", "Open full-page Studio")}
-                  </button>
-                  <button type="submit" className="button small">
-                    <Save size={15} />
-                    {t("Lưu bài học", "Save lesson")}
                   </button>
                 </div>
               </header>

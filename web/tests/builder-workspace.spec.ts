@@ -167,10 +167,11 @@ test("long course lists keep lesson editing visible and retain course context", 
   await page
     .getByRole("textbox", { name: "Nội dung", exact: true })
     .fill("Updated without scrolling past courses");
-  await page.getByRole("button", { name: "Lưu bài học", exact: true }).click();
+  await page.locator('.lesson-workbench input[name="title"]').press("Enter");
   await expect(
     page.getByRole("status").filter({ hasText: "Đã lưu bài học" }),
   ).toBeVisible();
+  await expect(page).toHaveURL(/administrator\?tab=courses/);
   await page
     .locator(".lesson-browser")
     .getByRole("button", { name: "Thêm bài học", exact: true })
