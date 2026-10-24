@@ -247,3 +247,18 @@ Danh mục developer đối chiếu **252 file/70 thư mục**. Chưa có Docker
 thật, benchmark mọi trình duyệt/mạng hoặc nghiệm thu giáo trình bởi chuyên gia Yoga.
 Kết quả Docker, native PostgreSQL 18.6 và upgrade 17→18 ghi riêng từ CI nguồn cuối.
 
+
+CI nguồn cuối `361a2cedceb19b2e02aebee4a9d84ddfca7b6bad`:
+[run 40110265808](https://github.com/tuantruong1368/yiedu/actions/runs/40110265808)
+đã thành công **cả 4 job**:
+
+- product: PostgreSQL 18.6 native, migration/check/downgrade/upgrade, 47 pytest,
+  Next production build và 11 Playwright tests.
+- mobile: typecheck, Expo dependency check và bundle iOS/Android.
+- compose: build/khởi động stack, API/web health và HTTP tải SVG Yoga trong image standalone.
+- database-upgrade: PostgreSQL 17→18, giữ dữ liệu/UTF-8 và đăng nhập cũ, chạy lại app mới.
+
+Gói export đã kiểm cả file khởi động khai báo trong mobile/package.json, SVG và dữ liệu học.
+Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay code đã kiểm tra.
+
+
