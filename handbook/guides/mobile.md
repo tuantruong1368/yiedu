@@ -36,3 +36,9 @@ npx expo export --platform android --platform ios --output-dir ../.build/mobile
 Bundle thành công không tạo APK/IPA hay chứng minh app chạy trên thiết bị thật.
 Signing, provisioning, app store account và build native cần thiết lập riêng.
 Chưa đăng ký/đẩy app lên store hoặc tạo tài nguyên trả phí.
+
+## Đa ngôn ngữ từ 0.4
+
+Bộ chọn Việt/English lưu locale trong SecureStore. Khi đang trong tenant, app hiển thị tên tenant;
+lesson dùng bản dịch text nếu có. Công cụ tương tác/math rich node hiện render trên web, native giữ
+text/video fallback; chưa có generic native tool host. Xem [authoring SDK](authoring-sdk.md).

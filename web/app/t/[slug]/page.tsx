@@ -9,7 +9,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const data = await publicApi("/sites/" + encodeURIComponent(slug));
   return {
-    title: data?.tenant.name || "Không tìm thấy hệ thống",
+    title: {
+      absolute:
+        data?.tenant.branding?.text ||
+        data?.tenant.name ||
+        "Không tìm thấy hệ thống",
+    },
     description:
       "Khám phá khóa học và lộ trình học tập tại " +
       (data?.tenant.name || "YiEdu"),

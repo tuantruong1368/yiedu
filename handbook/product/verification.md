@@ -124,5 +124,14 @@ Có cảnh báo upstream Starlette về httpx TestClient; chưa ảnh hưởng k
 - Mobile typecheck và bundle Android/iOS pass; chưa thử trên thiết bị thật.
 - Danh mục project-structure đối chiếu đủ 184 file/58 thư mục, gồm SDK và migration mới.
 
-Native PostgreSQL 18.6, Compose, migration round-trip và chuyển database cần xác nhận bằng CI của commit triển khai.
+CI của commit `9439fe939af823e6c374943ed61ea253f516fcff` đã hoàn tất cả bốn job **success**.
+[Workflow 0.4](https://github.com/tuantruong1368/yiedu/actions/runs/40063998726):
+
+- product: PostgreSQL 18.6 native, migration upgrade/check/downgrade/upgrade, 25 pytest tests, Next production build và hai browser journeys pass.
+- mobile: Expo dependency check, TypeScript và Android/iOS bundle pass.
+- compose: image API/web mới build và stack health/API/web smoke pass.
+- database-upgrade: seed dữ liệu 17, dump/restore 18, kiểm dữ liệu và đăng nhập cũ, khởi động app mới pass.
+
+Local browser kiểm cả absolute position, width bằng inspector, zoom, menu/page/VI/EN, sandbox events,
+logo tenant và lưu/read lại math/simulation. Chưa mô phỏng mọi pointer drag/resize trên mọi thiết bị.
 Giới hạn sản phẩm tại [release 0.4](release-0.4.md); chưa có checkout/installer/AI provider hoặc native interactive lesson renderer.

@@ -126,7 +126,8 @@ registerGadget({
 });
 ```
 
-Import module ở entry registry/builder trong lúc build. Muốn có tag/thuộc tính/action mới,
+Import module ở entry registry/builder trong lúc build. Có thể khai `setup(editor)` để đăng ký
+component type/trait chuyên biệt qua API GrapesJS trước khi nạp page. Muốn có tag/thuộc tính/action mới,
 cập nhật schema/allowlist trong `backend/yiedu/authoring.py`, renderer và test tương ứng.
 Không chỉ đổi client để vượt giới hạn API. Gadget hiện dựa trên HTML/style/traits; chưa có npm package
 SDK được phát hành hoặc cài gadget tùy ý từ giao diện tenant.
@@ -186,7 +187,7 @@ git switch main
 git pull --ff-only origin main
 mkdir -p backups
 umask 077
-docker compose exec -T db sh -c 'pg_dump -Fc -U "$POSTGRES_USER" -d "$POSTGRES_DB"' > backups/before-authoring.dump
+docker compose exec -T db sh -c 'pg_dump -Fc -U "$POSTGRES_USER" -d "$POSTGRES_DB"' > "backups/before-authoring-$(date +%Y%m%d-%H%M%S).dump" &&
 docker compose up --build -d
 docker compose ps
 ```

@@ -108,6 +108,7 @@ test("signed-in template opens studio; bilingual HTML import, pages, events and 
     page.getByRole("heading", { name: "Overview.", exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("link", { name: /YiEdu/ })).toHaveCount(0);
+  await expect(page).not.toHaveTitle(/YiEdu/);
   await expect(page.locator(".tenant-brand")).toContainText("My School");
   await page.screenshot({
     path: "../.build/screenshots/admin-english.png",

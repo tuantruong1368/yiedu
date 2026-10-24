@@ -17,7 +17,7 @@ quản trị khóa học/bài học/lộ trình → học viên tham gia/học/g
 thanh toán, AI, upload/media storage, bài kiểm tra, RLS, worker jobs, ký/áp dụng update tự động,
 third-party plugin execution và marketplace mua bán chưa triển khai. Developer portal mới nhận metadata.
 App đóng gói được bundle iOS/Android; chưa thử trên thiết bị thật, ký binary hoặc phát hành store.
-Xem [ma trận trạng thái](handbook/product/release-0.3.md) trước khi đánh giá phạm vi.
+Xem [ma trận trạng thái 0.4](handbook/product/release-0.4.md) trước khi đánh giá phạm vi.
 
 **Đã có dữ liệu từ bản trước?** Đọc [hướng dẫn nâng cấp và giữ dữ liệu](handbook/guides/upgrade-latest.md) trước khi chạy Compose mới.
 
@@ -56,7 +56,7 @@ Với mật khẩu DB có ký tự đặc biệt, cần URL-encode trong DATABAS
 ## Chạy bằng VSCode để học/debug
 
 ```bash
-python3 -m venv .venv
+python3.15 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.lock
 python -m pip install --no-deps -e .
@@ -86,7 +86,7 @@ mkdocs serve --dev-addr 127.0.0.1:8001
 ```
 
 Mở http://127.0.0.1:8001. [Bắt đầu](handbook/start-here.md) → P0–P9 →
-[hướng dẫn chạy sản phẩm](handbook/guides/product-local.md) → [ma trận 0.3](handbook/product/release-0.3.md).
+[hướng dẫn chạy sản phẩm](handbook/guides/product-local.md) → [ma trận 0.4](handbook/product/release-0.4.md).
 
 ## Mobile
 

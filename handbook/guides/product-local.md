@@ -1,4 +1,7 @@
-# Chạy và review sản phẩm 0.3
+# Chạy và review sản phẩm 0.4
+
+Builder, VI/EN và lesson tools mới: [Authoring Studio/SDK](authoring-sdk.md).
+Máy đã chạy bản cũ cần sao lưu và xem mục nâng local trong hướng dẫn này trước khi bật stack mới.
 
 ## Cách khởi động
 
@@ -15,8 +18,9 @@ Nếu muốn sửa code có hot reload, theo cách venv + npm trong README.
 
 ## Kịch bản chủ hệ thống
 
-1. Chọn Academy/Studio/Future Lab. Đăng ký email hoặc đăng nhập, selection được giữ.
-2. Tại dashboard đặt tên, slug và mẫu. Mở builder, kéo/sửa block, lưu nháp, bấm xuất bản.
+1. Chọn Academy/Studio/Future Lab. Guest đăng ký email; user đang login vào builder trực tiếp.
+2. Guest tạo workspace tại dashboard; user đang login có workspace mặc định. Trong builder sửa tên/slug,
+   kéo/sửa gadget, page/menu/logo và hai ngôn ngữ, lưu nháp rồi xuất bản.
 3. Xem `/t/<slug>`, mở `/t/<slug>/administrator` bằng tài khoản owner.
 4. Tạo course, mô tả, chọn xuất bản. Bấm Bài học, thêm tiêu đề/nội dung/URL video HTTPS trực tiếp.
 5. Tạo lộ trình theo thứ tự course; chỉnh sửa lộ trình. Các prerequisite vòng lặp bị từ chối.
@@ -46,5 +50,6 @@ Theo [restore guide](standalone-local.md), không nhập snapshot vào database 
 
 DB unhealthy: xem log DB/credential/port. API lỗi key: thay placeholder trong .env, khởi động lại.
 401: login lại; 403: kiểm membership/role/ghi danh/prerequisite; 409: slug/revision xung đột.
-Video cần URL media trực tiếp HTTPS, không phải URL trang YouTube; chưa có video ingestion.
+Trường Video HTTPS riêng cần URL media trực tiếp; YouTube được chèn bằng công cụ Tiptap trong nội dung.
+Chưa có video ingestion/storage service.
 Đăng nhập Google/Facebook đang disabled; không có callback giả hoặc thanh toán giả.

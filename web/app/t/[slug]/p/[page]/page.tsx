@@ -14,7 +14,12 @@ async function load(params: Props["params"]) {
 export async function generateMetadata({ params }: Props) {
   const { data, page } = await load(params),
     locale = await getLocale();
-  return { title: page?.title[locale] || data?.tenant.name };
+  return {
+    title: {
+      absolute:
+        page?.title[locale] || data?.tenant.branding?.text || data?.tenant.name,
+    },
+  };
 }
 export default async function Page({ params }: Props) {
   const { data, page, slug } = await load(params);
