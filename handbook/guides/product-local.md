@@ -53,3 +53,21 @@ DB unhealthy: xem log DB/credential/port. API lỗi key: thay placeholder trong 
 Trường Video HTTPS riêng cần URL media trực tiếp; YouTube được chèn bằng công cụ Tiptap trong nội dung.
 Chưa có video ingestion/storage service.
 Đăng nhập Google/Facebook đang disabled; không có callback giả hoặc thanh toán giả.
+
+## Migration báo PermissionError pyproject.toml
+
+Image API chạy bằng appuser. COPY giữ mode file từ máy host; config mode 0600 thuộc root
+sẽ không đọc được sau USER appuser. Dockerfile chuẩn hóa quyền đọc/traverse source trong
+/app bằng chmod -R a+rX trước khi chuyển user. Không cần đổi user thành root hoặc sửa DB.
+
+Sau khi pull bản sửa, chạy:
+
+```bash
+git pull --ff-only origin main
+docker compose build --no-cache migrate
+docker compose up -d
+docker compose ps -a
+```
+
+Mong đợi migrate Exited (0), API/web Up. DB đang healthy không cần xóa volume.
+Compose CI đặt pyproject.toml/alembic.ini thành 0600 trước build để tái hiện lỗi host.

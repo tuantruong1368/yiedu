@@ -7,6 +7,9 @@ COPY scripts ./scripts
 COPY web ./web
 COPY alembic.ini compose.yaml compose.pg17.yaml Dockerfile .python-version .node-version .nvmrc ./
 RUN pip install --no-cache-dir --no-deps . && useradd --create-home appuser
+# COPY preserves host file modes (for example 0600 on macOS).
+# Runtime must read Alembic config, source and portable-export assets.
+RUN chmod -R a+rX /app
 USER appuser
 EXPOSE 8000
 CMD ["uvicorn", "yiedu.main:app", "--host", "0.0.0.0", "--port", "8000"]

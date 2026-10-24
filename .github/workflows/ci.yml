@@ -87,6 +87,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7.0.1
       - run: python3 scripts/bootstrap.py
+      - name: Reproduce private host config permissions
+        run: chmod 600 pyproject.toml alembic.ini
       - run: docker compose up --build -d
       - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:8000/health/ready
       - run: curl --retry 15 --retry-delay 2 --retry-all-errors --fail http://localhost:3000/ > /tmp/yiedu-home.html
