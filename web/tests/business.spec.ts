@@ -113,11 +113,13 @@ test("dashboard designs and systems can be archived and restored without losing 
     .click();
   await expect(page.locator(".managed-draft-row")).toHaveCount(1);
   await page.getByRole("button", { name: "Xóa hệ thống", exact: true }).click();
+  await expect(page.locator(".site-card")).toHaveCount(0);
   expect((await page.request.get(`/api/v1/sites/${s.slug}`)).status()).toBe(
     404,
   );
   await page.getByRole("button", { name: "Thùng rác", exact: true }).click();
   await page.getByRole("button", { name: "Khôi phục", exact: true }).click();
+  await expect(page.locator(".site-card")).toHaveCount(0);
   expect((await page.request.get(`/api/v1/sites/${s.slug}`)).status()).toBe(
     200,
   );
