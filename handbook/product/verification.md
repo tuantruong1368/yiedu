@@ -211,3 +211,13 @@ không ghi được dữ liệu. Danh mục developer đối chiếu 236 file/68
 
 Chưa thử mọi trình duyệt, quyền micro trên thiết bị thật hoặc mọi thao tác touch. Không có Docker
 daemon local; bằng chứng native PostgreSQL, Compose, mobile và nâng cấp 17→18 ghi riêng từ CI.
+
+
+CI nguồn cuối `39b7e5c04259483c096f985dd60509064dff0f83`:
+[run 40090824799](https://github.com/tuantruong1368/yiedu/actions/runs/40090824799)
+đã thành công **cả 4 job**: product (PostgreSQL 18.6 native, migration/check/downgrade/upgrade,
+44 pytest, Next production build và 7 Playwright journeys), mobile (typecheck, Expo iOS/Android
+bundles), compose (build/ready/homepage), database-upgrade (PostgreSQL 17→18 giữ dữ liệu và
+chạy lại app). Luồng danh sách dài còn kiểm phím Enter lưu bài mà không chuyển sang Studio.
+Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay code đã kiểm tra.
+
