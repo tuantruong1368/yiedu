@@ -539,6 +539,15 @@
       "previous": "^7.0.2",
       "latest_at_check": "7.0.2",
       "selected": "7.0.2"
+    },
+    {
+      "group": "web",
+      "name": "grapesjs-parser-postcss",
+      "previous": null,
+      "latest_at_check": "1.0.3",
+      "selected": "1.0.3",
+      "source": "https://github.com/GrapesJS/parser-postcss",
+      "reason": "Preserve CSS variables and shorthand during authoring/import"
     }
   ]
 }

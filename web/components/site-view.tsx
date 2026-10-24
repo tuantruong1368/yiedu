@@ -64,6 +64,8 @@ export default function SiteView({
       {isNew ? (
         page ? (
           <SiteRuntime
+            key={`${tenant.id}:${page.id}:${locale}`}
+            frameUrl={`/api/v1/sites/${encodeURIComponent(tenant.slug)}/render?page=${encodeURIComponent(pageSlug)}&locale=${locale}`}
             source={page[locale].html ? page[locale] : page[doc.default_locale]}
             pages={doc.pages}
             courses={data.courses.map((c: any) => ({

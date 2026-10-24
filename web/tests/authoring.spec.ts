@@ -47,11 +47,19 @@ test("signed-in template opens studio; bilingual HTML import, pages, events and 
   await expect(
     page.frameLocator(".gjs-frame").getByRole("button", { name: "Try event" }),
   ).toHaveCSS("width", "260px");
+  const beforeZoom = Number(
+    (await page.locator(".studio-toolbar>span").textContent())!.replace(
+      "%",
+      "",
+    ),
+  );
   await page
     .locator(".studio-toolbar")
     .getByRole("button", { name: "+", exact: true })
     .click();
-  await expect(page.getByText("110%", { exact: true })).toBeVisible();
+  await expect(page.locator(".studio-toolbar>span")).toHaveText(
+    `${Math.min(200, beforeZoom + 10)}%`,
+  );
   await page.getByRole("button", { name: "Trang/Menu/Logo" }).click();
   await page.getByLabel("Chữ thương hiệu / tạo logo").fill("My School");
   await page.getByRole("button", { name: "Thêm trang", exact: false }).click();

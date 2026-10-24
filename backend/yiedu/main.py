@@ -26,7 +26,7 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="YiEdu API", version="0.6.0", lifespan=lifespan)
+app = FastAPI(title="YiEdu API", version="0.7.0", lifespan=lifespan)
 
 
 app.include_router(product_router)

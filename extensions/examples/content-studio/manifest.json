@@ -1,19 +1,58 @@
 {
-  "schema_version":"0.1",
-  "package_id":"example.content-studio",
-  "kind":"component",
-  "version":"1.0.0",
-  "display_name":"Portable content studio tools",
-  "core":{"min_inclusive":"0.6.0","max_exclusive":"0.7.0"},
-  "extension_api":{"min_inclusive":"0.1.0","max_exclusive":"0.2.0"},
-  "surfaces":["admin","web"],
-  "capabilities":["courses:read","courses:write"],
-  "dependencies":[],
-  "portable":true,
-  "data_schema_version":"1.0.0",
-  "editor_contributions":[
-    {"id":"slides","slot":"studio-tool","api_version":"1.0.0","export_name":"registerSlides","license":"free","props_schema":{"type":"object"}},
-    {"id":"video","slot":"studio-tool","api_version":"1.0.0","export_name":"registerVideo","license":"free","props_schema":{"type":"object"}},
-    {"id":"simulation","slot":"studio-tool","api_version":"1.0.0","export_name":"registerSimulation","license":"free","props_schema":{"type":"object"}}
+  "schema_version": "0.1",
+  "package_id": "example.content-studio",
+  "kind": "component",
+  "version": "1.0.0",
+  "display_name": "Portable content studio tools",
+  "core": {
+    "min_inclusive": "0.6.0",
+    "max_exclusive": "0.8.0"
+  },
+  "extension_api": {
+    "min_inclusive": "0.1.0",
+    "max_exclusive": "0.2.0"
+  },
+  "surfaces": [
+    "admin",
+    "web"
+  ],
+  "capabilities": [
+    "courses:read",
+    "courses:write"
+  ],
+  "dependencies": [],
+  "portable": true,
+  "data_schema_version": "1.0.0",
+  "editor_contributions": [
+    {
+      "id": "slides",
+      "slot": "studio-tool",
+      "api_version": "1.0.0",
+      "export_name": "registerSlides",
+      "license": "free",
+      "props_schema": {
+        "type": "object"
+      }
+    },
+    {
+      "id": "video",
+      "slot": "studio-tool",
+      "api_version": "1.0.0",
+      "export_name": "registerVideo",
+      "license": "free",
+      "props_schema": {
+        "type": "object"
+      }
+    },
+    {
+      "id": "simulation",
+      "slot": "studio-tool",
+      "api_version": "1.0.0",
+      "export_name": "registerSimulation",
+      "license": "free",
+      "props_schema": {
+        "type": "object"
+      }
+    }
   ]
 }

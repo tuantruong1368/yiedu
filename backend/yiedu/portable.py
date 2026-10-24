@@ -115,7 +115,7 @@ def create_export(db, tenant):
         raise HTTPException(413, "Gói vượt giới hạn exporter local")
     manifest = {
         "tenant_id": str(tenant.id),
-        "core_version": "0.6.0",
+        "core_version": "0.7.0",
         "schema_version": "0005",
         "files": {name: hashlib.sha256(body).hexdigest() for name, body in files.items()},
         "signed": False,

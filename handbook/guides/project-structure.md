@@ -1,9 +1,9 @@
 # Cấu trúc dự án YiEdu — tài liệu cho developer
 
-Cập nhật 24/10/2026, đối chiếu mã nguồn sau nâng cấp công nghệ, dựa trên commit
-`b906645f3c6fbda261492bb63b7ffe5713820bf3` làm baseline, bổ sung Content Studio 0.6.
-Danh mục bên dưới bao phủ toàn bộ **226 file được quản lý bằng Git** sau lần cập nhật tài liệu.
-Có 68 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6 cuối tài liệu.
+Cập nhật 24/10/2026, đối chiếu mã nguồn Website Studio 0.7, dựa trên commit
+`34fae91f4e85657b010950869fe40e0784e488c8` làm baseline.
+Danh mục bên dưới bao phủ toàn bộ **236 file được quản lý bằng Git** sau lần cập nhật tài liệu.
+Có 68 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6/0.7 cuối tài liệu.
 Các thư mục build/dependency/backup sinh ở máy developer được giải thích riêng ở mục 6.
 
 ## 1. Đọc tài liệu này để làm gì?
@@ -591,3 +591,24 @@ và [ma trận 0.6](../product/release-0.6.md). Các thư mục mới và file d
 Các thư mục `web/lib/studio/` và `web/components/studio/` là module TypeScript/React, không phải
 service riêng. `extensions/examples/content-studio/` là metadata SDK; dữ liệu dự án riêng tenant
 nằm trong PostgreSQL, không tự tạo folder source cho từng khách. Route Studio nằm dưới quản trị tenant.
+
+## Bổ sung Website Studio 0.7 — danh mục từng file mới
+
+Đọc [Website Studio](website-studio.md), [CR-005](../product/changes/CR-005-authoring-workspaces.md)
+và [ma trận 0.7](../product/release-0.7.md). Không thêm thư mục hoặc migration trong bản này.
+
+| File | Chức năng |
+|---|---|
+| `backend/yiedu/site_render.py` | Render HTML/CSS đã validate, resolve menu/page, điền khóa học công khai và tạo CSP/runtime nonce. |
+| `handbook/guides/website-studio.md` | Hướng dẫn Studio, chỉnh bài học, render lifecycle, PostCSS và phát triển gadget. |
+| `handbook/product/changes/CR-005-authoring-workspaces.md` | Yêu cầu, tiêu chí nghiệm thu và kiểm thử của ba vấn đề 0.7. |
+| `handbook/product/release-0.7.md` | Ma trận chức năng, tương thích dữ liệu và giới hạn bản 0.7. |
+| `tests/test_site_render.py` | Kiểm HTML/link/course escaping, runtime nonce và fallback page. |
+| `web/components/authoring/gadget-library.tsx` | Thư viện tìm kiếm/lọc/yêu thích và kéo gadget qua iframe theo tọa độ canvas. |
+| `web/components/authoring/gadget-preview.tsx` | Hình SVG minh họa chính xác cho từng gadget, không phụ thuộc ảnh ngoài. |
+| `web/components/course-workspace.tsx` | Course/lesson workspace, dialog khóa học, editor cạnh danh sách và giữ ngữ cảnh bằng URL. |
+| `web/tests/builder-workspace.spec.ts` | Kiểm pointer drag, theme CSS qua lưu/xuất bản và chỉnh bài trong danh sách dài. |
+| `web/tests/render-regression.spec.ts` | Kiểm page/menu, vào/ra quản trị, history, VI/EN và reload website công khai. |
+
+`builder.tsx` tiếp tục là entry point GrapesJS; `SiteRuntime` phục vụ iframe preview và render endpoint.
+`CourseWorkspace` được gọi từ `AdminScreen`; editor full page vẫn dùng Content Studio và schema 0.6.

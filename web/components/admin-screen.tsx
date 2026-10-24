@@ -2,7 +2,8 @@
 import { useI18n } from "./locale-provider";
 import { studioURL } from "@/lib/studio/types";
 import { Library } from "lucide-react";
-import LessonEditor from "./lesson/lesson-editor";
+import CourseWorkspace from "./course-workspace";
+import { useSearchParams } from "next/navigation";
 import { TenantBrand } from "./tenant-brand";
 import { LocaleSwitch } from "./locale-provider";
 import { useEffect, useState } from "react";
@@ -37,18 +38,19 @@ const tabs = [
 ] as const;
 export default function AdminScreen({ slug }: { slug: string }) {
   const { t: tr, locale } = useI18n();
+  const query = useSearchParams();
 
   const [data, setData] = useState<any>(null),
-    [tab, setTab] = useState("overview"),
+    [tab, setTab] = useState(
+      query.get("tab") === "courses" ? "courses" : "overview",
+    ),
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [busy, setBusy] = useState(false),
     [catalog, setCatalog] = useState<any[]>([]),
-    [editing, setEditing] = useState<any>(null),
-    [course, setCourse] = useState(""),
-    [lessonEdit, setLessonEdit] = useState<any>(null),
     [pathCourses, setPathCourses] = useState<string[]>([]),
-    [pathEdit, setPathEdit] = useState<any>(null);
+    [pathEdit, setPathEdit] = useState<any>(null),
+    [contentDirty, setContentDirty] = useState(false);
   const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
   async function refresh() {
     const site = await api("/sites/" + slug);
@@ -81,66 +83,6 @@ export default function AdminScreen({ slug }: { slug: string }) {
   function fdata(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     return new FormData(e.currentTarget);
-  }
-  async function saveCourse(e: React.FormEvent<HTMLFormElement>) {
-    const f = fdata(e);
-    const success = await action(
-      () =>
-        api(base + "/courses" + (editing ? "/" + editing.id : ""), {
-          method: editing ? "PUT" : "POST",
-          body: JSON.stringify({
-            title: f.get("title"),
-            slug: f.get("slug"),
-            description: f.get("description"),
-            published: f.get("published") === "on",
-            translations: {
-              ...(editing?.translations || {}),
-              en: {
-                title: f.get("title_en"),
-                description: f.get("description_en"),
-              },
-            },
-          }),
-        }),
-      tr("Đã lưu khóa học."),
-    );
-    if (!success) return;
-    setEditing(null);
-    (document.getElementById("course-form") as HTMLFormElement)?.reset();
-  }
-  async function saveLesson(e: React.FormEvent<HTMLFormElement>) {
-    const advanced =
-      (e.nativeEvent as SubmitEvent).submitter?.getAttribute("name") ===
-      "advanced";
-    const f = fdata(e);
-    let saved: any;
-    const success = await action(
-      async () =>
-        (saved = await api(
-          base +
-            (lessonEdit
-              ? "/lessons/" + lessonEdit.id
-              : "/courses/" + course + "/lessons"),
-          {
-            method: lessonEdit ? "PUT" : "POST",
-            body: JSON.stringify({
-              title: f.get("title"),
-              revision: lessonEdit?.revision,
-              content: f.get("content"),
-              document: JSON.parse(String(f.get("document") || "null")),
-              translations: JSON.parse(String(f.get("translations") || "{}")),
-              video_url: f.get("video_url"),
-              position: Number(f.get("position")),
-            }),
-          },
-        )),
-      tr("Đã lưu bài học."),
-    );
-    if (success && advanced) {
-      location.assign(studioURL(slug, "lesson", saved.id));
-      return;
-    }
-    if (success) setLessonEdit(null);
   }
   if (!data)
     return (
@@ -198,11 +140,27 @@ export default function AdminScreen({ slug }: { slug: string }) {
                 key={id}
                 className={tab === id ? "active" : ""}
                 onClick={() => {
+                  if (
+                    contentDirty &&
+                    id !== tab &&
+                    !confirm(
+                      tr(
+                        "Bài học chưa lưu. Rời phần biên tập?",
+                        "This lesson has unsaved changes. Leave the editor?",
+                      ),
+                    )
+                  )
+                    return;
                   if (id === "studio") {
                     location.assign(studioURL(slug));
                     return;
                   }
                   setTab(id);
+                  window.history.replaceState(
+                    null,
+                    "",
+                    `/t/${slug}/administrator${id === "courses" ? "?tab=courses" : ""}`,
+                  );
                   setError("");
                   setNotice("");
                 }}
@@ -238,7 +196,9 @@ export default function AdminScreen({ slug }: { slug: string }) {
             <Logout />
           </div>
         </header>
-        <main className="admin-content">
+        <main
+          className={`admin-content ${tab === "courses" ? "admin-courses-content" : ""}`}
+        >
           <div className="page-heading">
             <div>
               <span className="eyebrow">{tr("QUẢN TRỊ HỆ THỐNG")}</span>
@@ -381,241 +341,11 @@ export default function AdminScreen({ slug }: { slug: string }) {
             </>
           )}
           {tab === "courses" && (
-            <>
-              <div className="content-columns">
-                <section className="panel">
-                  <div className="section-title">
-                    <h2>{tr("Danh sách khóa học")}</h2>
-                    <span className="pill">{data.courses.length}</span>
-                  </div>
-                  {!data.courses.length ? (
-                    <Empty
-                      title={tr("Khóa học đầu tiên đang chờ bạn")}
-                      body={tr("Tạo nội dung bên phải để bắt đầu.")}
-                    />
-                  ) : (
-                    data.courses.map((c: any) => (
-                      <article className="admin-course" key={c.id}>
-                        <div>
-                          <span
-                            className={"pill " + (c.published ? "green" : "")}
-                          >
-                            {c.published ? tr("Đã xuất bản") : tr("Bản nháp")}
-                          </span>
-                          <h3>{c.title}</h3>
-                          <p>{c.description}</p>
-                          <small>
-                            {
-                              data.lessons.filter(
-                                (l: any) => l.course_id === c.id,
-                              ).length
-                            }{" "}
-                            {tr("bài học")}
-                          </small>
-                        </div>
-                        <div className="actions">
-                          <button
-                            className="button ghost small"
-                            onClick={() => setEditing(c)}
-                          >
-                            {tr("Chỉnh sửa")}
-                          </button>
-                          <button
-                            className="button small"
-                            onClick={() => {
-                              setCourse(c.id);
-                              setLessonEdit(null);
-                            }}
-                          >
-                            {tr("Bài học")}
-                          </button>
-                        </div>
-                      </article>
-                    ))
-                  )}
-                </section>
-                <section className="panel">
-                  <h2>
-                    {editing ? tr("Chỉnh sửa khóa học") : tr("Tạo khóa học")}
-                  </h2>
-                  <form
-                    id="course-form"
-                    key={editing?.id || "new"}
-                    onSubmit={saveCourse}
-                  >
-                    <label>
-                      {tr("Tên khóa học")}
-                      <input
-                        name="title"
-                        defaultValue={editing?.title}
-                        required
-                        onChange={(e) => {
-                          if (!editing)
-                            (
-                              e.target.form!.elements.namedItem(
-                                "slug",
-                              ) as HTMLInputElement
-                            ).value = slugify(e.target.value);
-                        }}
-                      />
-                    </label>
-                    <label>
-                      {tr("Đường dẫn")}
-                      <input
-                        name="slug"
-                        defaultValue={editing?.slug}
-                        pattern="[a-z0-9]+(-[a-z0-9]+)*"
-                        required
-                      />
-                    </label>
-                    <label>
-                      {tr("Mô tả")}
-                      <textarea
-                        name="description"
-                        defaultValue={editing?.description}
-                        rows={4}
-                      />
-                    </label>
-                    <label>
-                      {tr("Tên khóa học tiếng Anh", "English course title")}
-                      <input
-                        name="title_en"
-                        defaultValue={editing?.translations?.en?.title}
-                        maxLength={200}
-                      />
-                    </label>
-                    <label>
-                      {tr("Mô tả tiếng Anh", "English description")}
-                      <textarea
-                        name="description_en"
-                        defaultValue={editing?.translations?.en?.description}
-                      />
-                    </label>
-                    <label className="checkbox">
-                      <input
-                        name="published"
-                        type="checkbox"
-                        defaultChecked={editing?.published}
-                      />{" "}
-                      {tr("Xuất bản cho học viên")}
-                    </label>
-                    <button disabled={busy} className="button full">
-                      {tr("Lưu khóa học")}
-                    </button>
-                    {editing && (
-                      <button
-                        type="button"
-                        className="button ghost full"
-                        onClick={() => setEditing(null)}
-                      >
-                        {tr("Hủy chỉnh sửa")}
-                      </button>
-                    )}
-                  </form>
-                </section>
-              </div>
-              {course && (
-                <div className="panel spaced">
-                  <div className="section-title">
-                    <h2>
-                      {tr("Bài học ·")}{" "}
-                      {data.courses.find((c: any) => c.id === course)?.title}
-                    </h2>
-                    <button
-                      className="button ghost small"
-                      onClick={() => setCourse("")}
-                    >
-                      {tr("Đóng")}
-                    </button>
-                  </div>
-                  <div className="content-columns">
-                    <div>
-                      {data.lessons
-                        .filter((l: any) => l.course_id === course)
-                        .map((l: any) => (
-                          <button
-                            className="draft-row full"
-                            key={l.id}
-                            onClick={async () => {
-                              try {
-                                setLessonEdit(
-                                  await api(base + "/lessons/" + l.id),
-                                );
-                              } catch (e) {
-                                setError((e as Error).message);
-                              }
-                            }}
-                          >
-                            <BookOpen size={17} />
-                            {l.position + 1}. {l.title}
-                            <span>{tr("Chỉnh sửa ↗")}</span>
-                          </button>
-                        ))}
-                    </div>
-                    <form key={lessonEdit?.id || course} onSubmit={saveLesson}>
-                      <h3>
-                        {lessonEdit ? tr("Sửa bài học") : tr("Thêm bài học")}
-                      </h3>
-                      <label>
-                        {tr("Tiêu đề")}
-                        <input
-                          name="title"
-                          required
-                          defaultValue={lessonEdit?.title}
-                        />
-                      </label>
-                      <LessonEditor
-                        key={lessonEdit?.id || course}
-                        initial={lessonEdit}
-                      />
-                      <label>
-                        {tr("Video HTTPS (tùy chọn)")}
-                        <input
-                          name="video_url"
-                          type="url"
-                          defaultValue={lessonEdit?.video_url}
-                        />
-                      </label>
-                      <label>
-                        {tr("Thứ tự (bắt đầu từ 0)")}
-                        <input
-                          name="position"
-                          type="number"
-                          min={0}
-                          defaultValue={lessonEdit?.position || 0}
-                        />
-                      </label>
-                      <div className="actions">
-                        <button disabled={busy} className="button">
-                          {tr("Lưu bài học")}
-                        </button>
-                        <button
-                          type="submit"
-                          name="advanced"
-                          disabled={busy}
-                          className="button ghost"
-                        >
-                          {tr(
-                            "Lưu và mở Studio toàn màn hình",
-                            "Save and open full-page Studio",
-                          )}{" "}
-                          ↗
-                        </button>
-                      </div>
-                      {lessonEdit && (
-                        <button
-                          type="button"
-                          className="button ghost"
-                          onClick={() => setLessonEdit(null)}
-                        >
-                          {tr("Thêm bài mới")}
-                        </button>
-                      )}
-                    </form>
-                  </div>
-                </div>
-              )}
-            </>
+            <CourseWorkspace
+              data={data}
+              onRefresh={refresh}
+              onDirty={setContentDirty}
+            />
           )}
           {tab === "paths" && (
             <div className="content-columns">
@@ -887,7 +617,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
               <span className="feature-icon">
                 <RefreshCw />
               </span>
-              <span className="pill">CORE 0.6.0</span>
+              <span className="pill">CORE 0.7.0</span>
               <h2>{tr("Cập nhật có kiểm soát.")}</h2>
               <p>
                 {tr(

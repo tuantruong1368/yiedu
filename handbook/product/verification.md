@@ -186,3 +186,28 @@ CI nguồn `9866c34f2dc656bec4d642f5100aef2598c7fcc5`:
 41 pytest, Next production build và 4 Playwright journeys), mobile (typecheck, Expo iOS/Android
 bundles), compose (build/ready/homepage), database-upgrade (PostgreSQL 17→18, giữ dữ liệu và
 chạy lại app). Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay code đã kiểm tra.
+
+## Website Studio 0.7 — 24/10/2026
+
+Local trên Python 3.15.1, Node.js 26.12.1 và PGlite socket: Ruff, schema/contracts,
+docs links, MkDocs strict và Next production build thành công. Alembic lên head/check
+không drift; **44 pytest** qua, gồm public render/CSP, escaping và chỉ hiển thị course published.
+PGlite không thay thế PostgreSQL native trong CI.
+
+**7 Playwright journeys** qua trên Chromium, chạy toàn bộ suite trên production build:
+
+- Điều hướng trang/menu, vào/ra quản trị lặp lại, Back/Forward, đổi VI/EN và reload vẫn giữ nội dung.
+- Thư viện 23 SVG, lọc/tìm, kéo chuột thật vào iframe đã zoom, thêm section, preview và publish.
+- Màu Indigo được kiểm bằng computed style trong canvas, sau mở lại và trên website công khai;
+  PostCSS giữ CSS variables/shorthand thay vì để CSSOM làm mất chúng.
+- Danh sách 30 course/25 lesson: mở bài cuối, editor ở cạnh danh sách, tạo/lưu và trở về đúng
+  khóa/bài từ Studio toàn màn hình.
+- Những luồng cũ: import/VI/EN/events/branding, owner→learner→ZIP, preview template, thư viện
+  slide/mô phỏng/video, xuất video có dữ liệu và learner tương tác/hoàn thành.
+
+Đã xem ảnh Website Studio và CourseWorkspace; vùng canvas khớp zoom/chiều cao và editor không
+nằm dưới danh sách. Export video gắn canvas vào DOM và yêu cầu frame; không tải file nếu recorder
+không ghi được dữ liệu. Danh mục developer đối chiếu 236 file/68 thư mục.
+
+Chưa thử mọi trình duyệt, quyền micro trên thiết bị thật hoặc mọi thao tác touch. Không có Docker
+daemon local; bằng chứng native PostgreSQL, Compose, mobile và nâng cấp 17→18 ghi riêng từ CI.

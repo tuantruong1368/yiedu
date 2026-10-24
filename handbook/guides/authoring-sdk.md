@@ -211,3 +211,10 @@ Dùng PostgreSQL test riêng khi chạy integration; xem [testing](testing.md).
 [Hướng dẫn mới](content-studio.md) mô tả full-page lesson editor, thư viện học liệu,
 slide/video/mô phỏng độc lập, node snapshot, revision, export và contribution `studio-tool`.
 GrapesJS và page-gadget API ở tài liệu này tiếp tục dùng cho website.
+
+
+## Website Studio 0.7
+
+[Hướng dẫn mới](website-studio.md): thư viện gadget có SVG/filter/search, panel riêng, preview/theme,
+PostCSS giữ shorthand/CSS variable, render document URL và course/lesson workspace.
+`GadgetDefinition.category` bổ sung `sections` cho bố cục trang. Registry/contribution cũ giữ tương thích.

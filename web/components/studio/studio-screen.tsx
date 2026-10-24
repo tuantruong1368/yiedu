@@ -368,7 +368,11 @@ export default function StudioScreen({
         <div className="actions">
           <LocaleSwitch />
           <Link
-            href={`/t/${slug}/administrator`}
+            href={
+              kind === "lesson" && current?.course_id
+                ? `/t/${slug}/administrator?tab=courses&course=${current.course_id}&lesson=${current.id}`
+                : `/t/${slug}/administrator`
+            }
             onClick={(e) => {
               if (
                 dirty &&
@@ -661,7 +665,13 @@ export default function StudioScreen({
                   </select>
                 </label>
                 {!overview.courses.length && (
-                  <Link href={`/t/${slug}/administrator`}>
+                  <Link
+                    href={
+                      kind === "lesson" && current?.course_id
+                        ? `/t/${slug}/administrator?tab=courses&course=${current.course_id}&lesson=${current.id}`
+                        : `/t/${slug}/administrator`
+                    }
+                  >
                     {t("Tạo khóa học trước", "Create a course first")}
                   </Link>
                 )}

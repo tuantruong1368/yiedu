@@ -6,6 +6,7 @@ import uuid
 
 from fastapi import APIRouter, HTTPException, Request, Response
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import HTMLResponse
 from sqlalchemy import delete, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError
@@ -49,6 +50,7 @@ from yiedu.product_schemas import (
     WorkspaceCreate,
     WorkspaceUpdate,
 )
+from yiedu.site_render import render_site
 from yiedu.template_library import curriculum, get_template, lessons_for
 from yiedu.template_seed import seed_template
 
@@ -309,6 +311,35 @@ def join_site(slug: str, user: UserDep, db: DB):
         db.add(member)
         commit(db)
     return {"tenant_id": str(tenant.id), "role": member.role}
+
+
+@router.get("/sites/{slug}/render", response_class=HTMLResponse)
+def published_document(slug: str, db: DB, page: str = "", locale: str = "vi"):
+    tenant = db.scalar(select(Tenant).where(Tenant.slug == slug))
+    if not tenant or tenant.published_page.get("schema_version") != "2.0":
+        raise HTTPException(404, "Published page not found")
+    if locale not in {"vi", "en"} or len(page) > 63:
+        raise HTTPException(422, "Invalid page or locale")
+    courses = [
+        encode(row)
+        for row in db.scalars(
+            select(Course)
+            .where(Course.tenant_id == tenant.id, Course.published.is_(True))
+            .order_by(Course.created_at)
+        )
+    ]
+    try:
+        html, csp = render_site(tenant.published_page, courses, slug, page, locale)
+    except KeyError:
+        raise HTTPException(404, "Published page not found") from None
+    return HTMLResponse(
+        html,
+        headers={
+            "Cache-Control": "no-store",
+            "Content-Security-Policy": csp,
+            "X-Content-Type-Options": "nosniff",
+        },
+    )
 
 
 @router.get("/runtime/{tenant_id}/overview")
@@ -724,7 +755,7 @@ def marketplace(db: DB):
 def update_status(tenant_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin"])
     return {
-        "current_version": "0.6.0",
+        "current_version": "0.7.0",
         "configured": False,
         "message": (
             "Chưa cấu hình release registry và trust key. Không có bản cập nhật được xác minh."
@@ -754,7 +785,7 @@ def export_tenant(tenant_id: uuid.UUID, user: UserDep, db: DB):
 def instance_info(db: DB):
     mode = get_settings().instance_mode
     tenant = db.scalar(select(Tenant)) if mode == "standalone" else None
-    return {"mode": mode, "version": "0.6.0", "tenant": encode(tenant) if tenant else None}
+    return {"mode": mode, "version": "0.7.0", "tenant": encode(tenant) if tenant else None}
 
 
 @router.put("/runtime/{tenant_id}/paths/{path_id}")

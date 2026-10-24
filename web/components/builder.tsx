@@ -10,10 +10,29 @@ import {
   sanitizeImport,
   SiteDocument,
 } from "@/lib/authoring/site";
-import { installGadgets } from "@/lib/authoring/gadgets";
+import { gadgetCatalog, installGadgets } from "@/lib/authoring/gadgets";
 import { useI18n, LocaleSwitch } from "./locale-provider";
+import {
+  Eye,
+  Maximize2,
+  Minimize2,
+  Monitor,
+  Undo2,
+  Redo2,
+  Save,
+  Send,
+  SlidersHorizontal,
+  X,
+  ArrowUp,
+  ArrowDown,
+} from "lucide-react";
+import GadgetLibrary from "./authoring/gadget-library";
+import SiteRuntime from "./authoring/site-runtime";
 import { LogoMark } from "./tenant-brand";
 import { ErrorBox, Loading } from "./shared";
+function withBaseStyles(css: string) {
+  return css.includes(".yd-feature-grid") ? css : baseCss + "\n" + css;
+}
 export default function Builder({ id }: { id: string }) {
   const { t, locale } = useI18n();
   const [w, setW] = useState<any>(null),
@@ -30,11 +49,59 @@ export default function Builder({ id }: { id: string }) {
     [html, setHtml] = useState(""),
     [css, setCss] = useState(""),
     [panel, setPanel] = useState("gadgets"),
-    [ready, setReady] = useState(false);
+    [ready, setReady] = useState(false),
+    [dirty, setDirty] = useState(false),
+    [focusMode, setFocusMode] = useState(false),
+    [device, setDevice] = useState("desktop"),
+    [previewSite, setPreviewSite] = useState<SiteDocument | null>(null),
+    [previewPage, setPreviewPage] = useState("home"),
+    [previewCourses, setPreviewCourses] = useState<any[]>([]),
+    [recovery, setRecovery] = useState<any>(null);
   const canvas = useRef<HTMLDivElement>(null),
     editor = useRef<Editor | null>(null),
     latest = useRef<SiteDocument | null>(null);
+  const commandRef = useRef<() => void>(() => {}),
+    snapshotRef = useRef<() => SiteDocument>(() => latest.current!),
+    loadingCanvas = useRef(true);
   latest.current = site;
+  snapshotRef.current = snapshot;
+  commandRef.current = () => {
+    if (ready && !busy) save();
+  };
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+        commandRef.current();
+      }
+      if (e.key === "Escape") setPreviewSite(null);
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, []);
+  useEffect(() => {
+    if (!dirty) return;
+    const guard = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", guard);
+    return () => window.removeEventListener("beforeunload", guard);
+  }, [dirty]);
+  useEffect(() => {
+    if (!w || !dirty || !ready || busy) return;
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem(
+          `website-draft:${w.owner_id}:${id}`,
+          JSON.stringify({
+            data: snapshotRef.current(),
+            revision: w.revision,
+            name: w.name,
+            slug: w.slug,
+          }),
+        );
+      } catch {}
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [tick, site, w?.name, w?.slug, dirty, ready, busy]);
   useEffect(() => {
     api("/workspaces/" + id)
       .then((x) => {
@@ -42,6 +109,19 @@ export default function Builder({ id }: { id: string }) {
         const d = normalizeSite(x);
         setSite(d);
         setPageId(d.pages[0].id);
+        try {
+          const draft = localStorage.getItem(
+            `website-draft:${x.owner_id}:${id}`,
+          );
+          if (draft) setRecovery(JSON.parse(draft));
+        } catch {}
+        api(`/catalog/templates/${x.template_id}`)
+          .then((preview) => setPreviewCourses(preview.courses || []))
+          .catch(() => {});
+        if (x.tenant_id)
+          api(`/sites/${x.slug}`)
+            .then((preview) => setPreviewCourses(preview.courses || []))
+            .catch(() => {});
       })
       .catch((e) => setError(e.message));
   }, [id]);
@@ -51,7 +131,7 @@ export default function Builder({ id }: { id: string }) {
     if (editor.current && p)
       p[editLocale] = {
         html: editor.current.getHtml(),
-        css: editor.current.getCss() || "",
+        css: editor.current.getCss({ keepUnusedStyles: true }) || "",
       };
     return d;
   }
@@ -61,9 +141,11 @@ export default function Builder({ id }: { id: string }) {
     let ed: Editor;
     import("grapesjs").then(async ({ default: grapesjs }) => {
       const vi = (await import("grapesjs/locale/vi.mjs")).default;
+      const postcssParser = (await import("grapesjs-parser-postcss")).default;
       if (disposed) return;
       ed = grapesjs.init({
         container: canvas.current!,
+        plugins: [postcssParser],
         i18n: {
           locale,
           detectLocale: false,
@@ -74,7 +156,8 @@ export default function Builder({ id }: { id: string }) {
         height: "100%",
         storageManager: false,
         panels: { defaults: [] },
-        blockManager: { appendTo: "#yd-gadgets" },
+        blockManager: { appendTo: "#yd-gadgets", custom: true },
+        keepUnusedStyles: true,
         traitManager: { appendTo: "#yd-traits" },
         styleManager: {
           appendTo: "#yd-styles",
@@ -131,7 +214,7 @@ export default function Builder({ id }: { id: string }) {
         },
         deviceManager: {
           devices: [
-            { id: "desktop", name: "Desktop", width: "" },
+            { id: "desktop", name: "Desktop", width: "1280px" },
             { id: "tablet", name: "Tablet", width: "768px" },
             { id: "mobile", name: "Mobile", width: "390px" },
           ],
@@ -140,19 +223,32 @@ export default function Builder({ id }: { id: string }) {
       editor.current = ed;
       ed.I18n.setLocale(locale);
       installGadgets(ed, locale);
-      ed.setDragMode("absolute");
+      ed.setDragMode("");
       ed.on("component:selected", (c: any) => {
         setSelected(c);
-        setPanel("properties");
+
         force((n) => n + 1);
       });
       ed.on("component:deselected", () => setSelected(null));
       ed.on("component:update", () => force((n) => n + 1));
+      ed.on("update", () => {
+        if (!loadingCanvas.current) {
+          setDirty(true);
+          force((n) => n + 1);
+        }
+      });
       const d = latest.current!,
         p = d.pages.find((p) => p.id === pageId) || d.pages[0];
       ed.setComponents(p[editLocale].html);
-      ed.setStyle(p[editLocale].css || baseCss);
+      ed.setStyle(withBaseStyles(p[editLocale].css || ""));
       setReady(true);
+      ed.on("load", () => {
+        ed.Canvas.fitViewport({ ignoreHeight: true, gap: 24 });
+        setZoom(Math.round(ed.Canvas.getZoom()));
+      });
+      setTimeout(() => {
+        loadingCanvas.current = false;
+      }, 100);
     });
     return () => {
       disposed = true;
@@ -167,6 +263,20 @@ export default function Builder({ id }: { id: string }) {
       installGadgets(editor.current, locale);
     }
   }, [locale]);
+  useEffect(() => {
+    if (!ready || !canvas.current || !editor.current) return;
+    const fitHeight = () => {
+      const ed = editor.current;
+      if (!ed || !canvas.current) return;
+      const height = `${Math.ceil(canvas.current.clientHeight / (ed.Canvas.getZoom() / 100))}px`;
+      const frame = ed.Canvas.getFrame();
+      if (frame.get("height") !== height) frame.set("height", height);
+    };
+    const observer = new ResizeObserver(fitHeight);
+    observer.observe(canvas.current);
+    fitHeight();
+    return () => observer.disconnect();
+  }, [ready, zoom, focusMode, device]);
   function changePage(nextId: string, nextLocale = editLocale) {
     if (!editor.current) return;
     const d = snapshot(),
@@ -174,8 +284,12 @@ export default function Builder({ id }: { id: string }) {
     setSite(d);
     setPageId(nextId);
     setEditLocale(nextLocale);
+    loadingCanvas.current = true;
     editor.current.setComponents(p[nextLocale].html);
-    editor.current.setStyle(p[nextLocale].css || baseCss);
+    editor.current.setStyle(withBaseStyles(p[nextLocale].css || ""));
+    setTimeout(() => {
+      loadingCanvas.current = false;
+    }, 100);
     setSelected(null);
     editor.current.UndoManager.clear();
   }
@@ -196,6 +310,9 @@ export default function Builder({ id }: { id: string }) {
       });
       setW(saved);
       setSite(saved.data);
+      setDirty(false);
+      localStorage.removeItem(`website-draft:${w.owner_id}:${id}`);
+      setRecovery(null);
       if (publish) {
         const result = await api("/workspaces/" + id + "/publish", {
           method: "POST",
@@ -233,6 +350,78 @@ export default function Builder({ id }: { id: string }) {
     setSite(d);
     changePage(pid);
   }
+  function insertGadget(packageId: string) {
+    const ed = editor.current,
+      block = ed?.Blocks.get(packageId);
+    if (!ed || !block) return;
+    const content = block.get("content"),
+      target = ed.getSelected();
+    if (typeof content !== "string") return;
+    let added: any;
+    if (
+      target &&
+      target !== ed.getWrapper() &&
+      gadgetCatalog().find((g) => g.packageId === packageId)?.category !==
+        "sections"
+    ) {
+      const tag = String(target.get("tagName") || ""),
+        parent = target.parent();
+      if (
+        ["section", "div", "article", "main", "header", "footer"].includes(
+          tag,
+        ) &&
+        target.get("droppable")
+      )
+        added = target.append(content)[0];
+      else if (parent)
+        added = parent.append(content, {
+          at: parent.components().indexOf(target) + 1,
+        })[0];
+    }
+    if (
+      !added &&
+      target &&
+      target !== ed.getWrapper() &&
+      gadgetCatalog().find((g) => g.packageId === packageId)?.category ===
+        "sections"
+    ) {
+      let sibling = target;
+      while (sibling.parent() && sibling.parent() !== ed.getWrapper())
+        sibling = sibling.parent()!;
+      const root = ed.getWrapper();
+      if (root)
+        added = root.append(content, {
+          at: root.components().indexOf(sibling) + 1,
+        })[0];
+    }
+    if (!added) added = ed.addComponents(content)[0];
+    if (added) {
+      ed.select(added);
+      ed.Canvas.scrollTo(added, { behavior: "smooth" });
+      setDirty(true);
+    }
+  }
+  function applyTheme(color: string) {
+    const d = snapshot();
+    for (const p of d.pages)
+      for (const lang of ["vi", "en"] as const)
+        p[lang].css += `\n:root{--accent:${color};--yd-accent:${color}}`;
+    d.branding.color = color;
+    latest.current = d;
+    setSite(d);
+    editor.current?.setStyle(
+      d.pages.find((p) => p.id === pageId)![editLocale].css,
+    );
+    setDirty(true);
+  }
+  function ancestors(node: any) {
+    const list = [];
+    while (node) {
+      list.unshift(node);
+      node = node.parent();
+    }
+    return list.slice(-5);
+  }
   if (!w || !site)
     return (
       <>
@@ -247,23 +436,74 @@ export default function Builder({ id }: { id: string }) {
     force(tick + 1);
   }
   return (
-    <div className="studio-shell">
+    <div
+      className={`studio-shell website-studio ${focusMode ? "website-focus" : ""}`}
+      aria-busy={busy}
+      inert={busy}
+    >
       <header className="studio-top">
-        <Link href="/dashboard">
+        <Link
+          href="/dashboard"
+          onClick={(e) => {
+            if (
+              dirty &&
+              !confirm(
+                t(
+                  "Rời studio khi còn thay đổi chưa lưu?",
+                  "Leave with unsaved changes?",
+                ),
+              )
+            )
+              e.preventDefault();
+          }}
+        >
           ← {t("Không gian của tôi", "My workspace")}
         </Link>
         <input
           aria-label={t("Tên hệ thống", "Site name")}
           value={w.name}
-          onChange={(e) => setW({ ...w, name: e.target.value })}
+          onChange={(e) => {
+            setW({ ...w, name: e.target.value });
+            setDirty(true);
+          }}
         />
         <span>
-          {w.slug} · v{w.revision}
+          <i className={dirty ? "save-dot dirty" : "save-dot"} />
+          {dirty ? t("Chưa lưu", "Unsaved") : t("Đã lưu", "Saved")} · {w.slug} ·
+          v{w.revision}
         </span>
         <LocaleSwitch />
-        <button onClick={() => editor.current?.UndoManager.undo()}>↶</button>
-        <button onClick={() => editor.current?.UndoManager.redo()}>↷</button>
+        <button
+          aria-label={t("Hoàn tác", "Undo")}
+          title="Ctrl/⌘ Z"
+          onClick={() => editor.current?.UndoManager.undo()}
+        >
+          <Undo2 size={16} />
+        </button>
+        <button
+          aria-label={t("Làm lại", "Redo")}
+          onClick={() => editor.current?.UndoManager.redo()}
+        >
+          <Redo2 size={16} />
+        </button>
+        <button
+          onClick={() => {
+            setPreviewSite(snapshot());
+            setPreviewPage(pageId);
+          }}
+          disabled={!ready}
+        >
+          <Eye size={16} />
+          {t("Xem trước", "Preview")}
+        </button>
+        <button
+          aria-label={t("Chế độ tập trung", "Focus mode")}
+          onClick={() => setFocusMode(!focusMode)}
+        >
+          {focusMode ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+        </button>
         <button disabled={!ready || busy} onClick={() => save()}>
+          <Save size={15} />
           {t("Lưu nháp", "Save draft")}
         </button>
         <button
@@ -271,6 +511,7 @@ export default function Builder({ id }: { id: string }) {
           disabled={!ready || busy}
           onClick={() => save(true)}
         >
+          <Send size={15} />
           {t("Xuất bản", "Publish")}
         </button>
         {w.tenant_id && (
@@ -279,6 +520,48 @@ export default function Builder({ id }: { id: string }) {
           </Link>
         )}
       </header>
+      {recovery && (
+        <div className="website-recovery">
+          <span>
+            {t(
+              "Có bản nháp trình duyệt chưa lưu.",
+              "An unsaved browser draft is available.",
+            )}
+            {recovery.revision !== w.revision &&
+              t(
+                " Bản trên hệ thống đã thay đổi; hãy đối chiếu trước khi lưu.",
+                " The server version changed; review before saving.",
+              )}
+          </span>
+          <button
+            onClick={() => {
+              const d = recovery.data as SiteDocument;
+              latest.current = d;
+              setSite(d);
+              setW({
+                ...w,
+                name: recovery.name,
+                slug: w.tenant_id ? w.slug : recovery.slug,
+              });
+              setPageId(d.pages[0].id);
+              editor.current?.setComponents(d.pages[0][editLocale].html);
+              editor.current?.setStyle(d.pages[0][editLocale].css);
+              setDirty(true);
+              setRecovery(null);
+            }}
+          >
+            {t("Khôi phục", "Restore")}
+          </button>
+          <button
+            onClick={() => {
+              localStorage.removeItem(`website-draft:${w.owner_id}:${id}`);
+              setRecovery(null);
+            }}
+          >
+            {t("Bỏ nháp", "Discard")}
+          </button>
+        </div>
+      )}
       <ErrorBox message={error} />
       {notice && (
         <div role="status" className="notice">
@@ -308,7 +591,11 @@ export default function Builder({ id }: { id: string }) {
         </select>
         <select
           aria-label="Device"
-          onChange={(e) => editor.current?.setDevice(e.target.value)}
+          value={device}
+          onChange={(e) => {
+            setDevice(e.target.value);
+            editor.current?.setDevice(e.target.value);
+          }}
         >
           <option value="desktop">Desktop</option>
           <option value="tablet">Tablet</option>
@@ -332,6 +619,15 @@ export default function Builder({ id }: { id: string }) {
           }}
         >
           +
+        </button>
+        <button
+          title={t("Vừa khung thiết kế", "Fit canvas")}
+          onClick={() => {
+            editor.current?.Canvas.fitViewport({ ignoreHeight: true, gap: 24 });
+            setZoom(Math.round(editor.current?.Canvas.getZoom() || 100));
+          }}
+        >
+          {t("Vừa khung", "Fit")}
         </button>
         <button onClick={() => setImporting(!importing)}>
           {t("Nhập HTML/CSS", "Import HTML/CSS")}
@@ -376,245 +672,32 @@ export default function Builder({ id }: { id: string }) {
           </button>
         </section>
       )}
-      <div className="studio-body">
-        <aside className="studio-inspector">
-          <div className="studio-tabs">
+      <div className="studio-body website-body">
+        <aside className="website-library">
+          <div className="studio-tabs website-tabs">
             {[
-              ["gadgets", t("Gadget", "Gadgets")],
-              ["properties", t("Thuộc tính", "Properties")],
+              ["gadgets", t("Thư viện", "Library")],
               ["pages", t("Trang/Menu/Logo", "Pages/Menu/Logo")],
               ["layers", t("Lớp", "Layers")],
+              ["theme", t("Giao diện", "Theme")],
             ].map(([key, label]) => (
               <button
-                className={panel === key ? "active" : ""}
+                type="button"
                 key={key}
+                className={panel === key ? "active" : ""}
                 onClick={() => setPanel(key)}
               >
                 {label}
               </button>
             ))}
           </div>
-          <div
-            id="yd-gadgets"
-            style={{ display: panel === "gadgets" ? "block" : "none" }}
-          />
-          <section
-            style={{ display: panel === "properties" ? "block" : "none" }}
-          >
-            {selected ? (
-              <>
-                <div className="actions">
-                  <button
-                    onClick={() => selected.parent()?.append(selected.clone())}
-                  >
-                    {t("Nhân bản", "Duplicate")}
-                  </button>
-                  <button
-                    onClick={() => {
-                      selected.remove();
-                      setSelected(null);
-                    }}
-                  >
-                    {t("Xóa", "Delete")}
-                  </button>
-                  <button onClick={() => selected.append("<p>Text</p>")}>
-                    + {t("Thêm con", "Add child")}
-                  </button>
-                </div>
-                <label>
-                  {t("Vị trí", "Position")}
-                  <select
-                    aria-label={t("Vị trí", "Position")}
-                    value={selected.getStyle().position || "static"}
-                    onChange={(e) => {
-                      selected.addStyle({ position: e.target.value });
-                      editor.current?.setDragMode(
-                        e.target.value === "static" ? "" : "absolute",
-                      );
-                      force(tick + 1);
-                    }}
-                  >
-                    <option value="static">Flow / Responsive</option>
-                    <option value="absolute">Free / Absolute</option>
-                    <option value="fixed">Fixed / Viewport</option>
-                    <option value="relative">Relative</option>
-                    <option value="sticky">Sticky</option>
-                  </select>
-                </label>
-                <p>
-                  {t(
-                    "Kéo trên canvas để di chuyển; kéo các tay nắm để thay đổi kích thước.",
-                    "Drag on the canvas to move; use handles to resize.",
-                  )}
-                </p>
-                <fieldset>
-                  <legend>{t("Sự kiện", "Events")}</legend>
-                  <select
-                    aria-label="Event"
-                    value={attrs["data-event"] || ""}
-                    onChange={(e) => attribute("data-event", e.target.value)}
-                  >
-                    <option value="">None</option>
-                    {[
-                      "click",
-                      "dblclick",
-                      "mouseenter",
-                      "mouseleave",
-                      "change",
-                      "submit",
-                    ].map((x) => (
-                      <option key={x}>{x}</option>
-                    ))}
-                  </select>
-                  <select
-                    aria-label="Action"
-                    value={attrs["data-action"] || "message"}
-                    onChange={(e) => attribute("data-action", e.target.value)}
-                  >
-                    {["message", "navigate", "scroll", "toggle"].map((x) => (
-                      <option key={x}>{x}</option>
-                    ))}
-                  </select>
-                  <input
-                    aria-label="Event target"
-                    placeholder="/page, https://… or element ID"
-                    value={attrs["data-target"] || ""}
-                    onChange={(e) => attribute("data-target", e.target.value)}
-                  />
-                  <input
-                    aria-label="Event message"
-                    placeholder={t("Thông báo", "Message")}
-                    value={attrs["data-message"] || ""}
-                    onChange={(e) => attribute("data-message", e.target.value)}
-                  />
-                  <h4>{t("Sự kiện bổ sung", "Additional events")}</h4>
-                  {(() => {
-                    let events: any[] = [];
-                    try {
-                      events = JSON.parse(attrs["data-events"] || "[]");
-                    } catch {}
-                    return (
-                      <>
-                        {events.map((event, i) => (
-                          <div className="studio-event-row" key={i}>
-                            <select
-                              aria-label={"Additional event " + i}
-                              value={event.event}
-                              onChange={(e) => {
-                                events[i] = { ...event, event: e.target.value };
-                                attribute(
-                                  "data-events",
-                                  JSON.stringify(events),
-                                );
-                              }}
-                            >
-                              {[
-                                "click",
-                                "dblclick",
-                                "mouseenter",
-                                "mouseleave",
-                                "change",
-                                "submit",
-                              ].map((x) => (
-                                <option key={x}>{x}</option>
-                              ))}
-                            </select>
-                            <select
-                              aria-label={"Additional action " + i}
-                              value={event.action}
-                              onChange={(e) => {
-                                events[i] = {
-                                  ...event,
-                                  action: e.target.value,
-                                };
-                                attribute(
-                                  "data-events",
-                                  JSON.stringify(events),
-                                );
-                              }}
-                            >
-                              {["message", "navigate", "scroll", "toggle"].map(
-                                (x) => (
-                                  <option key={x}>{x}</option>
-                                ),
-                              )}
-                            </select>
-                            <input
-                              placeholder="Target"
-                              value={event.target || ""}
-                              onChange={(e) => {
-                                events[i] = {
-                                  ...event,
-                                  target: e.target.value,
-                                };
-                                attribute(
-                                  "data-events",
-                                  JSON.stringify(events),
-                                );
-                              }}
-                            />
-                            <input
-                              placeholder="Message"
-                              value={event.message || ""}
-                              onChange={(e) => {
-                                events[i] = {
-                                  ...event,
-                                  message: e.target.value,
-                                };
-                                attribute(
-                                  "data-events",
-                                  JSON.stringify(events),
-                                );
-                              }}
-                            />
-                            <button
-                              onClick={() =>
-                                attribute(
-                                  "data-events",
-                                  JSON.stringify(
-                                    events.filter((_, j) => j !== i),
-                                  ),
-                                )
-                              }
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
-                        <button
-                          disabled={events.length >= 8}
-                          onClick={() =>
-                            attribute(
-                              "data-events",
-                              JSON.stringify([
-                                ...events,
-                                {
-                                  event: "click",
-                                  action: "message",
-                                  message: "Hello",
-                                },
-                              ]),
-                            )
-                          }
-                        >
-                          + {t("Thêm sự kiện", "Add event")}
-                        </button>
-                      </>
-                    );
-                  })()}
-                </fieldset>
-              </>
-            ) : (
-              <p>
-                {t(
-                  "Chọn một gadget trên trang.",
-                  "Select a gadget on the page.",
-                )}
-              </p>
-            )}
-            <div id="yd-traits" />
-            <div id="yd-styles" />
-          </section>
+          <div id="yd-gadgets" hidden />
+          <div hidden={panel !== "gadgets"}>
+            <GadgetLibrary
+              editor={ready ? editor.current : null}
+              onInsert={insertGadget}
+            />
+          </div>
           <div
             id="yd-layers"
             style={{ display: panel === "layers" ? "block" : "none" }}
@@ -873,9 +956,409 @@ export default function Builder({ id }: { id: string }) {
               </label>
             </section>
           )}
+
+          {panel === "theme" && (
+            <section className="website-theme">
+              <small>DESIGN SYSTEM</small>
+              <h2>{t("Màu sắc hài hòa.", "A cohesive palette.")}</h2>
+              <p>
+                {t(
+                  "Áp dụng màu thương hiệu trên tất cả trang. Chọn từng thành phần để tinh chỉnh.",
+                  "Apply your brand accent across pages. Select components to fine-tune them.",
+                )}
+              </p>
+              <div className="theme-palettes">
+                {[
+                  ["Forest", "#23776d"],
+                  ["Indigo", "#565eb7"],
+                  ["Ocean", "#2d73a0"],
+                  ["Terracotta", "#ac6349"],
+                  ["Rose", "#a95070"],
+                  ["Graphite", "#36434a"],
+                ].map(([name, color]) => (
+                  <button
+                    key={name}
+                    onClick={() => applyTheme(color)}
+                    style={{ borderColor: color }}
+                  >
+                    <span style={{ background: color }} />
+                    <b>{name}</b>
+                    <small>{color}</small>
+                  </button>
+                ))}
+              </div>
+              <label>
+                {t("Màu tùy chọn", "Custom accent")}
+                <input
+                  type="color"
+                  value={site.branding.color}
+                  onChange={(e) => applyTheme(e.target.value)}
+                />
+              </label>
+            </section>
+          )}
         </aside>
-        <main className="studio-canvas" ref={canvas} />
+        <div className="website-stage">
+          <div className="website-canvas-caption">
+            <span>
+              <i />
+              {page.title[editLocale] || "Home"}
+            </span>
+            <span>
+              {device.toUpperCase()} · {zoom}%
+            </span>
+            <button
+              type="button"
+              onClick={() =>
+                editor.current?.runCommand("core:component-outline")
+              }
+            >
+              {t("Đường biên", "Outlines")}
+            </button>
+          </div>
+          <main className="studio-canvas" ref={canvas} />
+          <div className="website-breadcrumbs">
+            {selected ? (
+              ancestors(selected).map((node: any, i: number) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => editor.current?.select(node)}
+                >
+                  {node.getName?.() || node.get("tagName")}{" "}
+                  {i < ancestors(selected).length - 1 ? " / " : ""}
+                </button>
+              ))
+            ) : (
+              <span>
+                {t(
+                  "Nhấp để chọn · Nhấp đúp để sửa chữ · Kéo tay nắm để đổi kích thước",
+                  "Click to select · Double-click to edit text · Drag handles to resize",
+                )}
+              </span>
+            )}
+          </div>
+        </div>
+        <aside className="website-inspector">
+          <header>
+            <SlidersHorizontal size={17} />
+            <strong>{t("Thuộc tính", "Properties")}</strong>
+            <span>{selected?.get("tagName") || "—"}</span>
+          </header>
+          <section className="website-property-body">
+            {selected ? (
+              <>
+                <div className="website-selection-heading">
+                  <strong>
+                    {selected.getName?.() || selected.get("tagName")}
+                  </strong>
+                  <small>{t("Phần tử đang chọn", "Selected element")}</small>
+                </div>
+                <div className="actions">
+                  <button
+                    aria-label={t("Di chuyển lên", "Move up")}
+                    onClick={() => {
+                      const parent = selected.parent();
+                      if (parent)
+                        selected.move(parent, {
+                          at: Math.max(
+                            0,
+                            parent.components().indexOf(selected) - 1,
+                          ),
+                        });
+                    }}
+                  >
+                    <ArrowUp size={14} />
+                  </button>
+                  <button
+                    aria-label={t("Di chuyển xuống", "Move down")}
+                    onClick={() => {
+                      const parent = selected.parent();
+                      if (parent)
+                        selected.move(parent, {
+                          at: Math.min(
+                            parent.components().length,
+                            parent.components().indexOf(selected) + 2,
+                          ),
+                        });
+                    }}
+                  >
+                    <ArrowDown size={14} />
+                  </button>
+                  <button
+                    onClick={() => {
+                      const parent = selected.parent();
+                      if (parent) {
+                        const clone = parent.append(selected.clone(), {
+                          at: parent.components().indexOf(selected) + 1,
+                        })[0];
+                        editor.current?.select(clone);
+                      }
+                    }}
+                  >
+                    {t("Nhân bản", "Duplicate")}
+                  </button>
+                  <button
+                    onClick={() => {
+                      selected.remove();
+                      setSelected(null);
+                    }}
+                  >
+                    {t("Xóa", "Delete")}
+                  </button>
+                  <button onClick={() => selected.append("<p>Text</p>")}>
+                    + {t("Thêm con", "Add child")}
+                  </button>
+                </div>
+                <label>
+                  {t("Vị trí", "Position")}
+                  <select
+                    aria-label={t("Vị trí", "Position")}
+                    value={selected.getStyle().position || "static"}
+                    onChange={(e) => {
+                      selected.addStyle({ position: e.target.value });
+                      editor.current?.setDragMode(
+                        ["absolute", "fixed"].includes(e.target.value)
+                          ? "absolute"
+                          : "",
+                      );
+                      force(tick + 1);
+                    }}
+                  >
+                    <option value="static">Flow / Responsive</option>
+                    <option value="absolute">Free / Absolute</option>
+                    <option value="fixed">Fixed / Viewport</option>
+                    <option value="relative">Relative</option>
+                    <option value="sticky">Sticky</option>
+                  </select>
+                </label>
+                <p>
+                  {t(
+                    "Kéo trên canvas để di chuyển; kéo các tay nắm để thay đổi kích thước.",
+                    "Drag on the canvas to move; use handles to resize.",
+                  )}
+                </p>
+                <fieldset>
+                  <legend>{t("Sự kiện", "Events")}</legend>
+                  <select
+                    aria-label="Event"
+                    value={attrs["data-event"] || ""}
+                    onChange={(e) => attribute("data-event", e.target.value)}
+                  >
+                    <option value="">None</option>
+                    {[
+                      "click",
+                      "dblclick",
+                      "mouseenter",
+                      "mouseleave",
+                      "change",
+                      "submit",
+                    ].map((x) => (
+                      <option key={x}>{x}</option>
+                    ))}
+                  </select>
+                  <select
+                    aria-label="Action"
+                    value={attrs["data-action"] || "message"}
+                    onChange={(e) => attribute("data-action", e.target.value)}
+                  >
+                    {["message", "navigate", "scroll", "toggle"].map((x) => (
+                      <option key={x}>{x}</option>
+                    ))}
+                  </select>
+                  <input
+                    aria-label="Event target"
+                    placeholder="/page, https://… or element ID"
+                    value={attrs["data-target"] || ""}
+                    onChange={(e) => attribute("data-target", e.target.value)}
+                  />
+                  <input
+                    aria-label="Event message"
+                    placeholder={t("Thông báo", "Message")}
+                    value={attrs["data-message"] || ""}
+                    onChange={(e) => attribute("data-message", e.target.value)}
+                  />
+                  <h4>{t("Sự kiện bổ sung", "Additional events")}</h4>
+                  {(() => {
+                    let events: any[] = [];
+                    try {
+                      events = JSON.parse(attrs["data-events"] || "[]");
+                    } catch {}
+                    return (
+                      <>
+                        {events.map((event, i) => (
+                          <div className="studio-event-row" key={i}>
+                            <select
+                              aria-label={"Additional event " + i}
+                              value={event.event}
+                              onChange={(e) => {
+                                events[i] = { ...event, event: e.target.value };
+                                attribute(
+                                  "data-events",
+                                  JSON.stringify(events),
+                                );
+                              }}
+                            >
+                              {[
+                                "click",
+                                "dblclick",
+                                "mouseenter",
+                                "mouseleave",
+                                "change",
+                                "submit",
+                              ].map((x) => (
+                                <option key={x}>{x}</option>
+                              ))}
+                            </select>
+                            <select
+                              aria-label={"Additional action " + i}
+                              value={event.action}
+                              onChange={(e) => {
+                                events[i] = {
+                                  ...event,
+                                  action: e.target.value,
+                                };
+                                attribute(
+                                  "data-events",
+                                  JSON.stringify(events),
+                                );
+                              }}
+                            >
+                              {["message", "navigate", "scroll", "toggle"].map(
+                                (x) => (
+                                  <option key={x}>{x}</option>
+                                ),
+                              )}
+                            </select>
+                            <input
+                              placeholder="Target"
+                              value={event.target || ""}
+                              onChange={(e) => {
+                                events[i] = {
+                                  ...event,
+                                  target: e.target.value,
+                                };
+                                attribute(
+                                  "data-events",
+                                  JSON.stringify(events),
+                                );
+                              }}
+                            />
+                            <input
+                              placeholder="Message"
+                              value={event.message || ""}
+                              onChange={(e) => {
+                                events[i] = {
+                                  ...event,
+                                  message: e.target.value,
+                                };
+                                attribute(
+                                  "data-events",
+                                  JSON.stringify(events),
+                                );
+                              }}
+                            />
+                            <button
+                              onClick={() =>
+                                attribute(
+                                  "data-events",
+                                  JSON.stringify(
+                                    events.filter((_, j) => j !== i),
+                                  ),
+                                )
+                              }
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          disabled={events.length >= 8}
+                          onClick={() =>
+                            attribute(
+                              "data-events",
+                              JSON.stringify([
+                                ...events,
+                                {
+                                  event: "click",
+                                  action: "message",
+                                  message: "Hello",
+                                },
+                              ]),
+                            )
+                          }
+                        >
+                          + {t("Thêm sự kiện", "Add event")}
+                        </button>
+                      </>
+                    );
+                  })()}
+                </fieldset>
+              </>
+            ) : (
+              <p>
+                {t(
+                  "Chọn một gadget trên trang.",
+                  "Select a gadget on the page.",
+                )}
+              </p>
+            )}
+            <div id="yd-traits" />
+            <div id="yd-styles" />
+          </section>
+        </aside>
       </div>
+      {previewSite && (
+        <div
+          className="website-preview-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("Xem trước website", "Website preview")}
+        >
+          <header>
+            <strong>
+              {t("Xem trước bản đang chỉnh sửa", "Preview current draft")}
+            </strong>
+            <select
+              aria-label="Preview page"
+              value={previewPage}
+              onChange={(e) => setPreviewPage(e.target.value)}
+            >
+              {previewSite.pages.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.title[editLocale]}
+                </option>
+              ))}
+            </select>
+            <span>
+              {t("Chưa xuất bản thay đổi", "Changes are not published")}
+            </span>
+            <button type="button" onClick={() => setPreviewSite(null)}>
+              <X size={17} />
+              {t("Đóng", "Close")}
+            </button>
+          </header>
+          <div className="website-preview-content">
+            <SiteRuntime
+              key={previewPage}
+              source={
+                previewSite.pages.find((p) => p.id === previewPage)![editLocale]
+              }
+              pages={previewSite.pages}
+              courses={previewCourses}
+              slug={w.slug}
+              title="Draft website preview"
+              onNavigate={(href) => {
+                const path = new URL(href, location.origin).pathname;
+                const target = previewSite.pages.find(
+                  (p) => path === `/t/${w.slug}${p.slug ? `/p/${p.slug}` : ""}`,
+                );
+                if (target) setPreviewPage(target.id);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

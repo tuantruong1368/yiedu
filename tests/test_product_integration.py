@@ -522,3 +522,49 @@ def test_starter_upgrade_preserves_teacher_edits_and_does_not_duplicate_assets(c
     result = owner.post(base + "/studio/starter-content/upgrade")
     assert result.json()["lessons_updated"] == 0
     assert owner.get(base + "/lessons/" + lesson["id"]).json()["content"] == "Teacher-owned content"
+
+
+def test_published_render_is_public_fresh_scoped_and_keeps_security_headers(clients):
+    owner, _, visitor, _ = clients
+    register(owner, "RenderOwner")
+    w, tenant = create_site(owner)
+    document = w["data"]
+    document["pages"][0]["vi"]["html"] += (
+        '<section data-gadget="yiedu.courses"><div data-template-preview="true">'
+        "PLACEHOLDER</div></section>"
+    )
+    changed = owner.put(
+        f"/api/v1/workspaces/{w['id']}",
+        json={
+            "name": w["name"],
+            "slug": w["slug"],
+            "revision": w["revision"],
+            "data": document,
+        },
+    )
+    assert changed.status_code == 200, changed.text
+    assert owner.post(f"/api/v1/workspaces/{w['id']}/publish").status_code == 200
+    base = f"/api/v1/runtime/{tenant['id']}"
+    for title, published in [("Public course", True), ("PRIVATE DRAFT", False)]:
+        assert (
+            owner.post(
+                base + "/courses",
+                json={
+                    "title": title,
+                    "slug": title.lower().replace(" ", "-"),
+                    "published": published,
+                },
+            ).status_code
+            == 201
+        )
+    url = f"/api/v1/sites/{tenant['slug']}/render"
+    response = visitor.get(url)
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/html")
+    assert response.headers["cache-control"] == "no-store"
+    assert "nonce-" in response.headers["content-security-policy"]
+    assert response.headers["x-content-type-options"] == "nosniff"
+    assert "Public course" in response.text and "PRIVATE DRAFT" not in response.text
+    assert "PLACEHOLDER" not in response.text
+    assert visitor.get(url + "?page=missing").status_code == 404
+    assert visitor.get(url + "?locale=unsupported").status_code == 422

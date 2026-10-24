@@ -12,6 +12,8 @@ export default function SiteRuntime({
   courseBase,
   pageBase,
   pages = NO_PAGES,
+  frameUrl,
+  onNavigate,
 }: {
   source: Source;
   courses: any[];
@@ -20,11 +22,35 @@ export default function SiteRuntime({
   courseBase?: string;
   pageBase?: string;
   pages?: SitePage[];
+  frameUrl?: string;
+  onNavigate?: (href: string) => void;
 }) {
   const frame = useRef<HTMLIFrameElement>(null),
     [doc, setDoc] = useState(""),
     [height, setHeight] = useState(600);
+  const [epoch, setEpoch] = useState(0),
+    [attempt, setAttempt] = useState(0),
+    [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const viewportMode = useRef(false);
+  const ready = useRef(false),
+    navigateRef = useRef(onNavigate);
+  navigateRef.current = onNavigate;
   useEffect(() => {
+    setEpoch((n) => n + 1);
+  }, []);
+  useEffect(() => {
+    ready.current = false;
+    setStatus("loading");
+    const timer = setTimeout(() => {
+      if (!ready.current) {
+        if (attempt === 0) setAttempt(1);
+        else setStatus("error");
+      }
+    }, 7000);
+    return () => clearTimeout(timer);
+  }, [frameUrl, doc, epoch, attempt]);
+  useEffect(() => {
+    if (frameUrl) return;
     setHeight(600);
     const parsed = new DOMParser().parseFromString(
       sanitizeImport(source.html),
@@ -111,7 +137,16 @@ export default function SiteRuntime({
     setDoc(
       `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https: data:; media-src https:; style-src 'unsafe-inline'; script-src 'nonce-yiedu-runtime'; font-src https: data:; form-action 'none'; base-uri 'none'"><style>${source.css.replace(/</g, "\\3c ")}</style></head><body>${safe}<script nonce="yiedu-runtime">${runtime}</script></body></html>`,
     );
-  }, [source.html, source.css, courses, slug, courseBase, pageBase, pages]);
+  }, [
+    source.html,
+    source.css,
+    courses,
+    slug,
+    courseBase,
+    pageBase,
+    pages,
+    frameUrl,
+  ]);
   useEffect(() => {
     function receive(e: MessageEvent) {
       if (
@@ -119,23 +154,42 @@ export default function SiteRuntime({
         e.data?.channel !== "yiedu-page-v1"
       )
         return;
+      if (e.data.type === "ready" && e.data.viewport) {
+        viewportMode.current = true;
+        setHeight(Math.max(480, window.innerHeight - 160));
+      }
+      if (e.data.type === "ready" || e.data.type === "height") {
+        ready.current = true;
+        setStatus("ready");
+      }
       if (e.data.type === "height" && Number.isFinite(e.data.height))
-        setHeight(Math.min(40000, Math.max(200, e.data.height)));
+        setHeight(Math.min(60000, Math.max(200, e.data.height)));
       if (e.data.type === "navigate" && typeof e.data.href === "string") {
         const href = e.data.href;
         if (
           (/^\/(?!\/)/.test(href) || /^https:\/\//.test(href)) &&
           !/[\\\x00-\x20]/.test(href)
-        )
-          location.assign(href);
+        ) {
+          if (navigateRef.current) navigateRef.current(href);
+          else location.assign(href);
+        }
       }
     }
+    const resize = () => {
+      if (viewportMode.current)
+        setHeight(Math.max(480, window.innerHeight - 160));
+    };
     window.addEventListener("message", receive);
-    return () => window.removeEventListener("message", receive);
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("message", receive);
+      window.removeEventListener("resize", resize);
+    };
   }, []);
   return (
     <>
       <iframe
+        key={`${frameUrl || "inline"}:${epoch}:${attempt}`}
         ref={frame}
         onLoad={() => {
           let id = window.location.hash.slice(1);
@@ -149,12 +203,33 @@ export default function SiteRuntime({
             );
         }}
         title={title}
-        srcDoc={doc}
+        src={
+          frameUrl
+            ? `${frameUrl}${attempt ? `&retry=${attempt}` : ""}`
+            : undefined
+        }
+        srcDoc={frameUrl ? undefined : doc}
         sandbox="allow-scripts"
         referrerPolicy="no-referrer"
         className="tenant-canvas"
         style={{ height }}
       />
+      {status === "error" && (
+        <div className="site-render-error" role="alert">
+          <p>
+            Chưa tải được nội dung trang / Page content could not be loaded.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setAttempt(0);
+              setEpoch((n) => n + 1);
+            }}
+          >
+            Tải lại nội dung / Reload content
+          </button>
+        </div>
+      )}
       <noscript>{source.html.replace(/<[^>]*>/g, " ")}</noscript>
     </>
   );

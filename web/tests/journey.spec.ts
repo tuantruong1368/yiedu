@@ -41,6 +41,7 @@ test("owner creates a tenant and lesson, learner completes it, ZIP downloads", a
   ).toBeVisible();
   await page.goto("/t/" + slug + "/administrator");
   await page.getByRole("button", { name: "Khóa học", exact: true }).click();
+  await page.getByRole("button", { name: "Tạo khóa học", exact: true }).click();
   await page.getByLabel("Tên khóa học", { exact: true }).fill("Python căn bản");
   await page
     .getByLabel("Mô tả", { exact: true })
@@ -50,7 +51,10 @@ test("owner creates a tenant and lesson, learner completes it, ZIP downloads", a
   await expect(
     page.getByRole("status").filter({ hasText: "Đã lưu khóa học" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Bài học", exact: true }).click();
+  await page
+    .locator(".lesson-browser")
+    .getByRole("button", { name: "Thêm bài học", exact: true })
+    .click();
   await page
     .getByLabel("Tiêu đề", { exact: true })
     .fill("Bài 1: Biến và kiểu dữ liệu");

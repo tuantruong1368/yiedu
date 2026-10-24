@@ -1,6 +1,9 @@
 # Trạng thái thực tế YiEdu
 
-Cập nhật bản 0.6.0: [Content Studio và template website](release-0.6.md).
+Cập nhật bản 0.7.0: [Website Studio, render và course workspace](release-0.7.md).
+Không thêm migration hoặc thay nội dung tenant. [Hướng dẫn](../guides/website-studio.md).
+
+Bản 0.6.0: [Content Studio và template website](release-0.6.md).
 Đã có Studio toàn màn hình, thư viện slide/video theo cảnh/mô phỏng riêng tenant, revision,
 media snapshots và nâng cấp học liệu mẫu. [Hướng dẫn sử dụng và SDK](../guides/content-studio.md).
 Các mục dưới giữ lịch sử triển khai và các phần chưa có; 0.6 không hoàn thành marketplace/AI/media storage.

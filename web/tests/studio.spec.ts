@@ -138,16 +138,17 @@ test("actual template previews, all tenant menus, independent studio tools and l
   await expect(page).not.toHaveURL(/\/new$/);
   await page.goto(`/t/${slug}/administrator`);
   await page.getByRole("button", { name: "Khóa học", exact: true }).click();
-  await page.getByRole("button", { name: "Bài học", exact: true }).click();
+  await page
+    .locator(".lesson-browser")
+    .getByRole("button", { name: "Thêm bài học", exact: true })
+    .click();
   await page
     .getByLabel("Tiêu đề", { exact: true })
     .fill("Learning with real media");
   await page
     .getByRole("textbox", { name: "Nội dung", exact: true })
     .fill("Explain the model before trying the controls.");
-  await page
-    .getByRole("button", { name: /Lưu và mở Studio toàn màn hình/ })
-    .click();
+  await page.getByRole("button", { name: /Mở Studio toàn màn hình/ }).click();
   await expect(page).toHaveURL(/\/studio\/lesson\/[a-f0-9-]+$/);
   await expect(page.getByLabel("Tên dự án", { exact: true })).toHaveValue(
     "Learning with real media",
@@ -169,7 +170,9 @@ test("actual template previews, all tenant menus, independent studio tools and l
     .fill("Customized within this lesson");
   await embedded.getByRole("button", { name: "Xong", exact: true }).click();
   await page.getByRole("button", { name: "Lưu", exact: true }).click();
-  await expect(page.getByRole("status").filter({hasText:"Đã lưu"})).toContainText("Đã lưu");
+  await expect(
+    page.getByRole("status").filter({ hasText: "Đã lưu" }),
+  ).toContainText("Đã lưu");
   await page.reload();
   await expect(page.locator(".studio-lesson-node")).toHaveCount(2);
   await page

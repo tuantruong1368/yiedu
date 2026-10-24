@@ -89,7 +89,14 @@ export async function exportVideo(
       );
     return { titleSize, headline, bodySize, body, bodyY };
   });
+  canvas.style.cssText =
+    "position:fixed;left:-3000px;top:0;width:1280px;height:720px;pointer-events:none";
+  canvas.setAttribute("aria-hidden", "true");
+  document.body.appendChild(canvas);
   const stream = canvas.captureStream(25);
+  const videoTrack =
+    stream.getVideoTracks()[0] as CanvasCaptureMediaStreamTrack;
+  const requestFrame = () => videoTrack.requestFrame?.();
   let audio: MediaStream | undefined;
   let recorder: MediaRecorder | undefined;
   try {
@@ -145,7 +152,8 @@ export async function exportVideo(
       ctx.fillRect(0, 710, 1280 * Math.min(1, elapsed / total), 10);
     };
     draw(0);
-    recorder.start(500);
+    recorder.start(250);
+    requestFrame();
     await new Promise<void>((resolve, reject) => {
       let timer: ReturnType<typeof setTimeout>;
       const cleanup = () => {
@@ -164,6 +172,7 @@ export async function exportVideo(
         }
         const elapsed = (performance.now() - start) / 1000;
         draw(Math.min(elapsed, total));
+        requestFrame();
         onProgress(Math.min(100, Math.round((elapsed / total) * 100)));
         if (elapsed >= total) {
           cleanup();
@@ -176,13 +185,19 @@ export async function exportVideo(
     recorder.stop();
     await stopped;
     if (encodingError) throw encodingError;
+    const output = new Blob(chunks, { type: mime });
+    if (!output.size)
+      throw new Error(
+        "Không ghi được khung hình video. Hãy thử lại / No video frames recorded. Please retry.",
+      );
     download(
-      new Blob(chunks, { type: mime }),
+      output,
       `${title.replace(/[^\p{L}\p{N}-]/gu, "-").slice(0, 60)}.${mime.includes("mp4") ? "mp4" : "webm"}`,
     );
   } finally {
     if (recorder && recorder.state !== "inactive") recorder.stop();
     stream.getTracks().forEach((track) => track.stop());
     audio?.getTracks().forEach((track) => track.stop());
+    canvas.remove();
   }
 }

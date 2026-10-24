@@ -56,3 +56,10 @@ EditorContribution chỉ khai báo module/slot/license; không cấp quyền th�
 | Portable | snapshot 0005 + restore validator | integration restore trong schema trống |
 
 [AC và tác động](changes/CR-004-content-studio.md), [giới hạn](release-0.6.md).
+
+
+## CR-005 — sửa hiển thị và authoring UX
+
+[AC-005](changes/CR-005-authoring-workspaces.md) → render endpoint/SiteRuntime → render regression + API tests;
+Website Studio/GadgetLibrary/PostCSS → pointer drag, theme computed color và export/reopen browser;
+CourseWorkspace → long list, lesson save và return context browser. [Phạm vi 0.7](release-0.7.md).

@@ -12,8 +12,10 @@
 
 - Phạm vi hiện tại: handbook/product/vision-v2.md và traceability-v2.md. Đừng đánh đồng spec/metadata validator với installer hoặc runtime extension.
 
-- Bản triển khai hiện tại: handbook/product/release-0.6.md. Kiểm Next build/browser và Expo typecheck/bundle khi sửa client.
+- Bản triển khai hiện tại: handbook/product/release-0.7.md. Kiểm Next build/browser và Expo typecheck/bundle khi sửa client.
 
 - Authoring SDK: handbook/guides/authoring-sdk.md. Giữ Puck legacy, validate SiteDocument và rich lesson; cập nhật VI/EN cho UI mới.
 
 - Content Studio 0.6: handbook/guides/content-studio.md. Giữ schema snapshots, ACL tenant, revision và fingerprint bài mẫu khi thay đổi module.
+
+- Website Studio 0.7: handbook/guides/website-studio.md. Giữ render endpoint/CSP, PostCSS và regression điều hướng; lesson editor nằm trong CourseWorkspace.

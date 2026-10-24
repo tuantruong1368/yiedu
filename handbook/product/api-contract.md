@@ -89,3 +89,11 @@ Từ chối asset tenant khác; learner chỉ đọc snapshot trong lesson sau e
 LessonWrite nhận revision tùy chọn để giữ client cũ; editor web mới luôn gửi revision khi sửa.
 Bài học có metadata `localized_titles` trong overview, không chứa body/video/document/translations.
 [Schema và hướng dẫn](../guides/content-studio.md).
+
+
+## Published render 0.7
+
+GET `/api/v1/sites/{slug}/render?page=<slug>&locale=vi|en` trả HTML cho iframe public, không cần session.
+Chỉ lấy course đã publish cùng tenant, rewrite page ID/slug, fallback nội dung theo default locale.
+Response no-store, CSP nonce và nosniff; BFF giữ các header này. Trang thiếu trả 404, tham số không hợp lệ 422.
+Không có endpoint mới ghi dữ liệu, không thay ACL của workspace/learning. [Hướng dẫn](../guides/website-studio.md).

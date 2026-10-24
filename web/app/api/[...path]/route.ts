@@ -35,6 +35,8 @@ async function proxy(
       "content-type",
       "content-disposition",
       "cache-control",
+      "content-security-policy",
+      "x-content-type-options",
     ]) {
       const value = upstream.headers.get(name);
       if (value) result.set(name, value);
