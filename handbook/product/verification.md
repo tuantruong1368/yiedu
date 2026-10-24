@@ -179,3 +179,10 @@ Danh mục developer đã cập nhật đủ 226 file/68 thư mục.
 chuyên gia cho toàn bộ giáo trình. Video export được kiểm ở chế độ không thu micro.
 Không có Docker daemon local; kết quả PostgreSQL 18.6 native/Compose/mobile/upgrade được xác nhận
 riêng qua CI sau khi đưa nguồn lên main. PGlite local không thay thế bằng chứng đó.
+
+CI nguồn `9866c34f2dc656bec4d642f5100aef2598c7fcc5`:
+[run 40077614987](https://github.com/tuantruong1368/yiedu/actions/runs/40077614987)
+đã thành công **cả 4 job**: product (PostgreSQL 18.6 native, migration/check/downgrade/upgrade,
+41 pytest, Next production build và 4 Playwright journeys), mobile (typecheck, Expo iOS/Android
+bundles), compose (build/ready/homepage), database-upgrade (PostgreSQL 17→18, giữ dữ liệu và
+chạy lại app). Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay code đã kiểm tra.
