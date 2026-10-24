@@ -49,7 +49,7 @@ class Dependency(ContractModel):
 
 class EditorContribution(ContractModel):
     id: Annotated[str, StringConstraints(pattern=r"^[a-z][a-z0-9-]{0,63}$")]
-    slot: Literal["page-gadget", "lesson-tool"]
+    slot: Literal["page-gadget", "lesson-tool", "studio-tool"]
     api_version: Literal["1.0.0"]
     export_name: Annotated[str, StringConstraints(pattern=r"^[A-Za-z][A-Za-z0-9_]{0,99}$")]
     license: Literal["free", "commercial"] = "free"

@@ -3,7 +3,11 @@
 Tạo và vận hành hệ thống e-learning mang thương hiệu riêng.
 Yisoft và Yirobot là tenant demo, không phải khóa học do YiEdu bán.
 
-## Bản chạy local 0.5.0
+## Bản chạy local 0.6.0
+
+Mới: [Content Studio toàn màn hình](handbook/guides/content-studio.md), website template thu nhỏ đúng giao diện,
+slide/video/mô phỏng độc lập, bài giảng có học liệu và nâng cấp bài mẫu giữ nội dung khách đã sửa.
+[Phạm vi 0.6 và giới hạn](handbook/product/release-0.6.md).
 
 Mới: [14 template và học liệu Việt/Anh](handbook/guides/template-library.md), xem trước website/bài học và copy nội dung riêng cho tenant khi xuất bản.
 

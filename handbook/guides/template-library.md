@@ -108,3 +108,12 @@ Nội dung JSON được đóng vào Python package để Docker/standalone cùn
 Mở rộng một chuyên đề: viết hai ngôn ngữ, ví dụ có lời giải, lab tái lập và đáp án; thêm nguồn
 đọc, kiểm thử code, chạy validator, nhờ chuyên gia review rồi mới nâng content version. Không dùng
 số lượng môn hoặc tên trường làm bằng chứng cho chất lượng đào tạo.
+
+
+## Học liệu đa phương tiện 2026.10.2
+
+Bản 0.6 thêm slide và bài giảng theo cảnh vào học phần, chọn mô phỏng theo nội dung môn.
+Tenant mới được sao chép thêm thư viện dự án. Tenant cũ vào Tổng quan → Cập nhật học liệu mẫu
+để nâng phần còn nguyên bản; giữ bài đã sửa và tiến độ. [Hướng dẫn chi tiết](content-studio.md).
+Ảnh mẫu homepage dựng từ document website thật. Đây vẫn là học liệu cô đọng chờ chuyên gia review,
+chưa phải toàn bộ giáo trình đại học hay kho video giảng viên quay sẵn.

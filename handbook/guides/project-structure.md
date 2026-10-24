@@ -1,8 +1,9 @@
 # Cấu trúc dự án YiEdu — tài liệu cho developer
 
 Cập nhật 24/10/2026, đối chiếu mã nguồn sau nâng cấp công nghệ, dựa trên commit
-`e9730f1b812a2b979d4029d63446b177a2970e92` làm baseline và cập nhật Authoring Studio 0.4 trong lần thay đổi này.
-Danh mục bên dưới bao phủ toàn bộ **184 file được quản lý bằng Git** sau lần cập nhật tài liệu.
+`b906645f3c6fbda261492bb63b7ffe5713820bf3` làm baseline, bổ sung Content Studio 0.6.
+Danh mục bên dưới bao phủ toàn bộ **226 file được quản lý bằng Git** sau lần cập nhật tài liệu.
+Có 68 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6 cuối tài liệu.
 Các thư mục build/dependency/backup sinh ở máy developer được giải thích riêng ở mục 6.
 
 ## 1. Đọc tài liệu này để làm gì?
@@ -550,3 +551,43 @@ Quy trình tham gia: [CONTRIBUTING](https://github.com/tuantruong1368/yiedu/blob
 
 [Thư viện template](template-library.md) liệt kê chức năng các file nội dung, provisioning,
 migration 0004, API preview và giao diện gallery mới. Đây là nguồn tra cứu cho developer mở rộng mẫu.
+
+
+## Bổ sung Content Studio 0.6 — danh mục từng file mới
+
+Đọc [Content Studio và SDK](content-studio.md), [CR-004](../product/changes/CR-004-content-studio.md)
+và [ma trận 0.6](../product/release-0.6.md). Các thư mục mới và file dưới đây mở rộng danh mục baseline.
+
+| File | Chức năng |
+|---|---|
+| `backend/migrations/versions/0005_studio.py` | Tạo studio_assets và revision cho lessons; upgrade/downgrade. |
+| `backend/yiedu/content/lesson-baselines.json` | Fingerprint bài 0.5 để nhận biết nội dung mẫu còn nguyên trước nâng cấp. |
+| `backend/yiedu/learning_media.py` | Biên soạn slide, video theo cảnh và bài hướng dẫn thí nghiệm từ nội dung gốc. |
+| `backend/yiedu/studio.py` | API CRUD project, ACL, row lock/revision, audit và nâng học liệu. |
+| `backend/yiedu/studio_schema.py` | Validator phiên bản/nội dung, giới hạn slide và tham số mô phỏng. |
+| `backend/yiedu/studio_seed.py` | Sao chép thư viện riêng tenant, cập nhật bài nguyên bản và tránh nhân đôi. |
+| `extensions/examples/content-studio/README.md` | Cách phát triển contribution studio-tool. |
+| `extensions/examples/content-studio/manifest.json` | Metadata mẫu slide/video/simulation, không cấp quyền chạy code. |
+| `handbook/guides/content-studio.md` | Hướng dẫn local, tác giả, developer và export/restore. |
+| `handbook/product/changes/CR-004-content-studio.md` | Yêu cầu, AC và tác động thay đổi 0.6. |
+| `handbook/product/release-0.6.md` | Ma trận chức năng và giới hạn thực tế. |
+| `tests/test_studio.py` | Validator chống payload lạ và kiểm hợp đồng media học liệu. |
+| `web/app/t/[slug]/administrator/studio/[kind]/[id]/page.tsx` | Route editor toàn màn hình theo loại và project/lesson UUID. |
+| `web/app/t/[slug]/administrator/studio/page.tsx` | Route thư viện công cụ/học liệu tenant. |
+| `web/app/templates/[id]/thumbnail/route.ts` | HTML chỉ đọc từ chính document của template, CSP riêng. |
+| `web/components/studio/presentation-player.tsx` | Player slide/video, bàn phím, notes, timer và giọng đọc. |
+| `web/components/studio/project-editor.tsx` | Editor scene/slide/model, thuộc tính và thứ tự. |
+| `web/components/studio/simulation-player.tsx` | Giao diện tương tác robot/PID/sort/scaling, dùng độc lập hoặc trong lesson. |
+| `web/components/studio/studio-screen.tsx` | Trang quản trị thư viện và editor lesson/media, lưu/nháp/preview/export. |
+| `web/components/template-thumbnail.tsx` | Khung browser và scale thumbnail responsive. |
+| `web/lib/authoring/navigation.ts` | Bảng route page ID/slug, link nhập HTML và auth context. |
+| `web/lib/studio/export.ts` | Xuất HTML/JSON, browser print, canvas video và micro/cancel cleanup. |
+| `web/lib/studio/lesson-node.tsx` | Tiptap snapshot node, player và chỉnh bản sao inline. |
+| `web/lib/studio/registry.tsx` | Registry công cụ, module ID/version/capabilities và label VI/EN. |
+| `web/lib/studio/simulations.ts` | Thuật toán và control schema của bốn mô hình, độc lập renderer. |
+| `web/lib/studio/types.ts` | Contract TypeScript, project defaults, URL và schema version. |
+| `web/tests/studio.spec.ts` | Browser flow ảnh mẫu/menu/studio/video download/learner interaction. |
+
+Các thư mục `web/lib/studio/` và `web/components/studio/` là module TypeScript/React, không phải
+service riêng. `extensions/examples/content-studio/` là metadata SDK; dữ liệu dự án riêng tenant
+nằm trong PostgreSQL, không tự tạo folder source cho từng khách. Route Studio nằm dưới quản trị tenant.

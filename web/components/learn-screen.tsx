@@ -2,6 +2,7 @@
 import { useI18n } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   BookOpen,
   CheckCircle2,
@@ -19,16 +20,19 @@ import { LocaleSwitch } from "./locale-provider";
 import LessonView from "./lesson/lesson-view";
 export default function LearnScreen({ slug }: { slug: string }) {
   const { t: tr, locale } = useI18n();
+  const query = useSearchParams();
 
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
-    [courseId, setCourseId] = useState(""),
+    [courseId, setCourseId] = useState(query.get("course") || ""),
     [lesson, setLesson] = useState<any>(null),
     [certificate, setCertificate] = useState<any>(null);
   const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
   async function refresh() {
     const site = await api("/sites/" + slug);
     setTenant(site.tenant);
+    await api("/auth/me");
+    await api("/sites/" + slug + "/join", { method: "POST" });
     return api("/runtime/" + site.tenant.id + "/overview").then(setData);
   }
   useEffect(() => {
@@ -61,10 +65,24 @@ export default function LearnScreen({ slug }: { slug: string }) {
                 {slug}.
               </p>
               <div className="actions">
-                <Link className="button" href={"/register?site=" + slug}>
+                <Link
+                  className="button"
+                  href={
+                    "/register?site=" +
+                    slug +
+                    (courseId ? "&course=" + courseId : "")
+                  }
+                >
                   {tr("Tạo tài khoản")}
                 </Link>
-                <Link className="button ghost" href={"/login?site=" + slug}>
+                <Link
+                  className="button ghost"
+                  href={
+                    "/login?site=" +
+                    slug +
+                    (courseId ? "&course=" + courseId : "")
+                  }
+                >
                   {tr("Đăng nhập")}
                 </Link>
               </div>
@@ -146,7 +164,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                       ) : (
                         <PlayCircle size={17} />
                       )}
-                      <span>{l.title}</span>
+                      <span>{l.localized_titles?.[locale] || l.title}</span>
                     </button>
                   ))}
               </aside>
@@ -231,7 +249,10 @@ export default function LearnScreen({ slug }: { slug: string }) {
                             {enrolled ? tr("ĐANG HỌC") : tr("SẴN SÀNG BẮT ĐẦU")}
                           </small>
                           <h3>{c.translations?.[locale]?.title || c.title}</h3>
-                          <p>{c.description}</p>
+                          <p>
+                            {c.translations?.[locale]?.description ||
+                              c.description}
+                          </p>
                           {enrolled ? (
                             <>
                               <div className="progress-track">
@@ -266,7 +287,7 @@ export default function LearnScreen({ slug }: { slug: string }) {
                                     ) : (
                                       <PlayCircle size={17} />
                                     )}{" "}
-                                    {l.title}
+                                    {l.localized_titles?.[locale] || l.title}
                                   </button>
                                 ))}
                               </div>

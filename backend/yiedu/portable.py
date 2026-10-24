@@ -17,6 +17,7 @@ from yiedu.models import (
     LearningPath,
     Lesson,
     Membership,
+    StudioAsset,
     TenantExtension,
     User,
 )
@@ -25,7 +26,7 @@ from yiedu.models import (
 def snapshot(db, tenant):
     memberships = list(db.scalars(select(Membership).where(Membership.tenant_id == tenant.id)))
     user_ids = [m.user_id for m in memberships]
-    data = {"schema_version": "0004", "tenant": row_data(tenant), "tables": {}}
+    data = {"schema_version": "0005", "tenant": row_data(tenant), "tables": {}}
     # Passwords are reset at the destination. No password hash or session token is exported.
     data["users"] = [
         {"id": str(u.id), "email": u.email, "name": u.name}
@@ -39,6 +40,7 @@ def snapshot(db, tenant):
         Enrollment,
         Completion,
         TenantExtension,
+        StudioAsset,
     ]:
         rows = list(db.scalars(select(model).where(model.tenant_id == tenant.id).limit(10001)))
         if len(rows) > 10000:
@@ -113,8 +115,8 @@ def create_export(db, tenant):
         raise HTTPException(413, "Gói vượt giới hạn exporter local")
     manifest = {
         "tenant_id": str(tenant.id),
-        "core_version": "0.5.0",
-        "schema_version": "0004",
+        "core_version": "0.6.0",
+        "schema_version": "0005",
         "files": {name: hashlib.sha256(body).hexdigest() for name, body in files.items()},
         "signed": False,
         "passwords_reset_required": True,

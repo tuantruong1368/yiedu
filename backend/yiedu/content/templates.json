@@ -14,7 +14,7 @@
     "subtitle_en": "Learn today. Grow tomorrow.",
     "description": "Website trung tâm với chương trình, lớp học, lộ trình và thực hành mẫu.",
     "description_en": "A training center website with programs, pathways and practical learning units.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "study-skills",
       "learning-design",
@@ -43,7 +43,7 @@
     "subtitle_en": "Every lesson starts a connection.",
     "description": "Không gian riêng cho giáo viên, nội dung chuyên môn và học viên của mình.",
     "description_en": "A personal teaching space for expertise, courses and learner relationships.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "learning-design",
       "technical-communication",
@@ -72,7 +72,7 @@
     "subtitle_en": "Learn by making something new.",
     "description": "Phòng lab công nghệ với các bước lập trình, điện tử và robot di động.",
     "description_en": "A technology lab connecting programming, electronics and mobile robotics.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "python",
       "circuits",
@@ -101,7 +101,7 @@
     "subtitle_en": "Make every first step count.",
     "description": "Cổng đào tạo hội nhập, thông tin nội bộ và hỗ trợ nhân sự mới.",
     "description_en": "An onboarding portal for new employees, workplace information and support.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "onboarding",
       "corporate-security",
@@ -131,7 +131,7 @@
     "subtitle_en": "Build trust. Create customer value.",
     "description": "Học viện bán hàng với khám phá nhu cầu, dữ liệu và chăm sóc khách hàng.",
     "description_en": "A sales academy for discovery, data literacy and customer success.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "sales",
       "data-literacy",
@@ -161,7 +161,7 @@
     "subtitle_en": "Clear leadership. Stronger teams.",
     "description": "Đào tạo quản lý, phản hồi, dự án và thực hành nghề nghiệp.",
     "description_en": "Management learning covering feedback, projects and professional practice.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "leadership",
       "project-management",
@@ -191,7 +191,7 @@
     "subtitle_en": "Language opens new connections.",
     "description": "Trung tâm ngôn ngữ với viết, thuyết trình và thói quen tự học.",
     "description_en": "A language center for writing, speaking and independent learning habits.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "study-skills",
       "english-writing",
@@ -220,7 +220,7 @@
     "subtitle_en": "Spark curiosity. Build capability.",
     "description": "Website lớp học, mục tiêu, bài tập và phản hồi theo tiêu chí.",
     "description_en": "A classroom website for objectives, practice and criterion-based feedback.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "study-skills",
       "learning-design",
@@ -249,7 +249,7 @@
     "subtitle_en": "From your first line to a working product.",
     "description": "Bootcamp thực hành Python, web, database, API và kiểm thử.",
     "description_en": "A hands-on bootcamp connecting Python, web, databases, APIs and testing.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "python",
       "linux-git",
@@ -281,7 +281,7 @@
     "subtitle_en": "Learn. Build. Move robotics forward.",
     "description": "Lộ trình tham chiếu 8 học kỳ từ nền tảng đến tự hành và hình người; bài học cô đọng, thí nghiệm và đồ án.",
     "description_en": "An eight-semester reference pathway from fundamentals to autonomy and humanoids, with compact study units and projects.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "study-skills",
       "python",
@@ -388,7 +388,7 @@
     "subtitle_en": "Build foundations. Engineer dependable systems.",
     "description": "Lộ trình tham chiếu năm 1–4: toán, lập trình, hệ thống, kỹ nghệ phần mềm và đồ án.",
     "description_en": "A years-one-to-four reference pathway across mathematics, programming, systems, software engineering and capstone work.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "study-skills",
       "python",
@@ -495,7 +495,7 @@
     "subtitle_en": "Understand principles. Verify through experiments.",
     "description": "Khoa nền tảng với giải tích, đại số, vật lý và điện tử ứng dụng.",
     "description_en": "An engineering foundation combining calculus, linear algebra, physics and circuits.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "calculus",
       "linear-algebra",
@@ -525,7 +525,7 @@
     "subtitle_en": "Learn from data. Decide with evidence.",
     "description": "Đào tạo xác suất, pipeline dữ liệu và học máy với thực hành có kiểm chứng.",
     "description_en": "Probability, data pipelines and machine learning through evidence-based practice.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "probability",
       "data-engineering",
@@ -554,7 +554,7 @@
     "subtitle_en": "Clear ideas. Thoughtful experiences.",
     "description": "Không gian thiết kế thị giác, accessibility và dự án giao diện.",
     "description_en": "A visual design, accessibility and interface-project studio.",
-    "version": "2026.10.1",
+    "version": "2026.10.2",
     "module_ids": [
       "visual-design",
       "hci",

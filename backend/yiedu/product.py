@@ -332,9 +332,15 @@ def overview(tenant_id: uuid.UUID, user: UserDep, db: DB):
     # Return metadata only here. Lesson body is served after enrollment/prerequisite checks.
     lesson_rows = [
         {
-            k: v
-            for k, v in encode(lesson).items()
-            if k not in {"content", "video_url", "document", "translations"}
+            **{
+                k: v
+                for k, v in encode(lesson).items()
+                if k not in {"content", "video_url", "document", "translations"}
+            },
+            "localized_titles": {
+                lang: translation.get("title", "")
+                for lang, translation in lesson.translations.items()
+            },
         }
         for lesson in db.scalars(lessons)
     ]
@@ -420,7 +426,9 @@ def add_lesson(
 ):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
     get_course(db, tenant_id, course_id)
-    row = Lesson(tenant_id=tenant_id, course_id=course_id, **payload.model_dump())
+    row = Lesson(
+        tenant_id=tenant_id, course_id=course_id, **payload.model_dump(exclude={"revision"})
+    )
     db.add(row)
     commit(db)
     return encode(row)
@@ -477,11 +485,18 @@ def edit_lesson(
     tenant_id: uuid.UUID, lesson_id: uuid.UUID, payload: LessonWrite, user: UserDep, db: DB
 ):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
-    row = db.scalar(select(Lesson).where(Lesson.tenant_id == tenant_id, Lesson.id == lesson_id))
+    row = db.scalar(
+        select(Lesson)
+        .where(Lesson.tenant_id == tenant_id, Lesson.id == lesson_id)
+        .with_for_update()
+    )
     if not row:
         raise HTTPException(404, "Không tìm thấy bài học")
-    for key, value in payload.model_dump().items():
+    if payload.revision is not None and payload.revision != row.revision:
+        raise HTTPException(409, "Bài học đã thay đổi. Tải lại trước khi lưu / Revision conflict")
+    for key, value in payload.model_dump(exclude={"revision"}).items():
         setattr(row, key, value)
+    row.revision += 1
     commit(db)
     return encode(row)
 
@@ -709,7 +724,7 @@ def marketplace(db: DB):
 def update_status(tenant_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin"])
     return {
-        "current_version": "0.5.0",
+        "current_version": "0.6.0",
         "configured": False,
         "message": (
             "Chưa cấu hình release registry và trust key. Không có bản cập nhật được xác minh."
@@ -739,7 +754,7 @@ def export_tenant(tenant_id: uuid.UUID, user: UserDep, db: DB):
 def instance_info(db: DB):
     mode = get_settings().instance_mode
     tenant = db.scalar(select(Tenant)) if mode == "standalone" else None
-    return {"mode": mode, "version": "0.5.0", "tenant": encode(tenant) if tenant else None}
+    return {"mode": mode, "version": "0.6.0", "tenant": encode(tenant) if tenant else None}
 
 
 @router.put("/runtime/{tenant_id}/paths/{path_id}")

@@ -9,10 +9,12 @@ export default function AuthScreen({
   register = false,
   template = "academy",
   site = "",
+  course = "",
 }: {
   register?: boolean;
   template?: string;
   site?: string;
+  course?: string;
 }) {
   const { t: tr } = useI18n();
 
@@ -36,7 +38,11 @@ export default function AuthScreen({
         await api("/sites/" + encodeURIComponent(site) + "/join", {
           method: "POST",
         });
-        location.href = "/t/" + site + "/learn";
+        location.href =
+          "/t/" +
+          site +
+          "/learn" +
+          (course ? "?course=" + encodeURIComponent(course) : "");
       } else
         location.href = "/dashboard?template=" + encodeURIComponent(template);
     } catch (e) {
@@ -47,7 +53,8 @@ export default function AuthScreen({
   const query =
     "?template=" +
     encodeURIComponent(template) +
-    (site ? "&site=" + encodeURIComponent(site) : "");
+    (site ? "&site=" + encodeURIComponent(site) : "") +
+    (course ? "&course=" + encodeURIComponent(course) : "");
   return (
     <main className="auth-layout">
       <div className="auth-language">

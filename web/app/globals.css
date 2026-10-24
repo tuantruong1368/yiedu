@@ -1871,8 +1871,1347 @@ footer {
   }
 }
 /* Visual authoring studio */
-.locale-switch{width:auto;min-width:112px;font-size:13px;padding:8px}.tenant-logo-image{height:48px;width:auto;max-width:180px;object-fit:contain}.tenant-logo-mark{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:48px;height:48px;border-radius:15px;color:white;font-size:18px;letter-spacing:-1px;position:relative;box-shadow:0 5px 16px #1232}.tenant-logo-mark i{position:absolute;right:5px;bottom:5px;width:7px;height:7px;background:#f5be62;border-radius:50%}.tenant-logo-mark.circle{border-radius:50%}.tenant-logo-mark.square{border-radius:3px}.tenant-brand{gap:12px;max-width:280px}.tenant-brand>span:last-child{font-size:18px;white-space:normal}.template-select{padding:0;text-align:left;width:100%;font:inherit;cursor:pointer;color:inherit;border:0;background:transparent}.tenant-canvas{width:100%;border:0;display:block;background:white}.studio-shell{height:100dvh;display:flex;flex-direction:column;background:#192920;color:#eaf2ed;overflow:hidden}.studio-shell button,.studio-shell input,.studio-shell select{font:inherit;font-size:12px}.studio-shell button{padding:8px 12px;cursor:pointer;border:1px solid #597062;background:#293f32;color:#eaf2ed;border-radius:5px}.studio-shell button:disabled{opacity:.4;cursor:wait}.studio-shell input,.studio-shell select,.studio-shell textarea{background:#fff;color:#173625;border:1px solid #9ab1a1;border-radius:4px;padding:8px;min-width:0}.studio-top,.studio-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #4c6052;flex-shrink:0;flex-wrap:wrap}.studio-top>input{max-width:200px}.studio-top>span{margin-right:auto;color:#b4c6ba;font-size:11px}.studio-top a{color:inherit;font-size:12px}.studio-body{display:flex;flex:1;min-height:0}.studio-inspector{width:320px;flex-shrink:0;overflow:auto;background:#26392d;padding:10px}.studio-inspector section{padding:12px 0}.studio-inspector p{font-size:12px;color:#b9ccbf;line-height:1.5}.studio-inspector label{font-size:12px;margin:12px 0;color:white}.studio-inspector fieldset{border:1px solid #597062;margin:16px 0;padding:10px}.studio-inspector fieldset select,.studio-inspector fieldset input{margin:4px 0;width:100%}.studio-tabs{display:flex;gap:4px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid #526554}.studio-tabs .active{background:#d6eddd;color:#173625}.studio-canvas{flex:1;min-width:0;height:100%;position:relative;background:#d9e2dc}.studio-import{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px;max-height:270px;overflow:auto}.studio-import p{grid-column:1/-1;font-size:12px;margin:0}.studio-import textarea{height:100px}.studio-menu-row{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid #526554;padding:8px 0}.studio-menu-row input,.studio-menu-row select{width:120px}.studio-shell .gjs-one-bg{background:#26392d}.studio-shell .gjs-two-color{color:#eaf2ed}.studio-shell .gjs-four-color{color:#9cdbaf}.studio-shell .gjs-block{width:44%;min-height:65px}.studio-shell .gjs-cv-canvas{width:100%;height:100%;top:0}.studio-shell .notice{margin:0;border-radius:0}.lesson-editor{border:1px solid #c9d5cc;border-radius:8px;overflow:hidden;margin:16px 0;background:white}.lesson-toolbar{display:flex;flex-wrap:wrap;gap:5px;padding:10px;border-bottom:1px solid #d4ded5;background:#f0f5f1}.lesson-toolbar button{padding:6px 10px;border:1px solid #b9cabe;background:white;border-radius:4px;cursor:pointer;font-size:12px}.lesson-toolbar select{width:auto;padding:6px}.lesson-tiptap{min-height:240px;padding:18px;outline:none;line-height:1.7}.lesson-tiptap p{margin:8px 0}.lesson-editor .tiptap table,.lesson-document table{border-collapse:collapse;width:100%}.lesson-editor .tiptap td,.lesson-editor .tiptap th,.lesson-document td,.lesson-document th{border:1px solid #aec3b4;padding:8px;min-width:50px}.lesson-document .tiptap{outline:none;line-height:1.8;overflow-wrap:anywhere}.lesson-document img,.lesson-editor img{max-width:100%;height:auto}.lesson-document iframe,.lesson-editor iframe{max-width:100%;border:0}.lesson-document pre,.lesson-editor pre{background:#173024;color:#e6f3e9;padding:18px;border-radius:8px;white-space:pre-wrap}.simulation-node{padding:20px;border:1px solid #bcd1c4;background:#f2f8f4;border-radius:10px;margin:16px 0}.simulation-node svg{display:block;width:100%;max-height:200px}.lesson-callout{padding:18px;border-left:4px solid #215d4c;background:#edf5ef}.lesson-editor ul[data-type=taskList],.lesson-document ul[data-type=taskList]{list-style:none;padding:0}.lesson-editor ul[data-type=taskList] li,.lesson-document ul[data-type=taskList] li{display:flex;gap:10px}.lesson-editor .selectedCell{background:#c4e1cf}
-@media(max-width:900px){.studio-inspector{width:260px}.studio-top>span{display:none}.studio-toolbar{gap:4px}.studio-top{gap:4px}.studio-top>input{max-width:130px}.site-nav,.site-nav nav{flex-wrap:wrap}.studio-shell{min-width:680px}}
-.auth-language{position:absolute;top:20px;right:24px;z-index:10}.studio-event-row{border:1px solid #617668;padding:8px;margin:8px 0}
-.studio-toolbar{flex-wrap:nowrap;overflow-x:auto}.studio-toolbar select{width:auto;min-width:100px;max-width:220px;flex-shrink:0}.studio-toolbar button{white-space:nowrap;flex-shrink:0}.studio-top input{width:200px}.studio-top .locale-switch{width:auto}
-.studio-tabs{position:sticky;top:-10px;z-index:5;background:#26392d;padding-top:10px}
+.locale-switch {
+  width: auto;
+  min-width: 112px;
+  font-size: 13px;
+  padding: 8px;
+}
+.tenant-logo-image {
+  height: 48px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+}
+.tenant-logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  color: white;
+  font-size: 18px;
+  letter-spacing: -1px;
+  position: relative;
+  box-shadow: 0 5px 16px #1232;
+}
+.tenant-logo-mark i {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 7px;
+  height: 7px;
+  background: #f5be62;
+  border-radius: 50%;
+}
+.tenant-logo-mark.circle {
+  border-radius: 50%;
+}
+.tenant-logo-mark.square {
+  border-radius: 3px;
+}
+.tenant-brand {
+  gap: 12px;
+  max-width: 280px;
+}
+.tenant-brand > span:last-child {
+  font-size: 18px;
+  white-space: normal;
+}
+.template-select {
+  padding: 0;
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+  border: 0;
+  background: transparent;
+}
+.tenant-canvas {
+  width: 100%;
+  border: 0;
+  display: block;
+  background: white;
+}
+.studio-shell {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #192920;
+  color: #eaf2ed;
+  overflow: hidden;
+}
+.studio-shell button,
+.studio-shell input,
+.studio-shell select {
+  font: inherit;
+  font-size: 12px;
+}
+.studio-shell button {
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid #597062;
+  background: #293f32;
+  color: #eaf2ed;
+  border-radius: 5px;
+}
+.studio-shell button:disabled {
+  opacity: 0.4;
+  cursor: wait;
+}
+.studio-shell input,
+.studio-shell select,
+.studio-shell textarea {
+  background: #fff;
+  color: #173625;
+  border: 1px solid #9ab1a1;
+  border-radius: 4px;
+  padding: 8px;
+  min-width: 0;
+}
+.studio-top,
+.studio-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #4c6052;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.studio-top > input {
+  max-width: 200px;
+}
+.studio-top > span {
+  margin-right: auto;
+  color: #b4c6ba;
+  font-size: 11px;
+}
+.studio-top a {
+  color: inherit;
+  font-size: 12px;
+}
+.studio-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+.studio-inspector {
+  width: 320px;
+  flex-shrink: 0;
+  overflow: auto;
+  background: #26392d;
+  padding: 10px;
+}
+.studio-inspector section {
+  padding: 12px 0;
+}
+.studio-inspector p {
+  font-size: 12px;
+  color: #b9ccbf;
+  line-height: 1.5;
+}
+.studio-inspector label {
+  font-size: 12px;
+  margin: 12px 0;
+  color: white;
+}
+.studio-inspector fieldset {
+  border: 1px solid #597062;
+  margin: 16px 0;
+  padding: 10px;
+}
+.studio-inspector fieldset select,
+.studio-inspector fieldset input {
+  margin: 4px 0;
+  width: 100%;
+}
+.studio-tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #526554;
+}
+.studio-tabs .active {
+  background: #d6eddd;
+  color: #173625;
+}
+.studio-canvas {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  position: relative;
+  background: #d9e2dc;
+}
+.studio-import {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px;
+  max-height: 270px;
+  overflow: auto;
+}
+.studio-import p {
+  grid-column: 1/-1;
+  font-size: 12px;
+  margin: 0;
+}
+.studio-import textarea {
+  height: 100px;
+}
+.studio-menu-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid #526554;
+  padding: 8px 0;
+}
+.studio-menu-row input,
+.studio-menu-row select {
+  width: 120px;
+}
+.studio-shell .gjs-one-bg {
+  background: #26392d;
+}
+.studio-shell .gjs-two-color {
+  color: #eaf2ed;
+}
+.studio-shell .gjs-four-color {
+  color: #9cdbaf;
+}
+.studio-shell .gjs-block {
+  width: 44%;
+  min-height: 65px;
+}
+.studio-shell .gjs-cv-canvas {
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.studio-shell .notice {
+  margin: 0;
+  border-radius: 0;
+}
+.lesson-editor {
+  border: 1px solid #c9d5cc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0;
+  background: white;
+}
+.lesson-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 10px;
+  border-bottom: 1px solid #d4ded5;
+  background: #f0f5f1;
+}
+.lesson-toolbar button {
+  padding: 6px 10px;
+  border: 1px solid #b9cabe;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.lesson-toolbar select {
+  width: auto;
+  padding: 6px;
+}
+.lesson-tiptap {
+  min-height: 240px;
+  padding: 18px;
+  outline: none;
+  line-height: 1.7;
+}
+.lesson-tiptap p {
+  margin: 8px 0;
+}
+.lesson-editor .tiptap table,
+.lesson-document table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.lesson-editor .tiptap td,
+.lesson-editor .tiptap th,
+.lesson-document td,
+.lesson-document th {
+  border: 1px solid #aec3b4;
+  padding: 8px;
+  min-width: 50px;
+}
+.lesson-document .tiptap {
+  outline: none;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.lesson-document img,
+.lesson-editor img {
+  max-width: 100%;
+  height: auto;
+}
+.lesson-document iframe,
+.lesson-editor iframe {
+  max-width: 100%;
+  border: 0;
+}
+.lesson-document pre,
+.lesson-editor pre {
+  background: #173024;
+  color: #e6f3e9;
+  padding: 18px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
+.simulation-node {
+  padding: 20px;
+  border: 1px solid #bcd1c4;
+  background: #f2f8f4;
+  border-radius: 10px;
+  margin: 16px 0;
+}
+.simulation-node svg {
+  display: block;
+  width: 100%;
+  max-height: 200px;
+}
+.lesson-callout {
+  padding: 18px;
+  border-left: 4px solid #215d4c;
+  background: #edf5ef;
+}
+.lesson-editor ul[data-type="taskList"],
+.lesson-document ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0;
+}
+.lesson-editor ul[data-type="taskList"] li,
+.lesson-document ul[data-type="taskList"] li {
+  display: flex;
+  gap: 10px;
+}
+.lesson-editor .selectedCell {
+  background: #c4e1cf;
+}
+@media (max-width: 900px) {
+  .studio-inspector {
+    width: 260px;
+  }
+  .studio-top > span {
+    display: none;
+  }
+  .studio-toolbar {
+    gap: 4px;
+  }
+  .studio-top {
+    gap: 4px;
+  }
+  .studio-top > input {
+    max-width: 130px;
+  }
+  .site-nav,
+  .site-nav nav {
+    flex-wrap: wrap;
+  }
+  .studio-shell {
+    min-width: 680px;
+  }
+}
+.auth-language {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 10;
+}
+.studio-event-row {
+  border: 1px solid #617668;
+  padding: 8px;
+  margin: 8px 0;
+}
+.studio-toolbar {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+.studio-toolbar select {
+  width: auto;
+  min-width: 100px;
+  max-width: 220px;
+  flex-shrink: 0;
+}
+.studio-toolbar button {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.studio-top input {
+  width: 200px;
+}
+.studio-top .locale-switch {
+  width: auto;
+}
+.studio-tabs {
+  position: sticky;
+  top: -10px;
+  z-index: 5;
+  background: #26392d;
+  padding-top: 10px;
+}
+
+/* Actual template websites, rendered from the same versioned source as tenant sites. */
+.template-website-shot {
+  border: 1px solid #d5ddd8;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  position: relative;
+}
+.shot-browser {
+  height: 30px;
+  background: #edf1ed;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 12px;
+  font: 9px Arial;
+  color: #819086;
+}
+.shot-browser > span:first-child {
+  letter-spacing: 3px;
+  color: #a6b4aa;
+}
+.shot-viewport {
+  aspect-ratio: 1.6;
+  overflow: hidden;
+  position: relative;
+  background: white;
+}
+.shot-viewport iframe {
+  width: 1280px;
+  height: 1050px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+  border: 0;
+  pointer-events: none;
+}
+.shot-caption {
+  display: block;
+  padding: 8px 12px;
+  border-top: 1px solid #e4e9e4;
+  font-size: 10px;
+  color: #60766b;
+}
+.template-info h2 {
+  font-size: 24px;
+  margin: 10px 0;
+}
+.template-info .text-link {
+  margin-right: 18px;
+}
+.hero-website-shot {
+  box-shadow: 0 30px 80px #153a2920;
+  transform: rotate(-2deg);
+}
+.hero-website-shot .shot-viewport {
+  aspect-ratio: 1.15;
+}
+.hero-home .hero-art {
+  padding: 32px 8px;
+  min-height: 480px;
+}
+.platform-step-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.platform-step-grid article {
+  border-top: 2px solid var(--line);
+  padding-top: 22px;
+}
+.platform-step-grid small {
+  color: var(--brand);
+  font-size: 24px;
+}
+.platform-step-grid h3 {
+  margin: 18px 0;
+  font-size: 19px;
+}
+.platform-step-grid p {
+  font-size: 14px;
+}
+/* Full-page Content Studio; the GrapesJS studio retains its own styling. */
+.content-studio {
+  background: #f2f4f7;
+  color: #233b34;
+  font-size: 14px;
+  isolation: isolate;
+}
+.content-studio h1,
+.content-studio h2,
+.content-studio h3 {
+  letter-spacing: -0.035em;
+}
+.content-studio button {
+  background: white;
+  color: #354d43;
+  border: 1px solid #d4ded8;
+  border-radius: 7px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.content-studio button:hover {
+  background: #edf4ee;
+}
+.content-studio button:disabled {
+  cursor: not-allowed;
+}
+.content-studio input,
+.content-studio textarea,
+.content-studio select {
+  border: 1px solid #d6dfda;
+  border-radius: 7px;
+  background: white;
+  color: #293f32;
+  font-size: 13px;
+}
+.content-studio .button {
+  background: #215d4c;
+  color: white;
+  border: 1px solid #215d4c;
+}
+.content-studio .button.ghost {
+  background: white;
+  color: #215d4c;
+}
+.content-studio label {
+  font-size: 12px;
+  margin: 14px 0;
+}
+.content-studio .checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+.content-studio .checkbox input {
+  width: 16px;
+}
+.studio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 24px;
+  background: white;
+  border-bottom: 1px solid #dce3de;
+  flex-shrink: 0;
+}
+.studio-header .actions {
+  margin: 0;
+  font-size: 12px;
+}
+.studio-identity {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.studio-identity > a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 650;
+}
+.studio-identity .tenant-logo-mark {
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.studio-identity .tenant-logo-image {
+  height: 32px;
+}
+.studio-divider {
+  height: 24px;
+  border-left: 1px solid #d6dfd9;
+}
+.studio-library {
+  flex: 1;
+  overflow: auto;
+  padding: 40px max(24px, 5vw);
+}
+.studio-library-heading {
+  max-width: 730px;
+  padding: 8px 0 24px;
+}
+.studio-library-heading h1 {
+  font-size: 42px;
+}
+.studio-library-heading p {
+  max-width: 650px;
+}
+.studio-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin: 10px 0 44px;
+}
+.studio-tool-card {
+  background: white;
+  border: 1px solid #dbe3de;
+  border-radius: 14px;
+  padding: 25px;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+.studio-tool-card:hover {
+  box-shadow: 0 12px 30px #14312412;
+  transform: translateY(-3px);
+}
+.studio-tool-card > svg {
+  background: #edf4ef;
+  color: #215d4c;
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  margin-bottom: 24px;
+}
+.studio-tool-card.tool-slides > svg {
+  background: #f6ecde;
+  color: #b16b2e;
+}
+.studio-tool-card.tool-video > svg {
+  background: #e9e7fa;
+  color: #7153b6;
+}
+.studio-tool-card.tool-simulation > svg {
+  background: #e3f0fa;
+  color: #32749b;
+}
+.studio-tool-card h2 {
+  font-size: 22px;
+}
+.studio-tool-card p {
+  font-size: 13px;
+  min-height: 63px;
+}
+.studio-tool-card > span {
+  font-weight: 650;
+  font-size: 12px;
+}
+.studio-library .section-title input {
+  max-width: 330px;
+}
+.studio-project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.studio-project-grid article {
+  background: white;
+  border: 1px solid #dce3df;
+  border-radius: 12px;
+  padding: 22px;
+}
+.studio-project-grid article > svg {
+  color: #638574;
+  display: block;
+  margin-bottom: 18px;
+}
+.studio-project-grid h3 {
+  font-size: 18px;
+  margin: 12px 0 22px;
+}
+.studio-project-grid .actions {
+  justify-content: space-between;
+}
+.studio-lesson-library {
+  margin: 42px 0;
+}
+.studio-lesson-library select {
+  max-width: 500px;
+}
+.studio-lesson-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: white;
+  border-bottom: 1px solid #e0e6e2;
+  padding: 16px;
+}
+.studio-lesson-row > span:first-of-type {
+  flex: 1;
+}
+.studio-lesson-row small {
+  display: block;
+}
+.studio-command-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: white;
+  padding: 16px 24px;
+  border-bottom: 1px solid #dce3de;
+  flex-shrink: 0;
+}
+.studio-command-bar > div:first-child {
+  flex: 1;
+  max-width: 750px;
+}
+.content-studio .studio-title {
+  font-size: 21px;
+  font-weight: 700;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  margin-bottom: 5px;
+}
+.studio-command-bar small {
+  display: block;
+  font-size: 10px;
+}
+.studio-command-bar .actions {
+  margin: 0;
+  flex-shrink: 0;
+}
+.studio-notice,
+.studio-draft-banner {
+  padding: 10px 24px;
+  margin: 0;
+  background: #e6f2e9;
+  border-bottom: 1px solid #c8d9ce;
+  font-size: 12px;
+  color: #215d4c;
+}
+.studio-draft-banner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #fff5dc;
+  color: #675020;
+}
+.studio-draft-banner span {
+  flex: 1;
+}
+.studio-lesson-layout {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr) 260px;
+  flex: 1;
+  min-height: 0;
+}
+.studio-outline,
+.studio-resource-panel {
+  padding: 24px 18px;
+  background: #fbfcfa;
+  overflow: auto;
+}
+.studio-outline {
+  border-right: 1px solid #dce3de;
+}
+.studio-resource-panel {
+  border-left: 1px solid #dce3de;
+}
+.studio-outline h3,
+.studio-resource-panel h3 {
+  font-size: 14px;
+  margin: 10px 0 20px;
+}
+.studio-outline p,
+.studio-resource-panel p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #667d70;
+}
+.studio-resource-panel > a {
+  display: block;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 8px 0;
+  color: #215d4c;
+}
+.studio-resource-panel > button {
+  width: 100%;
+  margin: 8px 0;
+}
+.studio-resource-panel > input {
+  margin: 8px 0;
+}
+.studio-asset-insert {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left !important;
+  padding: 14px !important;
+}
+.studio-asset-insert strong {
+  font-size: 12px;
+}
+.studio-asset-insert span {
+  font-size: 10px;
+  color: #215d4c;
+}
+.studio-asset-insert small {
+  font-size: 9px;
+}
+.studio-writing-canvas {
+  overflow: auto;
+  padding: 28px clamp(20px, 3vw, 50px) 80px;
+}
+.studio-writing-canvas > .lesson-editor {
+  border: 1px solid #d9e2dc;
+  box-shadow: 0 5px 25px #1e3a2e06;
+  overflow: visible;
+  margin: 0 auto;
+  max-width: 1000px;
+  min-height: 100%;
+}
+.studio-writing-canvas .lesson-toolbar {
+  position: sticky;
+  top: -28px;
+  z-index: 10;
+  box-shadow: 0 1px 3px #1537230a;
+  border-radius: 8px 8px 0 0;
+  padding: 12px;
+}
+.studio-writing-canvas .lesson-toolbar select {
+  padding: 5px;
+}
+.studio-writing-canvas .lesson-toolbar button {
+  padding: 5px 7px;
+  font-size: 11px;
+}
+.studio-writing-canvas .lesson-tiptap {
+  padding: 32px;
+  min-height: 70vh;
+}
+.studio-writing-canvas .tiptap h1 {
+  font-size: 34px;
+}
+.studio-writing-canvas .tiptap h2 {
+  font-size: 26px;
+}
+.studio-writing-canvas .tiptap p {
+  color: #31483d;
+}
+.outline-heading {
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8e3;
+}
+.studio-writing-canvas > .lesson-document {
+  background: white;
+  border: 1px solid #d9e2dc;
+  padding: 36px;
+  max-width: 1000px;
+  margin: auto;
+}
+.studio-export-bar {
+  display: flex;
+  gap: 12px;
+  padding: 10px 24px;
+  background: #fafcfa;
+  border-bottom: 1px solid #dce3de;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.studio-export-bar label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row;
+}
+.studio-export-bar select {
+  width: auto;
+  padding: 6px;
+}
+.studio-hint {
+  font-size: 11px;
+  margin: 0;
+  padding: 10px 24px;
+  background: #edf2f6;
+  color: #526b5e;
+}
+.project-editor {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) 300px;
+  flex: 1;
+  min-height: 0;
+}
+.project-editor.simulation-editor {
+  grid-template-columns: 300px minmax(0, 1fr);
+}
+.studio-scenes,
+.studio-properties {
+  padding: 24px 18px;
+  overflow: auto;
+  background: #fbfcfa;
+  border-right: 1px solid #dce3de;
+}
+.studio-properties {
+  border-left: 1px solid #dce3de;
+  border-right: 0;
+}
+.studio-properties h3,
+.studio-scenes h3 {
+  font-size: 15px;
+}
+.studio-properties p {
+  font-size: 12px;
+}
+.studio-scenes > button {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+.studio-scenes > button small {
+  font-size: 10px;
+}
+.studio-scenes > button.selected {
+  border-color: #215d4c;
+  background: #e7f1e9;
+}
+.project-stage {
+  padding: 34px;
+  overflow: auto;
+  min-width: 0;
+}
+.slide-stage {
+  aspect-ratio: 16/9;
+  position: relative;
+  padding: clamp(22px, 4vw, 60px);
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 12px 30px #132d2615;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide-stage h2 {
+  color: white;
+  font-size: clamp(22px, 2.6vw, 42px);
+  margin: 20px 0;
+}
+.slide-stage p {
+  white-space: pre-wrap;
+  color: #fff;
+  font-size: clamp(13px, 1.4vw, 22px);
+  line-height: 1.6;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.slide-stage small {
+  color: #ffffffad;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+.slide-number {
+  position: absolute;
+  bottom: 14px;
+  right: 20px;
+  font-size: 11px;
+  color: #ffffff9c;
+}
+.presentation-player {
+  background: white;
+  border: 1px solid #d8e2dc;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+.presentation-player .slide-stage {
+  box-shadow: none;
+  border-radius: 0;
+}
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+.player-controls button,
+.studio-simulation button {
+  border: 1px solid #d4ded6;
+  border-radius: 6px;
+  padding: 7px 12px;
+  background: white;
+  color: #215d4c;
+}
+.player-controls span {
+  font-size: 11px;
+}
+.player-controls label.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  font-size: 11px;
+}
+.player-controls label input {
+  width: 15px;
+}
+.presenter-notes {
+  white-space: pre-wrap;
+  padding: 20px !important;
+  background: #f2f6f2;
+  color: #385542 !important;
+  font-size: 13px;
+}
+.studio-lesson-node {
+  border: 1px solid #d7e1da;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 24px 0;
+  user-select: none;
+}
+.studio-lesson-node > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: #ecf2ee;
+  color: #3b5c4b;
+  font-size: 11px;
+  font-weight: 650;
+}
+.studio-lesson-node .presentation-player {
+  border: 0;
+  border-radius: 0;
+  margin: 0;
+}
+.studio-lesson-node .slide-stage {
+  min-height: 280px;
+}
+.studio-lesson-node .slide-stage h2 {
+  font-size: 28px;
+}
+.studio-lesson-node .slide-stage p {
+  font-size: 16px;
+}
+.studio-simulation {
+  padding: 24px;
+  background: white;
+  color: #263f33;
+}
+.studio-simulation h3 {
+  font-size: 20px;
+}
+.studio-simulation p {
+  font-size: 13px !important;
+  line-height: 1.7;
+}
+.studio-simulation output {
+  display: block;
+  background: #edf3ef;
+  border-radius: 7px;
+  padding: 12px;
+  font-size: 12px;
+  font-family: monospace;
+}
+.simulation-chart {
+  margin: 20px 0;
+  background: #f8faf8;
+  border: 1px solid #e0e8e2;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.simulation-chart svg {
+  width: 100%;
+  display: block;
+  max-height: 320px;
+}
+.simulation-chart text {
+  font: 10px Arial;
+  fill: #6f7e76;
+}
+.simulation-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+}
+.simulation-controls label {
+  margin: 16px 0;
+  font-size: 12px;
+}
+.simulation-controls label > b {
+  float: right;
+  font-size: 11px;
+}
+.simulation-controls input {
+  width: 100%;
+  accent-color: #215d4c;
+  padding: 0;
+}
+.sorting-chart {
+  height: 240px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 20px;
+}
+.sorting-chart > div {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+  border-radius: 4px 4px 0 0;
+}
+.sorting-chart span {
+  color: white;
+  font-size: 10px;
+  display: block;
+  text-align: center;
+}
+.studio-video video,
+.studio-video iframe {
+  aspect-ratio: 16/9;
+  width: 100%;
+  border: 0;
+  display: block;
+}
+.content-studio > .presentation-player {
+  overflow: auto;
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 24px auto;
+}
+.content-studio > .studio-simulation {
+  overflow: auto;
+  flex: 1;
+}
+.studio-wide .studio-outline,
+.studio-wide .studio-resource-panel {
+  display: none;
+}
+.studio-wide .studio-lesson-layout {
+  grid-template-columns: 1fr;
+}
+.studio-wide .studio-scenes,
+.studio-wide .studio-properties {
+  display: none;
+}
+.studio-wide .project-editor {
+  grid-template-columns: 1fr;
+}
+@media (max-width: 1100px) {
+  .studio-tool-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .studio-lesson-layout {
+    grid-template-columns: 190px minmax(0, 1fr);
+  }
+  .studio-resource-panel {
+    grid-column: 1/-1;
+    max-height: 260px;
+    border-top: 1px solid #dce3de;
+  }
+  .studio-lesson-layout {
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .studio-outline {
+    width: 190px;
+    max-height: 600px;
+  }
+  .studio-writing-canvas {
+    flex: 1;
+    min-width: 350px;
+    max-height: 80vh;
+  }
+  .studio-resource-panel {
+    width: 100%;
+  }
+  .project-editor {
+    grid-template-columns: 170px minmax(0, 1fr) 240px;
+  }
+  .project-stage {
+    padding: 20px;
+  }
+  .studio-command-bar .actions {
+    flex-wrap: wrap;
+  }
+  .platform-step-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .studio-header {
+    padding: 12px;
+    flex-wrap: wrap;
+  }
+  .studio-identity .tenant-brand {
+    max-width: 150px;
+  }
+  .studio-identity .tenant-brand > span:last-child {
+    font-size: 13px;
+  }
+  .studio-divider {
+    display: none;
+  }
+  .studio-tool-grid,
+  .studio-project-grid {
+    grid-template-columns: 1fr;
+  }
+  .studio-library {
+    padding: 24px 16px;
+  }
+  .studio-library-heading h1 {
+    font-size: 32px;
+  }
+  .studio-command-bar {
+    padding: 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .studio-command-bar > div:first-child {
+    min-width: 100%;
+  }
+  .studio-command-bar .actions {
+    width: 100%;
+  }
+  .project-editor,
+  .project-editor.simulation-editor {
+    display: block;
+    overflow: auto;
+  }
+  .studio-scenes {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    overflow-x: auto;
+  }
+  .studio-scenes h3 {
+    display: none;
+  }
+  .studio-scenes > button {
+    min-width: 145px;
+    width: 145px;
+    flex-shrink: 0;
+    margin: 0;
+  }
+  .studio-properties {
+    padding: 20px;
+  }
+  .project-stage {
+    padding: 16px;
+  }
+  .studio-outline {
+    display: none;
+  }
+  .studio-writing-canvas {
+    min-width: 0;
+    width: 100%;
+    max-height: 75vh;
+    padding: 14px;
+  }
+  .studio-writing-canvas .lesson-toolbar {
+    top: -14px;
+  }
+  .studio-writing-canvas .lesson-tiptap {
+    padding: 18px;
+  }
+  .simulation-controls {
+    grid-template-columns: 1fr;
+  }
+  .studio-export-bar {
+    padding: 10px;
+    gap: 8px;
+  }
+  .studio-draft-banner {
+    flex-wrap: wrap;
+  }
+  .studio-draft-banner span {
+    min-width: 100%;
+  }
+  .platform-step-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-home .hero-art {
+    min-height: 370px;
+    padding: 20px 0;
+  }
+  .shot-caption {
+    font-size: 9px;
+  }
+  .studio-header .tenant-brand {
+    gap: 6px;
+  }
+  .studio-lesson-node .slide-stage h2 {
+    font-size: 21px;
+  }
+  .studio-lesson-node .slide-stage p {
+    font-size: 13px;
+  }
+}
+.content-studio {
+  min-width: 0;
+}
+.studio-lesson-node .project-editor {
+  display: block;
+  max-height: 900px;
+  overflow: auto;
+}
+.studio-lesson-node .studio-scenes {
+  display: flex;
+  overflow: auto;
+  max-height: 150px;
+}
+.studio-lesson-node .studio-scenes > button {
+  min-width: 140px;
+  width: 140px;
+  flex-shrink: 0;
+}
+.studio-lesson-node .studio-properties {
+  border-top: 1px solid #d9e2dd;
+}
+@media (max-width: 900px) {
+  .site-nav nav {
+    display: flex;
+    order: 5;
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding: 12px 0;
+    border-top: 1px solid #e1e6e0;
+  }
+  .site-nav nav a {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  .site-nav {
+    gap: 14px;
+  }
+  .content-studio {
+    min-width: 0;
+  }
+}
+.studio-writing-canvas .tiptap .slide-stage p,
+.lesson-document .tiptap .slide-stage p {
+  color: white !important;
+}
+.template-info .template-select {
+  background: #215d4c;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+}
+.template-info .template-select:hover {
+  background: #184b3c;
+}

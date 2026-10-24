@@ -18,6 +18,7 @@ export async function api<T = any>(
         : "Dữ liệu không hợp lệ. Kiểm tra lại các trường.",
     );
   }
+  if (res.status === 204) return null as T;
   return res.json();
 }
 export async function publicApi(path: string) {

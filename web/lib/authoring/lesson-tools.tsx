@@ -8,6 +8,7 @@ import Youtube from "@tiptap/extension-youtube";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Mathematics from "@tiptap/extension-mathematics";
+import { StudioNode } from "@/lib/studio/lesson-node";
 import { useState } from "react";
 export type LessonTool = {
   packageId: string;
@@ -235,6 +236,7 @@ export function lessonTools() {
 export function lessonExtensions() {
   return [
     StarterKit,
+    StudioNode,
     TableKit,
     Image.configure({ allowBase64: false }),
     Youtube.configure({ nocookie: true }),

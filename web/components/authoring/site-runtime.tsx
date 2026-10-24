@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Source, esc, sanitizeImport } from "@/lib/authoring/site";
-const runtime = `(()=>{const send=x=>parent.postMessage({channel:'yiedu-page-v1',...x},'*');const navigation=href=>{if(href.startsWith('#')){document.getElementById(href.slice(1))?.scrollIntoView({behavior:'smooth'});return}send({type:'navigate',href})};document.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&!a.hasAttribute('data-event')&&!a.hasAttribute('data-events')){e.preventDefault();navigation(a.getAttribute('href')||'')}});document.querySelectorAll('[data-event],[data-events]').forEach(el=>{let events=[];try{events=JSON.parse(el.dataset.events||'[]')}catch{}if(el.dataset.event)events.unshift({event:el.dataset.event,action:el.dataset.action,target:el.dataset.target,message:el.dataset.message});events.slice(0,9).forEach(def=>{if(!['click','dblclick','mouseenter','mouseleave','change','submit'].includes(def.event))return;el.addEventListener(def.event,e=>{e.preventDefault();const action=def.action,target=def.target||'';if(action==='navigate')navigation(target);if(action==='scroll')document.getElementById(target.replace(/^#/,''))?.scrollIntoView({behavior:'smooth'});if(action==='toggle'){const node=document.getElementById(target.replace(/^#/,''));if(node)node.hidden=!node.hidden}if(action==='message'){const message=document.createElement('div');message.setAttribute('role','status');message.textContent=def.message||'✓';message.style.cssText='padding:16px;background:#eaf1ed;color:#152f24;border:1px solid #aab';el.after(message);setTimeout(()=>message.remove(),8000)}})})});document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>e.preventDefault()));let last=0;new ResizeObserver(()=>{const height=Math.min(40000,Math.max(200,document.documentElement.scrollHeight));if(height!==last){last=height;send({type:'height',height})}}).observe(document.body)})();`;
+import { Source, SitePage, esc, sanitizeImport } from "@/lib/authoring/site";
+import { pageHref, resolveSiteHref } from "@/lib/authoring/navigation";
+const NO_PAGES: SitePage[] = [];
+const runtime = `(()=>{const send=x=>parent.postMessage({channel:'yiedu-page-v1',...x},'*');window.addEventListener('message',e=>{if(e.source===parent&&e.data?.channel==='yiedu-page-v1'&&e.data.type==='anchor'&&typeof e.data.id==='string')document.getElementById(e.data.id)?.scrollIntoView()});const navigation=href=>{if(href.startsWith('#')){document.getElementById(href.slice(1))?.scrollIntoView({behavior:'smooth'});return}send({type:'navigate',href})};document.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&!a.hasAttribute('data-event')&&!a.hasAttribute('data-events')){e.preventDefault();navigation(a.getAttribute('href')||'')}});document.querySelectorAll('[data-event],[data-events]').forEach(el=>{let events=[];try{events=JSON.parse(el.dataset.events||'[]')}catch{}if(el.dataset.event)events.unshift({event:el.dataset.event,action:el.dataset.action,target:el.dataset.target,message:el.dataset.message});events.slice(0,9).forEach(def=>{if(!['click','dblclick','mouseenter','mouseleave','change','submit'].includes(def.event))return;el.addEventListener(def.event,e=>{e.preventDefault();const action=def.action,target=def.target||'';if(action==='navigate')navigation(target);if(action==='scroll')document.getElementById(target.replace(/^#/,''))?.scrollIntoView({behavior:'smooth'});if(action==='toggle'){const node=document.getElementById(target.replace(/^#/,''));if(node)node.hidden=!node.hidden}if(action==='message'){const message=document.createElement('div');message.setAttribute('role','status');message.textContent=def.message||'✓';message.style.cssText='padding:16px;background:#eaf1ed;color:#152f24;border:1px solid #aab';el.after(message);setTimeout(()=>message.remove(),8000)}})})});document.querySelectorAll('form').forEach(f=>f.addEventListener('submit',e=>e.preventDefault()));let last=0;new ResizeObserver(()=>{const height=Math.min(40000,Math.max(200,document.documentElement.scrollHeight));if(height!==last){last=height;send({type:'height',height})}}).observe(document.body)})();`;
 export default function SiteRuntime({
   source,
   courses,
@@ -9,6 +11,7 @@ export default function SiteRuntime({
   title,
   courseBase,
   pageBase,
+  pages = NO_PAGES,
 }: {
   source: Source;
   courses: any[];
@@ -16,6 +19,7 @@ export default function SiteRuntime({
   title: string;
   courseBase?: string;
   pageBase?: string;
+  pages?: SitePage[];
 }) {
   const frame = useRef<HTMLIFrameElement>(null),
     [doc, setDoc] = useState(""),
@@ -29,8 +33,60 @@ export default function SiteRuntime({
     parsed.querySelectorAll("[data-template-link]").forEach((node) => {
       node.setAttribute(
         "href",
-        (pageBase || `/t/${slug}/p/`) + node.getAttribute("data-template-link"),
+        (() => {
+          const key = node.getAttribute("data-template-link");
+          const page = pages.find((p) => p.id === key || p.slug === key);
+          return page
+            ? pageHref(page, slug, pageBase)
+            : (pageBase || `/t/${slug}/p/`) + key;
+        })(),
       );
+    });
+    parsed
+      .querySelectorAll("a[href]")
+      .forEach((node) =>
+        node.setAttribute(
+          "href",
+          resolveSiteHref(
+            node.getAttribute("href") || "",
+            pages,
+            slug,
+            pageBase,
+          ),
+        ),
+      );
+    parsed.querySelectorAll("[data-target], [data-events]").forEach((node) => {
+      if (node.getAttribute("data-action") === "navigate")
+        node.setAttribute(
+          "data-target",
+          resolveSiteHref(
+            node.getAttribute("data-target") || "",
+            pages,
+            slug,
+            pageBase,
+          ),
+        );
+      try {
+        const events = JSON.parse(node.getAttribute("data-events") || "[]");
+        node.setAttribute(
+          "data-events",
+          JSON.stringify(
+            events.map((event: any) =>
+              event.action === "navigate"
+                ? {
+                    ...event,
+                    target: resolveSiteHref(
+                      event.target || "",
+                      pages,
+                      slug,
+                      pageBase,
+                    ),
+                  }
+                : event,
+            ),
+          ),
+        );
+      } catch {}
     });
     parsed.querySelectorAll('[data-gadget="yiedu.courses"]').forEach((node) => {
       node
@@ -55,7 +111,7 @@ export default function SiteRuntime({
     setDoc(
       `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https: data:; media-src https:; style-src 'unsafe-inline'; script-src 'nonce-yiedu-runtime'; font-src https: data:; form-action 'none'; base-uri 'none'"><style>${source.css.replace(/</g, "\\3c ")}</style></head><body>${safe}<script nonce="yiedu-runtime">${runtime}</script></body></html>`,
     );
-  }, [source.html, source.css, courses, slug, courseBase, pageBase]);
+  }, [source.html, source.css, courses, slug, courseBase, pageBase, pages]);
   useEffect(() => {
     function receive(e: MessageEvent) {
       if (
@@ -81,6 +137,17 @@ export default function SiteRuntime({
     <>
       <iframe
         ref={frame}
+        onLoad={() => {
+          let id = window.location.hash.slice(1);
+          try {
+            id = decodeURIComponent(id);
+          } catch {}
+          if (id)
+            frame.current?.contentWindow?.postMessage(
+              { channel: "yiedu-page-v1", type: "anchor", id },
+              "*",
+            );
+        }}
         title={title}
         srcDoc={doc}
         sandbox="allow-scripts"

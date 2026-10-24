@@ -9,7 +9,7 @@ test("owner creates a tenant and lesson, learner completes it, ZIP downloads", a
   const slug = "school-" + suffix;
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /Tri thức của bạn/ }),
+    page.getByRole("heading", { name: /Tạo hệ thống/ }),
   ).toBeVisible();
   await page.screenshot({
     path: "../.build/screenshots/home-desktop.png",

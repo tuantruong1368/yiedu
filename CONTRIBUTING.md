@@ -125,3 +125,6 @@ và [UAT](handbook/product/uat.md) cho bối cảnh quản lý dự án.
 [CR-002](handbook/product/changes/CR-002-authoring-i18n.md). Page gadget dùng GrapesJS,
 lesson tool dùng Tiptap. Đăng ký module build-time tin cậy và đồng bộ validator/render/tests;
 không import code từ ZIP/URL tenant. Thêm UI phải có nhãn VI/EN và giữ fallback nội dung cũ.
+
+
+Module Content Studio: đọc [hướng dẫn tác giả và SDK](handbook/guides/content-studio.md) trước khi sửa thư viện slide/video/mô phỏng, media snapshot hoặc nâng học liệu.

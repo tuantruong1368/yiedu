@@ -7,6 +7,7 @@ from fastapi import HTTPException
 from sqlalchemy import select
 
 from yiedu.models import Course, LearningPath, Lesson
+from yiedu.studio_seed import seed_studio
 from yiedu.template_library import curriculum, get_template, lessons_for
 
 
@@ -63,6 +64,8 @@ def seed_template(db, tenant):
         "installed_at": datetime.now(UTC).isoformat(),
         "review_status": "editorial-draft",
         "content_depth": "compact-learning-units",
+        "media_version": "2026.10.2",
+        "studio_asset_count": seed_studio(db, tenant),
     }
     tenant.template_seed = summary
     return {"already_installed": False, **summary}

@@ -324,9 +324,7 @@
     "questions": {
       "vi": [
         "Precision trong ví dụ là bao nhiêu?",
-        "P(A",
-        "B) có luôn bằng P(B",
-        "A) không?",
+        "P(A|B) có luôn bằng P(B|A) không?",
         "Có nên đánh giá trên dữ liệu huấn luyện không?"
       ],
       "en": [

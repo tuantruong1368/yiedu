@@ -6,6 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from yiedu.authoring import validate_lesson_document
+from yiedu.learning_media import guided_simulation, media_node, presentation_for
 
 ROOT = Path(__file__).with_name("content")
 
@@ -153,6 +154,28 @@ def lessons_for(module_id):
                         "qualified review, not completion clicks alone."
                     ),
                 ]
+            if index == 0:
+                nodes.append(media_node("slides", title, presentation_for(m, lang)))
+            elif index == 1:
+                nodes.append(
+                    heading(
+                        "Xem bài giảng theo cảnh"
+                        if lang == "vi"
+                        else "Scene-based lesson presentation"
+                    )
+                )
+                nodes.append(
+                    paragraph(
+                        "Bật đọc lời giảng hoặc mở ghi chú, dừng để làm bài tập. Đây là "
+                        "bài giảng theo cảnh, không phải video người giảng quay sẵn."
+                        if lang == "vi"
+                        else "Enable narration or open the notes, and pause to practice. "
+                        "This is a scene-based lesson, not a prerecorded instructor video."
+                    )
+                )
+                nodes.append(media_node("video", title, presentation_for(m, lang, video=True)))
+            elif index == 2:
+                nodes.extend(guided_simulation(module_id, lang))
             document = validate_lesson_document({"type": "doc", "content": nodes})
             versions[lang] = {
                 "title": title[:200],
@@ -174,6 +197,14 @@ def lessons_for(module_id):
 def plain_text(node):
     if node.get("type") == "text":
         return node["text"]
+    if node.get("type") == "studioAsset":
+        attrs = node["attrs"]
+        payload = attrs["payload"]
+        if attrs["kind"] == "simulation":
+            return "[Interactive model / Mô hình tương tác: " + payload["model"] + "]"
+        return "\n".join(
+            s["title"] + "\n" + s["body"] + "\n" + s["notes"] for s in payload["slides"]
+        )
     if node.get("type") == "simulation":
         return "[Mô phỏng tương tác trên web / Interactive simulation on web]"
     return "\n".join(filter(None, (plain_text(x) for x in node.get("content", []))))

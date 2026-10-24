@@ -77,3 +77,12 @@ translations mặc định {}; body/document/translation không trả trong over
 Snapshot mới 0003, restore nhận 0002/0003.
 GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
 EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.
+
+
+## Migration 0005 — Content Studio
+
+`studio_assets`: UUID id, tenant_id FK/index, title, kind (slides/video/simulation), locale,
+data JSONB có schema version 1.0, revision, created_at/updated_at. ACL theo membership ở API.
+`lessons.revision` mặc định 1; editor dùng optimistic concurrency qua row lock + revision check.
+Node `studioAsset` chứa snapshot `{kind,title,payload}`, không cần FK tới project gốc để học.
+ZIP schema 0005 gồm studio_assets; restore đọc cả các schema cũ. Không lưu binary video/upload tại server.

@@ -17,6 +17,7 @@ from yiedu.db import get_session
 from yiedu.models import Course, Tenant
 from yiedu.product import router as product_router
 from yiedu.schemas import CourseCreate, CourseRead, TenantCreate, TenantRead
+from yiedu.studio import router as studio_router
 
 
 @asynccontextmanager
@@ -25,10 +26,11 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="YiEdu API", version="0.5.0", lifespan=lifespan)
+app = FastAPI(title="YiEdu API", version="0.6.0", lifespan=lifespan)
 
 
 app.include_router(product_router)
+app.include_router(studio_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().allowed_origins.split(","),

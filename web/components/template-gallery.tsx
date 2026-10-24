@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import TemplateThumbnail from "./template-thumbnail";
 import TemplateLink from "./template-link";
 import { useI18n } from "./locale-provider";
 export default function TemplateGallery({ templates }: { templates: any[] }) {
@@ -34,25 +35,20 @@ export default function TemplateGallery({ templates }: { templates: any[] }) {
       <div className="template-grid">
         {visible.map((x) => (
           <article className="template-card" key={x.id}>
-            <div
-              className="template-preview"
-              style={{
-                background: x.color,
-                padding: 24,
-                color: "white",
-                minHeight: 240,
-              }}
+            <Link
+              href={`/templates/${x.id}`}
+              aria-label={`${t("Xem website", "Preview website")} ${x.name}`}
             >
+              <TemplateThumbnail id={x.id} name={x.name} />
+            </Link>
+            <div className="template-info" style={{ display: "block" }}>
               <small>{locale === "en" ? x.category_en : x.category}</small>
               <h2>{x.name}</h2>
-              <p>{x.tagline[locale]}</p>
-              <span>
+              <p>{locale === "en" ? x.description_en : x.description}</p>
+              <p>
                 {x.course_count} {t("môn", "courses")} · {x.lesson_count}{" "}
                 {t("bài học", "lessons")}
-              </span>
-            </div>
-            <div className="template-info" style={{ display: "block" }}>
-              <p>{locale === "en" ? x.description_en : x.description}</p>
+              </p>
               <Link href={`/templates/${x.id}`} className="text-link">
                 {t("Xem website và bài học", "Preview website and lessons")} ↗
               </Link>

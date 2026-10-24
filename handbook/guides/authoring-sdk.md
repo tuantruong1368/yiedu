@@ -204,3 +204,10 @@ learner khác; tài khoản ngoài tenant và học viên chưa enroll phải b�
 Kiểm tra tự động: `pytest -q`, `npm run build`, `npm run test:e2e`, mobile typecheck/bundle,
 `python scripts/check_docs.py`, `python scripts/check_contracts.py`, `mkdocs build --strict`.
 Dùng PostgreSQL test riêng khi chạy integration; xem [testing](testing.md).
+
+
+## Bổ sung 0.6 — Content Studio
+
+[Hướng dẫn mới](content-studio.md) mô tả full-page lesson editor, thư viện học liệu,
+slide/video/mô phỏng độc lập, node snapshot, revision, export và contribution `studio-tool`.
+GrapesJS và page-gadget API ở tài liệu này tiếp tục dùng cho website.

@@ -57,7 +57,7 @@ export default function SiteView({
           </Link>
         </nav>
         <LocaleSwitch />
-        <Link href={"/register?site=" + tenant.slug} className="button small">
+        <Link href={"/t/" + tenant.slug + "/learn"} className="button small">
           {t("Tham gia học tập ↗", "Start learning ↗")}
         </Link>
       </header>
@@ -65,6 +65,7 @@ export default function SiteView({
         page ? (
           <SiteRuntime
             source={page[locale].html ? page[locale] : page[doc.default_locale]}
+            pages={doc.pages}
             courses={data.courses.map((c: any) => ({
               ...c,
               ...c.translations?.[locale],

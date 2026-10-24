@@ -291,7 +291,7 @@ def test_bilingual_site_rich_lesson_and_tenant_isolation(clients):
 
     bundle = zipfile.ZipFile(io.BytesIO(owner.get(base + "/export").content))
     exported = json.loads(bundle.read("snapshot.json"))
-    assert exported["schema_version"] == "0004"
+    assert exported["schema_version"] == "0005"
     assert exported["tables"]["lessons"][0]["document"] == rich
 
 
@@ -319,8 +319,206 @@ def test_template_seed_is_isolated_and_idempotent(clients):
     assert len(overview["courses"]) == 32
     assert len(overview["lessons"]) == 128
     assert len(overview["paths"]) == 9
-    assert tenant["template_seed"]["version"] == "2026.10.1"
+    assert tenant["template_seed"]["version"] == "2026.10.2"
     ids = {x["id"] for x in overview["courses"]}
     assert owner.post(f"/api/v1/workspaces/{workspace['id']}/publish").status_code == 200
     assert {x["id"] for x in owner.get(base + "/overview").json()["courses"]} == ids
     assert learner.get(base + "/overview").status_code == 403
+
+
+def test_studio_isolation_revisions_embedded_snapshots_and_export_restore(clients):
+    from yiedu.learning_media import presentation_for
+    from yiedu.template_library import get_module
+
+    owner, learner, outsider, connection = clients
+    register(owner, "StudioOwner")
+    register(learner, "StudioLearner")
+    register(outsider, "StudioOutsider")
+    w, tenant = create_site(owner)
+    base = f"/api/v1/runtime/{tenant['id']}"
+    learner.post(f"/api/v1/sites/{tenant['slug']}/join")
+    payload = {
+        "title": "A reusable deck",
+        "kind": "slides",
+        "locale": "vi",
+        "data": presentation_for(get_module("python"), "vi"),
+    }
+    response = owner.post(base + "/studio", json=payload)
+    assert response.status_code == 201, response.text
+    row = response.json()
+    url = base + "/studio/" + row["id"]
+    assert row["revision"] == 1
+    assert learner.get(base + "/studio").status_code == 403
+    assert outsider.get(url).status_code == 403
+    assert learner.post(base + "/studio", json=payload).status_code == 403
+    # Same membership on another tenant never confers access to this asset.
+    _, other = create_site(owner)
+    assert owner.get(f"/api/v1/runtime/{other['id']}/studio/{row['id']}").status_code == 404
+    updated = owner.put(url, json={**payload, "title": "Updated deck", "revision": 1})
+    assert updated.status_code == 200, updated.text
+    assert updated.json()["revision"] == 2
+    assert owner.put(url, json={**payload, "revision": 1}).status_code == 409
+    assert owner.put(url, json={**payload, "kind": "video", "revision": 2}).status_code == 422
+    course = owner.post(
+        base + "/courses",
+        json={
+            "title": "Studio Course",
+            "slug": "studio-course",
+            "published": True,
+        },
+    ).json()
+    doc = {
+        "type": "doc",
+        "content": [
+            {
+                "type": "studioAsset",
+                "attrs": {
+                    "title": payload["title"],
+                    "kind": "slides",
+                    "payload": payload["data"],
+                },
+            }
+        ],
+    }
+    lesson = owner.post(
+        base + f"/courses/{course['id']}/lessons",
+        json={
+            "title": "Embedded media",
+            "content": "Accessible fallback",
+            "document": doc,
+        },
+    ).json()
+    edited = owner.put(
+        base + "/lessons/" + lesson["id"],
+        json={
+            "title": "Embedded media",
+            "document": doc,
+            "revision": 1,
+        },
+    )
+    assert edited.status_code == 200
+    assert edited.json()["revision"] == 2
+    assert (
+        owner.put(
+            base + "/lessons/" + lesson["id"],
+            json={
+                "title": "Stale edit",
+                "revision": 1,
+            },
+        ).status_code
+        == 409
+    )
+    learner.post(base + f"/courses/{course['id']}/enroll")
+    assert learner.get(base + "/lessons/" + lesson["id"]).json()["document"] == doc
+    exported = zipfile.ZipFile(io.BytesIO(owner.get(base + "/export").content))
+    snapshot = json.loads(exported.read("snapshot.json"))
+    assert snapshot["schema_version"] == "0005"
+    assert len(snapshot["tables"]["studio_assets"]) == 1
+    # Restore into an actually empty destination within the transaction.
+    spec = importlib.util.spec_from_file_location(
+        "restore_studio", Path("scripts/restore_snapshot.py")
+    )
+    restore_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(restore_module)
+    schema = "studio_restore_" + uuid.uuid4().hex[:10]
+    connection.execute(text(f'CREATE SCHEMA "{schema}"'))
+    connection.execution_options(schema_translate_map={None: schema})
+    try:
+        Base.metadata.create_all(connection)
+        with Session(bind=connection, join_transaction_mode="create_savepoint") as target:
+            restored = restore_module.restore(snapshot, target)
+            assert len(restored) == 2
+            from yiedu.models import StudioAsset
+
+            asset = target.get(StudioAsset, uuid.UUID(row["id"]))
+            assert asset.data == payload["data"]
+    finally:
+        connection.execution_options(schema_translate_map=None)
+    assert owner.delete(url).status_code == 204
+    assert learner.get(base + "/lessons/" + lesson["id"]).json()["document"] == doc
+    assert owner.get(url).status_code == 404
+    # Keep cross-tenant snapshot checks, including Studio records.
+    from yiedu.models import StudioAsset
+
+    assert not connection.execute(
+        text("SELECT id FROM studio_assets WHERE id=:id"), {"id": row["id"]}
+    ).first()
+    assert StudioAsset.__tablename__ in snapshot["tables"]
+
+
+def test_starter_upgrade_preserves_teacher_edits_and_does_not_duplicate_assets(clients):
+    owner, _, _, connection = clients
+    register(owner, "StarterUpgradeOwner")
+    workspace = owner.post(
+        "/api/v1/workspaces",
+        json={
+            "name": "Existing School",
+            "slug": "existing-" + uuid.uuid4().hex[:8],
+            "template_id": "yirobot",
+        },
+    ).json()
+    response = owner.post(f"/api/v1/workspaces/{workspace['id']}/publish")
+    assert response.status_code == 200, response.text
+    tenant = response.json()["tenant"]
+    base = f"/api/v1/runtime/{tenant['id']}"
+    assets = owner.get(base + "/studio").json()
+    assert len(assets) > 128
+    result = owner.post(base + "/studio/starter-content/upgrade")
+    assert result.status_code == 200, result.text
+    assert result.json()["assets_added"] == 0
+    assert result.json()["lessons_updated"] == 0
+    assert len(owner.get(base + "/studio").json()) == len(assets)
+    # Rebuild an untouched 0.5 principle lesson, then prove upgrade matches its fingerprint.
+    from sqlalchemy import select
+    from yiedu.models import Course, Lesson
+    from yiedu.studio_seed import lesson_fingerprint
+    from yiedu.template_library import ROOT, plain_text
+
+    with Session(bind=connection, join_transaction_mode="create_savepoint") as session:
+        starter = session.scalar(
+            select(Course).where(
+                Course.tenant_id == uuid.UUID(tenant["id"]), Course.slug == "tpl-study-skills"
+            )
+        )
+        old_lesson = session.scalar(
+            select(Lesson).where(Lesson.course_id == starter.id, Lesson.position == 0)
+        )
+        old_lesson.document = {
+            **old_lesson.document,
+            "content": [
+                node for node in old_lesson.document["content"] if node["type"] != "studioAsset"
+            ],
+        }
+        old_lesson.content = plain_text(old_lesson.document)
+        en = dict(old_lesson.translations["en"])
+        en["document"] = {
+            **en["document"],
+            "content": [
+                node for node in en["document"]["content"] if node["type"] != "studioAsset"
+            ],
+        }
+        en["content"] = plain_text(en["document"])
+        old_lesson.translations = {"en": en}
+        baselines = json.loads((ROOT / "lesson-baselines.json").read_text())
+        assert lesson_fingerprint(old_lesson) == baselines["study-skills:0"]
+        upgraded_id = str(old_lesson.id)
+        session.commit()
+    result = owner.post(base + "/studio/starter-content/upgrade")
+    assert result.json()["lessons_updated"] == 1, result.text
+    upgraded = owner.get(base + "/lessons/" + upgraded_id).json()
+    assert any(node["type"] == "studioAsset" for node in upgraded["document"]["content"])
+    overview = owner.get(base + "/overview").json()
+    lesson = overview["lessons"][0]
+    detail = owner.get(base + "/lessons/" + lesson["id"]).json()
+    changed = owner.put(
+        base + "/lessons/" + lesson["id"],
+        json={
+            "title": "Teacher has rewritten this lesson",
+            "content": "Teacher-owned content",
+            "revision": detail["revision"],
+        },
+    )
+    assert changed.status_code == 200
+    result = owner.post(base + "/studio/starter-content/upgrade")
+    assert result.json()["lessons_updated"] == 0
+    assert owner.get(base + "/lessons/" + lesson["id"]).json()["content"] == "Teacher-owned content"

@@ -116,10 +116,10 @@ test("signed-in template opens studio; bilingual HTML import, pages, events and 
   });
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Your knowledge.", level: 1 }),
+    page.getByRole("heading", { name: /Create your own/, level: 1 }),
   ).toBeVisible();
   await page.reload();
   await expect(
-    page.getByRole("heading", { name: "Your knowledge.", level: 1 }),
+    page.getByRole("heading", { name: /Create your own/, level: 1 }),
   ).toBeVisible();
 });

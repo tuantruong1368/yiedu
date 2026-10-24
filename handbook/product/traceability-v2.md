@@ -42,3 +42,17 @@ EditorContribution chỉ khai báo module/slot/license; không cấp quyền th�
 | 14 template và preview | template_library/template_sites, gallery/preview | test_template_library | 5 trang/mẫu |
 | Nội dung tenant độc lập | template_seed, migration 0004, publish | test_template_seed_is_isolated_and_idempotent | Không tự cập nhật tenant cũ |
 | Robot/Software 8 học kỳ | content/templates.json, modules.json | curriculum/document/code validators | Học phần cô đọng, chưa đủ giáo trình đại học |
+
+
+## CR-004 — template website và Content Studio 0.6
+
+| Hành vi | Code/contract | Kiểm tra |
+|---|---|---|
+| Template đúng giao diện | thumbnail route, TemplateThumbnail, SiteDocument | templates/studio browser |
+| Đa trang và điều hướng | navigation.ts, SiteRuntime, SiteView, auth/learn | studio browser đổi slug và bấm đủ 5 menu |
+| Studio và công cụ độc lập | studio_assets, studio.py, studio_schema.py, registry/types | schema + ACL/revision + CRUD browser |
+| Bài giảng nâng cao | studio-screen, LessonEditor, studioAsset NodeView | chèn/lưu/mở lại/learner interactive browser |
+| Media mẫu | learning_media, studio_seed, lesson-baselines | tất cả 65 học phần, upgrade idempotent/preserve-edit test |
+| Portable | snapshot 0005 + restore validator | integration restore trong schema trống |
+
+[AC và tác động](changes/CR-004-content-studio.md), [giới hạn](release-0.6.md).

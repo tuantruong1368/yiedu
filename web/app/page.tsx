@@ -1,4 +1,5 @@
 import { getT } from "@/lib/i18n/server";
+import TemplateThumbnail from "@/components/template-thumbnail";
 import TemplateGallery from "@/components/template-gallery";
 import Link from "next/link";
 import {
@@ -7,7 +8,6 @@ import {
   Check,
   BookOpen,
   Globe2,
-  Sparkles,
   ShieldCheck,
 } from "lucide-react";
 import { Header } from "@/components/shared";
@@ -36,11 +36,11 @@ export default async function Home() {
               {tr("NỀN TẢNG HỌC TẬP CỦA RIÊNG BẠN")}
             </span>
             <h1>
-              {tr("Tri thức của bạn.")}
+              {tr("Tạo hệ thống", "Create your own")}
               <br />
-              {tr("Một thế giới")}
+              <em>e-learning</em>
               <br />
-              <em>{tr("khả năng mới.")}</em>
+              {tr("của riêng bạn.", "learning platform.")}
             </h1>
             <p>
               {tr(
@@ -73,53 +73,25 @@ export default async function Home() {
             </div>
           </div>
           <div className="hero-art">
-            <div className="orb orb-one" />
-            <div className="orb orb-two" />
-            <div className="mock-browser">
-              <div className="browser-bar">
-                <i />
-                <i />
-                <i />
-                <span>your-academy.yiedu.vn</span>
-              </div>
-              <div className="mock-content">
-                <div className="mock-label">
-                  YOUR ACADEMY <ArrowUpRight size={16} />
-                </div>
-                <h2>
-                  {tr("Những điều lớn lao")}
-                  <br />
-                  {tr("bắt đầu từ")}
-                  <br />
-                  <em>{tr("một bài học.")}</em>
-                </h2>
-                <div className="mock-button">
-                  {tr("Khám phá hành trình")}
-                  <ArrowRight size={15} />
-                </div>
-                <div className="mock-grid">
-                  <div className="mock-course moss">
-                    <BookOpen />
-                    <span>{tr("Kỹ năng nền tảng")}</span>
-                  </div>
-                  <div className="mock-course clay">
-                    <Sparkles />
-                    <span>{tr("Thực hành sáng tạo")}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <TemplateThumbnail id="yirobot" name="Yirobot" hero />
             <div className="float-tag">
               <span className="float-icon">
                 <Globe2 />
               </span>
               <div>
-                <b>{tr("Thương hiệu của bạn")}</b>
-                <small>{tr("Một không gian. Nhiều khả năng.")}</small>
+                <b>
+                  {tr(
+                    "Website thật. Thương hiệu của bạn.",
+                    "A real website. Your brand.",
+                  )}
+                </b>
+                <small>
+                  {tr(
+                    "Menu · Khóa học · Lộ trình · Học viên",
+                    "Pages · Courses · Pathways · Learners",
+                  )}
+                </small>
               </div>
-            </div>
-            <div className="art-caption">
-              {tr("THIẾT KẾ ĐỂ HỌC TẬP. XÂY DỰNG ĐỂ PHÁT TRIỂN.")}
             </div>
           </div>
         </section>
@@ -141,6 +113,67 @@ export default async function Home() {
             <ShieldCheck />
             {tr("Sở hữu và mở rộng")}
           </span>
+        </section>
+        <section className="section platform-how">
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">HOW IT WORKS</span>
+              <h2>
+                {tr(
+                  "Bạn xây học viện. YiEdu lo nền tảng.",
+                  "Your academy. Built on YiEdu.",
+                )}
+              </h2>
+            </div>
+            <p>
+              {tr(
+                "Dành cho doanh nghiệp, trung tâm, giáo viên và đội ngũ đào tạo.",
+                "For companies, training centers, teachers and education teams.",
+              )}
+            </p>
+          </div>
+          <div className="platform-step-grid">
+            {[
+              [
+                "01",
+                tr("Chọn website mẫu", "Choose a website"),
+                tr(
+                  "Xem đúng giao diện sẽ tạo, đọc thử bài và lộ trình trước khi chọn.",
+                  "Preview the actual website, lessons and pathways before choosing.",
+                ),
+              ],
+              [
+                "02",
+                tr("Đặt thương hiệu riêng", "Make it yours"),
+                tr(
+                  "Chỉnh logo, menu, nội dung Việt/Anh và bố cục bằng builder kéo thả.",
+                  "Customize your logo, pages, Vietnamese/English content and layout.",
+                ),
+              ],
+              [
+                "03",
+                tr("Soạn bài trong Studio", "Create in Studio"),
+                tr(
+                  "Tạo bài giảng, slide, video và mô phỏng; lưu thư viện để dùng lại.",
+                  "Create lessons, slides, video and simulations in your reusable library.",
+                ),
+              ],
+              [
+                "04",
+                tr("Xuất bản và bắt đầu dạy", "Publish and teach"),
+                tr(
+                  "Học viên đăng ký tại website của bạn, ghi danh, học bài và theo dõi tiến độ.",
+                  "Learners join your website, enroll, study and track their progress.",
+                ),
+              ],
+            ].map(([n, title, body]) => (
+              <article key={n}>
+                <small>{n}</small>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </article>
+            ))}
+          </div>
         </section>
         <section id="templates" className="section">
           <div className="section-heading">

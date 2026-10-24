@@ -20,16 +20,18 @@ from yiedu.models import (
     LearningPath,
     Lesson,
     Membership,
+    StudioAsset,
     Tenant,
     TenantExtension,
     User,
     Workspace,
 )
 from yiedu.product_schemas import LessonWrite
+from yiedu.studio_schema import AssetWrite
 
 
 def restore(data, db):
-    if data.get("schema_version") not in {"0002", "0003", "0004"}:
+    if data.get("schema_version") not in {"0002", "0003", "0004", "0005"}:
         raise ValueError("Unsupported snapshot schema")
     if db.scalar(select(Tenant.id).limit(1)) or db.scalar(select(User.id).limit(1)):
         raise ValueError("Destination must be an empty migrated database")
@@ -61,6 +63,10 @@ def restore(data, db):
             if k in lesson
         }
         LessonWrite.model_validate(fields)
+    for row in tables.get("studio_assets", []):
+        AssetWrite.model_validate(
+            {k: row[k] for k in ["title", "kind", "locale", "data", "revision"]}
+        )
     credentials = []
     db.add(Tenant(**convert(data["tenant"])))
     db.flush()
@@ -77,8 +83,9 @@ def restore(data, db):
         Enrollment,
         Completion,
         TenantExtension,
+        StudioAsset,
     ]:
-        for row in tables[model.__tablename__]:
+        for row in tables.get(model.__tablename__, []):
             db.add(model(**convert(row)))
         db.flush()
     owner = next((m for m in tables["memberships"] if m["role"] == "owner"), None)
@@ -104,7 +111,7 @@ def convert(row):
             # template_id/package_id are names, not UUID foreign keys.
             if key not in {"template_id", "package_id"}:
                 result[key] = uuid.UUID(value)
-        if key == "created_at":
+        if key in {"created_at", "updated_at"}:
             result[key] = datetime.fromisoformat(value)
     return result
 

@@ -1,11 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { lessonExtensions, lessonTools } from "@/lib/authoring/lesson-tools";
 import { useI18n } from "../locale-provider";
 import { esc } from "@/lib/authoring/site";
 import "katex/dist/katex.min.css";
-export default function LessonEditor({ initial }: { initial: any }) {
+export default function LessonEditor({
+  initial,
+  onChange,
+  onReady,
+}: {
+  initial: any;
+  onChange?: (docs: any) => void;
+  onReady?: (editor: any) => void;
+}) {
   const { t, locale } = useI18n(),
     [lang, setLang] = useState<"vi" | "en">("vi"),
     [docs, setDocs] = useState<any>({
@@ -45,6 +53,12 @@ export default function LessonEditor({ initial }: { initial: any }) {
     },
     [lang],
   );
+  useEffect(() => {
+    onChange?.(docs);
+  }, [docs]);
+  useEffect(() => {
+    if (editor) onReady?.(editor);
+  }, [editor]);
   if (!editor)
     return <p>{t("Đang tải trình soạn thảo…", "Loading editor…")}</p>;
   return (
@@ -64,6 +78,21 @@ export default function LessonEditor({ initial }: { initial: any }) {
         {[
           ["B", () => editor.chain().focus().toggleBold().run()],
           ["I", () => editor.chain().focus().toggleItalic().run()],
+          ["U", () => editor.chain().focus().toggleUnderline().run()],
+          [
+            "H1",
+            () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+          ],
+          [
+            "H3",
+            () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+          ],
+          ["❝", () => editor.chain().focus().toggleBlockquote().run()],
+          ["―", () => editor.chain().focus().setHorizontalRule().run()],
+          [
+            "Clear",
+            () => editor.chain().focus().unsetAllMarks().clearNodes().run(),
+          ],
           [
             "H2",
             () => editor.chain().focus().toggleHeading({ level: 2 }).run(),

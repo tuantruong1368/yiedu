@@ -2,12 +2,20 @@
   "expo": {
     "name": "YiEdu",
     "slug": "yiedu-learning",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "scheme": "yiedu",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "ios": { "supportsTablet": true, "bundleIdentifier": "vn.yiedu.learning" },
-    "android": { "package": "vn.yiedu.learning" },
-    "plugins": ["expo-secure-store", "expo-video"]
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "vn.yiedu.learning"
+    },
+    "android": {
+      "package": "vn.yiedu.learning"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-video"
+    ]
   }
 }

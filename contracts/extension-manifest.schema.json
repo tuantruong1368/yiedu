@@ -31,7 +31,8 @@
         "slot": {
           "enum": [
             "page-gadget",
-            "lesson-tool"
+            "lesson-tool",
+            "studio-tool"
           ],
           "title": "Slot",
           "type": "string"

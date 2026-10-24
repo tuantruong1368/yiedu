@@ -31,7 +31,7 @@ def verify_password(password: str, stored: str) -> bool:
             return False
         check = hashlib.scrypt(password.encode(), salt=bytes.fromhex(salt), n=16384, r=8, p=1)
         return hmac.compare_digest(check.hex(), digest)
-    except (ValueError, TypeError):
+    except ValueError, TypeError:
         return False
 
 

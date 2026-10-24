@@ -112,6 +112,7 @@ class CourseWrite(StrictModel):
 
 
 class LessonWrite(StrictModel):
+    revision: int | None = Field(default=None, ge=1)
     title: Name
     content: str = Field(default="", max_length=100000)
     video_url: str = Field(default="", max_length=2000)

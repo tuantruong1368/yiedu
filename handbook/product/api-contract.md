@@ -78,3 +78,14 @@ translations mặc định {}; body/document/translation không trả trong over
 Snapshot mới 0003, restore nhận 0002/0003.
 GrapesJS được chọn cho HTML/CSS/free layout; Tiptap cho rich lesson và extension node.
 EditorContribution chỉ khai báo module/slot/license; không cấp quyền thực thi hoặc chứng minh đã mua.
+
+
+## Content Studio 0.6 — đã có endpoint
+
+Dưới `/api/v1/runtime/{tenant_id}/studio`: GET/POST gốc; GET/PUT/DELETE `/{asset_id}`;
+POST `/starter-content/upgrade` dành cho owner/admin. CRUD project cần owner/admin/instructor.
+AssetWrite có title/kind/locale/data/revision; PUT bắt buộc revision khớp, trả 409 khi xung đột.
+Từ chối asset tenant khác; learner chỉ đọc snapshot trong lesson sau enrollment/prerequisite.
+LessonWrite nhận revision tùy chọn để giữ client cũ; editor web mới luôn gửi revision khi sửa.
+Bài học có metadata `localized_titles` trong overview, không chứa body/video/document/translations.
+[Schema và hướng dẫn](../guides/content-studio.md).

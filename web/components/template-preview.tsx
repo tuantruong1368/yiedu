@@ -57,6 +57,7 @@ export default function TemplatePreview({
         </section>
         <SiteRuntime
           source={page[locale]}
+          pages={data.document.pages}
           courses={localized}
           slug="preview"
           title={template.name}

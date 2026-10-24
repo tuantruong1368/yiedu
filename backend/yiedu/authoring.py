@@ -287,6 +287,7 @@ def validate_lesson_document(value):
         "blockMath",
         "simulation",
         "callout",
+        "studioAsset",
     }
     marks = {"bold", "italic", "strike", "underline", "code", "link", "superscript", "subscript"}
     count = 0
@@ -307,6 +308,17 @@ def validate_lesson_document(value):
         attrs = node.get("attrs", {})
         if not isinstance(attrs, dict):
             raise ValueError("Invalid attributes")
+        if node.get("type") == "studioAsset":
+            from yiedu.studio_schema import validate_project
+
+            if set(attrs) != {"kind", "title", "payload"}:
+                raise ValueError("Invalid studio snapshot")
+            if not isinstance(attrs["title"], str) or len(attrs["title"]) > 200:
+                raise ValueError("Invalid studio snapshot title")
+            validate_project(attrs["kind"], attrs["payload"])
+            if node.get("content") or node.get("text") or node.get("marks"):
+                raise ValueError("Studio snapshots are atomic")
+            return
         allowed = {
             "level",
             "language",

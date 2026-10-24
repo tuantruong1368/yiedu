@@ -159,3 +159,23 @@ CI nguồn cuối `07046d77813e420ad24f7e3b9373bc07fa9ba54b`:
 compose (build/ready/homepage), database-upgrade (PostgreSQL 17→18 giữ dữ liệu và chạy lại app).
 Đã xem ảnh preview Yirobot desktop: bố cục hero, chữ Việt, robot CSS và CTA hiển thị đúng.
 Không có kiểm chứng chuyên gia nội dung, thiết bị mobile thật hoặc triển khai production.
+
+## Content Studio 0.6 — 24/10/2026
+
+Local nguồn 0.6: Python 3.15.1, Node.js 26.12.1/npm 12.2.1, PGlite socket.
+Ruff, schema manifest/5 ví dụ, link tài liệu, MkDocs strict và Next production build qua.
+Migration 0005 và `alembic check` không drift; **41 pytest** qua, gồm schema/media, ACL,
+revision conflict, cập nhật bài 0.5 đúng fingerprint, giữ bài đã sửa, không nhân đôi assets,
+learner enrollment và khôi phục snapshot Studio vào schema trống.
+
+**4 Playwright journeys** qua trên Chromium: builder cũ; owner/learner/export;
+thư viện template VI/EN; và luồng Content Studio mới. Luồng mới kiểm ảnh website thật,
+đổi page slug và bấm đủ menu, tạo/lưu/mở lại slide/mô phỏng/video, tải file video >1000 byte,
+chuyển form gọn sang editor full page không mất bài, chèn/sửa snapshot, learner tương tác và hoàn thành.
+Đã xem ảnh template card, slide editor, lesson preview và bài học learner; sửa độ tương phản chữ slide.
+Danh mục developer đã cập nhật đủ 226 file/68 thư mục.
+
+Đây chưa là kiểm thử mọi trình duyệt, quyền micro trên Mac M1, thiết bị native thật hoặc đánh giá
+chuyên gia cho toàn bộ giáo trình. Video export được kiểm ở chế độ không thu micro.
+Không có Docker daemon local; kết quả PostgreSQL 18.6 native/Compose/mobile/upgrade được xác nhận
+riêng qua CI sau khi đưa nguồn lên main. PGlite local không thay thế bằng chứng đó.

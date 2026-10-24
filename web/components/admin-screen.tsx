@@ -1,5 +1,7 @@
 "use client";
 import { useI18n } from "./locale-provider";
+import { studioURL } from "@/lib/studio/types";
+import { Library } from "lucide-react";
 import LessonEditor from "./lesson/lesson-editor";
 import { TenantBrand } from "./tenant-brand";
 import { LocaleSwitch } from "./locale-provider";
@@ -26,6 +28,7 @@ import { Brand, ErrorBox, Loading, Logout, Empty } from "./shared";
 const tabs = [
   ["overview", "Tổng quan", LayoutDashboard],
   ["courses", "Khóa học", BookOpen],
+  ["studio", "Studio nội dung", Library],
   ["paths", "Lộ trình", Route],
   ["members", "Thành viên", Users],
   ["extensions", "Tiện ích", Puzzle],
@@ -106,10 +109,14 @@ export default function AdminScreen({ slug }: { slug: string }) {
     (document.getElementById("course-form") as HTMLFormElement)?.reset();
   }
   async function saveLesson(e: React.FormEvent<HTMLFormElement>) {
+    const advanced =
+      (e.nativeEvent as SubmitEvent).submitter?.getAttribute("name") ===
+      "advanced";
     const f = fdata(e);
+    let saved: any;
     const success = await action(
-      () =>
-        api(
+      async () =>
+        (saved = await api(
           base +
             (lessonEdit
               ? "/lessons/" + lessonEdit.id
@@ -118,6 +125,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
             method: lessonEdit ? "PUT" : "POST",
             body: JSON.stringify({
               title: f.get("title"),
+              revision: lessonEdit?.revision,
               content: f.get("content"),
               document: JSON.parse(String(f.get("document") || "null")),
               translations: JSON.parse(String(f.get("translations") || "{}")),
@@ -125,9 +133,13 @@ export default function AdminScreen({ slug }: { slug: string }) {
               position: Number(f.get("position")),
             }),
           },
-        ),
+        )),
       tr("Đã lưu bài học."),
     );
+    if (success && advanced) {
+      location.assign(studioURL(slug, "lesson", saved.id));
+      return;
+    }
     if (success) setLessonEdit(null);
   }
   if (!data)
@@ -179,13 +191,17 @@ export default function AdminScreen({ slug }: { slug: string }) {
             .filter(
               ([id]) =>
                 data.role !== "instructor" ||
-                ["overview", "courses", "paths"].includes(id),
+                ["overview", "courses", "paths", "studio"].includes(id),
             )
             .map(([id, label, Icon]) => (
               <button
                 key={id}
                 className={tab === id ? "active" : ""}
                 onClick={() => {
+                  if (id === "studio") {
+                    location.assign(studioURL(slug));
+                    return;
+                  }
                   setTab(id);
                   setError("");
                   setNotice("");
@@ -276,6 +292,56 @@ export default function AdminScreen({ slug }: { slug: string }) {
                     {tr("Xem website")} ↗
                   </Link>
                 </div>
+                {data.tenant.template_seed?.template_id &&
+                  ["owner", "admin"].includes(data.role) && (
+                    <div className="notice">
+                      <div>
+                        <b>
+                          {tr(
+                            "Học liệu có slide, video theo cảnh và mô phỏng",
+                            "Learning media with slides, scene playback and simulations",
+                          )}
+                        </b>
+                        <p>
+                          {tr(
+                            "Cập nhật bài mẫu chưa chỉnh sửa, giữ bài đã sửa. Thư viện mới được thêm mà không nhân đôi.",
+                            "Upgrade untouched starter lessons, preserve edits, and add reusable media without duplicates.",
+                          )}
+                        </p>
+                        <button
+                          type="button"
+                          className="button ghost small"
+                          disabled={busy}
+                          onClick={() =>
+                            action(
+                              async () => {
+                                const result = await api(
+                                  base + "/studio/starter-content/upgrade",
+                                  { method: "POST" },
+                                );
+                                setNotice(
+                                  `${result.lessons_updated} ${tr("bài đã cập nhật", "lessons updated")} · ${result.lessons_preserved} ${tr("bài được giữ", "lessons preserved")}`,
+                                );
+                              },
+                              tr(
+                                "Đã cập nhật học liệu mẫu.",
+                                "Starter learning media updated.",
+                              ),
+                            )
+                          }
+                        >
+                          {tr(
+                            "Cập nhật học liệu mẫu",
+                            "Update starter learning media",
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                <Link className="button" href={studioURL(slug)}>
+                  <Library size={18} />
+                  {tr("Mở Studio nội dung", "Open Content Studio")} ↗
+                </Link>
                 <div className="quick-actions">
                   <button onClick={() => setTab("courses")}>
                     <BookOpen />
@@ -519,9 +585,23 @@ export default function AdminScreen({ slug }: { slug: string }) {
                           defaultValue={lessonEdit?.position || 0}
                         />
                       </label>
-                      <button disabled={busy} className="button">
-                        {tr("Lưu bài học")}
-                      </button>
+                      <div className="actions">
+                        <button disabled={busy} className="button">
+                          {tr("Lưu bài học")}
+                        </button>
+                        <button
+                          type="submit"
+                          name="advanced"
+                          disabled={busy}
+                          className="button ghost"
+                        >
+                          {tr(
+                            "Lưu và mở Studio toàn màn hình",
+                            "Save and open full-page Studio",
+                          )}{" "}
+                          ↗
+                        </button>
+                      </div>
                       {lessonEdit && (
                         <button
                           type="button"
@@ -807,7 +887,7 @@ export default function AdminScreen({ slug }: { slug: string }) {
               <span className="feature-icon">
                 <RefreshCw />
               </span>
-              <span className="pill">CORE 0.4.0</span>
+              <span className="pill">CORE 0.6.0</span>
               <h2>{tr("Cập nhật có kiểm soát.")}</h2>
               <p>
                 {tr(

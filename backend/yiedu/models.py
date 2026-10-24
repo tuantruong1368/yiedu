@@ -86,6 +86,7 @@ class Lesson(Base):
     position: Mapped[int] = mapped_column(default=0)
     document: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
     translations: Mapped[dict] = mapped_column(JSONB, default=dict)
+    revision: Mapped[int] = mapped_column(default=1)
 
 
 class LearningPath(Base):
@@ -143,3 +144,16 @@ class AuditEvent(Base):
     event_type: Mapped[str] = mapped_column(String(100))
     payload: Mapped[dict] = mapped_column(JSONB, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class StudioAsset(Base):
+    __tablename__ = "studio_assets"
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    tenant_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tenants.id"), index=True)
+    title: Mapped[str] = mapped_column(String(200))
+    kind: Mapped[str] = mapped_column(String(30))
+    locale: Mapped[str] = mapped_column(String(2), default="vi")
+    data: Mapped[dict] = mapped_column(JSONB)
+    revision: Mapped[int] = mapped_column(default=1)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
