@@ -208,6 +208,23 @@ def render_site(
                 child = Element(tag)
                 child.children.append(text)
                 link.children.append(child)
+            offer = course.get("offer")
+            if offer:
+                if not offer.get("active", True):
+                    label = "Tạm dừng đăng ký" if lang == "vi" else "Enrollment paused"
+                elif offer.get("mode") == "paid":
+                    vnd = offer.get("price_vnd", 0)
+                    usd = offer.get("price_usd", 0)
+                    label = (
+                        (f"{vnd:,}".replace(",", ".") + " VND")
+                        if vnd
+                        else f"{usd // 100}.{usd % 100:02d} USD"
+                    )
+                else:
+                    label = "Miễn phí" if lang == "vi" else "Free"
+                price = Element("strong", [("class", "yd-price")])
+                price.children.append(label)
+                link.children.append(price)
             grid.children.append(link)
         wrap = next(
             (child for child in node.walk() if "wrap" in (child.attrs.get("class") or "").split()),

@@ -32,6 +32,8 @@ nav:
   - P9 — Vận hành và cải tiến: phases/p9-operations/index.md
 - Hồ sơ YiEdu:
   - Trạng thái: product/status.md
+  - Quản trị AI và thương mại 0.9: product/release-0.9.md
+  - CR-007 quản trị và thương mại: product/changes/CR-007-platform-commerce-ai.md
   - Triển khai 0.3: product/release-0.3.md
   - Trải nghiệm 0.8: product/release-0.8.md
   - CR-006 template Yoga và navigation: product/changes/CR-006-discovery-yoga-navigation.md
@@ -70,6 +72,7 @@ nav:
 - Hướng dẫn:
   - Cấu trúc dự án cho developer: guides/project-structure.md
   - Template Yoga và điều hướng: guides/experience-yoga.md
+  - Quản trị, AI và thương mại: guides/platform-commerce-ai.md
   - Website Studio và bài học: guides/website-studio.md
   - Content Studio và SDK: guides/content-studio.md
   - Thư viện template: guides/template-library.md

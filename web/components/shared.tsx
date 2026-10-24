@@ -1,17 +1,23 @@
 "use client";
+import { usePlatform } from "./platform-provider";
 import { useI18n, LocaleSwitch } from "./locale-provider";
 import Link from "next/link";
 import { ArrowUpRight, Layers3, LogOut } from "lucide-react";
 import { api } from "@/lib/api";
 export function Brand() {
-  const { t: tr } = useI18n();
+  const branding = usePlatform();
 
   return (
     <Link href="/" className="brand">
-      <span className="brand-icon">
-        <Layers3 size={22} />
-      </span>
-      YiEdu<span className="brand-dot">.</span>
+      <img
+        className="yiedu-symbol"
+        src={branding.logo_url}
+        width={42}
+        height={42}
+        alt=""
+      />
+      {branding.name}
+      <span className="brand-dot">.</span>
     </Link>
   );
 }
@@ -24,11 +30,17 @@ export function Header() {
       <LocaleSwitch />
       <nav>
         <Link href="/#templates">{tr("Mẫu giao diện")}</Link>
+        <Link href="/#pricing">{tr("Bảng giá", "Pricing")}</Link>
         <Link href="/marketplace">{tr("Tiện ích")}</Link>
         <Link href="/developer">{tr("Dành cho developer")}</Link>
       </nav>
       <Link href="/dashboard" className="button small">
-        {tr("Không gian của tôi")}
+        <span className="header-workspace-full">
+          {tr("Không gian của tôi")}
+        </span>
+        <span className="header-workspace-short">
+          {tr("Không gian", "Workspace")}
+        </span>
         <ArrowUpRight size={16} />
       </Link>
     </header>

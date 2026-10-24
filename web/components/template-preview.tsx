@@ -122,7 +122,7 @@ export default function TemplatePreview({
             previewBase={previewBase}
           />
           <SiteRuntime
-            frameUrl={`/api/v1/catalog/templates/${template.id}/render?page=${page.id}&locale=${locale}`}
+            frameUrl={`/api/v1/catalog/templates/${template.id}/render?page=${page.id}&locale=${locale}&v=${encodeURIComponent(String(template.version || ""))}`}
             source={page[locale]}
             pages={doc.pages}
             courses={localized}

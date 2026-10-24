@@ -86,3 +86,16 @@ data JSONB có schema version 1.0, revision, created_at/updated_at. ACL theo mem
 `lessons.revision` mặc định 1; editor dùng optimistic concurrency qua row lock + revision check.
 Node `studioAsset` chứa snapshot `{kind,title,payload}`, không cần FK tới project gốc để học.
 ZIP schema 0005 gồm studio_assets; restore đọc cả các schema cũ. Không lưu binary video/upload tại server.
+
+
+## Migration 0006
+
+`users.platform_admin/trial_started_at`, `tenants.is_published/archived_at`,
+`workspaces.archived_at`, `enrollments.purchase_order_id`.
+Bảng mới: `platform_config`, `platform_events`, `managed_templates`, `private_connections`,
+`ai_drafts`, `offers`, `payment_orders`, `tenant_subscriptions`.
+Connection unique theo scope/provider, scope tenant UUID canonical; secret ciphertext tách config công khai.
+Order unique buyer/request_key và connection/provider/transaction reference, snapshot gateway mã hóa;
+bundle và price không đọc ngược giá hiện tại. Subscription giữ hạn mức của kỳ đã mua.
+Snapshot portable 0006 giữ offers và enrollment nhưng bỏ purchase-order FK (ledger không export),
+không export connections, sessions, role platform hoặc AI prompts. Restore tài khoản mới không có role platform.

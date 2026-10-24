@@ -1,4 +1,5 @@
 from alembic import context
+from yiedu import business_models  # noqa: F401
 from yiedu.db import get_engine
 from yiedu.models import Base
 

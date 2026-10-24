@@ -262,3 +262,18 @@ Gói export đã kiểm cả file khởi động khai báo trong mobile/package.
 Lần ghi bằng chứng sau commit này chỉ sửa tài liệu, không thay code đã kiểm tra.
 
 
+
+## 25/10/2026 — 0.9 platform, AI và commerce
+
+- Local: Ruff, docs links/contracts, MkDocs strict; migration `upgrade head` + `alembic check`;
+  **62 pytest** trên PostgreSQL wire-compatible PGlite, không thay cho chứng cứ PostgreSQL thật.
+- Next production build + **16 Playwright**: 11 regression cũ, 5 bài mới gồm URL safety,
+  logo/full-width/mobile, archive/restore, bank checkout/reconcile/learn, platform design và AI review/apply.
+  Sau chỉnh context checkout và transaction locks, chạy lại 62 API + 5 browser business: đều qua.
+- Expo typecheck + offline dependency check, export bundle Android/iOS qua. Không có thiết bị thật,
+  ký binary hoặc in-app purchase được thử trong lượt này.
+- OpenAI/PayPal/MoMo contract dùng fake provider responses và HMAC fixtures; AI UI dùng draft fixture
+  để kiểm review/apply. Không gọi API tính phí, không phát sinh giao dịch tiền thật.
+- Bằng chứng browser: `yiedu-brand-hero.png`, `yiedu-brand-mobile.png`, `verified-checkout.png`,
+  `platform-template-editor.png`, `platform-ai-studio.png` trong artifact CI `browser-evidence`.
+- CI PostgreSQL 18.6, Docker và PG17→18 sẽ được gắn với commit nguồn sau khi hoàn tất.

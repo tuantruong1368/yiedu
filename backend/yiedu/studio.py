@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException, Response
 from sqlalchemy import select
 
 from yiedu.auth import DB, UserDep, require_member
+from yiedu.billing import writable
 from yiedu.models import StudioAsset, Tenant
 from yiedu.product import audit, commit, encode
 from yiedu.studio_schema import AssetWrite
@@ -19,6 +20,7 @@ ROLES = ["owner", "admin", "instructor"]
 @router.post("/starter-content/upgrade")
 def upgrade_content(tenant_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin"])
+    writable(db, tenant_id)
     tenant = db.scalar(select(Tenant).where(Tenant.id == tenant_id).with_for_update())
     if not tenant.template_seed:
         raise HTTPException(422, "Tenant has no installed starter curriculum")
@@ -53,6 +55,7 @@ def list_assets(tenant_id: uuid.UUID, user: UserDep, db: DB):
 @router.post("", status_code=201)
 def create_asset(tenant_id: uuid.UUID, payload: AssetWrite, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ROLES)
+    writable(db, tenant_id)
     row = StudioAsset(tenant_id=tenant_id, **payload.model_dump(exclude={"revision"}))
     db.add(row)
     audit(db, tenant_id, user.id, "studio.created", {"kind": payload.kind})
@@ -71,6 +74,7 @@ def update_asset(
     tenant_id: uuid.UUID, asset_id: uuid.UUID, payload: AssetWrite, user: UserDep, db: DB
 ):
     require_member(db, user, tenant_id, ROLES)
+    writable(db, tenant_id)
     row = asset(db, tenant_id, asset_id, lock=True)
     if payload.revision != row.revision:
         raise HTTPException(409, "Dự án đã thay đổi. Tải lại trước khi lưu / Revision conflict")
@@ -88,6 +92,7 @@ def update_asset(
 @router.delete("/{asset_id}", status_code=204)
 def delete_asset(tenant_id: uuid.UUID, asset_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ROLES)
+    writable(db, tenant_id)
     row = asset(db, tenant_id, asset_id, lock=True)
     db.delete(row)
     audit(db, tenant_id, user.id, "studio.deleted", {"asset_id": str(asset_id)})

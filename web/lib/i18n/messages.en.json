@@ -256,5 +256,9 @@
   "Chứng nhận hoàn thành": "Certificate of completion",
   "Nhật ký học tập": "Learning activity log",
   "Cho phép học viên xem và in chứng nhận sau khi hoàn thành khóa học.": "Allow learners to view and print certificates after completing a course.",
-  "Ghi sự kiện hoàn thành bài học vào nhật ký quản trị của tenant.": "Record lesson completion events in the tenant activity log."
+  "Ghi sự kiện hoàn thành bài học vào nhật ký quản trị của tenant.": "Record lesson completion events in the tenant activity log.",
+  "AI tạo khóa học": "AI Course Studio",
+  "Bán khóa học": "Course sales",
+  "Kết nối": "Connections",
+  "Gói dịch vụ": "Membership plan"
 }

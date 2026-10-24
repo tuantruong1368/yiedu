@@ -1,9 +1,9 @@
 # Cấu trúc dự án YiEdu — tài liệu cho developer
 
-Cập nhật 24/10/2026, đối chiếu trải nghiệm 0.8, dựa trên commit
+Cập nhật 25/10/2026, đối chiếu quản trị/thương mại 0.9, dựa trên commit
 `742f9580750b569b890dcdf94423d55a3bd28525` làm baseline.
-Danh mục bên dưới bao phủ toàn bộ **252 file được quản lý bằng Git** sau lần cập nhật tài liệu.
-Có 70 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6/0.7/0.8 cuối tài liệu.
+Danh mục bên dưới bao phủ toàn bộ **286 file được quản lý bằng Git** sau lần cập nhật tài liệu.
+Có 76 thư mục chứa source/tài liệu. Các file mới ở phần bổ sung 0.6/0.7/0.8/0.9 cuối tài liệu.
 Các thư mục build/dependency/backup sinh ở máy developer được giải thích riêng ở mục 6.
 
 ## 1. Đọc tài liệu này để làm gì?
@@ -640,3 +640,49 @@ chứa asset tĩnh do Next phục vụ; Docker và standalone ZIP đóng gói c�
 
 Không thêm migration. `template_library.py` nạp nội dung Yoga và tạo rich lesson;
 `portable.py` bổ sung source mobile/SVG; `mobile/App.tsx` mở nguồn video trong rich lesson.
+
+
+## Bổ sung quản trị, AI và thương mại 0.9
+
+[Hướng dẫn](platform-commerce-ai.md), [release](../product/release-0.9.md),
+[CR-007](../product/changes/CR-007-platform-commerce-ai.md). Các file mới:
+
+| File | Chức năng |
+| --- | --- |
+| `backend/migrations/versions/0006_platform_commerce.py` | DDL đóng băng, role/trial/archive, các bảng quản trị và ledger, FK quyền học từ đơn. |
+| `backend/yiedu/business_models.py` | Model cấu hình, template, credentials, AI drafts, offers/orders và subscription. |
+| `backend/yiedu/business_schemas.py` | Payload strict, giới hạn, kiểm site/lesson/currency/config. |
+| `backend/yiedu/platform.py` | Console platform, appearance/plans/templates/customers, ACL, archive và connections. |
+| `backend/yiedu/managed_catalog.py` | Kết hợp bundled/DB template, preview, curriculum và copy tenant độc lập. |
+| `backend/yiedu/connections.py` | Scope canonical, role checks, mã hóa Fernet và secret redaction. |
+| `backend/yiedu/intelligence.py` | Responses schema, reservations/quotas, history/detail, review/apply và rich media. |
+| `backend/yiedu/payment_gateways.py` | PayPal/MoMo HTTP adapters, request/IPN signature và verification. |
+| `backend/yiedu/commerce.py` | Offer/checkout/ledger, bank reconciliation, CSV, refund record và entitlements. |
+| `backend/yiedu/billing.py` | Trial anchor, plan snapshots/quotas, paid terms và non-destructive expiry. |
+| `scripts/provision_platform_admin.py` | Cấp/revoke role cho account đã xác minh từ server, revoke session. |
+| `tests/test_business.py` | Regression ACL, encrypted integrations, AI, checkout, term và refund. |
+| `web/app/business.css` | Identity, hero full-width, platform/AI/commerce/responsive layouts. |
+| `web/app/platform/page.tsx` | Entry quản trị YiEdu. |
+| `web/app/checkout/[id]/page.tsx` | Trang thanh toán/biên nhận theo order. |
+| `web/app/orders/page.tsx` | Lịch sử đơn của tài khoản. |
+| `web/components/platform-provider.tsx` | Cấu hình nhận diện platform được truyền từ server. |
+| `web/components/business/platform-screen.tsx` | Console overview/appearance/templates/AI/connections/tenants/orders/audit. |
+| `web/components/business/template-manager.tsx` | Template CRUD/Studio, curriculum editor, import/export và dirty guard. |
+| `web/components/business/ai-studio.tsx` | Brief, lịch sử, review nội dung và áp dụng bản nháp. |
+| `web/components/business/connections-panel.tsx` | Form kết nối riêng, secret write-only, môi trường sandbox/live. |
+| `web/components/business/commerce-panel.tsx` | Giá khóa/combo, mở bán, đơn và CSV. |
+| `web/components/business/billing-panel.tsx` | Trial/gói tenant, checkout SaaS, invoices và tiếp tục xuất bản. |
+| `web/components/business/pricing.tsx` | Giá VI/EN, tháng/năm và định dạng tiền nhỏ nhất. |
+| `web/components/business/purchase-button.tsx` | Chọn method/currency và tạo order khóa/combo. |
+| `web/components/business/path-access.tsx` | Quyền học combo, paid gate và explicit free-path enrollment. |
+| `web/components/business/checkout-screen.tsx` | Provider redirect, bank instructions, sync/cancel và kết quả verified. |
+| `web/components/business/order-table.tsx` | Ledger, bank approval và ghi chứng từ refund đã thực hiện. |
+| `web/public/brand/yiedu-symbol.svg` | Logo biểu tượng vuông và favicon. |
+| `web/public/brand/yiedu-logo.svg` | Logo kèm chữ dùng trong nhận diện. |
+| `web/tests/business.spec.ts` | Browser journeys quản trị, mua khóa, archive, logo/responsive. |
+| `handbook/guides/platform-commerce-ai.md` | Cấp role, key/merchant config, vận hành, mô hình phí và nguồn tham khảo. |
+| `handbook/product/release-0.9.md` | Ma trận kết quả/giới hạn và bằng chứng. |
+| `handbook/product/changes/CR-007-platform-commerce-ai.md` | Thay đổi yêu cầu, quyết định và truy vết. |
+
+Migration/permissions/schema cũ giữ nguyên; các file hiện hữu được cập nhật để dùng module mới.
+Không có thư mục hoặc tiến trình ẩn nào truy cập máy Mac của người vận hành.

@@ -52,3 +52,13 @@ Cần khảo sát developer/seller và tenant buyer; [marketplace](marketplace.m
 review, ledger/refund/payout và quyền export. Giá, chia doanh thu, giấy phép và chính sách hỗ trợ chưa chốt.
 Cần tính thêm chi phí build/kiểm duyệt artifact, signing, registry/CDN, download, backup/restore,
 update support và xử lý sự cố của extension. Không tự đặt mức phí hoặc điều khoản thay chủ sản phẩm.
+
+
+## Bản triển khai khởi điểm 0.9
+
+Đã có trial 30 ngày và gói Starter/Growth/Scale trả trước, tách thu phí SaaS khỏi tiền học viên.
+Giá 299.000/799.000/1.990.000 VND mỗi 30 ngày là đề xuất để pilot; không phải số đã chứng minh
+chuyển đổi hoặc biên lợi nhuận. Năm dùng 365 ngày với giá ×10, API AI do tenant tự kết nối.
+Có quyền read/export/tiếp tục học khi hết hạn, không tự trừ tiền, không xóa nội dung.
+Giá/hạn mức thay được ở platform; cần đo activation, trial→paid, renewal/churn và chi phí hỗ trợ.
+[Chi tiết thiết kế và nghiên cứu](../guides/platform-commerce-ai.md).

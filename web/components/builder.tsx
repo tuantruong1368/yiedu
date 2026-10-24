@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
+import { accountReturnURL, tenantReturnURL } from "@/lib/navigation";
 import type { Editor } from "grapesjs";
 import "grapesjs/dist/css/grapes.min.css";
 import { api, slugify } from "@/lib/api";
@@ -35,6 +37,12 @@ function withBaseStyles(css: string) {
 }
 export default function Builder({ id }: { id: string }) {
   const { t, locale } = useI18n();
+  const router = useRouter();
+  const query = useSearchParams(),
+    managedTemplate = query.get("managedTemplate") || "";
+  const [templateRevision, setTemplateRevision] = useState(
+    Number(query.get("templateRevision") || 0),
+  );
   const [w, setW] = useState<any>(null),
     [site, setSite] = useState<SiteDocument | null>(null),
     [pageId, setPageId] = useState("home"),
@@ -313,11 +321,33 @@ export default function Builder({ id }: { id: string }) {
       setDirty(false);
       localStorage.removeItem(`website-draft:${w.owner_id}:${id}`);
       setRecovery(null);
-      if (publish) {
+      if (publish && managedTemplate) {
+        const applied = await api(
+          `/platform/templates/${managedTemplate}/design`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              workspace_id: id,
+              revision: templateRevision,
+            }),
+          },
+        );
+        setTemplateRevision(applied.revision);
+        const current = new URL(location.href);
+        current.searchParams.set("templateRevision", String(applied.revision));
+        history.replaceState(null, "", current.pathname + current.search);
+        setNotice(
+          t("Đã áp dụng giao diện vào template.", "Template design updated."),
+        );
+      } else if (publish) {
         const result = await api("/workspaces/" + id + "/publish", {
           method: "POST",
         });
         setW(result.workspace);
+        if (result.requires_billing) {
+          router.push(`/t/${result.tenant.slug}/administrator?tab=billing`);
+          return;
+        }
         setNotice(t("Đã xuất bản website.", "Website published."));
       } else setNotice(t("Đã lưu bản nháp.", "Draft saved."));
     } catch (e) {
@@ -443,7 +473,11 @@ export default function Builder({ id }: { id: string }) {
     >
       <header className="studio-top">
         <Link
-          href="/dashboard"
+          href={
+            w.tenant_id
+              ? tenantReturnURL(w.slug, query.get("returnTo"), "/dashboard")
+              : accountReturnURL(query.get("returnTo"), "/dashboard")
+          }
           onClick={(e) => {
             if (
               dirty &&
@@ -457,7 +491,12 @@ export default function Builder({ id }: { id: string }) {
               e.preventDefault();
           }}
         >
-          ← {t("Không gian của tôi", "My workspace")}
+          ←{" "}
+          {managedTemplate
+            ? t("Thư viện template", "Template library")
+            : query.get("returnTo")
+              ? t("Quay lại", "Back")
+              : t("Không gian của tôi", "My workspace")}
         </Link>
         <input
           aria-label={t("Tên hệ thống", "Site name")}
@@ -512,7 +551,9 @@ export default function Builder({ id }: { id: string }) {
           onClick={() => save(true)}
         >
           <Send size={15} />
-          {t("Xuất bản", "Publish")}
+          {managedTemplate
+            ? t("Áp dụng template", "Apply template")
+            : t("Xuất bản", "Publish")}
         </button>
         {w.tenant_id && (
           <Link href={"/t/" + w.slug} target="_blank">

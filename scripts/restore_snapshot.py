@@ -11,6 +11,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from yiedu.auth import hash_password
 from yiedu.authoring import validate_site
+from yiedu.business_models import Offer
 from yiedu.config import get_settings
 from yiedu.db import get_engine
 from yiedu.models import (
@@ -31,7 +32,7 @@ from yiedu.studio_schema import AssetWrite
 
 
 def restore(data, db):
-    if data.get("schema_version") not in {"0002", "0003", "0004", "0005"}:
+    if data.get("schema_version") not in {"0002", "0003", "0004", "0005", "0006"}:
         raise ValueError("Unsupported snapshot schema")
     if db.scalar(select(Tenant.id).limit(1)) or db.scalar(select(User.id).limit(1)):
         raise ValueError("Destination must be an empty migrated database")
@@ -84,6 +85,7 @@ def restore(data, db):
         Completion,
         TenantExtension,
         StudioAsset,
+        Offer,
     ]:
         for row in tables.get(model.__tablename__, []):
             db.add(model(**convert(row)))
@@ -111,7 +113,7 @@ def convert(row):
             # template_id/package_id are names, not UUID foreign keys.
             if key not in {"template_id", "package_id"}:
                 result[key] = uuid.UUID(value)
-        if key in {"created_at", "updated_at"}:
+        if value is not None and key in {"created_at", "updated_at", "archived_at"}:
             result[key] = datetime.fromisoformat(value)
     return result
 

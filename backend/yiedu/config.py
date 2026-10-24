@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     root_domain: str = "localhost"
     allowed_origins: str = "http://localhost:3000,http://127.0.0.1:3000"
     registration_enabled: bool = True
+    platform_admin_email: str = ""
+    connections_encryption_key: SecretStr = SecretStr("")
 
 
 @lru_cache

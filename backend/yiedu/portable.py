@@ -10,6 +10,7 @@ from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 
+from yiedu.business_models import Offer
 from yiedu.models import (
     Completion,
     Course,
@@ -26,7 +27,7 @@ from yiedu.models import (
 def snapshot(db, tenant):
     memberships = list(db.scalars(select(Membership).where(Membership.tenant_id == tenant.id)))
     user_ids = [m.user_id for m in memberships]
-    data = {"schema_version": "0005", "tenant": row_data(tenant), "tables": {}}
+    data = {"schema_version": "0006", "tenant": row_data(tenant), "tables": {}}
     # Passwords are reset at the destination. No password hash or session token is exported.
     data["users"] = [
         {"id": str(u.id), "email": u.email, "name": u.name}
@@ -41,13 +42,16 @@ def snapshot(db, tenant):
         Completion,
         TenantExtension,
         StudioAsset,
+        Offer,
     ]:
         rows = list(db.scalars(select(model).where(model.tenant_id == tenant.id).limit(10001)))
         if len(rows) > 10000:
             raise HTTPException(
                 413, "Dữ liệu vượt giới hạn exporter local; cần triển khai export job"
             )
-        data["tables"][model.__tablename__] = [row_data(row) for row in rows]
+        data["tables"][model.__tablename__] = [
+            {k: v for k, v in row_data(row).items() if k != "purchase_order_id"} for row in rows
+        ]
     return data
 
 
@@ -113,14 +117,15 @@ def create_export(db, tenant):
         "Video URLs are external references; no video files are managed by this release.\n"
         "Static SVG assets and mobile source are included. In mobile: npm ci; configure "
         "EXPO_PUBLIC_API_URL for your instance, then use Expo. App signing is separate.\n"
-        "OAuth/payment/update signing/mobile distribution require separate configuration.\n"
+        "AI/payment accounts, update signing and mobile distribution "
+        "require separate configuration.\n"
     ).encode()
     if sum(len(value) for value in files.values()) > 20_000_000:
         raise HTTPException(413, "Gói vượt giới hạn exporter local")
     manifest = {
         "tenant_id": str(tenant.id),
-        "core_version": "0.8.0",
-        "schema_version": "0005",
+        "core_version": "0.9.0",
+        "schema_version": "0006",
         "files": {name: hashlib.sha256(body).hexdigest() for name, body in files.items()},
         "signed": False,
         "passwords_reset_required": True,

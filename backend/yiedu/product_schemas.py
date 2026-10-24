@@ -7,7 +7,6 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from yiedu.authoring import validate_lesson_document, validate_site
 from yiedu.schemas import Name, TenantSlug
-from yiedu.template_library import get_template
 
 
 class StrictModel(BaseModel):
@@ -37,15 +36,6 @@ class WorkspaceCreate(StrictModel):
     slug: TenantSlug
     template_id: str = Field(default="academy", pattern=r"^[a-z][a-z0-9-]{0,99}$")
     include_sample_content: bool = True
-
-    @field_validator("template_id")
-    @classmethod
-    def template_exists(cls, value):
-        try:
-            get_template(value)
-        except KeyError:
-            raise ValueError("Unknown template") from None
-        return value
 
 
 class WorkspaceUpdate(StrictModel):

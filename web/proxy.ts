@@ -10,8 +10,12 @@ export function proxy(request: NextRequest) {
       "/dashboard",
       "/developer",
       "/marketplace",
+      "/platform",
+      "/orders",
     ].includes(request.nextUrl.pathname) &&
-    !request.nextUrl.pathname.startsWith("/builder/")
+    !["/builder/", "/checkout/", "/brand/", "/illustrations/"].some((prefix) =>
+      request.nextUrl.pathname.startsWith(prefix),
+    )
   ) {
     const slug = hostname.slice(0, -root.length - 1);
     if (

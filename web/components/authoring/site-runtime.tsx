@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useI18n } from "../locale-provider";
 import { Source, SitePage, esc, sanitizeImport } from "@/lib/authoring/site";
 import { pageHref, resolveSiteHref } from "@/lib/authoring/navigation";
 const NO_PAGES: SitePage[] = [];
@@ -29,6 +30,7 @@ export default function SiteRuntime({
   viewport?: boolean;
 }) {
   const router = useRouter();
+  const { locale } = useI18n();
   const frame = useRef<HTMLIFrameElement>(null),
     [doc, setDoc] = useState(""),
     [height, setHeight] = useState(600);
@@ -129,7 +131,7 @@ export default function SiteRuntime({
         .slice(0, limit)
         .map(
           (c) =>
-            `<a class="yd-course" href="${esc(courseBase || `/t/${slug}/learn?course=`)}${esc(c.id)}"><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p></a>`,
+            `<a class="yd-course" href="${esc(courseBase || `/t/${slug}/learn?course=`)}${esc(c.id)}"><h3>${esc(c.title)}</h3><p>${esc(c.description)}</p>${c.offer ? `<strong class="yd-price">${esc(!c.offer.active ? (locale === "vi" ? "Tạm dừng đăng ký" : "Enrollment paused") : c.offer.mode === "free" ? (locale === "vi" ? "Miễn phí" : "Free") : c.offer.price_vnd ? new Intl.NumberFormat("vi-VN").format(c.offer.price_vnd) + " VND" : (c.offer.price_usd / 100).toFixed(2) + " USD")}</strong>` : ""}</a>`,
         )
         .join("");
       (node.querySelector(".wrap") || node).appendChild(grid);
@@ -139,6 +141,7 @@ export default function SiteRuntime({
       `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https: data:; media-src https:; style-src 'unsafe-inline'; script-src 'nonce-yiedu-runtime'; font-src https: data:; form-action 'none'; base-uri 'none'"><style>${source.css.replace(/</g, "\\3c ")}</style></head><body>${safe}<script nonce="yiedu-runtime">${runtime}</script></body></html>`,
     );
   }, [
+    locale,
     source.html,
     source.css,
     courses,

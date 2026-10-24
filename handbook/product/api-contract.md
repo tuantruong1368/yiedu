@@ -111,3 +111,22 @@ quá dài trả 422. Course link trong preview mở đúng phần bài học, kh
 Không cần session cho catalog/preview; bản copy/seed vẫn nằm trong transaction publish có quyền.
 Yoga dùng SiteDocument 2.0/rich lesson hiện hành, không thêm schema API ghi hoặc migration.
 [Sử dụng và giới hạn](../guides/experience-yoga.md).
+
+
+## Product API 0.9
+
+Session/Bearer như product hiện tại. `/platform/public` là appearance/bảng giá công khai;
+`/platform/overview|appearance|plans|templates|tenants|orders` yêu cầu platform role,
+không dùng email match hoặc X-Admin-Key trên web. Templates có design workspace/apply và revision.
+`/connections/{scope}` và PUT/DELETE provider chỉ platform admin hoặc tenant owner;
+GET không trả secret. `scope` = `platform` hoặc `tenant:<uuid canonical>`.
+`/ai/{scope}/generate|drafts|drafts/{id}/apply` dùng schema strict, request_key UUID,
+review/apply idempotent; tenant owner/admin/instructor được tạo course.
+`/runtime/{tenant}/offers|store|commerce|checkout|billing|billing/checkout` quản lý hàng hóa,
+đơn khóa hoặc hóa đơn SaaS riêng. Checkout price lấy từ DB, không nhận amount từ buyer.
+`/payments/orders/{id}` chỉ buyer/seller có quyền; sync/cancel/confirm-bank/record-refund kiểm state,
+buyer không xác nhận tiền, confirm-bank/record-refund yêu cầu bằng chứng nhập tay của seller.
+`/payments/webhooks/momo/{order}` HMAC; `/payments/webhooks/paypal/{connection}` verify signature + query.
+`/workspaces/{id}/archive`, `/me/sites/{id}/archive|design` dùng owner/tenant ACL.
+Publish sau hết trial trả `requires_billing=true` và giữ tenant chưa công khai để checkout kích hoạt.
+Các route read không tự xuất bản nội dung hoặc xác nhận giao dịch.

@@ -1,4 +1,9 @@
 "use client";
+import AIStudio from "./business/ai-studio";
+import ConnectionsPanel from "./business/connections-panel";
+import CommercePanel from "./business/commerce-panel";
+import BillingPanel from "./business/billing-panel";
+import { Sparkles, Plug, ShoppingBag, CreditCard } from "lucide-react";
 import { useI18n } from "./locale-provider";
 import { studioURL } from "@/lib/studio/types";
 import StudioLibrary from "./studio/studio-library";
@@ -33,6 +38,10 @@ const tabs = [
   ["courses", "Khóa học", BookOpen],
   ["studio", "Studio nội dung", Library],
   ["paths", "Lộ trình", Route],
+  ["ai", "AI tạo khóa học", Sparkles],
+  ["commerce", "Bán khóa học", ShoppingBag],
+  ["connections", "Kết nối", Plug],
+  ["billing", "Gói dịch vụ", CreditCard],
   ["members", "Thành viên", Users],
   ["extensions", "Tiện ích", Puzzle],
   ["export", "Xuất hệ thống", Download],
@@ -64,7 +73,21 @@ export default function AdminScreen({
     initialTenant || { slug, name: slug, branding: {} },
   );
   async function refresh() {
-    const site = tenant.id ? { tenant } : await api("/sites/" + slug);
+    let site = tenant.id
+      ? { tenant }
+      : await api("/sites/" + slug).catch(() => null);
+    if (!site) {
+      const dashboard = await api("/me/dashboard");
+      const owned = dashboard.sites.find((s: any) => s.slug === slug);
+      if (!owned)
+        throw new Error(
+          tr(
+            "Không có quyền truy cập hệ thống.",
+            "You cannot access this system.",
+          ),
+        );
+      site = { tenant: owned };
+    }
     setTenant(site.tenant);
     const d = await api("/runtime/" + site.tenant.id + "/overview");
     setData(d);
@@ -244,8 +267,11 @@ export default function AdminScreen({
           {tabs
             .filter(
               ([id]) =>
-                data.role !== "instructor" ||
-                ["overview", "courses", "paths", "studio"].includes(id),
+                (id !== "connections" || data.role === "owner") &&
+                (data.role !== "instructor" ||
+                  ["overview", "courses", "paths", "studio", "ai"].includes(
+                    id,
+                  )),
             )
             .map(([id, label, Icon]) => (
               <button
@@ -314,6 +340,14 @@ export default function AdminScreen({
               {notice}
             </div>
           )}
+          {tab === "ai" && (
+            <AIStudio scope={`tenant:${data.tenant.id}`} onApplied={refresh} />
+          )}
+          {tab === "commerce" && <CommercePanel overview={data} />}
+          {tab === "connections" && (
+            <ConnectionsPanel scope={`tenant:${data.tenant.id}`} />
+          )}
+          {tab === "billing" && <BillingPanel tenantId={data.tenant.id} />}
           {tab === "studio" && <StudioLibrary overview={data} />}
           {tab === "overview" && (
             <>

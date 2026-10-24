@@ -106,3 +106,16 @@ FR-035: Danh mục theo mục đích sử dụng, website nhiều trang VI/EN, x
 copy nội dung riêng vào tenant lúc xuất bản đầu; republish giữ nội dung khách sửa.
 Robot/Software có bản đồ 8 học kỳ. Học liệu cô đọng phải công bố trạng thái draft và nguồn đọc;
 bộ giáo trình đại học đầy đủ và nghiệm thu chuyên gia vẫn là phần chưa hoàn tất.
+
+
+## Mở rộng 0.9 — CR-007
+
+| Mã | Yêu cầu | Điều kiện kiểm |
+| --- | --- | --- |
+| FR-026 | Nhận diện và homepage YiEdu cấu hình được | SVG, full-width responsive, appearance VI/EN có revision |
+| FR-027 | Sửa/archive/restore hệ thống và thiết kế | Owner/tenant ACL, website và dữ liệu được giữ |
+| FR-028 | Platform admin quản lý catalog và khách hàng | Server-provisioned role, template Studio/curriculum, audit |
+| FR-029 | AI tạo template/khóa học | Encrypted key, quotas, schema validation, review/apply idempotent |
+| FR-030 | Bán khóa lẻ hoặc combo, có miễn phí | Paid gate, frozen price/course snapshot, prerequisites |
+| FR-031 | PayPal/MoMo/ngân hàng về seller | Receiver/currency/signature verification, order ledger/reconciliation |
+| FR-032 | Thu phí tenant và trial 30 ngày | Owner anchor, prepaid terms/quotas, giữ quyền học khi hết hạn |

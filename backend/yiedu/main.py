@@ -12,9 +12,12 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 
+from yiedu.commerce import router as commerce_router
 from yiedu.config import get_settings
 from yiedu.db import get_session
+from yiedu.intelligence import router as intelligence_router
 from yiedu.models import Course, Tenant
+from yiedu.platform import router as platform_router
 from yiedu.product import router as product_router
 from yiedu.schemas import CourseCreate, CourseRead, TenantCreate, TenantRead
 from yiedu.studio import router as studio_router
@@ -26,11 +29,14 @@ async def lifespan(app: FastAPI):
     yield
 
 
-app = FastAPI(title="YiEdu API", version="0.8.0", lifespan=lifespan)
+app = FastAPI(title="YiEdu API", version="0.9.0", lifespan=lifespan)
 
 
 app.include_router(product_router)
 app.include_router(studio_router)
+app.include_router(platform_router)
+app.include_router(commerce_router)
+app.include_router(intelligence_router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=get_settings().allowed_origins.split(","),

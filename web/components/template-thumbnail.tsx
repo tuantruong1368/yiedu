@@ -5,10 +5,12 @@ export default function TemplateThumbnail({
   id,
   name,
   hero = false,
+  version = "",
 }: {
   id: string;
   name: string;
   hero?: boolean;
+  version?: string | number;
 }) {
   const { locale, t } = useI18n();
   const viewport = useRef<HTMLDivElement>(null),
@@ -30,7 +32,7 @@ export default function TemplateThumbnail({
         <iframe
           style={{ transform: `scale(${scale})` }}
           title={`${t("Website mẫu", "Template website")} ${name}`}
-          src={`/templates/${id}/thumbnail?locale=${locale}`}
+          src={`/templates/${id}/thumbnail?locale=${locale}&v=${encodeURIComponent(String(version))}`}
           loading={hero ? "eager" : "lazy"}
           sandbox=""
           tabIndex={-1}

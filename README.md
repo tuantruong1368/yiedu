@@ -3,7 +3,16 @@
 Tạo và vận hành hệ thống e-learning mang thương hiệu riêng.
 Yisoft và Yirobot là tenant demo, không phải khóa học do YiEdu bán.
 
-## Bản chạy local 0.8.0
+## Bản chạy local 0.9.0
+
+Mới: [Quản trị YiEdu, AI và bán khóa học](handbook/guides/platform-commerce-ai.md):
+logo/nền hero mới, thùng rác, quản trị giao diện/template, OpenAI API tạo nội dung có duyệt,
+khóa lẻ/combo, PayPal/MoMo/ngân hàng và trial 30 ngày. [Phạm vi và giới hạn 0.9](handbook/product/release-0.9.md).
+Chạy lại `python3 scripts/bootstrap.py` trước Compose để bổ sung khóa mã hóa kết nối;
+cấp quyền platform admin bằng công cụ máy chủ theo hướng dẫn, rồi đăng nhập tại `/platform`.
+AI/thanh toán cần cấu hình API/merchant thật; chưa có giao dịch thật hoặc production deployment.
+
+## Trải nghiệm 0.8.0
 
 Mới: [Nhóm template, An Nhiên Yoga và điều hướng ổn định](handbook/guides/experience-yoga.md):
 15 mẫu/7 nhóm, Yoga 16 bài có video, preview đủ logo/menu, Studio trong panel quản trị và Back giữ ngữ cảnh.
@@ -30,7 +39,7 @@ Luồng chính đã được chạy thử: đăng ký email → chọn template 
 quản trị khóa học/bài học/lộ trình → học viên tham gia/học/ghi tiến độ → tải ZIP.
 
 **Chưa phải toàn bộ sản phẩm thương mại.** Google/Facebook, email verification/reset,
-thanh toán, AI, upload/media storage, bài kiểm tra, RLS, worker jobs, ký/áp dụng update tự động,
+upload/media storage, bài kiểm tra, RLS, worker jobs, ký/áp dụng update tự động,
 third-party plugin execution và marketplace mua bán chưa triển khai. Developer portal mới nhận metadata.
 App đóng gói được bundle iOS/Android; chưa thử trên thiết bị thật, ký binary hoặc phát hành store.
 Xem [ma trận trạng thái 0.4](handbook/product/release-0.4.md) trước khi đánh giá phạm vi.

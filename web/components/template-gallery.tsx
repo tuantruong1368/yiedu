@@ -151,7 +151,11 @@ export default function TemplateGallery({
                 href={href}
                 aria-label={`${t("Xem website", "Preview website")} ${x.name}`}
               >
-                <TemplateThumbnail id={x.id} name={x.name} />
+                <TemplateThumbnail
+                  id={x.id}
+                  name={x.name}
+                  version={x.version || x.revision}
+                />
                 <span className="template-card-peek">
                   <Eye size={15} />
                   {t("Khám phá website", "Explore website")}

@@ -1,5 +1,10 @@
 # Trạng thái thực tế YiEdu
 
+Cập nhật 0.9.0: [quản trị, AI và thương mại](release-0.9.md). Có migration 0006,
+platform admin, logo/hero, template có thể sửa, AI drafts, offers/checkout, trial/subscription.
+Provider chỉ kiểm bằng mock và luồng ngân hàng manual; chưa kết nối merchant/OpenAI thật.
+[Hướng dẫn nâng cấp/cấp role/cấu hình](../guides/platform-commerce-ai.md).
+
 Cập nhật bản 0.8.0: [template, Yoga và điều hướng](release-0.8.md).
 15 mẫu/7 nhóm, 16 bài Yoga VI/EN, Studio nhúng, Back theo ngữ cảnh và video theo yêu cầu.
 Không thêm migration hoặc đổi dữ liệu tenant. [Hướng dẫn](../guides/experience-yoga.md).
@@ -26,7 +31,9 @@ Cập nhật: bản chạy local 0.5.0. [Template và học liệu 0.5](release-
 
 ## Chưa hoàn thành
 
-Google/Facebook và email recovery/verification; media upload/storage; quiz; AI; thanh toán;
+Google/Facebook và email recovery/verification; media upload/storage; quiz;
+AI live-provider UAT/durable jobs và ChatGPT OAuth thương mại; payment live UAT,
+refund execution/chargeback tự động, e-invoice và recurring debit;
 RLS/composite tenant FK và production hardening; async jobs; signed updater; arbitrary third-party
 extension execution; marketplace artifact/review/sales/ledger/payout; app signing/store/device UAT;
 cloud/DNS/TLS và release production. Không có hệ thống public tại yiedu.vn được tạo bởi cập nhật này.

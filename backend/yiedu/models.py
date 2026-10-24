@@ -17,8 +17,10 @@ class Tenant(Base):
     slug: Mapped[str] = mapped_column(String(63), unique=True)
     name: Mapped[str] = mapped_column(String(200))
     branding: Mapped[dict] = mapped_column(JSONB, default=dict)
+    is_published: Mapped[bool] = mapped_column(default=True)
     published_page: Mapped[dict] = mapped_column(JSONB, default=dict)
     template_id: Mapped[str] = mapped_column(String(100), default="academy")
+    archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     template_seed: Mapped[dict] = mapped_column(JSONB, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
@@ -42,6 +44,10 @@ class User(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     email: Mapped[str] = mapped_column(String(254), unique=True)
     name: Mapped[str] = mapped_column(String(200))
+    platform_admin: Mapped[bool] = mapped_column(default=False)
+    trial_started_at: Mapped[datetime | None] = mapped_column(
+        DateTime(timezone=True), nullable=True
+    )
     password_hash: Mapped[str] = mapped_column(String(300))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
@@ -71,6 +77,7 @@ class Workspace(Base):
     slug: Mapped[str] = mapped_column(String(63))
     data: Mapped[dict] = mapped_column(JSONB, default=dict)
     revision: Mapped[int] = mapped_column(default=1)
+    archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     include_sample_content: Mapped[bool] = mapped_column(default=True)
     tenant_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("tenants.id"), nullable=True)
 
@@ -104,6 +111,9 @@ class Enrollment(Base):
     id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     tenant_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("tenants.id"), index=True)
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), index=True)
+    purchase_order_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("payment_orders.id"), nullable=True
+    )
     course_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("courses.id"), index=True)
 
 

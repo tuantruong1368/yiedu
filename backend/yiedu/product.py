@@ -11,6 +11,7 @@ from sqlalchemy import delete, select
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import IntegrityError
 
+from yiedu import managed_catalog
 from yiedu.auth import (
     DB,
     UserDep,
@@ -20,7 +21,8 @@ from yiedu.auth import (
     require_member,
     verify_password,
 )
-from yiedu.catalog import BUILTINS, TEMPLATES, initial_page
+from yiedu.billing import start_trial, subscription, writable
+from yiedu.catalog import BUILTINS
 from yiedu.config import get_settings
 from yiedu.extensions.manifest import ExtensionManifest
 from yiedu.models import (
@@ -51,7 +53,6 @@ from yiedu.product_schemas import (
     WorkspaceUpdate,
 )
 from yiedu.site_render import render_site
-from yiedu.template_library import curriculum, get_template, lessons_for
 from yiedu.template_seed import seed_template
 
 router = APIRouter(prefix="/api/v1", tags=["product"])
@@ -64,7 +65,12 @@ def encode(row):
 
 
 def public_user(user):
-    return {"id": str(user.id), "name": user.name, "email": user.email}
+    return {
+        "id": str(user.id),
+        "name": user.name,
+        "email": user.email,
+        "platform_admin": user.platform_admin,
+    }
 
 
 def commit(db):
@@ -80,6 +86,19 @@ def get_tenant(db, tenant_id):
     if not tenant:
         raise HTTPException(404, "Không tìm thấy hệ thống")
     return tenant
+
+
+def course_public(db, course):
+    from yiedu.business_models import Offer
+
+    offer = db.scalar(
+        select(Offer).where(
+            Offer.tenant_id == course.tenant_id,
+            Offer.target_type == "course",
+            Offer.target_id == course.id,
+        )
+    )
+    return {**encode(course), "offer": encode(offer) if offer else None}
 
 
 def get_course(db, tenant_id, course_id):
@@ -169,8 +188,8 @@ def me(user: UserDep):
 
 
 @router.get("/catalog/templates")
-def templates():
-    return TEMPLATES
+def templates(db: DB):
+    return managed_catalog.public_catalog(db)
 
 
 @router.get("/catalog/template-groups")
@@ -181,38 +200,26 @@ def template_groups():
 
 
 @router.get("/catalog/templates/{template_id}")
-def template_preview(template_id: str):
-    try:
-        get_template(template_id)
-        return {
-            "template": next(t for t in TEMPLATES if t["id"] == template_id),
-            "document": initial_page(template_id),
-            "courses": curriculum(template_id),
-        }
-    except KeyError:
-        raise HTTPException(404, "Template not found") from None
+def template_preview(template_id: str, db: DB):
+    return managed_catalog.preview(db, template_id)
 
 
 @router.get("/catalog/templates/{template_id}/courses/{module_id}")
-def template_lessons(template_id: str, module_id: str):
-    try:
-        if module_id not in get_template(template_id)["module_ids"]:
-            raise KeyError(module_id)
-        return lessons_for(module_id)
-    except KeyError:
-        raise HTTPException(404, "Learning unit not found") from None
+def template_lessons(template_id: str, module_id: str, db: DB):
+    return managed_catalog.template_lessons(db, template_id, module_id)
 
 
 @router.get("/catalog/templates/{template_id}/render", response_class=HTMLResponse)
-def preview_document(template_id: str, page: str = "home", locale: str = "vi"):
+def preview_document(template_id: str, db: DB, page: str = "home", locale: str = "vi"):
     if locale not in {"vi", "en"} or len(page) > 63:
         raise HTTPException(422, "Invalid page or locale")
     try:
-        document = initial_page(template_id)
+        data = managed_catalog.preview(db, template_id)
+        document = data["document"]
         selected = next(p for p in document["pages"] if page in {p["id"], p["slug"]})
         html, csp = render_site(
             document,
-            curriculum(template_id),
+            data["courses"],
             "preview",
             selected["slug"],
             locale,
@@ -253,7 +260,7 @@ def create_workspace(payload: WorkspaceCreate, user: UserDep, db: DB):
     row = Workspace(
         owner_id=user.id,
         **payload.model_dump(),
-        data=initial_page(payload.template_id, payload.name),
+        data=managed_catalog.document(db, payload.template_id, payload.name),
     )
     db.add(row)
     commit(db)
@@ -273,6 +280,10 @@ def save_workspace(workspace_id: uuid.UUID, payload: WorkspaceUpdate, user: User
     check_slug(payload.slug)
     if row.tenant_id and payload.slug != get_tenant(db, row.tenant_id).slug:
         raise HTTPException(422, "Chưa hỗ trợ đổi domain sau xuất bản")
+    if row.archived_at:
+        raise HTTPException(409, "Khôi phục bản thiết kế trước / Restore this draft first")
+    if row.tenant_id:
+        writable(db, row.tenant_id)
     row.data = payload.data
     row.name = payload.name
     row.slug = payload.slug
@@ -286,17 +297,20 @@ def publish_workspace(workspace_id: uuid.UUID, user: UserDep, db: DB):
     row = get_workspace(db, user, workspace_id, lock=True)
     check_slug(row.slug)
     WorkspaceUpdate(name=row.name, slug=row.slug, data=row.data, revision=row.revision)
-    template = next(t for t in TEMPLATES if t["id"] == row.template_id)
-    creating_tenant = row.tenant_id is None
+    if row.archived_at:
+        raise HTTPException(409, "Khôi phục bản thiết kế trước / Restore this draft first")
+    template = managed_catalog.preview(db, row.template_id, hidden=True)["template"]
     if row.tenant_id:
         require_member(db, user, row.tenant_id, ["owner", "admin"])
         tenant = get_tenant(db, row.tenant_id)
+        writable(db, tenant.id)
     else:
         tenant = Tenant(
             slug=row.slug,
             name=row.name,
             branding={"color": template["color"]},
             template_id=row.template_id,
+            is_published=False,
         )
         db.add(tenant)
         try:
@@ -306,9 +320,17 @@ def publish_workspace(workspace_id: uuid.UUID, user: UserDep, db: DB):
             raise HTTPException(409, "Tên miền đã được sử dụng") from None
         db.add(Membership(tenant_id=tenant.id, user_id=user.id, role="owner"))
         row.tenant_id = tenant.id
-    if creating_tenant and row.include_sample_content:
-        seed_template(db, tenant)
+        start_trial(db, tenant.id, user)
+        db.flush()
+        if not subscription(db, tenant.id)["active"]:
+            audit(db, tenant.id, user.id, "site.activation.required")
+            commit(db)
+            return {"tenant": encode(tenant), "workspace": encode(row), "requires_billing": True}
+    if not tenant.is_published and row.include_sample_content:
+        if not managed_catalog.seed_managed(db, tenant):
+            seed_template(db, tenant)
     tenant.name = row.name
+    tenant.is_published = True
     tenant.published_page = row.data
     if row.data.get("schema_version") == "2.0":
         tenant.branding = row.data["branding"]
@@ -320,7 +342,7 @@ def publish_workspace(workspace_id: uuid.UUID, user: UserDep, db: DB):
 @router.get("/sites/{slug}")
 def public_site(slug: str, db: DB):
     row = db.scalar(select(Tenant).where(Tenant.slug == slug))
-    if not row:
+    if not row or row.archived_at or not row.is_published:
         raise HTTPException(404, "Không tìm thấy website")
     courses = db.scalars(
         select(Course).where(Course.tenant_id == row.id, Course.published.is_(True))
@@ -328,7 +350,7 @@ def public_site(slug: str, db: DB):
     paths = db.scalars(select(LearningPath).where(LearningPath.tenant_id == row.id))
     return {
         "tenant": encode(row),
-        "courses": [encode(c) for c in courses],
+        "courses": [course_public(db, c) for c in courses],
         "paths": [encode(p) for p in paths],
     }
 
@@ -336,12 +358,13 @@ def public_site(slug: str, db: DB):
 @router.post("/sites/{slug}/join")
 def join_site(slug: str, user: UserDep, db: DB):
     tenant = db.scalar(select(Tenant).where(Tenant.slug == slug))
-    if not tenant:
+    if not tenant or tenant.archived_at or not tenant.is_published:
         raise HTTPException(404, "Không tìm thấy website")
     member = db.scalar(
         select(Membership).where(Membership.tenant_id == tenant.id, Membership.user_id == user.id)
     )
     if not member:
+        writable(db, tenant.id, "learners")
         member = Membership(tenant_id=tenant.id, user_id=user.id, role="learner")
         db.add(member)
         commit(db)
@@ -351,12 +374,12 @@ def join_site(slug: str, user: UserDep, db: DB):
 @router.get("/sites/{slug}/render", response_class=HTMLResponse)
 def published_document(slug: str, db: DB, page: str = "", locale: str = "vi"):
     tenant = db.scalar(select(Tenant).where(Tenant.slug == slug))
-    if not tenant or tenant.published_page.get("schema_version") != "2.0":
+    if not tenant or tenant.archived_at or tenant.published_page.get("schema_version") != "2.0":
         raise HTTPException(404, "Published page not found")
     if locale not in {"vi", "en"} or len(page) > 63:
         raise HTTPException(422, "Invalid page or locale")
     courses = [
-        encode(row)
+        course_public(db, row)
         for row in db.scalars(
             select(Course)
             .where(Course.tenant_id == tenant.id, Course.published.is_(True))
@@ -444,7 +467,7 @@ def overview(tenant_id: uuid.UUID, user: UserDep, db: DB):
     return {
         "tenant": encode(tenant),
         "role": member.role,
-        "courses": [encode(c) for c in db.scalars(courses)],
+        "courses": [course_public(db, c) for c in db.scalars(courses)],
         "lessons": lesson_rows,
         "paths": [
             encode(p)
@@ -466,6 +489,7 @@ def overview(tenant_id: uuid.UUID, user: UserDep, db: DB):
 @router.post("/runtime/{tenant_id}/courses", status_code=201)
 def add_course(tenant_id: uuid.UUID, payload: CourseWrite, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id, "courses")
     row = Course(tenant_id=tenant_id, **payload.model_dump())
     db.add(row)
     audit(db, tenant_id, user.id, "course.created")
@@ -478,6 +502,7 @@ def edit_course(
     tenant_id: uuid.UUID, course_id: uuid.UUID, payload: CourseWrite, user: UserDep, db: DB
 ):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     row = get_course(db, tenant_id, course_id)
     for key, value in payload.model_dump().items():
         setattr(row, key, value)
@@ -491,6 +516,7 @@ def add_lesson(
     tenant_id: uuid.UUID, course_id: uuid.UUID, payload: LessonWrite, user: UserDep, db: DB
 ):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     get_course(db, tenant_id, course_id)
     row = Lesson(
         tenant_id=tenant_id, course_id=course_id, **payload.model_dump(exclude={"revision"})
@@ -551,6 +577,7 @@ def edit_lesson(
     tenant_id: uuid.UUID, lesson_id: uuid.UUID, payload: LessonWrite, user: UserDep, db: DB
 ):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     row = db.scalar(
         select(Lesson)
         .where(Lesson.tenant_id == tenant_id, Lesson.id == lesson_id)
@@ -570,7 +597,11 @@ def edit_lesson(
 @router.post("/runtime/{tenant_id}/courses/{course_id}/enroll")
 def enroll(tenant_id: uuid.UUID, course_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id)
+    db.execute(select(Tenant.id).where(Tenant.id == tenant_id).with_for_update())
     course = get_course(db, tenant_id, course_id)
+    from yiedu.commerce import enforce_free_enroll
+
+    enforce_free_enroll(db, tenant_id, course_id, user)
     if not course.published:
         raise HTTPException(403, "Khóa học chưa xuất bản")
     db.execute(
@@ -647,6 +678,7 @@ def validate_learning_path(db, tenant_id, payload, excluding=None):
 @router.post("/runtime/{tenant_id}/paths", status_code=201)
 def add_path(tenant_id: uuid.UUID, payload: PathWrite, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     validate_learning_path(db, tenant_id, payload)
     row = LearningPath(
         tenant_id=tenant_id, title=payload.title, course_ids=[str(x) for x in payload.course_ids]
@@ -659,6 +691,7 @@ def add_path(tenant_id: uuid.UUID, payload: PathWrite, user: UserDep, db: DB):
 @router.post("/runtime/{tenant_id}/members")
 def set_member(tenant_id: uuid.UUID, payload: MemberWrite, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner"])
+    writable(db, tenant_id)
     target = db.scalar(select(User).where(User.email == payload.email.strip().lower()))
     if not target:
         raise HTTPException(404, "Người dùng cần đăng ký tài khoản trước")
@@ -826,6 +859,7 @@ def instance_info(db: DB):
 @router.put("/runtime/{tenant_id}/paths/{path_id}")
 def edit_path(tenant_id: uuid.UUID, path_id: uuid.UUID, payload: PathWrite, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     row = db.scalar(
         select(LearningPath)
         .where(LearningPath.tenant_id == tenant_id, LearningPath.id == path_id)
@@ -845,11 +879,19 @@ def edit_path(tenant_id: uuid.UUID, path_id: uuid.UUID, payload: PathWrite, user
 @router.delete("/runtime/{tenant_id}/paths/{path_id}")
 def delete_path(tenant_id: uuid.UUID, path_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     row = db.scalar(
         select(LearningPath).where(LearningPath.tenant_id == tenant_id, LearningPath.id == path_id)
     )
     if not row:
         raise HTTPException(404, "Không tìm thấy lộ trình")
+    from yiedu.business_models import Offer
+
+    db.execute(
+        delete(Offer).where(
+            Offer.tenant_id == tenant_id, Offer.target_type == "path", Offer.target_id == path_id
+        )
+    )
     db.delete(row)
     audit(db, tenant_id, user.id, "path.deleted", {"path_id": str(path_id)})
     commit(db)
@@ -859,6 +901,7 @@ def delete_path(tenant_id: uuid.UUID, path_id: uuid.UUID, user: UserDep, db: DB)
 @router.delete("/runtime/{tenant_id}/lessons/{lesson_id}")
 def delete_lesson(tenant_id: uuid.UUID, lesson_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
     row = db.scalar(select(Lesson).where(Lesson.tenant_id == tenant_id, Lesson.id == lesson_id))
     if not row:
         raise HTTPException(404, "Không tìm thấy bài học")
@@ -876,6 +919,19 @@ def delete_lesson(tenant_id: uuid.UUID, lesson_id: uuid.UUID, user: UserDep, db:
 @router.delete("/runtime/{tenant_id}/courses/{course_id}")
 def delete_course(tenant_id: uuid.UUID, course_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin", "instructor"])
+    writable(db, tenant_id)
+    from yiedu.business_models import PaymentOrder
+
+    orders = db.scalars(
+        select(PaymentOrder).where(
+            PaymentOrder.tenant_id == tenant_id,
+            PaymentOrder.purpose == "course",
+        )
+    )
+    if any(str(course_id) in o.items.get("course_ids", []) for o in orders):
+        raise HTTPException(
+            409, "Khóa học có đơn hàng; ngừng mở bán thay vì xóa / Preserve sold courses"
+        )
     row = get_course(db, tenant_id, course_id)
     paths = db.scalars(select(LearningPath).where(LearningPath.tenant_id == tenant_id))
     if any(str(course_id) in path.course_ids for path in paths):
@@ -894,6 +950,15 @@ def delete_course(tenant_id: uuid.UUID, course_id: uuid.UUID, user: UserDep, db:
         )
     )
     db.execute(delete(Lesson).where(Lesson.tenant_id == tenant_id, Lesson.course_id == course_id))
+    from yiedu.business_models import Offer
+
+    db.execute(
+        delete(Offer).where(
+            Offer.tenant_id == tenant_id,
+            Offer.target_type == "course",
+            Offer.target_id == course_id,
+        )
+    )
     db.delete(row)
     audit(db, tenant_id, user.id, "course.deleted", {"course_id": str(course_id)})
     commit(db)

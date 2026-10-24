@@ -85,3 +85,13 @@ Không tự tạo backend/website riêng cho mỗi tenant dùng chung; export m�
 
 Đặc tả mục tiêu ở trên vẫn giữ nguyên. Đọc [ma trận 0.3](release-0.3.md) để biết subset đã có code,
 phần chưa triển khai và kiểm tra thực tế; không diễn giải toàn bộ spec thành tính năng đã chạy.
+
+
+## Mở rộng quản trị và thương mại 0.9
+
+`platform` dùng session role riêng, templates/appearance overrides trong PostgreSQL.
+`connections` giữ secret ciphertext; `intelligence` gọi Responses API có schema và reservation,
+không cấp quyền xuất bản cho model. `commerce` ghi snapshot order và gọi adapters cố định host,
+settlement chỉ sau verify hoặc bank approval có ACL. `billing` tách kỳ SaaS với sales của tenant.
+[Phạm vi 0.9](release-0.9.md), [data model](data-model.md),
+[hướng dẫn và giới hạn vận hành](../guides/platform-commerce-ai.md).

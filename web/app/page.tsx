@@ -1,4 +1,5 @@
 import { getT } from "@/lib/i18n/server";
+import Pricing from "@/components/business/pricing";
 import TemplateThumbnail from "@/components/template-thumbnail";
 import TemplateGallery from "@/components/template-gallery";
 import Link from "next/link";
@@ -16,12 +17,18 @@ import SiteView from "@/components/site-view";
 export const dynamic = "force-dynamic";
 export default async function Home() {
   const tr = await getT();
-  const [templateData, groupData] = await Promise.all([
+  const [templateData, groupData, config] = await Promise.all([
     publicApi("/catalog/templates"),
     publicApi("/catalog/template-groups"),
+    publicApi("/platform/public"),
   ]);
+  const appearance = config?.appearance;
   const templates = templateData || [],
     groups = groupData || [];
+  const heroTemplate =
+    templates.find((x: any) => x.id === appearance?.hero_template) ||
+    templates.find((x: any) => x.id === "yirobot") ||
+    templates[0];
 
   if (process.env.INSTANCE_MODE === "standalone") {
     const info = await publicApi("/instance");
@@ -34,68 +41,91 @@ export default async function Home() {
     <>
       <Header />
       <main>
-        <section className="hero-home">
-          <div>
-            <span className="eyebrow">
-              <span className="status-dot" />
-              {tr("NỀN TẢNG HỌC TẬP CỦA RIÊNG BẠN")}
-            </span>
-            <h1>
-              {tr("Tạo hệ thống", "Create your own")}
-              <br />
-              <em>e-learning</em>
-              <br />
-              {tr("của riêng bạn.", "learning platform.")}
-            </h1>
-            <p>
-              {tr(
-                "Từ ý tưởng đến một hệ thống đào tạo mang thương hiệu riêng. Tạo không gian để giảng dạy, kết nối và cùng học viên tiến xa.",
-              )}
-            </p>
-            <div className="actions">
-              <Link className="button" href="#templates">
-                {tr("Bắt đầu từ một mẫu")}
-                <ArrowRight size={18} />
-              </Link>
-              <Link className="text-link" href="/dashboard">
-                {tr("Mở không gian của tôi")}
-                <ArrowUpRight size={16} />
-              </Link>
-            </div>
-            <div className="hero-trust">
-              <span>
-                <Check size={15} />
-                {tr("Thiết kế linh hoạt")}
+        <section className="hero-band">
+          <div className="hero-home">
+            <div>
+              <span className="eyebrow">
+                <span className="status-dot" />
+                {tr("NỀN TẢNG HỌC TẬP CỦA RIÊNG BẠN")}
               </span>
-              <span>
-                <Check size={15} />
-                {tr("Dữ liệu thuộc về bạn")}
-              </span>
-              <span>
-                <Check size={15} />
-                {tr("Sẵn sàng mở rộng")}
-              </span>
-            </div>
-          </div>
-          <div className="hero-art">
-            <TemplateThumbnail id="yirobot" name="Yirobot" hero />
-            <div className="float-tag">
-              <span className="float-icon">
-                <Globe2 />
-              </span>
-              <div>
-                <b>
-                  {tr(
-                    "Website thật. Thương hiệu của bạn.",
-                    "A real website. Your brand.",
+              <h1>
+                {String(
+                  tr(
+                    appearance?.headline_vi ||
+                      "Tạo hệ thống e-learning của riêng bạn.",
+                    appearance?.headline_en ||
+                      "Create your own e-learning platform.",
+                  ),
+                )
+                  .split(/(e-learning)/i)
+                  .map((part, i) =>
+                    part.toLowerCase() === "e-learning" ? (
+                      <span className="headline-word" key={i}>
+                        {part}
+                      </span>
+                    ) : (
+                      part
+                    ),
                   )}
-                </b>
-                <small>
-                  {tr(
-                    "Menu · Khóa học · Lộ trình · Học viên",
-                    "Pages · Courses · Pathways · Learners",
-                  )}
-                </small>
+              </h1>
+              <p>
+                {tr(
+                  appearance?.description_vi ||
+                    "Thiết kế website, xây khóa học và kinh doanh tri thức trên nền tảng của riêng bạn.",
+                  appearance?.description_en ||
+                    "Design your website, create courses and grow your learning business with your own brand.",
+                )}
+              </p>
+              <div className="actions">
+                <Link className="button" href="#templates">
+                  {tr("Bắt đầu từ một mẫu")}
+                  <ArrowRight size={18} />
+                </Link>
+                <Link className="text-link" href="/dashboard">
+                  {tr("Mở không gian của tôi")}
+                  <ArrowUpRight size={16} />
+                </Link>
+              </div>
+              <div className="hero-trust">
+                <span>
+                  <Check size={15} />
+                  {tr("Thiết kế linh hoạt")}
+                </span>
+                <span>
+                  <Check size={15} />
+                  {tr("Dữ liệu thuộc về bạn")}
+                </span>
+                <span>
+                  <Check size={15} />
+                  {tr("Sẵn sàng mở rộng")}
+                </span>
+              </div>
+            </div>
+            <div className="hero-art">
+              <TemplateThumbnail
+                id={heroTemplate?.id || "yirobot"}
+                name={heroTemplate?.name || "Yirobot"}
+                version={heroTemplate?.version}
+                hero
+              />
+              <div className="float-tag">
+                <span className="float-icon">
+                  <Globe2 />
+                </span>
+                <div>
+                  <b>
+                    {tr(
+                      "Website thật. Thương hiệu của bạn.",
+                      "A real website. Your brand.",
+                    )}
+                  </b>
+                  <small>
+                    {tr(
+                      "Menu · Khóa học · Lộ trình · Học viên",
+                      "Pages · Courses · Pathways · Learners",
+                    )}
+                  </small>
+                </div>
               </div>
             </div>
           </div>
@@ -212,6 +242,9 @@ export default async function Home() {
             <ArrowRight size={18} />
           </Link>
         </section>
+        {appearance?.show_pricing !== false && config?.billing && (
+          <Pricing billing={config.billing} />
+        )}
       </main>
       <footer>
         <span>{tr("© YiEdu · Không gian cho tri thức.")}</span>

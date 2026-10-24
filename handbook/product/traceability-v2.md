@@ -69,3 +69,16 @@ EditorContribution chỉ khai báo module/slot/license; không cấp quyền th�
 [AC-005](changes/CR-005-authoring-workspaces.md) → render endpoint/SiteRuntime → render regression + API tests;
 Website Studio/GadgetLibrary/PostCSS → pointer drag, theme computed color và export/reopen browser;
 CourseWorkspace → long list, lesson save và return context browser. [Phạm vi 0.7](release-0.7.md).
+
+
+## CR-007 — 0.9
+
+| Requirement | Implementation | Verification | Giới hạn |
+| --- | --- | --- | --- |
+| FR-026 | brand SVG, business.css, platform appearance | business.spec.ts desktop/mobile, API revisions | Chưa pilot |
+| FR-027 | archive/design endpoints, dashboard | test_business.py, browser archive/restore | Xóa mềm |
+| FR-028 | platform.py, managed_catalog.py, provision script | Role denial, clone/publish/seed/Studio browser | Cấp role trên host thật riêng |
+| FR-029 | intelligence.py, connections.py, AIStudio | Mock Responses contract, quota/apply/media/isolation | Chưa live provider/OAuth |
+| FR-030 | offers, commerce.py, PurchaseButton | Paid bypass denial, combo snapshot/prerequisites | Chưa promotions/tax |
+| FR-031 | payment_gateways.py, order ledger | HMAC forgery/replay, receiver/price checks, bank browser | Chưa sandbox/live merchant UAT |
+| FR-032 | billing.py, pricing, TenantSubscription | Expiry/recreation/renewal snapshot/idempotency | Giá chưa pilot, không auto-debit |

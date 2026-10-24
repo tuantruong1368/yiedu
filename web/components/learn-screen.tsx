@@ -1,4 +1,6 @@
 "use client";
+import PathAccess from "./business/path-access";
+import PurchaseButton from "./business/purchase-button";
 import { useI18n } from "./locale-provider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -29,13 +31,20 @@ export default function LearnScreen({ slug }: { slug: string }) {
     [error, setError] = useState(""),
     [lesson, setLesson] = useState<any>(null),
     [certificate, setCertificate] = useState<any>(null);
+  const [store, setStore] = useState<any>({ offers: [], methods: [] });
   const [tenant, setTenant] = useState<any>({ slug, name: slug, branding: {} });
   async function refresh() {
     const site = await api("/sites/" + slug);
     setTenant(site.tenant);
     await api("/auth/me");
     await api("/sites/" + slug + "/join", { method: "POST" });
-    return api("/runtime/" + site.tenant.id + "/overview").then(setData);
+    const base = "/runtime/" + site.tenant.id;
+    const [overview, store] = await Promise.all([
+      api(base + "/overview"),
+      api(base + "/store"),
+    ]);
+    setStore(store);
+    setData(overview);
   }
   useEffect(() => {
     refresh().catch((e) => setError(e.message));
@@ -249,6 +258,12 @@ export default function LearnScreen({ slug }: { slug: string }) {
                           </button>
                         ))}
                       </div>
+                      <PathAccess
+                        path={p}
+                        store={store}
+                        data={data}
+                        onChange={refresh}
+                      />
                     </div>
                   ))}
                 </section>
@@ -268,6 +283,10 @@ export default function LearnScreen({ slug }: { slug: string }) {
                 {data.courses
                   .filter((c: any) => !courseId || c.id === courseId)
                   .map((c: any, i: number) => {
+                    const offer = store.offers.find(
+                      (o: any) =>
+                        o.target_type === "course" && o.target_id === c.id,
+                    );
                     const enrolled = data.enrolled.includes(c.id),
                       lessons = data.lessons.filter(
                         (l: any) => l.course_id === c.id,
@@ -346,6 +365,19 @@ export default function LearnScreen({ slug }: { slug: string }) {
                                   </button>
                                 )}
                             </>
+                          ) : offer?.active === false ? (
+                            <p>
+                              {tr(
+                                "Đang tạm dừng nhận học viên mới.",
+                                "New enrollments are paused.",
+                              )}
+                            </p>
+                          ) : offer?.mode === "paid" ? (
+                            <PurchaseButton
+                              offer={offer}
+                              methods={store.methods}
+                              tenantId={data.tenant.id}
+                            />
                           ) : (
                             <button
                               className="button"

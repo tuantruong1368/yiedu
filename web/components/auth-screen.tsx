@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowLeft, Layers3 } from "lucide-react";
 import { api } from "@/lib/api";
-import { tenantReturnURL } from "@/lib/navigation";
+import { tenantReturnURL, accountReturnURL } from "@/lib/navigation";
 import { Brand, ErrorBox } from "./shared";
 export default function AuthScreen({
   register = false,
@@ -52,7 +52,12 @@ export default function AuthScreen({
           returnTo ? tenantReturnURL(site, returnTo, destination) : destination,
         );
       } else
-        router.replace("/dashboard?template=" + encodeURIComponent(template));
+        router.replace(
+          accountReturnURL(
+            returnTo,
+            "/dashboard?template=" + encodeURIComponent(template),
+          ),
+        );
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);

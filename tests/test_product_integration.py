@@ -291,7 +291,7 @@ def test_bilingual_site_rich_lesson_and_tenant_isolation(clients):
 
     bundle = zipfile.ZipFile(io.BytesIO(owner.get(base + "/export").content))
     exported = json.loads(bundle.read("snapshot.json"))
-    assert exported["schema_version"] == "0005"
+    assert exported["schema_version"] == "0006"
     assert exported["tables"]["lessons"][0]["document"] == rich
 
 
@@ -412,7 +412,7 @@ def test_studio_isolation_revisions_embedded_snapshots_and_export_restore(client
     assert learner.get(base + "/lessons/" + lesson["id"]).json()["document"] == doc
     exported = zipfile.ZipFile(io.BytesIO(owner.get(base + "/export").content))
     snapshot = json.loads(exported.read("snapshot.json"))
-    assert snapshot["schema_version"] == "0005"
+    assert snapshot["schema_version"] == "0006"
     assert len(snapshot["tables"]["studio_assets"]) == 1
     # Restore into an actually empty destination within the transaction.
     spec = importlib.util.spec_from_file_location(

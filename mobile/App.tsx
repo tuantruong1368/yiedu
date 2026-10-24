@@ -356,45 +356,54 @@ export default function App() {
                 <Text style={s.kicker}>{tr("KHÓA HỌC")}</Text>
                 <Text style={s.cardTitle}>{course.title}</Text>
                 <Text style={s.muted}>{course.description}</Text>
-                {school.enrolled.includes(course.id)
-                  ? school.lessons
-                      .filter((l: any) => l.course_id === course.id)
-                      .map((l: any) => (
-                        <TouchableOpacity
-                          style={s.lesson}
-                          key={l.id}
-                          onPress={() =>
-                            perform(async () =>
-                              setLesson(
-                                await request(
-                                  "/runtime/" +
-                                    school.tenant.id +
-                                    "/lessons/" +
-                                    l.id,
-                                ),
+                {school.enrolled.includes(course.id) ? (
+                  school.lessons
+                    .filter((l: any) => l.course_id === course.id)
+                    .map((l: any) => (
+                      <TouchableOpacity
+                        style={s.lesson}
+                        key={l.id}
+                        onPress={() =>
+                          perform(async () =>
+                            setLesson(
+                              await request(
+                                "/runtime/" +
+                                  school.tenant.id +
+                                  "/lessons/" +
+                                  l.id,
                               ),
-                            )
-                          }
-                        >
-                          <Text style={s.link}>
-                            {school.completed.includes(l.id) ? "✓" : "▷"}{" "}
-                            {l.title}
-                          </Text>
-                        </TouchableOpacity>
-                      ))
-                  : button(tr("Ghi danh miễn phí"), () =>
-                      perform(async () => {
-                        await request(
-                          "/runtime/" +
-                            school.tenant.id +
-                            "/courses/" +
-                            course.id +
-                            "/enroll",
-                          "POST",
-                        );
-                        await openSchool(school.tenant.id);
-                      }),
-                    )}
+                            ),
+                          )
+                        }
+                      >
+                        <Text style={s.link}>
+                          {school.completed.includes(l.id) ? "✓" : "▷"}{" "}
+                          {l.title}
+                        </Text>
+                      </TouchableOpacity>
+                    ))
+                ) : course.offer?.mode === "paid" ||
+                  course.offer?.active === false ? (
+                  <Text style={s.muted}>
+                    {locale === "vi"
+                      ? "Khóa học có phí hoặc đang tạm dừng. Quản lý đăng ký trên website của hệ thống, sau đó làm mới ứng dụng để học."
+                      : "This course is paid or enrollment is paused. Manage access on the school website, then refresh the app to learn."}
+                  </Text>
+                ) : (
+                  button(tr("Ghi danh miễn phí"), () =>
+                    perform(async () => {
+                      await request(
+                        "/runtime/" +
+                          school.tenant.id +
+                          "/courses/" +
+                          course.id +
+                          "/enroll",
+                        "POST",
+                      );
+                      await openSchool(school.tenant.id);
+                    }),
+                  )
+                )}
               </View>
             ))}
           </>

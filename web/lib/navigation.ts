@@ -31,6 +31,8 @@ export function tenantReturnURL(
 export function galleryReturnURL(value?: string | null) {
   try {
     const url = new URL(value || "/#templates", "https://yiedu.invalid");
+    if (url.origin === "https://yiedu.invalid" && url.pathname === "/platform")
+      return "/platform?tab=templates";
     if (url.origin !== "https://yiedu.invalid" || url.pathname !== "/")
       return "/#templates";
     const params = new URLSearchParams();
@@ -42,4 +44,49 @@ export function galleryReturnURL(value?: string | null) {
   } catch {
     return "/#templates";
   }
+}
+
+/** Explicit account routes only; never accept a remote post-login redirect. */
+export function accountReturnURL(
+  value?: string | null,
+  fallback = "/dashboard",
+) {
+  if (!value || value.length > 4000 || /[\\\x00-\x20]/.test(value))
+    return fallback;
+  try {
+    const url = new URL(value, "https://yiedu.invalid");
+    if (
+      url.origin !== "https://yiedu.invalid" ||
+      !(
+        /^\/checkout\/[a-f0-9-]{36}$/.test(url.pathname) ||
+        ["/platform", "/orders", "/dashboard"].includes(url.pathname)
+      )
+    )
+      return fallback;
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return fallback;
+  }
+}
+
+/** Contextual checkout back link, limited to account pages or this tenant. */
+export function checkoutReturnURL(
+  slug: string,
+  value?: string | null,
+  fallback = "/orders",
+) {
+  if (!value || value.length > 4000 || /[\\\x00-\x20]/.test(value))
+    return fallback;
+  try {
+    const url = new URL(value, "https://yiedu.invalid");
+    if (url.origin !== "https://yiedu.invalid") return fallback;
+    if (
+      url.pathname === `/t/${encodeURIComponent(slug)}/learn` ||
+      url.pathname === tenantAdminURL(slug)
+    )
+      return url.pathname + url.search + url.hash;
+    if (["/dashboard", "/orders", "/platform"].includes(url.pathname))
+      return accountReturnURL(value, fallback);
+  } catch {}
+  return fallback;
 }

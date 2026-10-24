@@ -10,6 +10,11 @@ import {
   Plus,
   PencilRuler,
   BookOpen,
+  Pencil,
+  Trash2,
+  RotateCcw,
+  ShieldCheck,
+  Receipt,
 } from "lucide-react";
 import { api, slugify } from "@/lib/api";
 import { Header, Logout, ErrorBox, Loading, Empty } from "./shared";
@@ -17,6 +22,8 @@ export default function Dashboard({ template = "" }: { template?: string }) {
   const { t: tr } = useI18n();
   const router = useRouter();
 
+  const [trash, setTrash] = useState(false),
+    [managing, setManaging] = useState("");
   const [templates, setTemplates] = useState<any[]>([]);
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
@@ -51,6 +58,46 @@ export default function Dashboard({ template = "" }: { template?: string }) {
       setCreating(false);
     }
   }
+  async function archive(kind: string, id: string, archived: boolean) {
+    if (
+      archived &&
+      !confirm(
+        tr(
+          kind === "site"
+            ? "Chuyển hệ thống vào thùng rác? Website sẽ tạm ẩn; dữ liệu được giữ để khôi phục."
+            : "Chuyển bản thiết kế vào thùng rác? Website đã xuất bản vẫn được giữ.",
+          kind === "site"
+            ? "Archive this system? The public website will be hidden and data preserved for restoration."
+            : "Archive this design? Its published website will be preserved.",
+        ),
+      )
+    )
+      return;
+    setManaging(id);
+    setError("");
+    try {
+      await api(
+        (kind === "site" ? "/me/sites/" : "/workspaces/") + id + "/archive",
+        { method: "PUT", body: JSON.stringify({ archived }) },
+      );
+      setData(await api("/me/dashboard"));
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setManaging("");
+    }
+  }
+  async function editSite(id: string) {
+    setManaging(id);
+    setError("");
+    try {
+      const w = await api(`/me/sites/${id}/design`, { method: "POST" });
+      router.push(`/builder/${w.id}`);
+    } catch (e) {
+      setError((e as Error).message);
+      setManaging("");
+    }
+  }
   return (
     <>
       <Header />
@@ -68,7 +115,19 @@ export default function Dashboard({ template = "" }: { template?: string }) {
               </h1>
               <p>{tr("Mỗi bài học là khởi đầu của một điều mới.")}</p>
             </div>
-            <Logout />
+            <div className="actions">
+              {data.user.platform_admin && (
+                <Link href="/platform" className="button small">
+                  <ShieldCheck size={16} />
+                  {tr("Quản trị YiEdu", "YiEdu administration")}
+                </Link>
+              )}
+              <Link href="/orders" className="button small ghost">
+                <Receipt size={16} />
+                {tr("Đơn hàng", "Orders")}
+              </Link>
+              <Logout />
+            </div>
           </div>
           <div className="stats-row">
             <div>
@@ -87,6 +146,24 @@ export default function Dashboard({ template = "" }: { template?: string }) {
               <span>{tr("Học tập & phát triển")}</span>
             </div>
           </div>
+          <ErrorBox message={error} />
+          <div className="dashboard-toolbar">
+            <button
+              className={`button small ${trash ? "" : "ghost"}`}
+              onClick={() => setTrash(!trash)}
+            >
+              <Trash2 size={15} />
+              {trash
+                ? tr("Trở về đang hoạt động", "Back to active items")
+                : tr("Thùng rác", "Trash")}
+            </button>
+            <small>
+              {tr(
+                "Có thể khôi phục nội dung đã xóa trong thùng rác.",
+                "Archived items can be restored from the trash.",
+              )}
+            </small>
+          </div>
           <div className="dashboard-columns">
             <section>
               <div className="section-title">
@@ -102,58 +179,141 @@ export default function Dashboard({ template = "" }: { template?: string }) {
                 />
               ) : (
                 <div className="site-list">
-                  {data.sites.map((s: any) => (
-                    <article className="site-card" key={s.id}>
-                      <div
-                        className="site-mark"
-                        style={{ background: s.branding.color || "#215d4c" }}
-                      >
-                        {s.name[0]}
-                      </div>
-                      <div>
-                        <small>{s.role.toUpperCase()}</small>
-                        <h3>{s.name}</h3>
-                        <Link href={"/t/" + s.slug}>
-                          {s.slug}.yiedu.vn <ArrowUpRight size={12} />
-                        </Link>
-                      </div>
-                      <Link
-                        className="button small ghost"
-                        href={
-                          "/t/" +
-                          s.slug +
-                          (s.role === "learner" ? "/learn" : "/administrator")
-                        }
-                      >
-                        {s.role === "learner" ? tr("Vào học") : tr("Quản trị")}
-                        <ArrowRight size={15} />
-                      </Link>
-                    </article>
-                  ))}
+                  {data.sites
+                    .filter((s: any) => !!s.archived_at === trash)
+                    .map((s: any) => (
+                      <article className="site-card" key={s.id}>
+                        <div
+                          className="site-mark"
+                          style={{ background: s.branding.color || "#215d4c" }}
+                        >
+                          {s.name[0]}
+                        </div>
+                        <div>
+                          <small>{s.role.toUpperCase()}</small>
+                          <h3>{s.name}</h3>
+                          <Link
+                            href={
+                              s.is_published === false
+                                ? `/t/${s.slug}/administrator?tab=billing`
+                                : "/t/" + s.slug
+                            }
+                          >
+                            {s.is_published === false
+                              ? tr(
+                                  "Chờ kích hoạt / xuất bản",
+                                  "Activation / publication pending",
+                                )
+                              : `${s.slug}.yiedu.vn`}{" "}
+                            <ArrowUpRight size={12} />
+                          </Link>
+                        </div>
+                        <div className="site-card-actions">
+                          {trash ? (
+                            <button
+                              className="button small ghost"
+                              disabled={!!managing}
+                              onClick={() => archive("site", s.id, false)}
+                            >
+                              <RotateCcw size={15} />
+                              {tr("Khôi phục", "Restore")}
+                            </button>
+                          ) : (
+                            <>
+                              <Link
+                                className="button small ghost"
+                                href={
+                                  "/t/" +
+                                  s.slug +
+                                  (s.role === "learner"
+                                    ? "/learn"
+                                    : "/administrator")
+                                }
+                              >
+                                {s.role === "learner"
+                                  ? tr("Vào học")
+                                  : tr("Quản trị")}
+                                <ArrowRight size={15} />
+                              </Link>
+                              {["owner", "admin"].includes(s.role) && (
+                                <button
+                                  className="icon-button"
+                                  disabled={!!managing}
+                                  onClick={() => editSite(s.id)}
+                                  aria-label={tr(
+                                    "Chỉnh sửa website",
+                                    "Edit website",
+                                  )}
+                                  title={tr(
+                                    "Chỉnh sửa website",
+                                    "Edit website",
+                                  )}
+                                >
+                                  <Pencil size={16} />
+                                </button>
+                              )}
+                              {s.role === "owner" && (
+                                <button
+                                  className="icon-button danger-text"
+                                  disabled={!!managing}
+                                  onClick={() => archive("site", s.id, true)}
+                                  aria-label={tr(
+                                    "Xóa hệ thống",
+                                    "Archive system",
+                                  )}
+                                  title={tr("Xóa hệ thống", "Archive system")}
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </article>
+                    ))}
                 </div>
               )}
               <h2 className="spaced">{tr("Bản thiết kế")}</h2>
-              {data.workspaces.map((w: any) => (
-                <Link
-                  className="draft-row"
-                  key={w.id}
-                  href={"/builder/" + w.id}
-                >
-                  <PencilRuler size={20} />
-                  <div>
-                    <b>{w.name}</b>
-                    <small>
-                      {w.template_id}
-                      {tr("· Phiên bản")}
-                      {w.revision}
-                    </small>
-                  </div>
-                  <span>
-                    {w.tenant_id ? tr("Đã xuất bản") : tr("Bản nháp")}
-                  </span>
-                  <ArrowUpRight size={17} />
-                </Link>
-              ))}
+              {data.workspaces
+                .filter((w: any) => !!w.archived_at === trash)
+                .map((w: any) => (
+                  <article className="draft-row managed-draft-row" key={w.id}>
+                    <Link href={"/builder/" + w.id}>
+                      <PencilRuler size={20} />
+                      <div>
+                        <b>{w.name}</b>
+                        <small>
+                          {w.template_id} · v{w.revision}
+                        </small>
+                      </div>
+                      <span>
+                        {w.tenant_id ? tr("Đã xuất bản") : tr("Bản nháp")}
+                      </span>
+                    </Link>
+                    {trash ? (
+                      <button
+                        className="icon-button"
+                        disabled={!!managing}
+                        aria-label={tr(
+                          "Khôi phục bản thiết kế",
+                          "Restore design",
+                        )}
+                        onClick={() => archive("workspace", w.id, false)}
+                      >
+                        <RotateCcw size={17} />
+                      </button>
+                    ) : (
+                      <button
+                        className="icon-button danger-text"
+                        disabled={!!managing}
+                        aria-label={tr("Xóa bản thiết kế", "Archive design")}
+                        onClick={() => archive("workspace", w.id, true)}
+                      >
+                        <Trash2 size={17} />
+                      </button>
+                    )}
+                  </article>
+                ))}
             </section>
             <aside className="create-panel">
               <span className="eyebrow">{tr("TẠO ĐIỀU TIẾP THEO")}</span>
