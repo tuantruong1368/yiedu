@@ -73,7 +73,7 @@ có giới hạn phi thương mại; liên kết đọc không cấp quyền sao
 ## Sử dụng tại local
 
 1. Pull main rồi chạy `docker compose up --build -d` (Docker Desktop phải đang chạy).
-   Entrypoint API chạy migration 0004; không xóa volume PostgreSQL.
+   Service migrate chạy migration 0004; không xóa volume PostgreSQL.
 2. Mở http://localhost:3000/#templates, tìm mẫu và chọn xem website/bài học.
 3. Nhấn dùng mẫu, đăng ký/đăng nhập, chỉnh sửa trong builder rồi xuất bản.
    Người đã đăng nhập được chuyển thẳng vào builder.

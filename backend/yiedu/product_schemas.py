@@ -108,7 +108,7 @@ class CourseWrite(StrictModel):
                 raise ValueError("Invalid translated course text")
             if len(item.get("title", "")) > 200:
                 raise ValueError("Translated title too long")
-        return value
+        return {lang: {k: v for k, v in item.items() if v.strip()} for lang, item in value.items()}
 
 
 class LessonWrite(StrictModel):

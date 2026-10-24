@@ -709,7 +709,7 @@ def marketplace(db: DB):
 def update_status(tenant_id: uuid.UUID, user: UserDep, db: DB):
     require_member(db, user, tenant_id, ["owner", "admin"])
     return {
-        "current_version": "0.4.0",
+        "current_version": "0.5.0",
         "configured": False,
         "message": (
             "Chưa cấu hình release registry và trust key. Không có bản cập nhật được xác minh."
@@ -739,7 +739,7 @@ def export_tenant(tenant_id: uuid.UUID, user: UserDep, db: DB):
 def instance_info(db: DB):
     mode = get_settings().instance_mode
     tenant = db.scalar(select(Tenant)) if mode == "standalone" else None
-    return {"mode": mode, "version": "0.4.0", "tenant": encode(tenant) if tenant else None}
+    return {"mode": mode, "version": "0.5.0", "tenant": encode(tenant) if tenant else None}
 
 
 @router.put("/runtime/{tenant_id}/paths/{path_id}")

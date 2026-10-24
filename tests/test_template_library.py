@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 from yiedu.authoring import validate_site
-from yiedu.product_schemas import LessonWrite
+from yiedu.product_schemas import CourseWrite, LessonWrite
 from yiedu.template_library import catalog, curriculum, lessons_for, library
 from yiedu.template_sites import site_document
 
@@ -41,3 +41,10 @@ def test_authored_code_examples():
                 check=True,
             )
             assert result.stdout.strip() == module["code_output"].strip(), module["id"]
+
+
+def test_empty_course_translation_keeps_source_fallback():
+    course = CourseWrite(
+        title="Source", slug="source", translations={"en": {"title": "", "description": " "}}
+    )
+    assert course.translations == {"en": {}}
